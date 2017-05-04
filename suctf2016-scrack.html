@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- [[! Document Settings ]] -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <!-- [[! Page Meta ]] -->
+    <title>SharifCTF 2016 - SCrack</title>
+    <meta name="description" content="uid=0 (root) - CTF, InfoSec, Banana And More.." />
+
+    <meta name="HandheldFriendly" content="True" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="shortcut icon" href="/assets/images/favicon.ico" >
+
+    <!-- [[! Styles'n'Scripts ]] -->
+    <link rel="stylesheet" type="text/css" href="/assets/css/screen.css" />
+    <link rel="stylesheet" type="text/css"
+          href="//fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic|Open+Sans:700,400" />
+    <link rel="stylesheet" type="text/css" href="/assets/css/syntax.css" />
+
+    <!-- [[! highlight.js ]] -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/styles/default.min.css">
+    <style>.hljs { background: none; }</style>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.3.0/highlight.min.js"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+
+    <!-- [[! Ghost outputs important style and meta data with this tag ]] -->
+        <link rel="canonical" href="/" />
+    <meta name="referrer" content="origin" />
+    <link rel="next" href="/page2/" />
+
+    <meta property="og:site_name" content="uid=0 (root)" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="uid=0 (root)" />
+    <meta property="og:description" content="CTF, InfoSec, Banana And More.." />
+    <meta property="og:url" content="/" />
+    <meta property="og:image" content="/assets/images/cover1.jpg" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="uid=0 (root)" />
+    <meta name="twitter:description" content="CTF, InfoSec, Banana And More.." />
+    <meta name="twitter:url" content="/" />
+    <meta name="twitter:image:src" content="/assets/images/cover1.jpg" />
+
+    <script type="application/ld+json">
+{
+    "@context": "http://schema.org",
+    "@type": "Website",
+    "publisher": "uid=0",
+    "url": "/",
+    "image": "/assets/images/cover1.jpg",
+    "description": "CTF, InfoSec, Banana And More.."
+}
+    </script>
+
+    <meta name="generator" content="Jekyll 3.0.0" />
+    <link rel="alternate" type="application/rss+xml" title="uid=0 (root)" href="/feed.xml" />
+
+
+</head>
+<body class="home-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+        <li class="nav-home " role="presentation"><a href="/">Home</a></li>
+        <li class="nav-about " role="presentation"><a href="/about">About</a></li>
+         <li class="nav-archive " role="presentation"><a href="/archive">Archives</a></li>
+        <li class="nav-fables " role="presentation"><a href="/tag/CTF">CTF</a></li>
+        <li class="nav-speeches " role="presentation"><a href="/tag/Digital Forensic">Digital Forensic</a></li>
+        <li class="nav-fiction " role="presentation"><a href="/tag/Pentesting">Pentesting</a></li>
+        <li class="nav-author " role="presentation"><a href="/tag/RE">Rerverse Engineering</a></li>
+    </ul>
+    <a class="subscribe-button icon-feed" href="/feed.xml">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        <!-- [[! Everything else gets inserted here ]] -->
+        <!-- < default -->
+
+<!-- The comment above "< default" means - insert everything in this file into -->
+    <!-- the [body] of the default.hbs template, which contains our header/footer. -->
+
+<!-- Everything inside the #post tags pulls data from the post -->
+<!-- #post -->
+
+<header class="main-header post-head " style="background-image: url(/assets/images/ctf.png) ">
+    <nav class="main-nav  overlay  clearfix">
+        <a class="blog-logo" href="/"><img src="/assets/images/ghost.png" alt="Blog Logo" /></a>
+        
+            <a class="menu-button icon-menu" href="#"><span class="word">Menu</span></a>
+        
+    </nav>
+</header>
+
+<main class="content" role="main">
+
+    <article class="post tag-fiction">
+
+        <header class="post-header">
+            <h1 class="post-title">SharifCTF 2016 - SCrack</h1>
+            <section class="post-meta">
+            <!-- <a href='/'>Aiden Pearce</a> -->
+            <time class="post-date" datetime="2016-12-22">22 Dec 2016</time>
+                <!-- [[tags prefix=" on "]] -->
+                 
+                on 
+                
+                    
+                       <a href='/tag/sharifctf2016'>Sharifctf2016</a>,
+                       
+                
+                    
+                       <a href='/tag/re'>Re</a>
+                       
+                
+                
+            </section>
+        </header>
+
+        <section class="post-content">
+            
+            <p>Challenge RE SharifCTF 2016 SCrack berupa file elf binnary 64bit yang akan melakukan validasi key</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>root@kali:~/Desktop/SU CTF/RE# file SCrack
+SCrack: ELF <span class="m">64</span>-bit LSB executable, x86-64, version <span class="m">1</span> <span class="o">(</span>SYSV<span class="o">)</span>, 
+dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, 
+<span class="k">for</span> GNU/Linux <span class="m">2</span>.6.24, BuildID<span class="o">[</span>sha1<span class="o">]=</span>d011afc29443bbb3ea2c72ef5ac15f8dc278397a, 
+not stripped
+
+root@kali:~/Desktop/SU CTF/RE# ./SCrack
+Enter the valid key!
+asasasasasas
+Invalid Key! :<span class="o">(</span></code></pre></figure>
+
+<p>Saat mencoba menggunakan <strong>ltrace</strong> terdapat output <em>Dont trace me!</em> dan percobaan <em>disassembly</em> menggunakan gdb ditemukan <em>ptrace</em> yang digunakan sebagai <em>anti-debugging technique</em></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>root@kali:~/Desktop/SU CTF/RE# gdb -q SCrack
+Reading symbols from SCrack...<span class="o">(</span>no debugging symbols found<span class="o">)</span>...done.
+<span class="o">(</span>gdb<span class="o">)</span> disass main
+Dump of assembler code <span class="k">for</span> <span class="k">function</span> main:
+--- snip ---
+   0x0000000000400a79 &lt;+44&gt;:	mov    <span class="nv">$0</span>x0,%eax
+   0x0000000000400a7e &lt;+49&gt;:	callq  0x400910 &lt;ptrace@plt&gt;
+   0x0000000000400a83 &lt;+54&gt;:	cmp    <span class="nv">$0</span>xffffffffffffffff,%rax
+   0x0000000000400a87 &lt;+58&gt;:	sete   %al
+   0x0000000000400a8a &lt;+61&gt;:	<span class="nb">test</span>   %al,%al
+--- snip ---</code></pre></figure>
+
+<h1 id="proof-of-concept">Proof Of Concept</h1>
+<p>Dikarenakan menggunakan ltrace tidak bisa, saya mencoba melakukan <em>static analisys</em> menggunakan <strong>objdump</strong></p>
+
+<p>Ditemukan instruksi yang akan memberikan “sesuatu” ke register esi</p>
+
+<p><img src="https://raw.githubusercontent.com/rh4ma/rh4ma.github.io/master/_posts/SCRACK.png" alt="SCRACK.png" /></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>root@kali:~/Desktop/SU CTF/RE# objdump -M intel -d SCrack <span class="p">|</span> grep esi <span class="p">|</span> awk <span class="s1">&#39;{print $8}&#39;</span> <span class="p">|</span> 
+cut -f2 -d<span class="s2">&quot;,&quot;</span>  <span class="p">|</span> tr <span class="s2">&quot;\n&quot;</span> <span class="s2">&quot;,&quot;</span>
+
+0x0,0x401064,0x401075,0x53,0x68,0x61,0x72,0x69,0x66,0x43,0x54,
+0x46,0x7b,0x65,0x64,0x39,0x37,0x64,0x32,0x38,0x36,0x66,0x33,
+0x35,0x36,0x64,0x61,0x64,0x62,0x35,0x63,0x64,0x65,0x30,0x39,
+0x30,0x32,0x30,0x30,0x36,0x63,0x37,0x64,0x65,0x62,0x7d,0x400950,
+0x49,0x6e,0x76,0x61,0x6c,0x69,0x64,0x20,0x4b,0x65,0x79,0x21,0x20,
+0x3a,0x28,0x400950,esi,0x6022d1,0xffff,</code></pre></figure>
+
+<p>Decode menggunakan python</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>root@kali:~/Desktop/SU CTF/RE# python
+&gt;&gt;&gt; <span class="nv">x</span> <span class="o">=</span> <span class="o">[</span>0x53,0x68,0x61,0x72,0x69,0x66,0x43,0x54,0x46,0x7b,0x65,
+0x64,0x39,0x37,0x64,0x32,0x38,0x36,0x66,0x33,0x35,0x36,0x64,0x61,
+0x64,0x62,0x35,0x63,0x64,0x65,0x30,0x39,0x30,0x32,0x30,0x30,0x36,
+0x63,0x37,0x64,0x65,0x62,0x7d,0x49,0x6e,0x76,0x61,0x6c,0x69,0x64,
+0x20,0x4b,0x65,0x79,0x21,0x20,0x3a,0x28<span class="o">]</span>
+&gt;&gt;&gt; <span class="s2">&quot;&quot;</span>.join<span class="o">([</span> chr<span class="o">(</span>y<span class="o">)</span> <span class="k">for</span> y in x<span class="o">])</span>
+<span class="s1">&#39;SharifCTF{ed97d286f356dadb5cde0902006c7deb}Invalid Key! :(&#39;</span></code></pre></figure>
+
+<p>Flag : SharifCTF{ed97d286f356dadb5cde0902006c7deb}</p>
+
+<h1 id="proof-of-concept-2">Proof Of Concept #2</h1>
+<p>Cara lain juga dapat digunakan untuk mendapatkan flag pada challenge ini, yang saya rasa ini memang cara yang diharapkan untuk mendapatkan flag yaitu dengan memasukan key yang valid</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>root@kali:~/Desktop/SU CTF/RE# objdump -M intel -d SCrack <span class="p">|</span> grep cmp <span class="p">|</span> awk <span class="s1">&#39;{print $5}&#39;</span> <span class="p">|</span> 
+cut -f2 -d<span class="s2">&quot;,&quot;</span>  <span class="p">|</span> tr <span class="s2">&quot;\n&quot;</span> <span class="s2">&quot;,&quot;</span>
+0e,18,e8,ff,0x38,0x37,0x34,0x30,0x33,0x38,0x65,0x34,0x62,0x36,0x65,
+0x32,0x39,0x62,0x66,0x30,0x38,0x39,0x38,0x62,0x67,0x34,0x66,0x30,0x32,
+0x32,0x35,0x39,0x33,0x35,0x63,0x30,01,ff,cmp,</code></pre></figure>
+
+<p>Decode menggunakan Python</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>root@kali:~/Desktop/SU CTF/RE# python
+&gt;&gt;&gt; <span class="nv">x</span> <span class="o">=</span> <span class="o">[</span>0x38,0x37,0x34,0x30,0x33,0x38,0x65,0x34,0x62,0x36,0x65,0x32,
+0x39,0x62,0x66,0x30,0x38,0x39,0x38,0x62,0x67,0x34,0x66,0x30,0x32,0x32,
+0x35,0x39,0x33,0x35,0x63,0x30<span class="o">]</span>
+&gt;&gt;&gt; <span class="s2">&quot;&quot;</span>.join<span class="o">([</span> chr<span class="o">(</span>y<span class="o">)</span> <span class="k">for</span> y in x<span class="o">])</span>
+<span class="s1">&#39;874038e4b6e29bf0898bg4f0225935c0&#39;</span>
+&gt;&gt;&gt; exit<span class="o">()</span>
+
+root@kali:~/Desktop/SU CTF/RE# ./SCrack
+Enter the valid key!
+874038e4b6e29bf0898bg4f0225935c0
+SharifCTF<span class="o">{</span>ed97d286f356dadb5cde0902006c7deb<span class="o">}</span></code></pre></figure>
+
+
+
+        </section>
+
+        <footer class="post-footer">
+
+            <!-- Everything inside the #author tags pulls data from the author -->
+            <!-- #author-->
+
+            
+            <figure class="author-image">
+                <a class="img" href="/author/rhama" style="background-image: url(/assets/images/casper.png)"><span class="hidden">Aiden Pearce's Picture</span></a>
+            </figure>
+            
+
+            <section class="author">
+                <h4><a href="/author/rhama">Aiden Pearce</a></h4>
+                
+                
+                    <p> Beyond The Limit</p>
+                
+                <div class="author-meta">
+                    <span class="author-location icon-location"> NTB, Indonesia</span> 
+                    <span class="author-link icon-link"><a href="127.0.0.1:4000"> 127.0.0.1:4000</a></span> 
+                </div>
+            </section>
+
+            <!-- /author  -->
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="http://twitter.com/share?text=SharifCTF 2016 - SCrack&amp;url=127.0.0.1:4000suctf2016-scrack"
+                    onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=127.0.0.1:4000suctf2016-scrack"
+                    onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=127.0.0.1:4000suctf2016-scrack"
+                   onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+            
+            <!-- Add Disqus Comments -->
+            
+            
+        </footer>
+
+    </article>
+
+</main>
+
+<aside class="read-next">
+
+    <!-- [[! next_post ]] -->
+    
+        <a class="read-next-story " style="background-image: url(/assets/images/ctf.png)" href="/suctf2016-unloadme">
+            <section class="post">
+                <h2>SharifCTF 2016 - UnloadMe</h2>
+                <p>* content {:toc} Challenge RE SharifCTF 2016 UnloadMe berupa file PE32 Windows Executable {% highlight...</p>
+            </section>
+        </a>
+    
+    <!-- [[! /next_post ]] -->
+    <!-- [[! prev_post ]] -->
+    
+        <a class="read-next-story prev " style="background-image: url(/assets/images/ctf.png)" href="/suctf2016-getit">
+            <section class="post">
+                <h2>SharifCTF 2016 - Getit</h2>
+                <p>Pada challenge RE ShariftCTF 2016 diberikan file elf binnary bernama getit, yang informasi nya seperti...</p>
+            </section>
+        </a>
+    
+    <!-- [[! /prev_post ]] -->
+</aside>
+
+<!-- /post -->
+
+
+        <footer class="site-footer clearfix">
+          <section class="copyright"><a href="/">uid=0 (root)</a> &copy; 2017</section>
+          <section class="poweredby">Proudly published with <a href="https://jekyllrb.com/">Jekyll</a> using <a href="https://github.com/biomadeira/jasper">Jasper</a></section>
+        </footer>
+    </div>
+    <!-- [[! Ghost outputs important scripts and data with this tag ]] -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <!-- [[! The main JavaScript file for Casper ]] -->
+    <script type="text/javascript" src="/assets/js/jquery.fitvids.js"></script>
+    <script type="text/javascript" src="/assets/js/index.js"></script>
+
+    <!-- Add Google Analytics  -->
+        <!-- Google Analytics Tracking code -->
+     <script>
+	    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	    ga('create', 'UA-69281367-1', 'auto');
+	    ga('send', 'pageview');
+
+     </script>   
+</body>
+</html>

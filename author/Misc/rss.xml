@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+   
+      <title>127.0.0.1:4000</title>
+   
+   <link>127.0.0.1:4000</link>
+   <description>CTF, InfoSec, Banana And More..</description>
+   <language>en-uk</language>
+   <managingEditor> Aiden Pearce</managingEditor>
+   <atom:link href="rss" rel="self" type="application/rss+xml" />
+   
+	<item>
+	  <title>SharifCTF 2016 - Camera Model</title>
+	  <link>//suctf2016-camera-model</link>
+	  <author>Aiden Pearce</author>
+	  <pubDate>2016-12-23T00:00:00+08:00</pubDate>
+	  <guid>//suctf2016-camera-model</guid>
+	  <description><![CDATA[
+	     <p>Challenge Misc SharifCTF 2016 diberikan file bernama Image_Viewer yang akan menampilkan sebuah foto dan model kamera yang digunakan untuk mengambil foto tersebut merupakan flag.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>	root@kali:~/Desktop/SU CTF# file Image_Viewer
+	Image_Viewer: ELF <span class="m">64</span>-bit LSB executable, x86-64, version <span class="m">1</span> <span class="o">(</span>SYSV<span class="o">)</span>, 
+	dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, 
+	<span class="k">for</span> GNU/Linux <span class="m">2</span>.6.32, BuildID<span class="o">[</span>sha1<span class="o">]=</span>c3aaafe49fbcc6a7a2adbcdf4f3c2dd125a3dd32, not stripped</code></pre></figure>
+
+<h1 id="proof-of-concept">Proof Of Concept</h1>
+<p>Saya menggunakan <strong>binwalk</strong> untuk melakukan <em>signature scan</em></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>root@kali:~/Desktop/SU CTF# binwalk Image_Viewer
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+<span class="m">0</span>             0x0             ELF, <span class="m">64</span>-bit LSB executable, AMD x86-64, version <span class="m">1</span> <span class="o">(</span>SYSV<span class="o">)</span>
+<span class="m">5432</span>          0x1538          Zlib compressed data, best compression</code></pre></figure>
+
+<p>Tidak terdapat <em>signature</em> file gambar, tapi saya mencoba mengekstrack gambar tersebut dengan option -e pada binwalk</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>root@kali:~/Desktop/SU CTF# binwalk -e Image_Viewer
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+--------------------------------------------------------------------------------
+<span class="m">0</span>             0x0             ELF, <span class="m">64</span>-bit LSB executable, AMD x86-64, version <span class="m">1</span> <span class="o">(</span>SYSV<span class="o">)</span>
+<span class="m">5432</span>          0x1538          Zlib compressed data, best compression</code></pre></figure>
+
+<p>Hasil command diatas membuat output sebuah directory _Image_Viewer.extracted</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span></span>	root@kali:~/Desktop/SU CTF# <span class="nb">cd</span> _Image_Viewer.extracted
+	root@kali:~/Desktop/SU CTF/_Image_Viewer.extracted# ls
+	<span class="m">0</span>.elf  <span class="m">1538</span>  <span class="m">1538</span>.zlib
+	root@kali:~/Desktop/SU CTF/_Image_Viewer.extracted# file *
+	--- snip ---
+	<span class="m">1538</span>:  JPEG image data, JFIF standard <span class="m">1</span>.01, resolution <span class="o">(</span>DPI<span class="o">)</span>, density 72x72, 
+	segment length <span class="m">16</span>, Exif Standard: <span class="o">[</span>TIFF image data, big-endian, 
+	<span class="nv">direntries</span><span class="o">=</span><span class="m">8</span>, <span class="nv">model</span><span class="o">=</span>DSLR4781, <span class="nv">orientation</span><span class="o">=</span>upper-left, 
+	<span class="nv">xresolution</span><span class="o">=</span><span class="m">120</span>, <span class="nv">yresolution</span><span class="o">=</span><span class="m">128</span>, <span class="nv">resolutionunit</span><span class="o">=</span><span class="m">2</span>, 
+	<span class="nv">software</span><span class="o">=</span>GIMP <span class="m">2</span>.8.16, <span class="nv">datetime</span><span class="o">=</span><span class="m">2016</span>:12:02 <span class="m">11</span>:38:04<span class="o">]</span>, 
+	progressive, precision <span class="m">8</span>, 355x382, frames <span class="m">3</span>
+	--- snip ---</code></pre></figure>
+
+<p>File 1538 merupakan file gambar yang muncul pada saat program Image_Viewer dijalankan, dan bagian model=DSLR4781 adalah model kamera yang digunakan.</p>
+
+<p>Flag : SharifCTF{md5(DSLR4781)}</p>
+
+	  ]]></description>
+	</item>
+
+
+</channel>
+</rss>
