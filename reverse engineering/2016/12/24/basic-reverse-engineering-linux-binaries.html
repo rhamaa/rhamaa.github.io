@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Basic Reverse Engineering Linux Binaries</title>
+  <meta name="description" content="Assalamualaikum.Saya akan sedikit membahas basic dalam melakukan reverse engineering elf binnary, reverse engineering sendiri sangat penting apalagi dalam ch...">
+  
+  <meta name="author" content="rhama">
+  <meta name="copyright" content="&copy; rhama 2017">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="Assalamualaikum.Saya akan sedikit membahas basic dalam melakukan reverse engineering elf binnary, reverse engineering sendiri sangat penting apalagi dalam ch..." />
+  <meta property="og:url" content="https://rhama.my.id" />
+  <meta property="og:site_name" content="CTF.Ninja" />
+  <meta property="og:title" content="Basic Reverse Engineering Linux Binaries" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://rhama.my.id/assets/images/ctf.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Basic Reverse Engineering Linux Binaries">
+  <meta name="twitter:description" content="Assalamualaikum.Saya akan sedikit membahas basic dalam melakukan reverse engineering elf binnary, reverse engineering sendiri sangat penting apalagi dalam ch...">
+  <meta name="twitter:image" content="https://rhama.my.id/assets/images/ctf.png">
+  <meta name="twitter:url" content="https://rhama.my.id">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+   <link rel="stylesheet" href="/css/terminal.css">
+  <link rel="canonical" href="https://rhama.my.id/reverse%20engineering/2016/12/24/basic-reverse-engineering-linux-binaries.html">
+  <link rel="alternate" type="application/rss+xml" title="CTF.Ninja" href="https://rhama.my.id/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="CTF.Ninja">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/about/">About</a>
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Archives</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container has-cover" style="background-image: url(/assets/images/ctf.png);">
+  <div class="scrim has-cover">
+    <header class="post-header">
+      <h1 class="title">Basic Reverse Engineering Linux Binaries</h1>
+      <p class="info">by <strong>Aiden Pearce</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+
+
+<section class="post-meta">
+  <div class="post-date">December 24, 2016</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/Reverse Engineering">Reverse engineering</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <p>Assalamualaikum.
+Saya akan sedikit membahas basic dalam melakukan reverse engineering elf binnary, reverse engineering sendiri sangat penting apalagi dalam challenge CTF yang biasa nya mempunyai poin yang besar.</p>
+
+<h1 id="the-code">The Code</h1>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:~</span><span class="err">#</span> <span class="n">cat</span> <span class="n">rev</span><span class="p">.</span><span class="n">c</span>
+<span class="cp">#include 
+</span><span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+	<span class="kt">int</span> <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">,</span><span class="n">d</span><span class="p">;</span>
+	<span class="n">a</span> <span class="o">=</span> <span class="mi">306</span><span class="p">;</span>
+	<span class="n">b</span> <span class="o">=</span> <span class="mi">737</span><span class="p">;</span>
+	<span class="n">c</span> <span class="o">=</span> <span class="mi">100</span> <span class="o">*</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span><span class="p">;</span>
+	<span class="n">printf</span><span class="p">(</span><span class="s">"Enter your passcode : "</span><span class="p">);</span>
+	<span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">d</span><span class="p">);</span>
+	<span class="k">if</span><span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="n">c</span><span class="p">){</span>
+		<span class="n">puts</span><span class="p">(</span><span class="s">"Correct"</span><span class="p">);</span>
+	<span class="k">else</span><span class="p">{</span>
+		<span class="n">puts</span><span class="p">(</span><span class="s">"Incorrect"</span><span class="p">);</span>			
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+			</code></pre></figure>
+
+<h1 id="proof-of-concept">Proof Of Concept</h1>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:~</span><span class="err">#</span> <span class="n">gcc</span> <span class="n">rev</span><span class="p">.</span><span class="n">c</span> <span class="o">-</span><span class="n">o</span> <span class="n">rev</span>
+<span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:~</span><span class="err">#</span> <span class="n">gdb</span> <span class="o">-</span><span class="n">q</span> <span class="n">rev</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">set</span> <span class="n">disassembly</span><span class="o">-</span><span class="n">flavor</span> <span class="n">intel</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">disass</span> <span class="n">main</span>
+<span class="n">Dump</span> <span class="n">of</span> <span class="n">assembler</span> <span class="n">code</span> <span class="k">for</span> <span class="n">function</span> <span class="n">main</span><span class="o">:</span>
+<span class="mh">0x0000555555554760</span> <span class="o">&lt;+</span><span class="mi">0</span><span class="o">&gt;:</span>    <span class="n">push</span>   <span class="n">rbp</span>
+<span class="mh">0x0000555555554761</span> <span class="o">&lt;+</span><span class="mi">1</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">rbp</span><span class="p">,</span><span class="n">rsp</span>
+<span class="mh">0x0000555555554764</span> <span class="o">&lt;+</span><span class="mi">4</span><span class="o">&gt;:</span>    <span class="n">sub</span>    <span class="n">rsp</span><span class="p">,</span><span class="mh">0x10</span>
+<span class="mh">0x0000555555554768</span> <span class="o">&lt;+</span><span class="mi">8</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x4</span><span class="p">],</span><span class="mh">0x132</span>
+<span class="mh">0x000055555555476f</span> <span class="o">&lt;+</span><span class="mi">15</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x8</span><span class="p">],</span><span class="mh">0x2e1</span>
+<span class="mh">0x0000555555554776</span> <span class="o">&lt;+</span><span class="mi">22</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x4</span><span class="p">]</span>
+<span class="mh">0x0000555555554779</span> <span class="o">&lt;+</span><span class="mi">25</span><span class="o">&gt;:</span>    <span class="n">imul</span>   <span class="n">edx</span><span class="p">,</span><span class="n">eax</span><span class="p">,</span><span class="mh">0x64</span>
+<span class="mh">0x000055555555477c</span> <span class="o">&lt;+</span><span class="mi">28</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x8</span><span class="p">]</span>
+<span class="mh">0x000055555555477f</span> <span class="o">&lt;+</span><span class="mi">31</span><span class="o">&gt;:</span>    <span class="n">add</span>    <span class="n">eax</span><span class="p">,</span><span class="n">edx</span>
+<span class="mh">0x0000555555554781</span> <span class="o">&lt;+</span><span class="mi">33</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0xc</span><span class="p">],</span><span class="n">eax</span>
+<span class="mh">0x0000555555554784</span> <span class="o">&lt;+</span><span class="mi">36</span><span class="o">&gt;:</span>    <span class="n">lea</span>    <span class="n">rdi</span><span class="p">,[</span><span class="n">rip</span><span class="o">+</span><span class="mh">0xd9</span><span class="p">]</span>        <span class="err">#</span> <span class="mh">0x555555554864</span>
+<span class="mh">0x000055555555478b</span> <span class="o">&lt;+</span><span class="mi">43</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+<span class="mh">0x0000555555554790</span> <span class="o">&lt;+</span><span class="mi">48</span><span class="o">&gt;:</span>    <span class="n">call</span>   <span class="mh">0x555555554600</span> <span class="o">&lt;</span><span class="n">printf</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
+<span class="mh">0x0000555555554795</span> <span class="o">&lt;+</span><span class="mi">53</span><span class="o">&gt;:</span>    <span class="n">lea</span>    <span class="n">rax</span><span class="p">,[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x10</span><span class="p">]</span>
+<span class="mh">0x0000555555554799</span> <span class="o">&lt;+</span><span class="mi">57</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">rsi</span><span class="p">,</span><span class="n">rax</span>
+<span class="mh">0x000055555555479c</span> <span class="o">&lt;+</span><span class="mi">60</span><span class="o">&gt;:</span>    <span class="n">lea</span>    <span class="n">rdi</span><span class="p">,[</span><span class="n">rip</span><span class="o">+</span><span class="mh">0xd7</span><span class="p">]</span>        <span class="err">#</span> <span class="mh">0x55555555487a</span>
+<span class="mh">0x00005555555547a3</span> <span class="o">&lt;+</span><span class="mi">67</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+<span class="mh">0x00005555555547a8</span> <span class="o">&lt;+</span><span class="mi">72</span><span class="o">&gt;:</span>    <span class="n">call</span>   <span class="mh">0x555555554610</span> <span class="o">&lt;</span><span class="n">__isoc99_scanf</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
+<span class="mh">0x00005555555547ad</span> <span class="o">&lt;+</span><span class="mi">77</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x10</span><span class="p">]</span>
+<span class="mh">0x00005555555547b0</span> <span class="o">&lt;+</span><span class="mi">80</span><span class="o">&gt;:</span>    <span class="n">cmp</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0xc</span><span class="p">]</span>
+<span class="mh">0x00005555555547b3</span> <span class="o">&lt;+</span><span class="mi">83</span><span class="o">&gt;:</span>    <span class="n">jne</span>    <span class="mh">0x5555555547c3</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">99</span><span class="o">&gt;</span>
+<span class="mh">0x00005555555547b5</span> <span class="o">&lt;+</span><span class="mi">85</span><span class="o">&gt;:</span>    <span class="n">lea</span>    <span class="n">rdi</span><span class="p">,[</span><span class="n">rip</span><span class="o">+</span><span class="mh">0xc1</span><span class="p">]</span>        <span class="err">#</span> <span class="mh">0x55555555487d</span>
+<span class="mh">0x00005555555547bc</span> <span class="o">&lt;+</span><span class="mi">92</span><span class="o">&gt;:</span>    <span class="n">call</span>   <span class="mh">0x5555555545f0</span> <span class="o">&lt;</span><span class="n">puts</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
+<span class="mh">0x00005555555547c1</span> <span class="o">&lt;+</span><span class="mi">97</span><span class="o">&gt;:</span>    <span class="n">jmp</span>    <span class="mh">0x5555555547cf</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">111</span><span class="o">&gt;</span>
+<span class="mh">0x00005555555547c3</span> <span class="o">&lt;+</span><span class="mi">99</span><span class="o">&gt;:</span>    <span class="n">lea</span>    <span class="n">rdi</span><span class="p">,[</span><span class="n">rip</span><span class="o">+</span><span class="mh">0xbb</span><span class="p">]</span>        <span class="err">#</span> <span class="mh">0x555555554885</span>
+<span class="mh">0x00005555555547ca</span> <span class="o">&lt;+</span><span class="mi">106</span><span class="o">&gt;:</span>    <span class="n">call</span>   <span class="mh">0x5555555545f0</span> <span class="o">&lt;</span><span class="n">puts</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
+<span class="mh">0x00005555555547cf</span> <span class="o">&lt;+</span><span class="mi">111</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+<span class="mh">0x00005555555547d4</span> <span class="o">&lt;+</span><span class="mi">116</span><span class="o">&gt;:</span>    <span class="n">leave</span>  
+<span class="mh">0x00005555555547d5</span> <span class="o">&lt;+</span><span class="mi">117</span><span class="o">&gt;:</span>    <span class="n">ret</span>    
+<span class="n">End</span> <span class="n">of</span> <span class="n">assembler</span> <span class="n">dump</span><span class="p">.</span></code></pre></figure>
+
+<p>Command <code class="highlighter-rouge">set disassembly-flavor intel</code> digunakan agar hasil 
+disassembly menggunakan syntax intel, karena terdapat 2 syntax pada gdb yaitu att dan intel. 
+Sedangkan <code class="highlighter-rouge">disass main</code> merupakan command untuk melakukan disassembly pada fungsi main, apabila ingin melakukan disassembly pada fungsi lain bisa menggunakan <code class="highlighter-rouge">disass nama_fungsi</code>.</p>
+
+<p>Dari hasil disassembly diatas, terdapat instruksi yang akan memindahkan nilai hex 0x132 ke rbp-0x4 dan 0x2e1 rbp-0x8.
+Yang apabila 0x132 dan 0x2e1 dikonversi ke decimal akan menghasilkan 306 dan 737 sama seperti nilai dari variable a,b.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="mh">0x0000555555554768</span> <span class="o">&lt;+</span><span class="mi">8</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x4</span><span class="p">],</span><span class="mh">0x132</span>
+<span class="mh">0x000055555555476f</span> <span class="o">&lt;+</span><span class="mi">15</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x8</span><span class="p">],</span><span class="mh">0x2e1</span></code></pre></figure>
+
+<p>Selanjutnya nilai 0x132 yang tersimpan pada rbp-0x4 akan dipindahkan ke register eax</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="mh">0x0000555555554776</span> <span class="o">&lt;+</span><span class="mi">22</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x4</span><span class="p">]</span></code></pre></figure>
+
+<p>Lalu terdapat intruksi imul, imul digunakan untuk melakukan operasi perkalian
+pada intruksi ini terdapat 0x64 ( konversi ke decimal = 100, sama seperti yang di source code), yang akan dikalikan dengan register eax ( nilai 0x132 ), 0x64 * 0x132 = 0x7788, dan hasil kali tersebut akan disimpan di register edx.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="mh">0x0000555555554779</span> <span class="o">&lt;+</span><span class="mi">25</span><span class="o">&gt;:</span>    <span class="n">imul</span>   <span class="n">edx</span><span class="p">,</span><span class="n">eax</span><span class="p">,</span><span class="mh">0x64</span></code></pre></figure>
+
+<p>Selanjutnya nilai 0x2e1 yang tersimpan pada rbp-0x8 akan dipindahkan ke register eax</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="mh">0x000055555555477c</span> <span class="o">&lt;+</span><span class="mi">28</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x8</span><span class="p">]</span></code></pre></figure>
+
+<p>Sehingga masuk pada intruksi add yang melakukan operasi pertambahan antara 0x2e1 + 0x7788 = 0x7a69 (31337), lalu akan memindahkan nilai 0x7a69 pada eax ke rbp-0xc, setelah itu baru memindahkan user input (scanf) yang tersimpan sementara di rbp-0x10 ke register eax.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="mh">0x000055555555477f</span> <span class="o">&lt;+</span><span class="mi">31</span><span class="o">&gt;:</span>    <span class="n">add</span>    <span class="n">eax</span><span class="p">,</span><span class="n">edx</span>
+<span class="mh">0x0000555555554781</span> <span class="o">&lt;+</span><span class="mi">33</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0xc</span><span class="p">],</span><span class="n">eax</span>
+        <span class="o">---</span> <span class="n">snip</span> <span class="o">---</span>
+<span class="mh">0x00005555555547ad</span> <span class="o">&lt;+</span><span class="mi">77</span><span class="o">&gt;:</span>    <span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x10</span><span class="p">]</span></code></pre></figure>
+
+<p>Setelah itu intruksi cmp akan melakukan compare antara nilai 0x7a69 yang berada di rbp-0xc dan inputan passcode kita yang berada di eax.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="mh">0x00005555555547b0</span> <span class="o">&lt;+</span><span class="mi">80</span><span class="o">&gt;:</span>    <span class="n">cmp</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0xc</span><span class="p">]</span></code></pre></figure>
+
+<p>Apabila hasil compare tidak sama (jne = jump if not equal), maka akan menuju offset 0x5555555547c3 dan mengeluarkan pesan “Incorrect”.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="mh">0x00005555555547b3</span> <span class="o">&lt;+</span><span class="mi">83</span><span class="o">&gt;:</span>    <span class="n">jne</span>    <span class="mh">0x5555555547c3</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">99</span><span class="o">&gt;</span>
+        <span class="o">---</span> <span class="n">snip</span> <span class="o">---</span>
+<span class="mh">0x00005555555547ca</span> <span class="o">&lt;+</span><span class="mi">106</span><span class="o">&gt;:</span>    <span class="n">call</span>   <span class="mh">0x5555555545f0</span> <span class="o">&lt;</span><span class="n">puts</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span></code></pre></figure>
+
+<p>Sedangkan apabila sama, akan melewati intruksi jne dan dan mengeluarkan pesan “Correct”.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="mh">0x00005555555547bc</span> <span class="o">&lt;+</span><span class="mi">92</span><span class="o">&gt;:</span>    <span class="n">call</span>   <span class="mh">0x5555555545f0</span> <span class="o">&lt;</span><span class="n">puts</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span></code></pre></figure>
+
+<p>Dari pembahasan diatas, diketahui bahwa passcode yang valid adalah 31337
+Apabila kita sudah mengerti uraian diatas, sebenar nya kita bisa mencari passcode yang tersimpan dalam register secara otomatis tanpa menghitung manual seperti diatas jika kita sudah sedikit mengerti intruksi assembly.</p>
+
+<h1 id="proof-of-concept-2">Proof Of Concept #2</h1>
+<p>Saya memasang breakpoint pada offset 0x00005555555547b0 #&lt;+80&gt;, untuk melihat nilai yang akan di <em>compare</em> dengan inputan kita yang telah tersimpan di rbp-0xc</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">b</span> <span class="o">*</span><span class="mh">0x00005555555547b0</span>
+<span class="n">Breakpoint</span> <span class="mi">1</span> <span class="n">at</span> <span class="mh">0x5555555547b0</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">r</span>
+<span class="n">The</span> <span class="n">program</span> <span class="n">being</span> <span class="n">debugged</span> <span class="n">has</span> <span class="n">been</span> <span class="n">started</span> <span class="n">already</span><span class="p">.</span>
+<span class="n">Start</span> <span class="n">it</span> <span class="n">from</span> <span class="n">the</span> <span class="n">beginning</span><span class="o">?</span> <span class="p">(</span><span class="n">y</span> <span class="n">or</span> <span class="n">n</span><span class="p">)</span> <span class="n">y</span>
+<span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">~/</span><span class="n">rev</span> 
+<span class="n">Enter</span> <span class="n">your</span> <span class="n">passcode</span> <span class="o">:</span> <span class="mi">123456</span>
+<span class="n">Breakpoint</span> <span class="mi">1</span><span class="p">,</span> <span class="mh">0x00005555555547b0</span> <span class="n">in</span> <span class="n">main</span> <span class="p">()</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">x</span> <span class="err">$</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0xc</span>
+<span class="mh">0x7fffffffe244</span><span class="o">:</span>    <span class="mh">0x00007a69</span>
+<span class="p">(</span><span class="n">gdb</span><span class="p">)</span> <span class="n">print</span> <span class="mh">0x00007a69</span>
+<span class="err">$</span><span class="mi">1</span> <span class="o">=</span> <span class="mi">31337</span></code></pre></figure>
+
+<p>Karena passcode yang valid sudah diketahui, bisa langsung membuktikan dengan menjalankan program nya.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">root</span><span class="err">@</span><span class="n">kali</span><span class="o">:~</span><span class="err">#</span> <span class="p">.</span><span class="o">/</span><span class="n">rev</span>
+<span class="n">Enter</span> <span class="n">your</span> <span class="n">passcode</span> <span class="o">:</span> <span class="mi">31337</span>   
+<span class="n">Correct</span></code></pre></figure>
+
+<h1 id="akhir-kata">Akhir Kata…</h1>
+<p>Saya sendiri sebenarnya tidak terlalu ahli dalam reverse engineering, saya menulis posting ini ditujukan kepada siapa saja yang ingin belajar sehingga bisa mendapatkan pengetahuan dasar mengenai reverse engineering. Jadi semoga tulisan ini dapat bermanfaat bagi kita semua.</p>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/RE">RE</a>
+</section>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+      <a href="//www.facebook.com/sharer.php?t=Basic+Reverse+Engineering+Linux+Binaries&u=https%3A%2F%2Frhama.my.id%2Freverse%2520engineering%2F2016%2F12%2F24%2Fbasic-reverse-engineering-linux-binaries.html"
+        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+        <i class="fa fa-facebook-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('https://rhama.my.id/reverse%20engineering/2016/12/24/basic-reverse-engineering-linux-binaries.html') + '&title=Basic Reverse Engineering Linux Binaries'; return false">
+        <i class="fa fa-reddit-square fa-lg"></i>
+      </a>
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">CTF.Ninja</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+          <li class="nav-link"><a href="/about/">About</a>
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Archives</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:r4m@protonmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">r4m@protonmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://www.facebook.com/eat.sleep.pwn.repeat" title="Friend me on Facebook">
+              <i class="fa fa-facebook"></i>
+              <span class="username">eat.sleep.pwn.repeat</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">CTF, InfoSec, Banana And More.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>

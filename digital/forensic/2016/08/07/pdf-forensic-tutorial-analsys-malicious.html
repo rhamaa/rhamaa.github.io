@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>[PDF Forensic] Tutorial Analysis "Malicious" PDF File</title>
+  <meta name="description" content="">
+  
+  <meta name="author" content="rhama">
+  <meta name="copyright" content="&copy; rhama 2017">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="" />
+  <meta property="og:url" content="https://rhama.my.id" />
+  <meta property="og:site_name" content="CTF.Ninja" />
+  <meta property="og:title" content="[PDF Forensic] Tutorial Analysis "Malicious" PDF File" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://rhama.my.id/assets/images/forensic.jpg" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="[PDF Forensic] Tutorial Analysis "Malicious" PDF File">
+  <meta name="twitter:description" content="">
+  <meta name="twitter:image" content="https://rhama.my.id/assets/images/forensic.jpg">
+  <meta name="twitter:url" content="https://rhama.my.id">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+   <link rel="stylesheet" href="/css/terminal.css">
+  <link rel="canonical" href="https://rhama.my.id/digital/forensic/2016/08/07/pdf-forensic-tutorial-analsys-malicious.html">
+  <link rel="alternate" type="application/rss+xml" title="CTF.Ninja" href="https://rhama.my.id/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="CTF.Ninja">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/about/">About</a>
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Archives</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container has-cover" style="background-image: url(/assets/images/forensic.jpg);">
+  <div class="scrim has-cover">
+    <header class="post-header">
+      <h1 class="title">[PDF Forensic] Tutorial Analysis "Malicious" PDF File</h1>
+      <p class="info">by <strong>Aiden Pearce</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+
+
+<section class="post-meta">
+  <div class="post-date">August 7, 2016</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/Digital">Digital</a>, 
+    
+  
+    
+    <a href="/category/Forensic">Forensic</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <ul id="markdown-toc">
+  <li><a href="#scanning-pdf-keyword-dengan-pdfid" id="markdown-toc-scanning-pdf-keyword-dengan-pdfid">Scanning PDF Keyword dengan pdfid</a></li>
+  <li><a href="#analsys-pdf-dengan-pdf-parser" id="markdown-toc-analsys-pdf-dengan-pdf-parser">Analsys PDF Dengan pdf-parser</a></li>
+  <li><a href="#analsys-pdf-dengan-peepdf" id="markdown-toc-analsys-pdf-dengan-peepdf">Analsys PDF Dengan peepdf</a></li>
+</ul>
+
+<p><b>
+	<span style="font-size: large;">assalamualaikum..</span>
+</b></p>
+
+<p><span style="font-size: large;">T</span>
+<b>utorial Analsys “Malicious” PDF File</b> - Terkadang kita sering mendownload ebook dengan filetype PDF tanpa memperhatikan apakah file PDF tersebut benar-benar aman atau ada sebuah code yang mencurigakan. Oleh karena itu saya membuat posting ini agar kita selalu berhati-hati dalam mendownload berbagai file sehingga tidak terjadi hal yang tidak diinginkan saat mengeksekusi file tersebut.</p>
+
+<p><b>Tool Yang Digunakan Untuk PDF Forensic</b></p>
+
+<ul>
+	<li>pdfid</li>
+	<li>pdf-parser</li>
+	<li>peepdf</li>
+</ul>
+<p>Saya menggunakan exploit 
+<code class="highlighter-rouge">adobe_collectemailinfo</code>yang tersedia di metasploit sebagai bahan uji coba. perlu diketahui saya disini tidak membahas exploit nya.</p>
+
+<h1 id="scanning-pdf-keyword-dengan-pdfid">Scanning PDF Keyword dengan pdfid</h1>
+<p>Dimana step ini dibutuhkan untuk mengidentifikasi apakah terdapat berbagai Action tertentu saat file PDF dibuka.</p>
+
+<div class="separator" style="clear: both; text-align: center;">
+	<a href="https://4.bp.blogspot.com/-gWQoXwwdfp4/V6YYUstsmFI/AAAAAAAABA4/K0Rr5grA8z0Kjgtqm8jg2sADKwBzEqQmgCLcB/s1600/1.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+		<img alt="Tutorial Analsys &quot;Malicious&quot; PDF File" border="0" height="320" src="https://4.bp.blogspot.com/-gWQoXwwdfp4/V6YYUstsmFI/AAAAAAAABA4/K0Rr5grA8z0Kjgtqm8jg2sADKwBzEqQmgCLcB/s320/1.png" title="Tutorial Analsys &quot;Malicious&quot; PDF File" width="294" />
+	</a>
+</div>
+
+<p><b>/JS &amp; /Javascript</b> : file pdf mengandung code javascript yang akan dieksekusi</p>
+
+<p><b>/AA (Additional Action) atau /OpenAction</b> : akan otomatis mengeksekusi Action atau script tertentu saat file dibuka.</p>
+
+<h1 id="analsys-pdf-dengan-pdf-parser">Analsys PDF Dengan pdf-parser</h1>
+<p>Setelah melakukan scanning, tahap selanjut nya adalah dengan meneliti alur dari OpenAction agar kita dapat mengetahui object mana saja yang dilewati saat file PDF tersebut dibuka.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">pdf-parser --search<span class="o">=</span>OpenAction malicious.pdf</code></pre></figure>
+
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;">
+	<tbody>
+		<tr>
+			<td style="text-align: center;">
+				<a href="https://2.bp.blogspot.com/-97ioaehNg0w/V6YZY94u6fI/AAAAAAAABBA/ZteD7cxySbA_YkOLaTkrvMe4OP88fSOWgCLcB/s1600/Selection_001.png" imageanchor="1" style="margin-left: auto; margin-right: auto;">
+					<img alt="Tutorial Analsys &quot;Malicious&quot; PDF File" border="0" height="141" src="https://2.bp.blogspot.com/-97ioaehNg0w/V6YZY94u6fI/AAAAAAAABBA/ZteD7cxySbA_YkOLaTkrvMe4OP88fSOWgCLcB/s400/Selection_001.png" title="Tutorial Analsys &quot;Malicious&quot; PDF File" width="400" />
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="tr-caption" style="text-align: center;">OpenAction Merujuk atau mengarah ke object 5</td>
+		</tr>
+	</tbody>
+</table>
+<p>Ikuti ke object 5</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">pdf-parser --object<span class="o">=</span>5 malicious.pdf</code></pre></figure>
+
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;">
+	<tbody>
+		<tr>
+			<td style="text-align: center;">
+				<a href="https://2.bp.blogspot.com/-PMW5idx6rxA/V6YaMLt_xoI/AAAAAAAABBE/wD2s2agdsSkxtli9SPe1wtfcNdLS5qMtgCEw/s1600/Selection_002.png" imageanchor="1" style="margin-left: auto; margin-right: auto;">
+					<img alt="Tutorial Analsys &quot;Malicious&quot; PDF File" border="0" height="145" src="https://2.bp.blogspot.com/-PMW5idx6rxA/V6YaMLt_xoI/AAAAAAAABBE/wD2s2agdsSkxtli9SPe1wtfcNdLS5qMtgCEw/s400/Selection_002.png" title="Tutorial Analsys &quot;Malicious&quot; PDF File" width="400" />
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="tr-caption" style="text-align: center;">JS mengarah ke object 6</td>
+		</tr>
+	</tbody>
+</table>
+<p>Lalu ikuti lagi menuju object 6</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">pdf-parser --object<span class="o">=</span>6 malicious.pdf</code></pre></figure>
+
+<div class="separator" style="clear: both; text-align: center;">
+	<a href="https://3.bp.blogspot.com/-BJ4sQ8sClX8/V6YasILu6zI/AAAAAAAABBM/TwZeNGZVp7UvZPTCSo1Gf_rAlxBh3F5PgCLcB/s1600/Selection_003.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+		<img alt="Tutorial Analsys &quot;Malicious&quot; PDF File" border="0" height="125" src="https://3.bp.blogspot.com/-BJ4sQ8sClX8/V6YasILu6zI/AAAAAAAABBM/TwZeNGZVp7UvZPTCSo1Gf_rAlxBh3F5PgCLcB/s400/Selection_003.png" title="Tutorial Analsys &quot;Malicious&quot; PDF File" width="400" />
+	</a>
+</div>
+<p>Pada object 6 terdapat filter, filter digunakan untuk mengompress. <br /></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">Hex String : 
+/Fl#61t#65#44#65co#64e/A#53#43I#49#48#65#78D#65c#6fde
+<span class="c">#apabila didecode akan menghasilkan </span>
+/FlateDecode /ASCIIHexDecode</code></pre></figure>
+
+<p>Untuk melihat isi dari konten yang compress :</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">	pdf-parser --object<span class="o">=</span>6 --filter malicious.pdf</code></pre></figure>
+
+<table align="center" cellpadding="0" cellspacing="0" class="tr-caption-container" style="margin-left: auto; margin-right: auto; text-align: center;">
+	<tbody>
+		<tr>
+			<td style="text-align: center;">
+				<a href="https://2.bp.blogspot.com/-ReFHyulo6Ew/V6YbebqpNfI/AAAAAAAABBY/vGL1hd8wsBMbDNTPNBkN4NaqXXL2dFbXQCLcB/s1600/Selection_004.png" imageanchor="1" style="margin-left: auto; margin-right: auto;">
+					<img alt="Tutorial Analsys &quot;Malicious&quot; PDF File" border="0" height="300" src="https://2.bp.blogspot.com/-ReFHyulo6Ew/V6YbebqpNfI/AAAAAAAABBY/vGL1hd8wsBMbDNTPNBkN4NaqXXL2dFbXQCLcB/s400/Selection_004.png" title="Tutorial Analsys &quot;Malicious&quot; PDF File" width="400" />
+				</a>
+			</td>
+		</tr>
+		<tr>
+			<td class="tr-caption" style="text-align: center;">Hore, ternyata itu javascript yang kita cari.</td>
+		</tr>
+	</tbody>
+</table>
+<p> Apabila script JS tersebut ingin diDump dapat menggunakan command</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">	pdf-parser --object<span class="o">=</span>6 --filter --raw --dump<span class="o">=</span>/path/to/dir/ malicious.pdf</code></pre></figure>
+
+<h1 id="analsys-pdf-dengan-peepdf">Analsys PDF Dengan peepdf</h1>
+
+<p>Sama hal nya seperti pdf-parser, peepdf tool yang digunakan untuk pdf forensic.
+Langsung saja, gunakan peepdf dalam 
+<i>interactive mode</i></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">peepdf -i malicious.pdf</code></pre></figure>
+
+<div class="separator" style="clear: both; text-align: center;">
+	<a href="https://4.bp.blogspot.com/-TSN29IyTv60/V6YcsmyToHI/AAAAAAAABBk/7BhneIkZxFc7uS14G0KgB5s0K7DqGA1vgCLcB/s1600/Selection_005.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+		<img alt="Tutorial Analsys &quot;Malicious&quot; PDF File" border="0" height="386" src="https://4.bp.blogspot.com/-TSN29IyTv60/V6YcsmyToHI/AAAAAAAABBk/7BhneIkZxFc7uS14G0KgB5s0K7DqGA1vgCLcB/s400/Selection_005.png" title="Tutorial Analsys &quot;Malicious&quot; PDF File" width="400" />
+	</a>
+</div>
+<p>”
+<i>Suspicious Element</i>” nya langsung ditemukan,dan karena file yang “
+<i>malicious.pdf</i>” yang saya gunakan sama dengan saat menggunakan pdf-parser alur nya sudah kita ketahui, jadi langsung saja menuju object 6 dimana terdapat “
+<i>Objects with JS code</i>”.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">object 6</code></pre></figure>
+
+<div class="separator" style="clear: both; text-align: center;">
+	<a href="https://2.bp.blogspot.com/-bx8ex1DlGAc/V6YgB7V9inI/AAAAAAAABBw/B6dVVMuqwVQj9Os2QbiUHgc75Ev4YyHhQCLcB/s1600/Screenshot%2B-%2B08072016%2B-%2B01%253A35%253A44%2BAM.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+		<img alt="Tutorial Analsys &quot;Malicious&quot; PDF File" border="0" height="278" src="https://2.bp.blogspot.com/-bx8ex1DlGAc/V6YgB7V9inI/AAAAAAAABBw/B6dVVMuqwVQj9Os2QbiUHgc75Ev4YyHhQCLcB/s400/Screenshot%2B-%2B08072016%2B-%2B01%253A35%253A44%2BAM.png" title="Tutorial Analsys &quot;Malicious&quot; PDF File" width="400" />
+	</a>
+</div>
+<p>Apabila ingin didump jalankan perintah dibawah ini ( di interactice mode ) :</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="nb">set </span>output file /path/to/dirobject 6</code></pre></figure>
+
+<p>Sekian tutorial sederhana dari saya, semoga dapat bermanfaat bagi kita semua, dan saya  mohon maaf apabila ada salah dalam pemberian definisi maupun penjelasan.</p>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/Digital Forensic">Digital Forensic</a>
+</section>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+      <a href="//www.facebook.com/sharer.php?t=%5BPDF+Forensic%5D+Tutorial+Analysis+%22Malicious%22+PDF+File&u=https%3A%2F%2Frhama.my.id%2Fdigital%2Fforensic%2F2016%2F08%2F07%2Fpdf-forensic-tutorial-analsys-malicious.html"
+        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+        <i class="fa fa-facebook-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('https://rhama.my.id/digital/forensic/2016/08/07/pdf-forensic-tutorial-analsys-malicious.html') + '&title=[PDF Forensic] Tutorial Analysis "Malicious" PDF File'; return false">
+        <i class="fa fa-reddit-square fa-lg"></i>
+      </a>
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">CTF.Ninja</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+          <li class="nav-link"><a href="/about/">About</a>
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Archives</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:r4m@protonmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">r4m@protonmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://www.facebook.com/eat.sleep.pwn.repeat" title="Friend me on Facebook">
+              <i class="fa fa-facebook"></i>
+              <span class="username">eat.sleep.pwn.repeat</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">CTF, InfoSec, Banana And More.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>

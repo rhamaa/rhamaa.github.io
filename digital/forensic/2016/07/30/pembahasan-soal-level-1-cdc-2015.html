@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CDC 2015 OFFLINE - POST.PCAPNG Write Up</title>
+  <meta name="description" content="assalamualaikum...saya akan mencoba membahas soal forensic cdc offline 2015.soal nya dapat didownload disini :Soal OfflinePass : soalcdcofflinesumber soal : ...">
+  
+  <meta name="author" content="rhama">
+  <meta name="copyright" content="&copy; rhama 2017">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="assalamualaikum...saya akan mencoba membahas soal forensic cdc offline 2015.soal nya dapat didownload disini :Soal OfflinePass : soalcdcofflinesumber soal : ..." />
+  <meta property="og:url" content="https://rhama.my.id" />
+  <meta property="og:site_name" content="CTF.Ninja" />
+  <meta property="og:title" content="CDC 2015 OFFLINE - POST.PCAPNG Write Up" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://rhama.my.id/assets/images/forensic.jpg" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CDC 2015 OFFLINE - POST.PCAPNG Write Up">
+  <meta name="twitter:description" content="assalamualaikum...saya akan mencoba membahas soal forensic cdc offline 2015.soal nya dapat didownload disini :Soal OfflinePass : soalcdcofflinesumber soal : ...">
+  <meta name="twitter:image" content="https://rhama.my.id/assets/images/forensic.jpg">
+  <meta name="twitter:url" content="https://rhama.my.id">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+   <link rel="stylesheet" href="/css/terminal.css">
+  <link rel="canonical" href="https://rhama.my.id/digital/forensic/2016/07/30/pembahasan-soal-level-1-cdc-2015.html">
+  <link rel="alternate" type="application/rss+xml" title="CTF.Ninja" href="https://rhama.my.id/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="CTF.Ninja">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/about/">About</a>
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Archives</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container has-cover" style="background-image: url(/assets/images/forensic.jpg);">
+  <div class="scrim has-cover">
+    <header class="post-header">
+      <h1 class="title">CDC 2015 OFFLINE - POST.PCAPNG Write Up</h1>
+      <p class="info">by <strong>Aiden Pearce</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+
+
+<section class="post-meta">
+  <div class="post-date">July 30, 2016</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/Digital">Digital</a>, 
+    
+  
+    
+    <a href="/category/Forensic">Forensic</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <span style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: large;"><span style="box-sizing: border-box; font-weight: bold;"><span style="background-color: white; box-sizing: border-box;">assalamualaikum...</span></span></span><br /><br /><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">saya akan mencoba membahas soal forensic cdc offline 2015.</span><br /><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;"><br /></span><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">soal nya dapat didownload disini :</span><br /><br /><a href="http://www.mediafire.com/download/551g44148a1yq5o/Soal+Offline.zip" original-title="" style="background-color: white; box-sizing: border-box; color: #3498db; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; text-decoration: none;" target="_blank">Soal Offline</a><br /><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">Pass : soalcdcoffline</span><br /><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">sumber soal : forum.explorecrew.org</span><br /><span style="background-color: white;"><br style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px;" /></span><span style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: large;"><span style="box-sizing: border-box; font-weight: bold;"><span style="background-color: white; box-sizing: border-box; font-size: medium;">Soal Level 1. post</span></span></span><br /><blockquote class="tr_bq"><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">Detail Soal :</span><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">post.pcapng</span><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">md5 : af3a6981ee165752824c439ae420c31a</span></blockquote><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">extensi file tersebut adalah .pcapng yang merupakan packet capture,&nbsp; so langsung saja kita buka dengan wireshark..</span><br /><span style="background-color: white;"><br style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px;" /></span><span style="background-color: white;"><img alt="[Image: YDBIJFK.png]" border="0" src="http://i.imgur.com/YDBIJFK.png" height="377" original-title="" style="border: none; box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; max-width: 100%; vertical-align: middle;" width="720" /></span><br /><span style="background-color: white;"><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">terdapat banyak paket, dan sayamulai mencurigai bahwa ini merupakan network sniffing, lalu filter&nbsp;</span><span style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; font-weight: bold; line-height: 20px;">http</span><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">&nbsp;pada paket tsb</span></span><br /><span style="background-color: white;"><br style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px;" /></span><span style="background-color: white;"><img alt="[Image: AjwbHWC.png]" border="0" src="http://i.imgur.com/AjwbHWC.png" height="304" original-title="" style="border: none; box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; max-width: 100%; vertical-align: middle;" width="717" /></span><br /><span style="background-color: white;"><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">Terdapat banyak request dengan method&nbsp;</span><span style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; font-weight: bold; line-height: 20px;">GET,</span><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">&nbsp;kalau gitu mari kita inget, nama soal nya adalah&nbsp;</span><span style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; font-weight: bold; line-height: 20px;">post</span><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">.pcapng , haha tau kan mksd saya kek gmn ? yaa bisa aja itu adalah clue bahwa terdapat request dengan method&nbsp;</span><span style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; font-weight: bold; line-height: 20px;">POST</span><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">&nbsp;pada paket tsb, mari kita filter&nbsp;</span><span style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; font-weight: bold; line-height: 20px;">POST</span><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">&nbsp;request dengan :</span></span><br /><br /><blockquote style="background-attachment: initial; background-clip: initial; background-image: initial; background-origin: initial; background-position: initial; background-repeat: initial; background-size: initial; border-radius: 3px; border: 2px solid rgb(237, 237, 237); box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; margin: 0px 0px 20px; padding: 10px;"><cite style="box-sizing: border-box; display: block; padding-bottom: 5px;"><span style="background-color: white;">Quote:</span></cite><span style="background-color: white;">http.request.method eq POST</span></blockquote><span style="background-color: white;"><img alt="[Image: 3rXvbLM.png]" border="0" src="http://i.imgur.com/3rXvbLM.png" height="163" original-title="" style="border: none; box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; max-width: 100%; vertical-align: middle;" width="772" /></span><br /><span style="background-color: white;"><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">terdapat 6 paket dengan request&nbsp;</span><span style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; font-weight: bold; line-height: 20px;">POST</span></span><br /><span style="background-color: white;"><br style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px;" /></span><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">dan pada saat itu sayaspontan mengira kalau value dari authenticity_token adalah string base64 yang merupakan flag, tapi ternyata ZONKKK !!</span><br /><span style="background-color: white;"><img alt="[Image: ebBlrsn.png]" border="0" src="http://i.imgur.com/ebBlrsn.png" height="361" original-title="" style="border: none; box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; max-width: 100%; vertical-align: middle;" width="685" /></span><br /><span style="background-color: white;"><br style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px;" /></span><span style="background-color: white;"><img alt="[Image: dpYbeME.png]" border="0" src="http://i.imgur.com/dpYbeME.png" original-title="" style="border: none; box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; max-width: 100%; vertical-align: middle;" /></span><br /><span style="background-color: white;"><br style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px;" /></span><span style="background-color: white;"><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">selanjut kita dapat melihat form&nbsp;</span><span style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; font-weight: bold; line-height: 20px;">user[password]</span><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">&nbsp;yang sangat mencurigakan, so langsung saja kita ambil nilai2 dari form&nbsp;</span><span style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; font-weight: bold; line-height: 20px;">user[password]</span></span><br /><span style="background-color: white;"><img alt="[Image: uiiAAOr.png]" border="0" src="http://i.imgur.com/uiiAAOr.png" height="342" original-title="" style="border: none; box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; max-width: 100%; vertical-align: middle;" width="777" /></span><br /><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">lalu mari kita salin semua nilai dari paket yang terdapat form user[password], hingga hasil nya :&nbsp;</span><br /><br /><blockquote style="background-attachment: initial; background-clip: initial; background-image: initial; background-origin: initial; background-position: initial; background-repeat: initial; background-size: initial; border-radius: 3px; border: 2px solid rgb(237, 237, 237); box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; margin: 0px 0px 20px; padding: 10px;"><cite style="box-sizing: border-box; display: block; padding-bottom: 5px;"><span style="background-color: white;">Quote:</span></cite><span style="background-color: white;">packet number 3280 : 466c6167206e79</span><br /><span style="background-color: white;">packet number 3483 : KOSONG</span><br /><span style="background-color: white;">packet number 3627 : 61206164616c61</span><br /><span style="background-color: white;">packet number 11714 : 68203a2053316d</span><br /><span style="background-color: white;">packet number 12497 :&nbsp; kita lewati, karen fokus pada form user[password]</span><br /><span style="background-color: white;">packet number 12593 : 706c3368337840</span></blockquote><span style="background-color: white;"><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">kita susun baik2 dulu&nbsp;</span></span><br /><span style="background-color: white;"><br /></span><blockquote style="background-attachment: initial; background-clip: initial; background-image: initial; background-origin: initial; background-position: initial; background-repeat: initial; background-size: initial; border-radius: 3px; border: 2px solid rgb(237, 237, 237); box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; margin: 0px 0px 20px; padding: 10px;"><cite style="box-sizing: border-box; display: block; padding-bottom: 5px;"><span style="background-color: white;">Quote:</span></cite><span style="background-color: white;">466c6167206e79</span><br /><span style="background-color: white;">61206164616c61</span><br /><span style="background-color: white;">68203a2053316d</span><br /><span style="background-color: white;">706c3368337840</span></blockquote><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">saya rasa ini adalah hex decimal, jadi mari kita decode dengan command xxd pada linux..</span><br /><span style="background-color: white;"><br style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px;" /></span><span style="background-color: white;"><img alt="[Image: UDuKpPb.png]" border="0" src="http://i.imgur.com/UDuKpPb.png" original-title="" style="border: none; box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; max-width: 100%; vertical-align: middle;" /></span><br /><br /><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">Flag nya adalah : S1mpl3h3x@</span><br /><span style="background-color: white;"><br style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px;" /></span><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">selain menggunakan cara diatas, sebenar nya ada cara paling mudah</span><br /><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">kita perlu menggunakan strings lalu filter simbol2 tertentu</span><br /><span style="background-color: white;"><br /></span><blockquote style="background-attachment: initial; background-clip: initial; background-image: initial; background-origin: initial; background-position: initial; background-repeat: initial; background-size: initial; border-radius: 3px; border: 2px solid rgb(237, 237, 237); box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; margin: 0px 0px 20px; padding: 10px;"><cite style="box-sizing: border-box; display: block; padding-bottom: 5px;"><span style="background-color: white;">Quote:</span></cite><span style="background-color: white;">strings post.pcapng | grep flag | cut -d'=' -f5 | cut -d'&amp;' -f1</span></blockquote><span style="background-color: white;"><img alt="[Image: aNit8WB.png]" border="0" src="http://i.imgur.com/aNit8WB.png" original-title="" style="border: none; box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px; max-width: 100%; vertical-align: middle;" /></span><br /><br /><span style="background-color: white;"><span style="color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">Tinggal di decode aja&nbsp;</span></span><br /><span style="background-color: white;"><br style="box-sizing: border-box; color: #333333; font-family: &quot;pt sans&quot;, vedrana, sans-serif; font-size: 14px; line-height: 20px;" /></span><span style="background-color: white; color: #333333; font-family: &quot;pt sans&quot; , &quot;vedrana&quot; , sans-serif; font-size: 14px; line-height: 20px;">sekian write up sederhana dari saya, mohon maaf kalau ada salah pemberian definisi dan maaf juga kalau penjelesannya banyak yang missed..</span>
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/CTF">CTF</a>
+</section>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+      <a href="//www.facebook.com/sharer.php?t=CDC+2015+OFFLINE+-+POST.PCAPNG+Write+Up&u=https%3A%2F%2Frhama.my.id%2Fdigital%2Fforensic%2F2016%2F07%2F30%2Fpembahasan-soal-level-1-cdc-2015.html"
+        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+        <i class="fa fa-facebook-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('https://rhama.my.id/digital/forensic/2016/07/30/pembahasan-soal-level-1-cdc-2015.html') + '&title=CDC 2015 OFFLINE - POST.PCAPNG Write Up'; return false">
+        <i class="fa fa-reddit-square fa-lg"></i>
+      </a>
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">CTF.Ninja</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+          <li class="nav-link"><a href="/about/">About</a>
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Archives</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:r4m@protonmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">r4m@protonmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://www.facebook.com/eat.sleep.pwn.repeat" title="Friend me on Facebook">
+              <i class="fa fa-facebook"></i>
+              <span class="username">eat.sleep.pwn.repeat</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">CTF, InfoSec, Banana And More.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>

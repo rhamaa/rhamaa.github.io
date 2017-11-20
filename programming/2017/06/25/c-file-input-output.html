@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>File Input/Output In C</title>
+  <meta name="description" content="Posting tentang programming C pertama, dimana saya akan membahas mengenai File Input/Output di C dengan menggunakan berbagai macam fungsi yang berhubungan de...">
+  
+  <meta name="author" content="rhama">
+  <meta name="copyright" content="&copy; rhama 2017">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="Posting tentang programming C pertama, dimana saya akan membahas mengenai File Input/Output di C dengan menggunakan berbagai macam fungsi yang berhubungan de..." />
+  <meta property="og:url" content="https://rhama.my.id" />
+  <meta property="og:site_name" content="CTF.Ninja" />
+  <meta property="og:title" content="File Input/Output In C" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://rhama.my.id/assets/images/ctf.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="File Input/Output In C">
+  <meta name="twitter:description" content="Posting tentang programming C pertama, dimana saya akan membahas mengenai File Input/Output di C dengan menggunakan berbagai macam fungsi yang berhubungan de...">
+  <meta name="twitter:image" content="https://rhama.my.id/assets/images/ctf.png">
+  <meta name="twitter:url" content="https://rhama.my.id">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+   <link rel="stylesheet" href="/css/terminal.css">
+  <link rel="canonical" href="https://rhama.my.id/programming/2017/06/25/c-file-input-output.html">
+  <link rel="alternate" type="application/rss+xml" title="CTF.Ninja" href="https://rhama.my.id/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="CTF.Ninja">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/about/">About</a>
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Archives</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container has-cover" style="background-image: url(/assets/images/ctf.png);">
+  <div class="scrim has-cover">
+    <header class="post-header">
+      <h1 class="title">File Input/Output In C</h1>
+      <p class="info">by <strong>Aiden Pearce</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+
+
+<section class="post-meta">
+  <div class="post-date">June 25, 2017</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/Programming">Programming</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <p>Posting tentang programming C pertama, dimana saya akan membahas mengenai File Input/Output di C dengan menggunakan berbagai macam fungsi yang berhubungan dengan File I/O di C yang sudah tersedia di pustaka “stdio.h”.</p>
+
+<h2 id="tipe-files">Tipe Files</h2>
+<p>Terdapat dua tipe files yang harus diketahui, yaitu Text File dan Binary File.</p>
+
+<ul>
+  <li><strong>Text File</strong> - Adalah text file biasa yang berformat .txt dan dapat dibaca (<em>readable</em>) oleh manusia.</li>
+  <li><strong>Binary File</strong> - Adalah data nya disimpan dalam bentuk biner (0 dan 1) dan tidak dapat dibaca (<em>not readable</em>) oleh manusia.</li>
+</ul>
+
+<h2 id="operasi-file-yang-biasa-dilakukan">Operasi File Yang Biasa Dilakukan</h2>
+<p>Didalam bahasa C, kita dapat melakukan ke-4 operasi dibawah ini, baik untuk binary file dan text file.</p>
+<ol>
+  <li>Membuat file baru</li>
+  <li>Membuka file yang telah ada</li>
+  <li>Menutup file</li>
+  <li>Membaca dan menulis informasi ke sebuah file</li>
+</ol>
+
+<h2 id="bekerja-dengan-files">Bekerja Dengan Files</h2>
+
+<p>Untuk memulai bekerja dengan file, kita harus mendeklarasi pointer dari tipe FILE. Ini dibutuhkan untuk komunikasi antara program dan file.</p>
+
+<p>Bentuk umum deklarasi pointer dari tipe FILE</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span><span class="p">;</span></code></pre></figure>
+
+<h3 id="membuka-file">Membuka File</h3>
+
+<p>Untuk membuka file, kita dapat menggunakan fungsi fopen().</p>
+
+<p><strong>Syntax Umum</strong></p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">FILE</span> <span class="o">*</span><span class="n">fopen</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">mode</span><span class="p">);</span></code></pre></figure>
+
+<p><strong>const char *path</strong> = Diisi dengan <em>path</em>  atau lokasi dari file yang akan dioperasikan.</p>
+
+<p><strong>const char *mode</strong> = Diisi dengan salah satu <em>mode</em> dibawah ini</p>
+<table>
+<colgroup>
+<col width="40%" />
+<col width="280%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mode</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>r (read)</td>
+<td>Membuka file untuk dibaca</td>
+</tr>
+<tr>
+<td>w (write)</td>
+<td>Membuka file untuk ditulis dan apabila terdapat file dengan nama sama, isi dari file yang lama akan ditimpa
+</td>
+</tr>
+<tr>
+<td>a (append)</td>
+<td>Membuka file untuk ditambahkan isi nya diakhir file dan apabila file belum ada akan dibuat baru</td>
+</tr>
+<tr>
+<td>r+</td>
+<td>Membuka file untuk dibaca dan ditulis
+</td>
+</tr>
+<tr>
+<td>w+</td>
+<td>Membuka file untuk dibaca dan ditulis</td>
+</tr>
+<tr>
+<td>a+</td>
+<td>Membuka file untuk dibaca dan ditulis
+</td>
+</tr>
+<tr>
+<td>rb</td>
+<td>Membuka file untuk dibaca untuk binary file</td>
+</tr>
+<tr>
+<td>wb</td>
+<td>Membuka file untuk ditulis untuk binary file
+</td>
+</tr>
+<tr>
+<td>ab</td>
+<td>Membuka file untuk ditambahkan untuk binary file</td>
+</tr>
+</tbody>
+</table>
+
+<p><strong>Return Value</strong></p>
+<ul>
+  <li>
+    <font color="green">Success</font>
+    <p>Pointer ke FILE object</p>
+  </li>
+  <li>
+    <font color="red">Fail</font>
+    <p>Return NULL</p>
+  </li>
+</ul>
+
+<p><strong>Contoh penggunaan</strong></p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">"Belajar_io.txt"</span><span class="p">,</span><span class="s">"r"</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">fp</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">){</span>
+	<span class="c1">// your code
+</span><span class="p">}</span><span class="k">else</span><span class="p">{</span>
+	<span class="c1">// your code
+</span><span class="p">}</span></code></pre></figure>
+
+<h3 id="menutup-file">Menutup File</h3>
+<p>Baik itu saat mengoperasikan text file/binary file haruslah di tutup apabila selesai dibaca ataupun ditulis. Untuk menutupnya, dapat menggunakan fungsi fclose().</p>
+
+<p><strong>Syntax Umum</strong></p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">int</span> <span class="n">fclose</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">);</span></code></pre></figure>
+
+<p><strong>FILE *stream</strong> - Diisi dengan pointer dari tipe FILE yang telah didelarasi sebelum nya.</p>
+
+<p><strong>Contoh penggunanaan</strong></p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="kt">FILE</span> <span class="o">*</span><span class="n">fp</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">"Belajar_io.txt"</span><span class="p">,</span><span class="s">"r"</span><span class="p">);</span>
+<span class="p">....</span>
+<span class="p">....</span>
+<span class="n">fclose</span><span class="p">(</span><span class="n">fp</span><span class="p">);</span></code></pre></figure>
+
+<p><strong>Return Value</strong></p>
+<ul>
+  <li>
+    <font color="green">Success</font>
+    <p>Return 0</p>
+  </li>
+  <li>
+    <font color="red">Fail</font>
+    <p>Return EOF</p>
+  </li>
+</ul>
+
+<h3 id="membaca-sebuah-file">Membaca Sebuah File</h3>
+
+<p>Terdapat banyak fungsi yang dapat digunakan untuk membaca sebuah file di C, diantara nya akan dibahasa adalah fgetc(), fgets(), fread()</p>
+
+<h1 id="to-be-continue">To be continue</h1>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/C">C</a>,&nbsp;<a href="/tag/Programming">Programming</a>
+</section>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+      <a href="//www.facebook.com/sharer.php?t=File+Input%2FOutput+In+C&u=https%3A%2F%2Frhama.my.id%2Fprogramming%2F2017%2F06%2F25%2Fc-file-input-output.html"
+        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+        <i class="fa fa-facebook-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('https://rhama.my.id/programming/2017/06/25/c-file-input-output.html') + '&title=File Input/Output In C'; return false">
+        <i class="fa fa-reddit-square fa-lg"></i>
+      </a>
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">CTF.Ninja</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+          <li class="nav-link"><a href="/about/">About</a>
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Archives</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:r4m@protonmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">r4m@protonmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://www.facebook.com/eat.sleep.pwn.repeat" title="Friend me on Facebook">
+              <i class="fa fa-facebook"></i>
+              <span class="username">eat.sleep.pwn.repeat</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">CTF, InfoSec, Banana And More.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>
