@@ -41,7 +41,7 @@
 
   
   <!-- Facebook OGP cards -->
-  <meta property="og:description" content="Reversing 200 (Unknown)" />
+<!--   <meta property="og:description" content="Reversing 200 (Unknown)" />
   <meta property="og:url" content="https://rhama.my.id" />
   <meta property="og:site_name" content="CTF.Ninja" />
   <meta property="og:title" content="TUCTF 2017 - Writeup" />
@@ -49,16 +49,16 @@
   <meta property="og:image" content="https://rhama.my.id/assets/images/ctf.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="612" />
-  <meta property="og:image:height" content="605" />
-  
+  <meta property="og:image:height" content="605" /> -->
+<meta content="https://rhama.my.id/assets/images/ctf.png" property="og:image" />
+<meta content="CTF.Ninja" property="og:site_name" />
+<meta content="object" property="og:type" />
+<meta content="TUCTF 2017 - Writeup" property="og:title" />
+<meta content="https://rhama.my.id/ctf/2017/11/27/tuctf-2017.html" property="og:url" />
+<meta content="Reversing 200 (Unknown)" property="og:description" />
 
   
-  <!-- Twitter: card tags -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="TUCTF 2017 - Writeup">
-  <meta name="twitter:description" content="Reversing 200 (Unknown)">
-  <meta name="twitter:image" content="https://rhama.my.id/assets/images/ctf.png">
-  <meta name="twitter:url" content="https://rhama.my.id">
+
   
 
   
@@ -199,9 +199,9 @@
       }
 </code></pre>
 
-<p>saat mencoba membaca hasil Pseodo-C fungsi <code class="highlighter-rouge">sub_401E90</code>, saya sama sekali tidak mengerti proses apaan itu *ribet :v .</p>
+<p>saat mencoba membaca hasil Pseodo-C fungsi <code class="highlighter-rouge">sub_401E90</code>, saya sama sekali tidak mengerti proses apaan itu *ribet :v karena banyak fungsi-fungsi lain yang dipanggil lagi.</p>
 
-<p>Dari hasil decompile, yang dimana nilai hasil proses fungsi <code class="highlighter-rouge">sub_401E90</code>, <code class="highlighter-rouge">eax</code> akan bernilai <code class="highlighter-rouge">0x0</code> apabila byte inputan benar, dan akan bernilai <code class="highlighter-rouge">0x1</code> apabila salah.</p>
+<p>Percobaan debug menggunakan <code class="highlighter-rouge">gdb</code>, yang dimana nilai hasil proses fungsi <code class="highlighter-rouge">sub_401E90</code>, <code class="highlighter-rouge">eax</code> akan bernilai <code class="highlighter-rouge">0x0</code> apabila byte inputan benar, dan  akan bernilai <code class="highlighter-rouge">0x1</code> apabila byte inputan salah.</p>
 
 <p>Snippet decompile</p>
 
@@ -219,7 +219,7 @@ gdb-peda$ r AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 gdb-peda$ p/x $rax
 $3 = 0x1
 </code></pre>
-<p>Karena inputan di proses, byte-per-byte, saya mencoba input dengan prefix “TUCTF{“ sehingga nilai <code class="highlighter-rouge">eax</code> akan bernilai <code class="highlighter-rouge">0x0</code> dalam 6 kali iterasi, dan selanjutkan akan <code class="highlighter-rouge">eax</code> bernilai <code class="highlighter-rouge">0x1</code> karena <code class="highlighter-rouge">A*50</code> bukan byte yang benar. Dari sini kita bisa melakukan <em>Brute Force</em> setiap kemungkinan byte yang benar.</p>
+<p>Karena inputan di proses, byte-per-byte, saya mencoba input dengan prefix “TUCTF{“ sehingga nilai <code class="highlighter-rouge">eax</code> akan bernilai <code class="highlighter-rouge">0x0</code> dalam 6 kali iterasi, dan selanjutkan <code class="highlighter-rouge">eax</code> akan bernilai <code class="highlighter-rouge">0x1</code> karena <code class="highlighter-rouge">"A"*50</code> bukan byte-byte yang benar. Dari sini kita bisa melakukan <em>Brute Force</em> setiap kemungkinan byte yang benar.</p>
 
 <p>Berikut script yang saya gunakan untuk melakukan brute force</p>
 

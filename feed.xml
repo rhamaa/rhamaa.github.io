@@ -6,8 +6,8 @@
 </description>
     <link>https://rhama.my.id/</link>
     <atom:link href="https://rhama.my.id/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 27 Nov 2017 14:19:23 +0700</pubDate>
-    <lastBuildDate>Mon, 27 Nov 2017 14:19:23 +0700</lastBuildDate>
+    <pubDate>Mon, 27 Nov 2017 17:11:06 +0700</pubDate>
+    <lastBuildDate>Mon, 27 Nov 2017 17:11:06 +0700</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
@@ -65,9 +65,9 @@
       }
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;saat mencoba membaca hasil Pseodo-C fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;sub_401E90&lt;/code&gt;, saya sama sekali tidak mengerti proses apaan itu *ribet :v .&lt;/p&gt;
+&lt;p&gt;saat mencoba membaca hasil Pseodo-C fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;sub_401E90&lt;/code&gt;, saya sama sekali tidak mengerti proses apaan itu *ribet :v karena banyak fungsi-fungsi lain yang dipanggil lagi.&lt;/p&gt;
 
-&lt;p&gt;Dari hasil decompile, yang dimana nilai hasil proses fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;sub_401E90&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0&lt;/code&gt; apabila byte inputan benar, dan akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x1&lt;/code&gt; apabila salah.&lt;/p&gt;
+&lt;p&gt;Percobaan debug menggunakan &lt;code class=&quot;highlighter-rouge&quot;&gt;gdb&lt;/code&gt;, yang dimana nilai hasil proses fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;sub_401E90&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0&lt;/code&gt; apabila byte inputan benar, dan  akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x1&lt;/code&gt; apabila byte inputan salah.&lt;/p&gt;
 
 &lt;p&gt;Snippet decompile&lt;/p&gt;
 
@@ -85,7 +85,7 @@ gdb-peda$ r AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 gdb-peda$ p/x $rax
 $3 = 0x1
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Karena inputan di proses, byte-per-byte, saya mencoba input dengan prefix “TUCTF{“ sehingga nilai &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0&lt;/code&gt; dalam 6 kali iterasi, dan selanjutkan akan &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x1&lt;/code&gt; karena &lt;code class=&quot;highlighter-rouge&quot;&gt;A*50&lt;/code&gt; bukan byte yang benar. Dari sini kita bisa melakukan &lt;em&gt;Brute Force&lt;/em&gt; setiap kemungkinan byte yang benar.&lt;/p&gt;
+&lt;p&gt;Karena inputan di proses, byte-per-byte, saya mencoba input dengan prefix “TUCTF{“ sehingga nilai &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0&lt;/code&gt; dalam 6 kali iterasi, dan selanjutkan &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x1&lt;/code&gt; karena &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;A&quot;*50&lt;/code&gt; bukan byte-byte yang benar. Dari sini kita bisa melakukan &lt;em&gt;Brute Force&lt;/em&gt; setiap kemungkinan byte yang benar.&lt;/p&gt;
 
 &lt;p&gt;Berikut script yang saya gunakan untuk melakukan brute force&lt;/p&gt;
 
