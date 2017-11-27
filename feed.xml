@@ -6,9 +6,348 @@
 </description>
     <link>https://rhama.my.id/</link>
     <atom:link href="https://rhama.my.id/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Mon, 20 Nov 2017 14:44:07 +0700</pubDate>
-    <lastBuildDate>Mon, 20 Nov 2017 14:44:07 +0700</lastBuildDate>
+    <pubDate>Mon, 27 Nov 2017 14:19:23 +0700</pubDate>
+    <lastBuildDate>Mon, 27 Nov 2017 14:19:23 +0700</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
+    
+      <item>
+        <title>TUCTF 2017 - Writeup</title>
+        <description>&lt;h2 id=&quot;reversing-200-unknown&quot;&gt;Reversing 200 (Unknown)&lt;/h2&gt;
+
+&lt;p&gt;Diberikan file ELF 64 bit stripped.&lt;/p&gt;
+
+&lt;p&gt;Berikut hasil disassembly fungsi main&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;signed __int64 __fastcall main(int a1, char **a2, char **a3)
+{
+  signed __int64 result; // rax@2
+  unsigned int i; // [sp+14h] [bp-Ch]@5
+  char *v5; // [sp+18h] [bp-8h]@5
+
+  if ( a1 == 2 )
+  {
+    if ( strlen(a2[1]) == 56 )
+    {
+      v5 = a2[1];
+      for ( i = 0; i &amp;lt; 0x38; ++i )
+      {
+        if ( (unsigned int)sub_401E90((__int64)v5, i) )
+          dword_603084 = 1;
+      }
+      if ( dword_603084 )
+        puts(&quot;Nope.&quot;);
+      else
+        printf(&quot;Congraz the flag is: %s\n&quot;, v5, a2);
+      result = 0LL;
+    }
+    else
+    {
+      puts(&quot;Still nope.&quot;);
+      result = 4294967294LL;
+    }
+  }
+  else
+  {
+    puts(&quot;Try again.&quot;);
+    result = 0xFFFFFFFFLL;
+  }
+  return result;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Dari Pseudo-C diatas diketahui program membutuhkan &lt;code class=&quot;highlighter-rouge&quot;&gt;args&lt;/code&gt; dan panjang nya &lt;code class=&quot;highlighter-rouge&quot;&gt;56 bytes&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;sub_401E90&lt;/code&gt; akan memproses inputan, dan inputan di proses byte per byte hingga 56, dan &lt;code class=&quot;highlighter-rouge&quot;&gt;dword_603084&lt;/code&gt; adalah global variable yang di set ke nilai &lt;code class=&quot;highlighter-rouge&quot;&gt;True&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;for ( i = 0; i &amp;lt; 0x38; ++i )
+      {
+        if ( (unsigned int)sub_401E90((__int64)v5, i) )
+          dword_603084 = 1;
+      }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;saat mencoba membaca hasil Pseodo-C fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;sub_401E90&lt;/code&gt;, saya sama sekali tidak mengerti proses apaan itu *ribet :v .&lt;/p&gt;
+
+&lt;p&gt;Dari hasil decompile, yang dimana nilai hasil proses fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;sub_401E90&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0&lt;/code&gt; apabila byte inputan benar, dan akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x1&lt;/code&gt; apabila salah.&lt;/p&gt;
+
+&lt;p&gt;Snippet decompile&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-asm&quot;&gt;   0x401c7d:	call   0x401e90
+   0x401c82:	test   eax,eax
+   0x401c84:	je     0x401c90
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-asm&quot;&gt;gdb-peda$ b *0x0000000000401c82
+Breakpoint 1 at 0x401c82
+gdb-peda$ r TUCTF{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+gdb-peda$ p/x $rax
+$3 = 0x0
+gdb-peda$ r AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+gdb-peda$ p/x $rax
+$3 = 0x1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Karena inputan di proses, byte-per-byte, saya mencoba input dengan prefix “TUCTF{“ sehingga nilai &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0&lt;/code&gt; dalam 6 kali iterasi, dan selanjutkan akan &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x1&lt;/code&gt; karena &lt;code class=&quot;highlighter-rouge&quot;&gt;A*50&lt;/code&gt; bukan byte yang benar. Dari sini kita bisa melakukan &lt;em&gt;Brute Force&lt;/em&gt; setiap kemungkinan byte yang benar.&lt;/p&gt;
+
+&lt;p&gt;Berikut script yang saya gunakan untuk melakukan brute force&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gdb&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;string&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ascii_letters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;digits&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;!_}&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;TUCTF{&quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;gdb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;b *0x0000000000401c82&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;gdb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;r {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;gdb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;c&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gdb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;p/x $rax&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;0x0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		 	&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
+		 	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;}&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		 		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Flag : &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		 		&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		 	&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Curret Flag : &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		 	&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		 	&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Pattern : &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Nilai Rax : &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;	
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;gdb -x unk.py -q unknown --nh --batch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Setelah menunggu beberapa lama, akan mendapatkan Flag&lt;/p&gt;
+
+&lt;h3 id=&quot;flag--tuctfw3lc0m3707uc7f4nd7h4nky0uf0rp4r71c1p471n6&quot;&gt;Flag : TUCTF{w3lc0m3_70_7uc7f_4nd_7h4nk_y0u_f0r_p4r71c1p471n6!}&lt;/h3&gt;
+
+&lt;h2 id=&quot;pwn-50-vuln-chat&quot;&gt;Pwn 50 (Vuln-chat)&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Classic Buffer Overflow&lt;/em&gt; yang dimana meng overwrite &lt;em&gt;Local Variable&lt;/em&gt; dengan “%s” agar pada bagian form “Enter your username” tidak dibatasi dan bisa meoverwrite &lt;code class=&quot;highlighter-rouge&quot;&gt;EIP&lt;/code&gt; dan arahkan ke fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;printFlag&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Berikut script yang saya gunakan.&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;vuln&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;vulnchat.tuctf.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4141&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x00007325&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# overwrite with &quot;%s&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enter your username: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;payload2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;49&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x804856b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vuln&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;pwn-100-vuln-chat20&quot;&gt;Pwn 100 (Vuln-chat2.0)&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Classic Buffer Overflow&lt;/em&gt; yang dimana mengoverwrite nilai &lt;code class=&quot;highlighter-rouge&quot;&gt;EIP&lt;/code&gt;, tetapi kita hanya membutuhkan 1 byte address dari fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;printFlag&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x72&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;vulnchat2.tuctf.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4242&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enter your username: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AAAA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvuntil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AAAA: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;43&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vuln2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;crypto-50-the-never-ending-crypto&quot;&gt;Crypto 50 (The Never Ending Crypto)&lt;/h2&gt;
+
+&lt;p&gt;Crypto 50 sebenar nya hanya &lt;code class=&quot;highlighter-rouge&quot;&gt;Caesar Cipher&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Berikut script yang saya gunakan untuk melakukan decrypt&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;string&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;never&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;neverending.tuctf.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12345&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;#$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;()*+,-./:;&amp;lt;=&amp;gt;?@[&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]^_`{|}~&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;round1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;enc_base&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;is &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;enc_msg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;is &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;enc_msg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enc_msg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; decrypted?&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ENC BASE : -&amp;gt; {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enc_base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ENC MSG : -&amp;gt; {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enc_msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enc_base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enc_msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+	
+	&lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;95&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;non_printable2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;printable2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;190&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;non_printable2&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;non_printable2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Decrypted -&amp;gt; {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;repr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Round {0}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;round1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Correct!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;-&amp;gt; BENAR&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;-&amp;gt; SALAH&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Pada Round 50 akan mendatkan Flag.&lt;/p&gt;
+
+&lt;h3 id=&quot;flag--tuctfwh0wsher3la5tyer&quot;&gt;Flag : TUCTF{wh0_w@s_her3_la5t_ye@r?!?}&lt;/h3&gt;
+</description>
+        <pubDate>Mon, 27 Nov 2017 00:00:00 +0700</pubDate>
+        <link>https://rhama.my.id/ctf/2017/11/27/tuctf-2017.html</link>
+        <guid isPermaLink="true">https://rhama.my.id/ctf/2017/11/27/tuctf-2017.html</guid>
+        
+        <category>tuctf2017</category>
+        
+        <category>CTF</category>
+        
+        
+        <category>CTF</category>
+        
+      </item>
+    
+      <item>
+        <title>RC3 CTF 2017 Write Up</title>
+        <description>&lt;h1 id=&quot;reversing-100&quot;&gt;Reversing (100)&lt;/h1&gt;
+
+&lt;p&gt;Diberikan file elf 64bit not stripped.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;file hello
+hello: ELF 64-bit LSB executable, x86-64, version 1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SYSV&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;GNU/Linux 2.6.32, BuildID[sha1]&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;e85915bc2c95f7eac6c02254b065d9161e5efca2, not stripped
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Hanya dengan menggunakan &lt;code class=&quot;highlighter-rouge&quot;&gt;strings&lt;/code&gt; didapatkan Flag yang benar.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;strings hello | grep RC
+RC3-2017&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;little_ball_of_fur&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Cukup mudah untuk challenge dengan points 100 :)
+Flag : &lt;code class=&quot;highlighter-rouge&quot;&gt;RC3-2017{little_ball_of_fur}&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;web-100&quot;&gt;Web (100)&lt;/h1&gt;
+
+&lt;p&gt;Diberikan sebuah website ()[http://13.59.6.98]&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;curl http://13.59.6.98
+&amp;lt;meta http-equiv&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;refresh&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0; url=C.html&quot;&lt;/span&gt; /&amp;gt; &amp;lt;p hidden&amp;gt;R&amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Website tersebut akan otomatis direfresh apabila dikunjungi via Browser. Tapi terdapat bagian &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;p hidden&amp;gt;R&amp;lt;/p&amp;gt;&lt;/code&gt; yang seperti nya adalah flag nya apabila mengikuti bagian &lt;code class=&quot;highlighter-rouge&quot;&gt;url=C.html&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Berikut script yang digunakan untuk melakukan automasi.&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;requests&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://13.59.6.98&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;p hidden&amp;gt;(.*?)&amp;lt;/p&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;777&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Flag : {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://13.59.6.98/{}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;url=(.*?)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Setelah menunggu beberapa saat Flag akan muncul.&lt;/p&gt;
+
+&lt;p&gt;Flag : &lt;code class=&quot;highlighter-rouge&quot;&gt;RC3W3MUS7G0D33P3RR3D1R3C777&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;pwn-100&quot;&gt;Pwn (100)&lt;/h1&gt;
+
+&lt;p&gt;Diberikan sebuah file elf 32bit stripped bernama &lt;code class=&quot;highlighter-rouge&quot;&gt;easy_peasy&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;file easy_peasy 
+easy_peasy: ELF 32-bit LSB executable, Intel 80386, version 1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SYSV&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, dynamically linked, interpreter /lib/ld-linux.so.2, &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;GNU/Linux 2.6.24, BuildID[sha1]&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;3a5dd5cc49b1a8efbc0a6269bdea9c1da99b3bcf, stripped
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;checksec easy_peasy 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'easy_peasy'&lt;/span&gt;
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    No canary found
+    NX:       NX enabled
+    PIE:      No PIE &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0x8048000&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Hasi decompile menggunakan &lt;code class=&quot;highlighter-rouge&quot;&gt;IDA PRO&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;void __cdecl main()
+{
+  int v0; // [sp+18h] [bp-18h]@1
+  int v1; // [sp+28h] [bp-8h]@1
+  int v2; // [sp+2Ch] [bp-4h]@1
+
+  v2 = 0;
+  v1 = 0;
+  printf(&quot;Enter Key: &quot;);
+  gets((char *)&amp;amp;v0);
+  if ( v2 == 0xCAFEF00D &amp;amp;&amp;amp; v1 == 0xC0FFEE )
+    sub_80484EF();
+  puts(&quot;Error: Invalid key!&quot;);
+  srand(1u);
+  init();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Terlihat penggunaan fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;gets&lt;/code&gt; yang vulnerable &lt;em&gt;Buffer Overflow&lt;/em&gt;. Dan seperti nya tujuan dari challenge ini adalah melakukan &lt;em&gt;Overwrite Local Variable&lt;/em&gt; v1 dan v2.&lt;/p&gt;
+
+&lt;p&gt;Perhitungan Padding.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;  int v0; // [sp+18h] [bp-18h]@1
+  int v1; // [sp+28h] [bp-8h]@1
+  int v2; // [sp+2Ch] [bp-4h]@1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# jumlah padding untuk overwrite v1&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x18&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x8&lt;/span&gt; 
+&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# jumlah padding untuk overwrite v2&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x18&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x4&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Berikut script yang digunakan&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;18.216.183.46&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xC0FFEE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# v1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xCAFEF00D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# v2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Flag: &lt;code class=&quot;highlighter-rouge&quot;&gt;RC3-2017{S3E_N0T_TO0_B4D_HUH_ec1368b59b858e08}&lt;/code&gt;&lt;/p&gt;
+
+</description>
+        <pubDate>Tue, 21 Nov 2017 00:00:00 +0700</pubDate>
+        <link>https://rhama.my.id/ctf/2017/11/21/rc3-ctf-2017.html</link>
+        <guid isPermaLink="true">https://rhama.my.id/ctf/2017/11/21/rc3-ctf-2017.html</guid>
+        
+        <category>rc3ctf</category>
+        
+        <category>CTF</category>
+        
+        
+        <category>CTF</category>
+        
+      </item>
     
       <item>
         <title>RC3 CTF 2017 Write Up</title>
@@ -1306,406 +1645,6 @@ http://ropshell.com/ropsearch?h=4a33feaf7ac08268b924f4cb8b5cafbe
         <pubDate>Sat, 22 Jul 2017 00:00:00 +0700</pubDate>
         <link>https://rhama.my.id/ctf/2017/07/22/bugs-bunny2k17-pwn150.html</link>
         <guid isPermaLink="true">https://rhama.my.id/ctf/2017/07/22/bugs-bunny2k17-pwn150.html</guid>
-        
-        <category>bugs-bunny2k17</category>
-        
-        <category>CTF</category>
-        
-        
-        <category>CTF</category>
-        
-      </item>
-    
-      <item>
-        <title>File Input/Output In C</title>
-        <description>&lt;p&gt;Posting tentang programming C pertama, dimana saya akan membahas mengenai File Input/Output di C dengan menggunakan berbagai macam fungsi yang berhubungan dengan File I/O di C yang sudah tersedia di pustaka “stdio.h”.&lt;/p&gt;
-
-&lt;h2 id=&quot;tipe-files&quot;&gt;Tipe Files&lt;/h2&gt;
-&lt;p&gt;Terdapat dua tipe files yang harus diketahui, yaitu Text File dan Binary File.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;strong&gt;Text File&lt;/strong&gt; - Adalah text file biasa yang berformat .txt dan dapat dibaca (&lt;em&gt;readable&lt;/em&gt;) oleh manusia.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Binary File&lt;/strong&gt; - Adalah data nya disimpan dalam bentuk biner (0 dan 1) dan tidak dapat dibaca (&lt;em&gt;not readable&lt;/em&gt;) oleh manusia.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;operasi-file-yang-biasa-dilakukan&quot;&gt;Operasi File Yang Biasa Dilakukan&lt;/h2&gt;
-&lt;p&gt;Didalam bahasa C, kita dapat melakukan ke-4 operasi dibawah ini, baik untuk binary file dan text file.&lt;/p&gt;
-&lt;ol&gt;
-  &lt;li&gt;Membuat file baru&lt;/li&gt;
-  &lt;li&gt;Membuka file yang telah ada&lt;/li&gt;
-  &lt;li&gt;Menutup file&lt;/li&gt;
-  &lt;li&gt;Membaca dan menulis informasi ke sebuah file&lt;/li&gt;
-&lt;/ol&gt;
-
-&lt;h2 id=&quot;bekerja-dengan-files&quot;&gt;Bekerja Dengan Files&lt;/h2&gt;
-
-&lt;p&gt;Untuk memulai bekerja dengan file, kita harus mendeklarasi pointer dari tipe FILE. Ini dibutuhkan untuk komunikasi antara program dan file.&lt;/p&gt;
-
-&lt;p&gt;Bentuk umum deklarasi pointer dari tipe FILE&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;membuka-file&quot;&gt;Membuka File&lt;/h3&gt;
-
-&lt;p&gt;Untuk membuka file, kita dapat menggunakan fungsi fopen().&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Syntax Umum&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;const char *path&lt;/strong&gt; = Diisi dengan &lt;em&gt;path&lt;/em&gt;  atau lokasi dari file yang akan dioperasikan.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;const char *mode&lt;/strong&gt; = Diisi dengan salah satu &lt;em&gt;mode&lt;/em&gt; dibawah ini&lt;/p&gt;
-&lt;table&gt;
-&lt;colgroup&gt;
-&lt;col width=&quot;40%&quot; /&gt;
-&lt;col width=&quot;280%&quot; /&gt;
-&lt;/colgroup&gt;
-&lt;thead&gt;
-&lt;tr class=&quot;header&quot;&gt;
-&lt;th&gt;Mode&lt;/th&gt;
-&lt;th&gt;Description&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;r (read)&lt;/td&gt;
-&lt;td&gt;Membuka file untuk dibaca&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;w (write)&lt;/td&gt;
-&lt;td&gt;Membuka file untuk ditulis dan apabila terdapat file dengan nama sama, isi dari file yang lama akan ditimpa
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;a (append)&lt;/td&gt;
-&lt;td&gt;Membuka file untuk ditambahkan isi nya diakhir file dan apabila file belum ada akan dibuat baru&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;r+&lt;/td&gt;
-&lt;td&gt;Membuka file untuk dibaca dan ditulis
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;w+&lt;/td&gt;
-&lt;td&gt;Membuka file untuk dibaca dan ditulis&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;a+&lt;/td&gt;
-&lt;td&gt;Membuka file untuk dibaca dan ditulis
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;rb&lt;/td&gt;
-&lt;td&gt;Membuka file untuk dibaca untuk binary file&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;wb&lt;/td&gt;
-&lt;td&gt;Membuka file untuk ditulis untuk binary file
-&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;ab&lt;/td&gt;
-&lt;td&gt;Membuka file untuk ditambahkan untuk binary file&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;&lt;strong&gt;Return Value&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;font color=&quot;green&quot;&gt;Success&lt;/font&gt;
-    &lt;p&gt;Pointer ke FILE object&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;font color=&quot;red&quot;&gt;Fail&lt;/font&gt;
-    &lt;p&gt;Return NULL&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;Contoh penggunaan&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Belajar_io.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;r&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-	&lt;span class=&quot;c1&quot;&gt;// your code
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-	&lt;span class=&quot;c1&quot;&gt;// your code
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h3 id=&quot;menutup-file&quot;&gt;Menutup File&lt;/h3&gt;
-&lt;p&gt;Baik itu saat mengoperasikan text file/binary file haruslah di tutup apabila selesai dibaca ataupun ditulis. Untuk menutupnya, dapat menggunakan fungsi fclose().&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Syntax Umum&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fclose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;FILE *stream&lt;/strong&gt; - Diisi dengan pointer dari tipe FILE yang telah didelarasi sebelum nya.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Contoh penggunanaan&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Belajar_io.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;r&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;....&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;....&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;fclose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;&lt;strong&gt;Return Value&lt;/strong&gt;&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;font color=&quot;green&quot;&gt;Success&lt;/font&gt;
-    &lt;p&gt;Return 0&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;font color=&quot;red&quot;&gt;Fail&lt;/font&gt;
-    &lt;p&gt;Return EOF&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;membaca-sebuah-file&quot;&gt;Membaca Sebuah File&lt;/h3&gt;
-
-&lt;p&gt;Terdapat banyak fungsi yang dapat digunakan untuk membaca sebuah file di C, diantara nya akan dibahasa adalah fgetc(), fgets(), fread()&lt;/p&gt;
-
-&lt;h1 id=&quot;to-be-continue&quot;&gt;To be continue&lt;/h1&gt;
-</description>
-        <pubDate>Sun, 25 Jun 2017 00:00:00 +0700</pubDate>
-        <link>https://rhama.my.id/programming/2017/06/25/c-file-input-output.html</link>
-        <guid isPermaLink="true">https://rhama.my.id/programming/2017/06/25/c-file-input-output.html</guid>
-        
-        <category>C</category>
-        
-        <category>Programming</category>
-        
-        
-        <category>Programming</category>
-        
-      </item>
-    
-      <item>
-        <title>Bugs Bunny 2k17 CTF - Rev75</title>
-        <description>&lt;h2 id=&quot;deskripsi-soal&quot;&gt;Deskripsi Soal&lt;/h2&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;i ran the binary but no password match but believe this is another simple reverse engineering challenge . &lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Diberikan file elf binary static bernama rev75 64 bit yang harus direversing agar bisa mendapatkan flag.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;➜  rev75 file rev75
-rev75: ELF 64-bit LSB executable, x86-64, version 1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GNU/Linux&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, statically linked, &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;GNU/Linux 2.6.24, BuildID[sha1]&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1bd9592380c83821bf975f46076118ecfd1964df, not stripped&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Binary tersebut membutuhkan password sebagai argumentnya&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;➜  rev75 ./rev75 
-usage: ./rev75 password
-➜  rev75 ./rev75 test123
-bad password&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;proof-of-concept&quot;&gt;Proof Of Concept&lt;/h2&gt;
-
-&lt;p&gt;Disassembly fungsi main&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;gp&quot;&gt;gdb-peda$ &lt;/span&gt;pdisass main
-Dump of assembler code &lt;span class=&quot;k&quot;&gt;for function &lt;/span&gt;main:
-   0x000000000040a08c &amp;lt;+0&amp;gt;:	push   rbp
-   0x000000000040a08d &amp;lt;+1&amp;gt;:	mov    rbp,rsp
-   0x000000000040a090 &amp;lt;+4&amp;gt;:	push   rbx
-   0x000000000040a091 &amp;lt;+5&amp;gt;:	sub    rsp,0x148
-   0x000000000040a098 &amp;lt;+12&amp;gt;:	mov    DWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x134],edi
-   0x000000000040a09e &amp;lt;+18&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x140],rsi
-   0x000000000040a0a5 &amp;lt;+25&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x148],rdx
-   0x000000000040a0ac &amp;lt;+32&amp;gt;:	mov    rax,QWORD PTR fs:0x28
-   0x000000000040a0b5 &amp;lt;+41&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x18],rax
-   0x000000000040a0b9 &amp;lt;+45&amp;gt;:	xor    eax,eax
-   0x000000000040a0bb &amp;lt;+47&amp;gt;:	movabs rax,0x6472307773733470
-   0x000000000040a0c5 &amp;lt;+57&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x130],rax
-   0x000000000040a0cc &amp;lt;+64&amp;gt;:	mov    DWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x128],0x0
-   0x000000000040a0d6 &amp;lt;+74&amp;gt;:	mov    WORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x124],0x0
-   0x000000000040a0df &amp;lt;+83&amp;gt;:	mov    BYTE PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x122],0x0
-   0x000000000040a0e6 &amp;lt;+90&amp;gt;:	movabs rax,0x74756220646f6f67
-   0x000000000040a0f0 &amp;lt;+100&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0xa0],rax
-   0x000000000040a0f7 &amp;lt;+107&amp;gt;:	movabs rax,0x67616c66206f6e20
-   0x000000000040a101 &amp;lt;+117&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x98],rax
-   0x000000000040a108 &amp;lt;+124&amp;gt;:	movabs rax,0x756f7920726f6620
-   0x000000000040a112 &amp;lt;+134&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x90],rax
-   0x000000000040a119 &amp;lt;+141&amp;gt;:	movabs rax,0x2069686968696820
-   0x000000000040a123 &amp;lt;+151&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x88],rax
-   0x000000000040a12a &amp;lt;+158&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x80],0x4478
-   0x000000000040a132 &amp;lt;+166&amp;gt;:	movabs rax,0x7373617020646162
-   0x000000000040a13c &amp;lt;+176&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x100],rax
-   0x000000000040a143 &amp;lt;+183&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0xf8],0x64726f77
-   0x000000000040a14e &amp;lt;+194&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0xf0],0x0
-   0x000000000040a159 &amp;lt;+205&amp;gt;:	mov    BYTE PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0xe8],0x0
-   0x000000000040a160 &amp;lt;+212&amp;gt;:	movabs rax,0x2e203a6567617375
-   0x000000000040a16a &amp;lt;+222&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0xe0],rax
-   0x000000000040a171 &amp;lt;+229&amp;gt;:	movabs rax,0x702035377665722f
-   0x000000000040a17b &amp;lt;+239&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0xd8],rax
-   0x000000000040a182 &amp;lt;+246&amp;gt;:	movabs rax,0x64726f77737361
-   0x000000000040a18c &amp;lt;+256&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0xd0],rax
-   0x000000000040a193 &amp;lt;+263&amp;gt;:	mov    DWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0xc8],0x0
-   0x000000000040a19d &amp;lt;+273&amp;gt;:	mov    WORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0xc4],0x0
-   0x000000000040a1a6 &amp;lt;+282&amp;gt;:	lea    rcx,[rbp-0xa0]
-   0x000000000040a1ad &amp;lt;+289&amp;gt;:	lea    rax,[rbp-0x40]
-   0x000000000040a1b1 &amp;lt;+293&amp;gt;:	mov    edx,0x23
-   0x000000000040a1b6 &amp;lt;+298&amp;gt;:	mov    rsi,rcx
-   0x000000000040a1b9 &amp;lt;+301&amp;gt;:	mov    rdi,rax
-   0x000000000040a1bc &amp;lt;+304&amp;gt;:	call   0x42b470 &amp;lt;memcpy&amp;gt;
-   0x000000000040a1c1 &amp;lt;+309&amp;gt;:	lea    rcx,[rbp-0x100]
-   0x000000000040a1c8 &amp;lt;+316&amp;gt;:	lea    rax,[rbp-0x70]
-   0x000000000040a1cc &amp;lt;+320&amp;gt;:	mov    edx,0xd
-   0x000000000040a1d1 &amp;lt;+325&amp;gt;:	mov    rsi,rcx
-   0x000000000040a1d4 &amp;lt;+328&amp;gt;:	mov    rdi,rax
-   0x000000000040a1d7 &amp;lt;+331&amp;gt;:	call   0x42b470 &amp;lt;memcpy&amp;gt;
-   0x000000000040a1dc &amp;lt;+336&amp;gt;:	lea    rcx,[rbp-0x130]
-   0x000000000040a1e3 &amp;lt;+343&amp;gt;:	lea    rax,[rbp-0x120]
-   0x000000000040a1ea &amp;lt;+350&amp;gt;:	mov    edx,0x9
-   0x000000000040a1ef &amp;lt;+355&amp;gt;:	mov    rsi,rcx
-   0x000000000040a1f2 &amp;lt;+358&amp;gt;:	mov    rdi,rax
-   0x000000000040a1f5 &amp;lt;+361&amp;gt;:	call   0x42b470 &amp;lt;memcpy&amp;gt;
-   0x000000000040a1fa &amp;lt;+366&amp;gt;:	lea    rcx,[rbp-0xe0]
-   0x000000000040a201 &amp;lt;+373&amp;gt;:	lea    rax,[rbp-0xc0]
-   0x000000000040a208 &amp;lt;+380&amp;gt;:	mov    edx,0x18
-   0x000000000040a20d &amp;lt;+385&amp;gt;:	mov    rsi,rcx
-   0x000000000040a210 &amp;lt;+388&amp;gt;:	mov    rdi,rax
-   0x000000000040a213 &amp;lt;+391&amp;gt;:	call   0x42b470 &amp;lt;memcpy&amp;gt;
-   0x000000000040a218 &amp;lt;+396&amp;gt;:	cmp    DWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x134],0x1
-   0x000000000040a21f &amp;lt;+403&amp;gt;:	jle    0x40a261 &amp;lt;main+469&amp;gt;
-   0x000000000040a221 &amp;lt;+405&amp;gt;:	mov    rax,QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x140]
-   0x000000000040a228 &amp;lt;+412&amp;gt;:	add    rax,0x8
-   0x000000000040a22c &amp;lt;+416&amp;gt;:	mov    rdx,QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rax]
-   0x000000000040a22f &amp;lt;+419&amp;gt;:	lea    rax,[rbp-0x120]
-   0x000000000040a236 &amp;lt;+426&amp;gt;:	mov    rsi,rdx
-   0x000000000040a239 &amp;lt;+429&amp;gt;:	mov    rdi,rax
-   0x000000000040a23c &amp;lt;+432&amp;gt;:	call   0x400330
-   0x000000000040a241 &amp;lt;+437&amp;gt;:	&lt;span class=&quot;nb&quot;&gt;test   &lt;/span&gt;eax,eax
-   0x000000000040a243 &amp;lt;+439&amp;gt;:	jne    0x40a253 &amp;lt;main+455&amp;gt;
-   0x000000000040a245 &amp;lt;+441&amp;gt;:	lea    rax,[rbp-0x40]
-   0x000000000040a249 &amp;lt;+445&amp;gt;:	mov    rdi,rax
-   0x000000000040a24c &amp;lt;+448&amp;gt;:	call   0x411900 &amp;lt;puts&amp;gt;
-   0x000000000040a251 &amp;lt;+453&amp;gt;:	jmp    0x40a270 &amp;lt;main+484&amp;gt;
-   0x000000000040a253 &amp;lt;+455&amp;gt;:	lea    rax,[rbp-0x70]
-   0x000000000040a257 &amp;lt;+459&amp;gt;:	mov    rdi,rax
-   0x000000000040a25a &amp;lt;+462&amp;gt;:	call   0x411900 &amp;lt;puts&amp;gt;
-   0x000000000040a25f &amp;lt;+467&amp;gt;:	jmp    0x40a270 &amp;lt;main+484&amp;gt;
-   0x000000000040a261 &amp;lt;+469&amp;gt;:	lea    rax,[rbp-0xc0]
-   0x000000000040a268 &amp;lt;+476&amp;gt;:	mov    rdi,rax
-   0x000000000040a26b &amp;lt;+479&amp;gt;:	call   0x411900 &amp;lt;puts&amp;gt;
-   0x000000000040a270 &amp;lt;+484&amp;gt;:	mov    eax,0x0
-   0x000000000040a275 &amp;lt;+489&amp;gt;:	mov    rbx,QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x18]
-   0x000000000040a279 &amp;lt;+493&amp;gt;:	xor    rbx,QWORD PTR fs:0x28
-   0x000000000040a282 &amp;lt;+502&amp;gt;:	je     0x40a289 &amp;lt;main+509&amp;gt;
-   0x000000000040a284 &amp;lt;+504&amp;gt;:	call   0x4408f0 &amp;lt;__stack_chk_fail&amp;gt;
-   0x000000000040a289 &amp;lt;+509&amp;gt;:	add    rsp,0x148
-   0x000000000040a290 &amp;lt;+516&amp;gt;:	pop    rbx
-   0x000000000040a291 &amp;lt;+517&amp;gt;:	pop    rbp
-   0x000000000040a292 &amp;lt;+518&amp;gt;:	ret    
-End of assembler dump.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Yang menarik perhatian saya adalah pemanggilan fungsi pada alamat &lt;code class=&quot;highlighter-rouge&quot;&gt;0x400330&lt;/code&gt; yang nama nya tidak ketahui (karena binary static).
-Menurut asumsi saya, fungsi tersebut adalah fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;strcmp&lt;/code&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;   0x000000000040a236 &amp;lt;+426&amp;gt;:	mov    rsi,rdx
-   0x000000000040a239 &amp;lt;+429&amp;gt;:	mov    rdi,rax
-   0x000000000040a23c &amp;lt;+432&amp;gt;:	call   0x400330
-   0x000000000040a241 &amp;lt;+437&amp;gt;:	&lt;span class=&quot;nb&quot;&gt;test   &lt;/span&gt;eax,eax&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Saya memasang breakpoint pada &lt;code class=&quot;highlighter-rouge&quot;&gt;0x000000000040a23c&lt;/code&gt; agar bisa melihat isi dari argument nya.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;gp&quot;&gt;gdb-peda$ &lt;/span&gt;b &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;0x000000000040a23c
-Breakpoint 1 at 0x40a23c&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Ternyata memang benar itu adalah fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;strcmp&lt;/code&gt; yang akan membandingkan inputan kita yang berada pada &lt;code class=&quot;highlighter-rouge&quot;&gt;rsi&lt;/code&gt; dan string password pada &lt;code class=&quot;highlighter-rouge&quot;&gt;rdi&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;gp&quot;&gt;gdb-peda$ &lt;/span&gt;x/s &lt;span class=&quot;nv&quot;&gt;$rdi&lt;/span&gt;
-0x7fffffffdd40:	&lt;span class=&quot;s2&quot;&gt;&quot;p4ssw0rd&quot;&lt;/span&gt;
-&lt;span class=&quot;gp&quot;&gt;gdb-peda$ &lt;/span&gt;x/s &lt;span class=&quot;nv&quot;&gt;$rsi&lt;/span&gt;
-0x7fffffffe2f3:	&lt;span class=&quot;s2&quot;&gt;&quot;test123&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Karena passwordnya sudah diketahui, saya mencoba menjalankan lagi binary tersebut.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;➜  rev75 ./rev75 p4ssw0rd
-good but no flag &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;you hihihi xD&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;ternyata hanya troll.&lt;/p&gt;
-
-&lt;p&gt;Saya mencoba cara lain dengan melakukan checking terhadap fungsi2 yang ada di binary tersebut menggunakan &lt;code class=&quot;highlighter-rouge&quot;&gt;nm&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Ditemukan banyak sekali fungsi dengan nama &lt;code class=&quot;highlighter-rouge&quot;&gt;a0&lt;/code&gt; sampai &lt;code class=&quot;highlighter-rouge&quot;&gt;a814&lt;/code&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;...
-00000000004002b0 T _init
-0000000000400f4e T _start
-000000000040105e T a0
-000000000040108b T a1
-00000000004010b8 T a2
-00000000004010e5 T a3
-0000000000401112 T a4
-000000000040113f T a5
-000000000040116c T a6
-...
-000000000040a005 T a812
-000000000040a032 T a813
-000000000040a05f T a814
-000000000040a08c T main
-...&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Hasil disassembly fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;a0&lt;/code&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;gp&quot;&gt;gdb-peda$ &lt;/span&gt;pdisass 0x000000000040105e
-Dump of assembler code from 0x40105e to 0x40107e::	Dump of assembler code from 0x40105e to 0x40107e:
-   0x000000000040105e &amp;lt;a0+0&amp;gt;:	push   rbp
-   0x000000000040105f &amp;lt;a0+1&amp;gt;:	mov    rbp,rsp
-   0x0000000000401062 &amp;lt;a0+4&amp;gt;:	sub    rsp,0x10
-   0x0000000000401066 &amp;lt;a0+8&amp;gt;:	mov    QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x8],rdi
-   0x000000000040106a &amp;lt;a0+12&amp;gt;:	mov    rax,QWORD PTR &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;rbp-0x8]
-   0x000000000040106e &amp;lt;a0+16&amp;gt;:	mov    esi,0x49cd48
-   0x0000000000401073 &amp;lt;a0+21&amp;gt;:	mov    rdi,rax
-   0x0000000000401076 &amp;lt;a0+24&amp;gt;:	call   0x400330
-   0x000000000040107b &amp;lt;a0+29&amp;gt;:	&lt;span class=&quot;nb&quot;&gt;test   &lt;/span&gt;eax,eax
-   0x000000000040107d &amp;lt;a0+31&amp;gt;:	jne    0x401089 &amp;lt;a0+43&amp;gt;
-End of assembler dump.&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Fungsi tersebut akan membandingkan ‘sesuatu’ yang berada di &lt;code class=&quot;highlighter-rouge&quot;&gt;0x49cd48&lt;/code&gt; dengan &lt;code class=&quot;highlighter-rouge&quot;&gt;rdi&lt;/code&gt;.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;&lt;span class=&quot;gp&quot;&gt;gdb-peda$ &lt;/span&gt;x/s 0x49cd48
-0x49cd48:	&lt;span class=&quot;s2&quot;&gt;&quot;iVBORw0KGgoA&quot;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Sesuatu tersebut ternyata adalah string base64, apabila &lt;code class=&quot;highlighter-rouge&quot;&gt;iVBORw0KGgoA&lt;/code&gt; di decode akan menghasilkan &lt;strong&gt;file signature png&lt;/strong&gt;&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;In &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;1]: &lt;span class=&quot;s2&quot;&gt;&quot;iVBORw0KGgoA&quot;&lt;/span&gt;.decode&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;base64&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-Out[1]: &lt;span class=&quot;s1&quot;&gt;'\x89PNG\r\n\x1a\n\x00'&lt;/span&gt;
-In &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;2]: &lt;span class=&quot;s2&quot;&gt;&quot;iVBORw0KGgoA&quot;&lt;/span&gt;.decode&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;base64&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;.encode&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;hex&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-Out[2]: &lt;span class=&quot;s1&quot;&gt;'89504e470d0a1a0a00'&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Saya rasa fungsi-fungsi a1 dan seterus nya mengandung data2 gambar PNG.
-Menggunakan command &lt;code class=&quot;highlighter-rouge&quot;&gt;string&lt;/code&gt; didapatkan semua string base64 yang displit.&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;...
-iVBORw0KGgoA
-AAANSUhEUgAA
-AoAAAAGQCAYA
-AAA+89ElAAAA
-BmJLR0QA/wD/
-AP+gvaeTAAAA
-CXBIWXMAAAsT
-AAALEwEAmpwY
-AAAAB3RJTUUH
-4QcPFScXuHT4
-+AAAABl0RVh0
-Q29tbWVudABD
-cmVhdGVkIHdp
-dGggR0lNUFeB
-...&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Saya hanya mengambil bagian base64 untuk didecode&lt;/p&gt;
-
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cat rev75_strings | tr -d &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; | base64 -d &amp;gt; flag.png&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
-
-&lt;p&gt;Saat dibuka ternyata error, tapi dengan menggunakan &lt;code class=&quot;highlighter-rouge&quot;&gt;GIMP&lt;/code&gt; kita bisa melihat tulisan pada gambar flag.png&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/img/bugs-bunny2k17/FLAG_REV75.png&quot; alt=&quot;web-content&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Flag : &lt;strong&gt;Bugs_Bunny{Th1s_t0t4lly_Th3_fl4g}&lt;/strong&gt;&lt;/p&gt;
-</description>
-        <pubDate>Thu, 22 Jun 2017 00:00:00 +0700</pubDate>
-        <link>https://rhama.my.id/ctf/2017/06/22/bugs-bunny2k17-rev75.html</link>
-        <guid isPermaLink="true">https://rhama.my.id/ctf/2017/06/22/bugs-bunny2k17-rev75.html</guid>
         
         <category>bugs-bunny2k17</category>
         
