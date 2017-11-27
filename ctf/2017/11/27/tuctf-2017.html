@@ -191,7 +191,7 @@
 
 <p>Dari Pseudo-C diatas diketahui program membutuhkan <code class="highlighter-rouge">args</code> dan panjang nya <code class="highlighter-rouge">56 bytes</code>.</p>
 
-<p>fungsi <code class="highlighter-rouge">sub_401E90</code> akan memproses inputan, dan inputan di proses byte per byte hingga 56, dan <code class="highlighter-rouge">dword_603084</code> adalah global variable yang di set ke nilai <code class="highlighter-rouge">True</code>.</p>
+<p>fungsi <code class="highlighter-rouge">sub_401E90</code> akan memproses inputan, dan inputan di proses byte per byte hingga 56, dan <code class="highlighter-rouge">dword_603084</code> adalah global variable yang di set ke nilai <code class="highlighter-rouge">True</code> selama byte inputan benar.</p>
 <pre><code class="language-C">for ( i = 0; i &lt; 0x38; ++i )
       {
         if ( (unsigned int)sub_401E90((__int64)v5, i) )
