@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>CTF.Ninja</title>
+  <meta name="description" content="CTF, InfoSec, Banana And More.
+">
+  
+  <meta name="author" content="rhama">
+  <meta name="copyright" content="&copy; rhama 2017">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="CTF, InfoSec, Banana And More.
+" />
+  <meta property="og:url" content="https://rhama.my.id/page2/" />
+  <meta property="og:site_name" content="CTF.Ninja" />
+  <meta property="og:title" content="CTF.Ninja" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://rhama.my.id/assets/logo.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="CTF.Ninja">
+  <meta name="twitter:description" content="CTF, InfoSec, Banana And More.
+">
+  <meta name="twitter:image" content="https://rhama.my.id/assets/logo.png">
+  <meta name="twitter:url" content="https://rhama.my.id/page2/">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+   <link rel="stylesheet" href="/css/terminal.css">
+  <link rel="canonical" href="https://rhama.my.id/page2/">
+  <link rel="alternate" type="application/rss+xml" title="CTF.Ninja" href="https://rhama.my.id/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="CTF.Ninja">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/about/">About</a>
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Archives</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="home">
+
+<div class="site-header-container has-cover" style="background-image: url(/assets/header_image.png);">
+  <div class="scrim has-cover">
+    <header class="site-header">
+      <h1 class="title">CTF.Ninja</h1>
+      <p class="subtitle">flag{CTF, InfoSec, Banana And More.}</p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+<ul class="post-list">
+  
+  <li>
+    <h2>
+      <a class="post-link" href="/ctf/2017/11/20/cyber-jawara-2017-final-pwn200.html">Cyber Jawara 2017 Final - echo (pwn 200)</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>Diberikan sebuah file elf binary 64 bit dengan nama echo $ file echo echo: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.32, BuildID[sha1]=c5e63f048eccc18550211a8582dd02c44874ba61, stripped Dengan proteksi sebagai berikut $ checksec echo [*] 'echo' Arch: amd64-64-little RELRO: Partial RELRO Stack: No canary found NX: NX enabled...</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">November 20, 2017</div>
+      <div class="post-categories">
+      in 
+        
+        <a href="/category/CTF">Ctf</a>
+        
+      
+      </div>
+    </section>
+  </li>
+  
+  <hr>
+  
+  
+  <li>
+    <h2>
+      <a class="post-link" href="/ctf/2017/11/20/csawctf-2017-quals.html">CSAW CTF 2017 Prelims - Write Up</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>Pwn (75) - Pilot pilot Can I take your order? nc pwn.chal.csaw.io 8464 Diberikan sebuah binary 64 bit striped. [email&#160;protected]:~/CTF/CSAW2017$ file pilot pilot: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=6ed26a43b94fd3ff1dd15964e4106df72c01dc6c, stripped Apabila program dijalankan akan meminta command yang merupakan inputan pengguna....</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">November 20, 2017</div>
+      <div class="post-categories">
+      in 
+        
+        <a href="/category/CTF">Ctf</a>
+        
+      
+      </div>
+    </section>
+  </li>
+  
+  <hr>
+  
+  
+  <li>
+    <h2>
+      <a class="post-link" href="/ctf/2017/07/22/bugs-bunny2k17-pwn150.html">Bugs Bunny 2k17 CTF - Pwn150</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>Diberikan file ELF binary bernama pwn150 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag. ➜ file pwn150 pwn150: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=dc1ada44067255e5211fafc5133679404b54f110, not stripped Elf binary tersebut diproteksi NX (No-eXecute) gdb-peda$ checksec CANARY : disabled FORTIFY...</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">July 22, 2017</div>
+      <div class="post-categories">
+      in 
+        
+        <a href="/category/CTF">Ctf</a>
+        
+      
+      </div>
+    </section>
+  </li>
+  
+  <hr>
+  
+  
+  <li>
+    <h2>
+      <a class="post-link" href="/programming/2017/06/25/c-file-input-output.html">File Input/Output In C</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>Posting tentang programming C pertama, dimana saya akan membahas mengenai File Input/Output di C dengan menggunakan berbagai macam fungsi yang berhubungan dengan File I/O di C yang sudah tersedia di pustaka “stdio.h”. Tipe Files Terdapat dua tipe files yang harus diketahui, yaitu Text File dan Binary File. Text File -...</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">June 25, 2017</div>
+      <div class="post-categories">
+      in 
+        
+        <a href="/category/Programming">Programming</a>
+        
+      
+      </div>
+    </section>
+  </li>
+  
+  <hr>
+  
+  
+  <li>
+    <h2>
+      <a class="post-link" href="/ctf/2017/06/22/bugs-bunny2k17-rev75.html">Bugs Bunny 2k17 CTF - Rev75</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>Deskripsi Soal i ran the binary but no password match but believe this is another simple reverse engineering challenge . Diberikan file elf binary static bernama rev75 64 bit yang harus direversing agar bisa mendapatkan flag. ➜ rev75 file rev75 rev75: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically...</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">June 22, 2017</div>
+      <div class="post-categories">
+      in 
+        
+        <a href="/category/CTF">Ctf</a>
+        
+      
+      </div>
+    </section>
+  </li>
+  
+  <hr>
+  
+  
+  <li>
+    <h2>
+      <a class="post-link" href="/pwn/ctf/2017/06/22/bugs-bunny2k17-pwn50.html">Bugs Bunny 2k17 CTF - Pwn50</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>Diberikan file ELF binary bernama pwn50 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag. ➜ file pwn50 pwn50: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=9100876ac8da789151a1afcbc3e43ddaca1305c1, not stripped Binary ini hanya meminta user input tanpa mengirim kembali outputnya ➜ ./pwn50...</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">June 22, 2017</div>
+      <div class="post-categories">
+      in 
+        
+        <a href="/category/PWN">Pwn</a>, 
+        
+      
+        
+        <a href="/category/CTF">Ctf</a>
+        
+      
+      </div>
+    </section>
+  </li>
+  
+  <hr>
+  
+  
+  <li>
+    <h2>
+      <a class="post-link" href="/pentesting/2017/05/03/lord-of-the-root-write-up.html">Lord Of The Root Write up</a>
+    </h2>
+    <section class="post-excerpt" itemprop="description">
+      <p>Description Lord Of The Root adalah VM yang saya dapatkan dari situs vulnhub.com, yang dimana goal nya adalah dengan mendapatkan root access sehingga bisa membaca flag yang berada di /root/Flag.txt Proof Of Concept 1. Nmap Scanning Saya hanya melakukan scanning port biasa menggunakan nmap agar mendapakat hasil dengan cepat dan...</p>
+    </section>
+    <section class="post-meta">
+      <div class="post-date">May 3, 2017</div>
+      <div class="post-categories">
+      in 
+        
+        <a href="/category/Pentesting">Pentesting</a>
+        
+      
+      </div>
+    </section>
+  </li>
+  
+  
+</ul>
+
+<nav class="pagination" role="navigation">
+	<p>
+    
+			
+			<a class="newer-posts" href="/">
+        <span class="fa-stack fa-lg">
+          <i class="fa fa-square fa-stack-2x"></i>
+          <i class="fa fa-angle-double-left fa-stack-1x fa-inverse"></i>
+        </span>
+      </a>
+			
+		
+		<span class="page-number">Page 2 of 5</span>
+		
+		<a class="newer-posts" href="/page3">
+      <span class="fa-stack fa-lg">
+        <i class="fa fa-square fa-stack-2x"></i>
+        <i class="fa fa-angle-double-right fa-stack-1x fa-inverse"></i>
+      </span>
+    </a>
+		
+	</p>
+</nav>
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">CTF.Ninja</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+          <li class="nav-link"><a href="/about/">About</a>
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Archives</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:r4m@protonmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">r4m@protonmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://www.facebook.com/eat.sleep.pwn.repeat" title="Friend me on Facebook">
+              <i class="fa fa-facebook"></i>
+              <span class="username">eat.sleep.pwn.repeat</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">CTF, InfoSec, Banana And More.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>

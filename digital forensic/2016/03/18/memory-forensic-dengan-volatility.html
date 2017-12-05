@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Tutorial Memory Forensic Dengan Volatility</title>
+  <meta name="description" content="Terdapat Challenge Memory Forensic yang diberikan oleh Indonesia Digital Forensic Community pada halaman facebook nya( https://www.facebook.com/idforensic/po...">
+  
+  <meta name="author" content="rhama">
+  <meta name="copyright" content="&copy; rhama 2017">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+  <meta property="og:description" content="Terdapat Challenge Memory Forensic yang diberikan oleh Indonesia Digital Forensic Community pada halaman facebook nya( https://www.facebook.com/idforensic/po..." />
+  <meta property="og:url" content="https://rhama.my.id/digital%20forensic/2016/03/18/memory-forensic-dengan-volatility.html" />
+  <meta property="og:site_name" content="CTF.Ninja" />
+  <meta property="og:title" content="Tutorial Memory Forensic Dengan Volatility" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://rhama.my.id/assets/images/forensic.jpg" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" />
+  
+
+  
+  <!-- Twitter: card tags -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Tutorial Memory Forensic Dengan Volatility">
+  <meta name="twitter:description" content="Terdapat Challenge Memory Forensic yang diberikan oleh Indonesia Digital Forensic Community pada halaman facebook nya( https://www.facebook.com/idforensic/po...">
+  <meta name="twitter:image" content="https://rhama.my.id/assets/images/forensic.jpg">
+  <meta name="twitter:url" content="https://rhama.my.id/digital%20forensic/2016/03/18/memory-forensic-dengan-volatility.html">
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+   <link rel="stylesheet" href="/css/terminal.css">
+  <link rel="canonical" href="https://rhama.my.id/digital%20forensic/2016/03/18/memory-forensic-dengan-volatility.html">
+  <link rel="alternate" type="application/rss+xml" title="CTF.Ninja" href="https://rhama.my.id/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="CTF.Ninja">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/about/">About</a>
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Archives</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container has-cover" style="background-image: url(/assets/images/forensic.jpg);">
+  <div class="scrim has-cover">
+    <header class="post-header">
+      <h1 class="title">Tutorial Memory Forensic Dengan Volatility</h1>
+      <p class="info">by <strong>CTF.Ninja</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+
+
+<section class="post-meta">
+  <div class="post-date">March 18, 2016</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/Digital Forensic">Digital forensic</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <p>Terdapat Challenge Memory Forensic yang diberikan oleh 
+<i>Indonesia Digital Forensic Community</i> pada halaman facebook nya
+( https://www.facebook.com/idforensic/posts/571872846243270 )</p>
+
+<p>Berikut adalah pertanyaan dari Challenge tersebut</p>
+
+<p><b>Memory analysis challenge : </b></p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">1. Identifikasi jenis OS-nya
+2. Identifikasi proses yang mencurigakan
+3. Identifikasi service yang mencurigakan
+4. Identifikasi remote IP yang mentriger proses tersebut
+5. Apakah tipe malware yang menginfeksi komputer tersebut
+6. Apakah dikomputer tersebut terinstall antivirus 
+7. Temukan aplikasi atau service yang <span class="s2">"vulnerable"</span> yang mungkin dimanfaatkan oleh si hacker untuk masuk ke dalam komputer tersebut
+8. Pertanyaan Bonus :
+Hacker tersebut ternyata juga berhasil mencuri informasi yang tersimpan pada suatu file di komputer tersebut. Informasi tersebut adalah
+akun yang dapat digunakan untuk mengakses suatu server. Dapatkah anda menemukan informasi yang tersimpan pada file tersebut ?</code></pre></figure>
+
+<p>    Banyak sekali tool yang dapat digunakan untuk melakukan memory forensic, tapi saya memilih
+<b>volatility</b> untuk mengerjakan Challenge ini, karena 
+<b>volatility</b> powerfull dan mudah digunakan. Untuk penggunaka distro pentest seperti kali linux dan backbox seperti Volatility sudah terinstall otomatis, dan untuk distro linux yang belum terinstall volatility bisa langsung mengunjungi situs resmi nya di ( http://www.volatilityfoundation.org/ ). 
+<b>Volatility</b> ditulis menggunakan bahasa python jadi tidak menutup kemungkinan dapat berjalan di platform Windows, tapi pada tutorial ini saya menggunakan linux dan semua step nya sama saja dengan os-os lain.</p>
+
+<p><b>Detail File Challenge :</b></p>
+
+<p>Name : RAM.mem
+MD5 : 47ca9f4ef6549705a9337166ac45ea82
+Size : 536809472 bytes</p>
+
+<h1 id="proof-of-concept">Proof Of Concept</h1>
+
+<p>syntaxt umum :</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">vol -f FileName &lt;Options&gt;</code></pre></figure>
+
+<h2 id="pertanyaan-nomor-1-nbsp-identifikasi-jenis-os-nya">Pertanyaan nomor 1 :  Identifikasi jenis OS-nya</h2>
+<p>Untuk identifikasi jenis os nya kita dapat menggunakan Plugin imageinfo</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">vol -f RAM.mem imageinfo</code></pre></figure>
+
+<div class="separator" style="clear: both; text-align: center;">
+	<a href="https://3.bp.blogspot.com/-ZKgmjPDoMuA/VuuQMpgbkgI/AAAAAAAAA8Y/ANqXovR3kIshFROaygBt1dE6pxqN7g9Cg/s1600/image1.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+		<img border="0" src="https://3.bp.blogspot.com/-ZKgmjPDoMuA/VuuQMpgbkgI/AAAAAAAAA8Y/ANqXovR3kIshFROaygBt1dE6pxqN7g9Cg/s1600/image1.png" />
+	</a>
+</div>
+<p>pada bagian 
+<i>Suggested Profile(s)</i> dapat kita lihat bahwa RAM.mem didump pada os Windows XP.
+Tapi kenapa ada muncul 2 , 
+<i>WinXPSP2</i> Dan 
+<i>WinXPSP3</i> ? Iyaa karena itu profile yang tersedia pada   Volatility yang dapat kita gunakan untuk melakukan kegiatan seperti melihat prosses, history dan sebagai nya menggunakan Volatility.</p>
+
+<h2 id="pertanyaan-nomo-2-nbsp-identifikasi-proses-yang-mencurigakan">Pertanyaan Nomo 2 :  Identifikasi proses yang mencurigakan</h2>
+<p>Untuk indentifikasi proses kita bisa menggunakan salah satu Plugin pslist, psscan serta pstree karena ketiga Plugin tersebut digunakan untuk melihat running proses.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">vol -f RAM.mem --profile<span class="o">=</span>WinXPSP2x86 pslist</code></pre></figure>
+
+<div class="separator" style="clear: both; text-align: center;">
+	<a href="https://2.bp.blogspot.com/-85mmBd3u49E/VuuQQhb7lEI/AAAAAAAAA8c/qNRpTDtOvccZBbDtbsUrQmpJVJFn6FRMQ/s1600/image2.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+		<img border="0" src="https://2.bp.blogspot.com/-85mmBd3u49E/VuuQQhb7lEI/AAAAAAAAA8c/qNRpTDtOvccZBbDtbsUrQmpJVJFn6FRMQ/s1600/image2.png" />
+	</a>
+</div>
+<p>Dari output tersebut kita dapat menentukan proses mana yang mencurigakan, dan saya perhatikan ada proses dengan nama 
+<i>wscript.exe</i> pada pid 584, 
+<i>metsvc.exe</i> pada pid 1644 serta 
+<i>qNPEwOBAwGzOSN.</i> Pada pid 1760. karena ane mencuriguakan ketiga proses tersebut merupakan payload dari metasploit ( https://www.offensive-security.com/metasploit-unleashed/interacting-metsvc/ ).</p>
+
+<h2 id="pertanyaannbsp-nomor-3--identifikasi-remote-ip-yang-mentriger-proses-tersebut">Pertanyaan  nomor 3 : Identifikasi remote IP yang mentriger proses tersebut</h2>
+<p>Untuk indentifikasi remote ip tentu kita harus mengecek connection layak nya kita menggunakan 
+<code class="highlighter-rouge">netstat</code>, Plugin yang digunakan untuk proses ini bisa kita gunakan 
+<code class="highlighter-rouge">connections</code> untuk melihat koneksi yang terbukan ( Windows XP dan Windows Server 2003) serta 
+<code class="highlighter-rouge">connscan</code>untuk melihat koneksi TCP</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">vol -f RAM.mem --profile<span class="o">=</span>WinXPSP2x86 connections
+vol -f RAM.mem --profile<span class="o">=</span>WinXPSP2x86 connscan</code></pre></figure>
+
+<div class="separator" style="clear: both; text-align: center;">
+	<a href="https://4.bp.blogspot.com/-AvKlQF9S4Vw/VuuQSPtrfzI/AAAAAAAAA8g/xyNdqvATg3o7C_D4MVMSZm_NJDTgkKvPg/s1600/image3.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+		<img border="0" src="https://4.bp.blogspot.com/-AvKlQF9S4Vw/VuuQSPtrfzI/AAAAAAAAA8g/xyNdqvATg3o7C_D4MVMSZm_NJDTgkKvPg/s1600/image3.png" />
+	</a>
+</div>
+<p>Terdapat 2 ip yang mempunyai remote koneksi, terus yang mana ini yang bener ? Karena kita tadi mencurigai ini merupakan payload metsvc metasploit, jadi kita coba melihat history internet explore apakah korban mengakses sesuatu yang menyebabkan payload ini bisa dieksekusi di PC korban</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">vol -f RAM.mem --profile<span class="o">=</span>WinXPSP2x86 iehistory</code></pre></figure>
+
+<div class="separator" style="clear: both; text-align: center;">
+	<a href="https://2.bp.blogspot.com/-hgwq55hF9-A/VuuQUhkb6HI/AAAAAAAAA8k/ut7Q0Seetz8_qWDq1Mye-161Co3E_cGkw/s1600/image4.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+		<img border="0" src="https://2.bp.blogspot.com/-hgwq55hF9-A/VuuQUhkb6HI/AAAAAAAAA8k/ut7Q0Seetz8_qWDq1Mye-161Co3E_cGkw/s1600/image4.png" />
+	</a>
+</div>
+<p>Terdapat koneksi ke 
+<i>http://192.168.88.44:8080/payloads/trojan.exe</i> dan 
+<i>http://192.168.88.44:8080/payloads/ </i>.  Dan tentu kita semua tau ini adalah payload dari metasploit yang kita curigrai sebelum nya.
+Ternyata IP yang  mentriger proses tersebut adalah ip 
+<b>192.168.88.44</b></p>
+
+<h2 id="pertanyaan-nomor-5-nbsp-apakah-tipe-malware-yang-menginfeksi-komputer-tersebut">Pertanyaan nomor 5 :  Apakah tipe malware yang menginfeksi komputer tersebut</h2>
+<p>Untuk mengetahui tipe dari malware yang menginfeksi tentu kita bisa menggunakan anti virus, dan agar bisa di scan menggunakan anti virus tentu malware tersebut harus ada, oleh karena itu kita bisa dump malware tersebut dengan Plugin 
+<code class="highlighter-rouge">procdump</code></p>
+
+<p>Ingat !! proses mencurigakan yang kita kumpulkan pada soal nomor 2 adalah  
+<i>wscript.exe</i> pada pid 584, 
+<i>metsvc.exe</i> pada pid 1644 serta 
+<i>qNPEwOBAwGzOSN.</i> Pada pid 1760, tapi disini kita hanya perlu 
+<i>dump</i> file  metsvc.exe dan qNPEwOBAwGzOSN. Karena wscript tersebut ada karena adanya file trojan.exe tadi sehingga wscript menciptakan proses qNPEwOBAwGzOSN.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">vol -f RAM.mem --profile<span class="o">=</span>WinXPSP2x86 procdump -p 1644,1760 -D virus</code></pre></figure>
+
+<div class="separator" style="clear: both; text-align: center;">
+	<a href="https://1.bp.blogspot.com/-49vY6oDhsqo/VuuQ9pQ7pRI/AAAAAAAAA8s/vy9GkOuHAnAC9gJYQKO6MWNbKIK2uERJA/s1600/image5.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+		<img border="0" src="https://1.bp.blogspot.com/-49vY6oDhsqo/VuuQ9pQ7pRI/AAAAAAAAA8s/vy9GkOuHAnAC9gJYQKO6MWNbKIK2uERJA/s1600/image5.png" />
+	</a>
+</div>
+<p>Output dari dump tersebut berada pada directory virus. Selanjutnya mari kita scanning dengan http://virustotal.com/</p>
+
+<p><b>Hasil Scan Virustotal : </b></p>
+
+<p>executable.1644.exe
+Detection ratio:
+16 / 57</p>
+
+<p>https://www.virustotal.com/en/file/065d005d090ebbf6376907bcda3341d6a2fd1b3199ce1045221f55ab6313e147/analysis/</p>
+
+<p>executable.1760.exe
+Detection ratio:
+44 / 55</p>
+
+<p>https://www.virustotal.com/en/file/3e8719442ab0bc70bf4cc76da0052e57fbd1dcaac57a7b5738661b81299c67b0/analysis/</p>
+
+<p>Tipe malware tersebut adalah 
+<b>Trojan</b></p>
+
+<p>Pertanyaan nomor nomor 6 : Apakah dikomputer tersebut terinstall antivirus 
+Untuk melihat apakah dikomputer ini terinstall antivirus kita bisa menggunakan plugin shimcache</p>
+
+<blockquote class="tr_bq">vol -f RAM.mem --profile=WinXPSP2x86 shimcache</blockquote>
+<div class="separator" style="clear: both; text-align: center;">
+	<a href="https://1.bp.blogspot.com/-BWvw2eyyelc/VuuRALhqoFI/AAAAAAAAA8w/o1HsNYtuaW8pMp0D0552_oWMlraxZtG9g/s1600/image6.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+		<img border="0" src="https://1.bp.blogspot.com/-BWvw2eyyelc/VuuRALhqoFI/AAAAAAAAA8w/o1HsNYtuaW8pMp0D0552_oWMlraxZtG9g/s1600/image6.png" />
+	</a>
+</div>
+<p>Ternyata komputer tersebut menggunakan 
+<b>Anti-Virus Kaspersky Internet Security.</b></p>
+
+<h2 id="pertanyaan-nomornbsp-7--temukan-aplikasi-atau-service-yang-vulnerable-yang-mungkin-dimanfaatkan-oleh-si-hacker-untuk-masuk-ke-dalam-komputer-tersebut">Pertanyaan nomor  7 : Temukan aplikasi atau service yang “vulnerable” yang mungkin dimanfaatkan oleh si hacker untuk masuk ke dalam komputer tersebut</h2>
+
+<p>Sebenar nya saya bingung untuk menjawab pertanyaan ini karena pengetahuan saya yang masih kurang, kita dilihat dari proses yang running tidak melihat adanya vulnerable applications, tapi untuk mengecek service nya bisa menggunakan plugin svcscan.</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">vol -f RAM.mem --profile<span class="o">=</span>WinXPSP2x86 svcscan</code></pre></figure>
+
+<div class="separator" style="clear: both; text-align: center;">
+	<a href="https://1.bp.blogspot.com/-a76IRYwxMOI/VuuRB-Oh8-I/AAAAAAAAA80/jYStHcwYILoiFTTiPdES8-x8aPKH8oWbQ/s1600/image7.png" imageanchor="1" style="margin-left: 1em; margin-right: 1em;">
+		<img border="0" src="https://1.bp.blogspot.com/-a76IRYwxMOI/VuuRB-Oh8-I/AAAAAAAAA80/jYStHcwYILoiFTTiPdES8-x8aPKH8oWbQ/s1600/image7.png" />
+	</a>
+</div>
+<p>Pada service metsvc tersebut tercipta karena ada nya payload metasploit yang dieksekusi pada komputer korban. Jadi saya simpulkan bahwa service yang vulnrable itu metsvc nya</p>
+
+<p>Untuk pertanyaan bonus nomor 8 masih menjadi misteri, karena sampai saat ini saya belum bisa mengambil file tersebut, file yang dimaksud adalah file account.txt yang terletak di C:/Documents and Settings/WINVICTIM/My Documents/</p>
+
+<p><b>Akhir kata..</b></p>
+
+<p>Semoga tutorial ini dapat bermanfaat bagi kita semua dan mohon maaf apabila ada yang salah dalam pemberian definisi</p>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/Digital Forensic">Digital Forensic</a>
+</section>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+      <a href="//www.facebook.com/sharer.php?t=Tutorial+Memory+Forensic+Dengan+Volatility&u=https%3A%2F%2Frhama.my.id%2Fdigital%2520forensic%2F2016%2F03%2F18%2Fmemory-forensic-dengan-volatility.html"
+        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+        <i class="fa fa-facebook-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('https://rhama.my.id/digital%20forensic/2016/03/18/memory-forensic-dengan-volatility.html') + '&title=Tutorial Memory Forensic Dengan Volatility'; return false">
+        <i class="fa fa-reddit-square fa-lg"></i>
+      </a>
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">CTF.Ninja</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+          <li class="nav-link"><a href="/about/">About</a>
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Archives</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:r4m@protonmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">r4m@protonmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://www.facebook.com/eat.sleep.pwn.repeat" title="Friend me on Facebook">
+              <i class="fa fa-facebook"></i>
+              <span class="username">eat.sleep.pwn.repeat</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">CTF, InfoSec, Banana And More.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>
