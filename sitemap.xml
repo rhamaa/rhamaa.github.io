@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://rhama.my.id/2017/12/05/tpctf-2017-write-up.html</loc>
+<lastmod>2017-12-05T00:00:00+07:00</lastmod>
+</url>
+<url>
 <loc>https://rhama.my.id/ctf/2017/12/03/juniorsctf-2017.html</loc>
 <lastmod>2017-12-03T00:00:00+07:00</lastmod>
 </url>

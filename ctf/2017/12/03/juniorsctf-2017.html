@@ -201,11 +201,11 @@ word/media/flag.png
 
 <p>Ganti opcode yang akan memanggil fungsi <code class="highlighter-rouge">connect_timeserver</code> menjadi <code class="highlighter-rouge">nop</code>.</p>
 
-<p><img src="/img/juniorsCTF2017/horseanim1.png" alt="" /></p>
+<p><img src="/img/juniorsctf2017/horseanim1.png" alt="" /></p>
 
 <p>Dan intruksi <code class="highlighter-rouge">jbe ( jum if bellow or equal)</code> menjadi <code class="highlighter-rouge">jne atau jnz</code>. Sehingga akan masuk ke fungsi <code class="highlighter-rouge">you_get_flag</code>.</p>
 
-<p><img src="/img/juniorsCTF2017/horseanim2.png" alt="" /></p>
+<p><img src="/img/juniorsctf2017/horseanim2.png" alt="" /></p>
 
 <p>Apply Patch nya, lalu jalankan.</p>
 
@@ -290,6 +290,185 @@ Password user tidak diberikan. Oleh karena itu, untuk masuk saya mengubah <em>Bo
 <p>Terdapat berbagai file, tapi setelah di cek, file yang terdapat Flag nya adalah file bernama <code class="highlighter-rouge">ris.svg.gz</code></p>
 
 <h4 id="flag--horsesgobacktothestables">Flag : HorsesGoBackToTheStables</h4>
+
+<h2 id="admin-forensic">Admin Forensic</h2>
+<h3 id="typical-admin-but">Typical Admin, but…</h3>
+
+<p>Diberikan sebuah url github <a href="https://github.com/MierBen/TM-Patch.git">TM-PATCH</a>, terdapat file bernama <code class="highlighter-rouge">main.go</code> yang telah dicommit, dan repository nya memiliki sekitar 108 branch.</p>
+
+<p>Saya pull semua branch nya dengan script berikut.</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="k">for </span>i <span class="k">in</span> <span class="k">$(</span>seq 1 108<span class="k">)</span>; <span class="k">do
+  </span>git pull https://github.com/MierBen/TM-Patch.git <span class="k">${</span><span class="nv">i</span><span class="k">}</span>
+<span class="k">done</span>
+</code></pre>
+</div>
+
+<p>Karena saya sangat awam dengan git, saya menggunakan tool bernama <code class="highlighter-rouge">tig</code> untuk copy manual source code nya.. wkwkwk</p>
+
+<p><img src="/img/juniorsctf2017/typical_tig.png" alt="" /></p>
+
+<p>Setelah copy susun dan dirapihkan menggunakan <em>Go Beautifier</em> didapatkan source main.go</p>
+
+<div class="language-go highlighter-rouge"><pre class="highlight"><code><span class="k">package</span><span class="x"> </span><span class="n">main</span><span class="x">
+</span><span class="k">import</span><span class="x"> </span><span class="p">(</span><span class="s">"fmt"</span><span class="x">
+        </span><span class="s">"encoding/base64"</span><span class="x">
+        </span><span class="s">"os"</span><span class="x">
+        </span><span class="s">"strings"</span><span class="x">
+        </span><span class="s">"archive/tar"</span><span class="x">
+        </span><span class="s">"io"</span><span class="x">
+        </span><span class="s">"compress/gzip"</span><span class="x">
+        </span><span class="s">"strconv"</span><span class="p">)</span><span class="x">
+
+
+</span><span class="k">var</span><span class="x"> </span><span class="n">MAGIC</span><span class="x"> </span><span class="kt">int</span><span class="x">
+
+</span><span class="k">func</span><span class="x"> </span><span class="n">main</span><span class="p">()</span><span class="x"> </span><span class="p">{</span><span class="x">
+        </span><span class="n">f</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">os</span><span class="o">.</span><span class="n">OpenFile</span><span class="p">(</span><span class="s">"flag.tar.gz"</span><span class="p">,</span><span class="x"> </span><span class="n">os</span><span class="o">.</span><span class="n">O_RDONLY</span><span class="p">,</span><span class="x"> </span><span class="m">0444</span><span class="p">)</span><span class="x">
+        </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+            </span><span class="nb">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+        </span><span class="p">}</span><span class="x">
+
+        </span><span class="n">gr</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">gzip</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span><span class="x">
+
+        </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+            </span><span class="nb">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+        </span><span class="p">}</span><span class="x">
+
+        </span><span class="n">tr</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">tar</span><span class="o">.</span><span class="n">NewReader</span><span class="p">(</span><span class="n">gr</span><span class="p">)</span><span class="x">
+        </span><span class="k">for</span><span class="x"> </span><span class="p">{</span><span class="x">
+            </span><span class="n">hdr</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">tr</span><span class="o">.</span><span class="n">Next</span><span class="p">()</span><span class="x">
+            </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="n">io</span><span class="o">.</span><span class="n">EOF</span><span class="x"> </span><span class="p">{</span><span class="x">
+                </span><span class="k">break</span><span class="x">
+            </span><span class="p">}</span><span class="x">
+            </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+                </span><span class="nb">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+            </span><span class="p">}</span><span class="x">
+            </span><span class="n">path</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">hdr</span><span class="o">.</span><span class="n">Name</span><span class="x">
+            </span><span class="k">switch</span><span class="x"> </span><span class="n">hdr</span><span class="o">.</span><span class="n">Typeflag</span><span class="x"> </span><span class="p">{</span><span class="x">
+                    </span><span class="k">case</span><span class="x"> </span><span class="n">tar</span><span class="o">.</span><span class="n">TypeDir</span><span class="o">:</span><span class="x">
+                        </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">os</span><span class="o">.</span><span class="n">MkdirAll</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="x"> </span><span class="n">os</span><span class="o">.</span><span class="n">FileMode</span><span class="p">(</span><span class="n">hdr</span><span class="o">.</span><span class="n">Mode</span><span class="p">));</span><span class="x">
+                        </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+                            </span><span class="nb">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+                        </span><span class="p">}</span><span class="x">
+                    </span><span class="k">case</span><span class="x"> </span><span class="n">tar</span><span class="o">.</span><span class="n">TypeReg</span><span class="o">:</span><span class="x">
+                        </span><span class="n">ow</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">os</span><span class="o">.</span><span class="n">OpenFile</span><span class="p">(</span><span class="n">path</span><span class="p">,</span><span class="x"> </span><span class="n">os</span><span class="o">.</span><span class="n">O_RDWR</span><span class="x"> </span><span class="o">|</span><span class="x"> </span><span class="n">os</span><span class="o">.</span><span class="n">O_TRUNC</span><span class="p">,</span><span class="x"> </span><span class="m">0777</span><span class="p">)</span><span class="x">
+                        </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+                            </span><span class="n">ow</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">os</span><span class="o">.</span><span class="n">Create</span><span class="p">(</span><span class="n">path</span><span class="p">)</span><span class="x">
+                            </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                </span><span class="nb">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+                            </span><span class="p">}</span><span class="x">
+                            </span><span class="k">if</span><span class="x"> </span><span class="n">_</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">io</span><span class="o">.</span><span class="n">Copy</span><span class="p">(</span><span class="n">ow</span><span class="p">,</span><span class="x"> </span><span class="n">tr</span><span class="p">);</span><span class="x">
+                            </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                </span><span class="nb">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+                            </span><span class="p">}</span><span class="x">
+                            </span><span class="n">ow</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span><span class="x">
+                        </span><span class="p">}</span><span class="x">
+                        </span><span class="n">gr</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span><span class="x">
+                        </span><span class="n">f</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span><span class="x">
+                        </span><span class="n">file</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">os</span><span class="o">.</span><span class="n">OpenFile</span><span class="p">(</span><span class="s">"morse_flag"</span><span class="p">,</span><span class="x"> </span><span class="n">os</span><span class="o">.</span><span class="n">O_RDONLY</span><span class="p">,</span><span class="x"> </span><span class="m">0444</span><span class="p">)</span><span class="x">
+                        </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+                            </span><span class="nb">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+                        </span><span class="p">}</span><span class="x">
+                        </span><span class="n">stat</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">file</span><span class="o">.</span><span class="n">Stat</span><span class="p">()</span><span class="x">
+                        </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+                            </span><span class="nb">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+                        </span><span class="p">}</span><span class="x">
+                        </span><span class="n">data</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">make</span><span class="p">([]</span><span class="x"> </span><span class="kt">byte</span><span class="p">,</span><span class="x"> </span><span class="n">stat</span><span class="o">.</span><span class="n">Size</span><span class="p">())</span><span class="x">
+                        </span><span class="n">_</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">file</span><span class="o">.</span><span class="n">Read</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="x">
+                        </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+                            </span><span class="nb">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+                        </span><span class="p">}</span><span class="x">
+                        </span><span class="n">file</span><span class="o">.</span><span class="n">Close</span><span class="p">()</span><span class="x">
+                        </span><span class="n">splStr</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">strings</span><span class="o">.</span><span class="n">Split</span><span class="p">(</span><span class="kt">string</span><span class="p">(</span><span class="n">data</span><span class="p">),</span><span class="x"> </span><span class="s">" "</span><span class="p">)</span><span class="x">
+                        </span><span class="k">var</span><span class="x"> </span><span class="n">binaryFlag</span><span class="p">[]</span><span class="x"> </span><span class="kt">string</span><span class="x">
+                        </span><span class="k">for</span><span class="x"> </span><span class="n">_</span><span class="p">,</span><span class="x"> </span><span class="n">v</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="k">range</span><span class="x"> </span><span class="n">splStr</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                </span><span class="k">var</span><span class="x"> </span><span class="n">temp</span><span class="p">[]</span><span class="x"> </span><span class="kt">string</span><span class="x">
+                                </span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="k">range</span><span class="x"> </span><span class="n">v</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                    </span><span class="k">if</span><span class="x"> </span><span class="kt">string</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="s">"*"</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                        </span><span class="n">temp</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="x"> </span><span class="s">"1"</span><span class="p">)</span><span class="x">
+                                    </span><span class="p">}</span><span class="x"> </span><span class="k">else</span><span class="x"> </span><span class="k">if</span><span class="x"> </span><span class="kt">string</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="x"> </span><span class="o">==</span><span class="x"> </span><span class="s">"-"</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                        </span><span class="n">temp</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="x"> </span><span class="s">"0"</span><span class="x">
+                                        </span><span class="p">}</span><span class="x"> </span><span class="k">else</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                            </span><span class="k">continue</span><span class="x">
+                                        </span><span class="p">}</span><span class="x">
+                                        </span><span class="n">binaryFlag</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">binaryFlag</span><span class="p">,</span><span class="x"> </span><span class="n">strings</span><span class="o">.</span><span class="n">Join</span><span class="p">(</span><span class="n">temp</span><span class="p">,</span><span class="x"> </span><span class="s">""</span><span class="p">))</span><span class="x">
+                                    </span><span class="p">}</span><span class="x">
+                                    </span><span class="n">binaryFlag</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">binaryFlag</span><span class="p">[</span><span class="o">:</span><span class="x"> </span><span class="nb">len</span><span class="p">(</span><span class="n">binaryFlag</span><span class="p">)</span><span class="x"> </span><span class="o">-</span><span class="x"> </span><span class="m">1</span><span class="p">]</span><span class="x">
+                                    </span><span class="n">encodedFlag</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">make</span><span class="p">([]</span><span class="x"> </span><span class="kt">string</span><span class="p">,</span><span class="x"> </span><span class="nb">len</span><span class="p">(</span><span class="n">binaryFlag</span><span class="p">))</span><span class="x">
+                                    </span><span class="k">for</span><span class="x"> </span><span class="n">i</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="k">range</span><span class="x"> </span><span class="n">binaryFlag</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                        </span><span class="n">temp</span><span class="p">,</span><span class="x"> </span><span class="n">_</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">strconv</span><span class="o">.</span><span class="n">ParseInt</span><span class="p">(</span><span class="n">binaryFlag</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="x"> </span><span class="m">2</span><span class="p">,</span><span class="x"> </span><span class="m">64</span><span class="p">)</span><span class="x">
+                                        </span><span class="n">encodedFlag</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="kt">string</span><span class="p">(</span><span class="n">temp</span><span class="p">)</span><span class="x">
+                                    </span><span class="p">}</span><span class="x">
+                                    </span><span class="n">baseFlag</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">strings</span><span class="o">.</span><span class="n">Join</span><span class="p">(</span><span class="n">encodedFlag</span><span class="p">,</span><span class="x"> </span><span class="s">""</span><span class="p">)</span><span class="x">
+                                    </span><span class="n">unBaseFlag</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">base64</span><span class="o">.</span><span class="n">StdEncoding</span><span class="o">.</span><span class="n">DecodeString</span><span class="p">(</span><span class="n">baseFlag</span><span class="p">)</span><span class="x">
+                                    </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                        </span><span class="nb">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+                                    </span><span class="p">}</span><span class="x">
+                                    </span><span class="k">var</span><span class="x"> </span><span class="n">rotFlag</span><span class="p">[]</span><span class="x"> </span><span class="kt">byte</span><span class="x">
+                                    </span><span class="n">MAGIC</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="m">13</span><span class="x">
+                                    </span><span class="k">for</span><span class="x"> </span><span class="n">_</span><span class="p">,</span><span class="x"> </span><span class="n">v</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="k">range</span><span class="x"> </span><span class="n">unBaseFlag</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                        </span><span class="n">rotFlag</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">rotFlag</span><span class="p">,</span><span class="x"> </span><span class="n">v</span><span class="x"> </span><span class="o">+</span><span class="x"> </span><span class="kt">byte</span><span class="p">(</span><span class="n">MAGIC</span><span class="p">))</span><span class="x">
+                                    </span><span class="p">}</span><span class="x">
+                                    </span><span class="n">deBaseRot</span><span class="p">,</span><span class="x"> </span><span class="n">err</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="n">base64</span><span class="o">.</span><span class="n">StdEncoding</span><span class="o">.</span><span class="n">DecodeString</span><span class="p">(</span><span class="kt">string</span><span class="p">(</span><span class="n">rotFlag</span><span class="p">))</span><span class="x">
+                                    </span><span class="k">if</span><span class="x"> </span><span class="n">err</span><span class="x"> </span><span class="o">!=</span><span class="x"> </span><span class="no">nil</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                        </span><span class="nb">panic</span><span class="p">(</span><span class="n">err</span><span class="p">)</span><span class="x">
+                                    </span><span class="p">}</span><span class="x">
+                                    </span><span class="k">var</span><span class="x"> </span><span class="n">flag</span><span class="p">[]</span><span class="x"> </span><span class="kt">byte</span><span class="x">
+                                    </span><span class="n">MAGIC</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="p">(</span><span class="m">1</span><span class="x"> </span><span class="o">&lt;&lt;</span><span class="x"> </span><span class="m">3</span><span class="p">)</span><span class="x"> </span><span class="o">+</span><span class="x"> </span><span class="p">(</span><span class="m">1</span><span class="x"> </span><span class="o">&lt;&lt;</span><span class="x"> </span><span class="m">5</span><span class="p">)</span><span class="x"> </span><span class="o">-</span><span class="x"> </span><span class="m">1</span><span class="x">
+                                    </span><span class="k">for</span><span class="x"> </span><span class="n">_</span><span class="p">,</span><span class="x"> </span><span class="n">v</span><span class="o">:</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="k">range</span><span class="x"> </span><span class="n">deBaseRot</span><span class="x"> </span><span class="p">{</span><span class="x">
+                                        </span><span class="n">flag</span><span class="x"> </span><span class="o">=</span><span class="x"> </span><span class="nb">append</span><span class="p">(</span><span class="n">flag</span><span class="p">,</span><span class="x"> </span><span class="n">v</span><span class="x"> </span><span class="o">^</span><span class="x"> </span><span class="kt">byte</span><span class="p">(</span><span class="n">MAGIC</span><span class="p">))</span><span class="x">
+                                    </span><span class="p">}</span><span class="x">
+                                    </span><span class="n">fmt</span><span class="o">.</span><span class="n">Print</span><span class="p">(</span><span class="kt">string</span><span class="p">(</span><span class="n">flag</span><span class="p">))</span><span class="x">
+                                </span><span class="p">}</span><span class="x">
+</span></code></pre>
+</div>
+
+<p>Apabila di jalankan mengeluarkan error.</p>
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>go run main.go
+package main: 
+main_BACK.go:2:14: expected <span class="s1">';'</span>, found <span class="s1">','</span>
+main_BACK.go:3:9: expected <span class="s1">';'</span>, found <span class="s1">','</span>
+</code></pre>
+</div>
+
+<p>Karena tidak begitu familier dengan bahasa <code class="highlighter-rouge">Go</code> sehingga saya tidak bisa memperbaikinya, tapi inti nya logika bahasa program itu sama, saya membuat nya dalam bahasa <code class="highlighter-rouge">Python</code> berdasarkan Algoritma main.go untuk menggenerate Flag.
+Berikut script yang digunakan</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">tarfile</span>
+
+<span class="c"># extract flag.tar.gz</span>
+
+<span class="n">tar</span> <span class="o">=</span> <span class="n">tarfile</span><span class="o">.</span><span class="nb">open</span><span class="p">(</span><span class="s">"flag.tar.gz"</span><span class="p">)</span>
+<span class="n">tar</span><span class="o">.</span><span class="n">extractall</span><span class="p">()</span>
+<span class="n">tar</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+<span class="c"># open morse_flag</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"morse_flag"</span><span class="p">)</span> <span class="k">as</span> <span class="n">morse_tmp</span><span class="p">:</span>
+  <span class="n">morse_tmp</span> <span class="o">=</span> <span class="n">morse_tmp</span><span class="o">.</span><span class="n">read</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+
+<span class="n">morse_flag</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="s">""</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">morse_tmp</span><span class="p">:</span>
+  <span class="n">tmp</span> <span class="o">=</span> <span class="n">i</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"*"</span><span class="p">,</span><span class="s">"1"</span><span class="p">)</span>
+  <span class="n">tmp</span> <span class="o">=</span> <span class="n">tmp</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s">"-"</span><span class="p">,</span><span class="s">"0"</span><span class="p">)</span>
+  <span class="n">morse_flag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tmp</span><span class="p">)</span>
+
+<span class="n">unbase</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="mi">2</span><span class="p">),</span> <span class="n">morse_flag</span><span class="p">)</span>
+<span class="n">unbase</span> <span class="o">=</span> <span class="s">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">unbase</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"base64"</span><span class="p">)</span>
+
+<span class="n">rotFlag</span> <span class="o">=</span> <span class="s">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">+</span> <span class="mi">13</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">unbase</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s">"base64"</span><span class="p">)</span>
+
+<span class="n">MAGIC</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span> <span class="c"># == 39</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="o">^</span> <span class="n">MAGIC</span><span class="p">)</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">rotFlag</span><span class="p">)</span>
+<span class="k">print</span> <span class="s">'Flag : {}'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">flag</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<p>Setelah dijalankan akan mendapatkan Flag.</p>
+<h4 id="flag--itsohardtoprogsolo">Flag : ItSoHardToProgSolo</h4>
 
 </article>
 
