@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>pwnable.kr - random</title>
+  <meta name="description" content="Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code">
+  
+  <meta name="author" content="rhama">
+  <meta name="copyright" content="&copy; rhama 2018">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+<!--   <meta property="og:description" content="Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code" />
+  <meta property="og:url" content="https://rhama.my.id" />
+  <meta property="og:site_name" content="CTF.Ninja" />
+  <meta property="og:title" content="pwnable.kr - random" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://rhama.my.id/assets/images/ctf.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" /> -->
+<meta content="https://rhama.my.id/assets/images/ctf.png" property="og:image" />
+<meta content="CTF.Ninja" property="og:site_name" />
+<meta content="object" property="og:type" />
+<meta content="pwnable.kr - random" property="og:title" />
+<meta content="https://rhama.my.id/ctf/reverse%20engineering/2016/12/21/pwnable.kr-random.html" property="og:url" />
+<meta content="Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code" property="og:description" />
+
+  
+
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+   <link rel="stylesheet" href="/css/terminal.css">
+  <link rel="canonical" href="https://rhama.my.id/ctf/reverse%20engineering/2016/12/21/pwnable.kr-random.html">
+  <link rel="alternate" type="application/rss+xml" title="CTF.Ninja" href="https://rhama.my.id/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="CTF.Ninja">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/about/">About</a>
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Archives</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container has-cover" style="background-image: url(/assets/images/ctf.png);">
+  <div class="scrim has-cover">
+    <header class="post-header">
+      <h1 class="title">pwnable.kr - random</h1>
+      <p class="info">by <strong>Aiden Pearce</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+
+
+<section class="post-meta">
+  <div class="post-date">December 21, 2016</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/CTF">Ctf</a>, 
+    
+  
+    
+    <a href="/category/Reverse Engineering">Reverse engineering</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <p>Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="cp">#include &lt;stdio.h&gt;
+</span>
+<span class="kt">int</span> <span class="n">main</span><span class="p">(){</span>
+	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">random</span><span class="p">;</span>
+	<span class="n">random</span> <span class="o">=</span> <span class="n">rand</span><span class="p">();</span>	<span class="c1">// random value!
+</span>
+	<span class="kt">unsigned</span> <span class="kt">int</span> <span class="n">key</span><span class="o">=</span><span class="mi">0</span><span class="p">;</span>
+	<span class="n">scanf</span><span class="p">(</span><span class="s">"%d"</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">key</span><span class="p">);</span>
+
+	<span class="k">if</span><span class="p">(</span> <span class="p">(</span><span class="n">key</span> <span class="o">^</span> <span class="n">random</span><span class="p">)</span> <span class="o">==</span> <span class="mh">0xdeadbeef</span> <span class="p">){</span>
+		<span class="n">printf</span><span class="p">(</span><span class="s">"Good!</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+		<span class="n">system</span><span class="p">(</span><span class="s">"/bin/cat flag"</span><span class="p">);</span>
+		<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+	<span class="p">}</span>
+
+	<span class="n">printf</span><span class="p">(</span><span class="s">"Wrong, maybe you should try 2^32 cases.</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+	<span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>Fungsi rand() akan mengembalikan nilai pseudo-random antara 0 dan RAND_MAX. Value dari fungsi rand() akan disimpan pada variable random, dan terdapat variable key yang menampung user input sehingga pada kondisi if dilakukan <em>XOR</em> antara key ^ random jika hasil nya 0xdeadbeef akan mendapatkan flag. *Apabila belum mengerti tentang <em>XOR Encryption</em> dapat melihat video dari <a href="https://www.youtube.com/watch?v=j3ya6t3Zfrs">Cyber Security IPB</a></p>
+
+<h1 id="proof-of-concept">Proof Of Concept</h1>
+<p>Saya menggunakan gdb dengan plugin peda.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">root</span><span class="err">@</span><span class="n">linux</span> <span class="o">~</span><span class="err">#</span> <span class="n">gdb</span> <span class="o">-</span><span class="n">q</span> <span class="n">random</span>
+<span class="n">Reading</span> <span class="n">symbols</span> <span class="n">from</span> <span class="n">random</span><span class="p">...(</span><span class="n">no</span> <span class="n">debugging</span> <span class="n">symbols</span> <span class="n">found</span><span class="p">)...</span><span class="n">done</span><span class="p">.</span>
+<span class="n">gdb</span><span class="o">-</span><span class="n">peda</span><span class="err">$</span> <span class="n">disass</span> <span class="n">main</span>
+<span class="n">Dump</span> <span class="n">of</span> <span class="n">assembler</span> <span class="n">code</span> <span class="k">for</span> <span class="n">function</span> <span class="n">main</span><span class="o">:</span>
+   <span class="mh">0x00000000004005f4</span> <span class="o">&lt;+</span><span class="mi">0</span><span class="o">&gt;:</span>	<span class="n">push</span>   <span class="n">rbp</span>
+   <span class="mh">0x00000000004005f5</span> <span class="o">&lt;+</span><span class="mi">1</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">rbp</span><span class="p">,</span><span class="n">rsp</span>
+   <span class="mh">0x00000000004005f8</span> <span class="o">&lt;+</span><span class="mi">4</span><span class="o">&gt;:</span>	<span class="n">sub</span>    <span class="n">rsp</span><span class="p">,</span><span class="mh">0x10</span>
+   <span class="mh">0x00000000004005fc</span> <span class="o">&lt;+</span><span class="mi">8</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+   <span class="mh">0x0000000000400601</span> <span class="o">&lt;+</span><span class="mi">13</span><span class="o">&gt;:</span>	<span class="n">call</span>   <span class="mh">0x400500</span> <span class="o">&lt;</span><span class="n">rand</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
+   <span class="mh">0x0000000000400606</span> <span class="o">&lt;+</span><span class="mi">18</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x4</span><span class="p">],</span><span class="n">eax</span> <span class="p">;</span> <span class="n">Pasang</span> <span class="n">breakpoint</span> <span class="n">disini</span>
+   <span class="mh">0x0000000000400609</span> <span class="o">&lt;+</span><span class="mi">21</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x8</span><span class="p">],</span><span class="mh">0x0</span>
+   <span class="mh">0x0000000000400610</span> <span class="o">&lt;+</span><span class="mi">28</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x400760</span>
+   <span class="mh">0x0000000000400615</span> <span class="o">&lt;+</span><span class="mi">33</span><span class="o">&gt;:</span>	<span class="n">lea</span>    <span class="n">rdx</span><span class="p">,[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x8</span><span class="p">]</span>
+   <span class="mh">0x0000000000400619</span> <span class="o">&lt;+</span><span class="mi">37</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">rsi</span><span class="p">,</span><span class="n">rdx</span>
+   <span class="mh">0x000000000040061c</span> <span class="o">&lt;+</span><span class="mi">40</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">rdi</span><span class="p">,</span><span class="n">rax</span>
+   <span class="mh">0x000000000040061f</span> <span class="o">&lt;+</span><span class="mi">43</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+   <span class="mh">0x0000000000400624</span> <span class="o">&lt;+</span><span class="mi">48</span><span class="o">&gt;:</span>	<span class="n">call</span>   <span class="mh">0x4004f0</span> <span class="o">&lt;</span><span class="n">__isoc99_scanf</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
+   <span class="mh">0x0000000000400629</span> <span class="o">&lt;+</span><span class="mi">53</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x8</span><span class="p">]</span>
+   <span class="mh">0x000000000040062c</span> <span class="o">&lt;+</span><span class="mi">56</span><span class="o">&gt;:</span>	<span class="n">xor</span>    <span class="n">eax</span><span class="p">,</span><span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x4</span><span class="p">]</span>
+   <span class="mh">0x000000000040062f</span> <span class="o">&lt;+</span><span class="mi">59</span><span class="o">&gt;:</span>	<span class="n">cmp</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0xdeadbeef</span>
+   <span class="mh">0x0000000000400634</span> <span class="o">&lt;+</span><span class="mi">64</span><span class="o">&gt;:</span>	<span class="n">jne</span>    <span class="mh">0x400656</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">98</span><span class="o">&gt;</span>
+   <span class="mh">0x0000000000400636</span> <span class="o">&lt;+</span><span class="mi">66</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">edi</span><span class="p">,</span><span class="mh">0x400763</span>
+   <span class="mh">0x000000000040063b</span> <span class="o">&lt;+</span><span class="mi">71</span><span class="o">&gt;:</span>	<span class="n">call</span>   <span class="mh">0x4004c0</span> <span class="o">&lt;</span><span class="n">puts</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
+   <span class="mh">0x0000000000400640</span> <span class="o">&lt;+</span><span class="mi">76</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">edi</span><span class="p">,</span><span class="mh">0x400769</span>
+   <span class="mh">0x0000000000400645</span> <span class="o">&lt;+</span><span class="mi">81</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+   <span class="mh">0x000000000040064a</span> <span class="o">&lt;+</span><span class="mi">86</span><span class="o">&gt;:</span>	<span class="n">call</span>   <span class="mh">0x4004d0</span> <span class="o">&lt;</span><span class="n">system</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
+   <span class="mh">0x000000000040064f</span> <span class="o">&lt;+</span><span class="mi">91</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+   <span class="mh">0x0000000000400654</span> <span class="o">&lt;+</span><span class="mi">96</span><span class="o">&gt;:</span>	<span class="n">jmp</span>    <span class="mh">0x400665</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">113</span><span class="o">&gt;</span>
+   <span class="mh">0x0000000000400656</span> <span class="o">&lt;+</span><span class="mi">98</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">edi</span><span class="p">,</span><span class="mh">0x400778</span>
+   <span class="mh">0x000000000040065b</span> <span class="o">&lt;+</span><span class="mi">103</span><span class="o">&gt;:</span>	<span class="n">call</span>   <span class="mh">0x4004c0</span> <span class="o">&lt;</span><span class="n">puts</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
+   <span class="mh">0x0000000000400660</span> <span class="o">&lt;+</span><span class="mi">108</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+   <span class="mh">0x0000000000400665</span> <span class="o">&lt;+</span><span class="mi">113</span><span class="o">&gt;:</span>	<span class="n">leave</span>  
+   <span class="mh">0x0000000000400666</span> <span class="o">&lt;+</span><span class="mi">114</span><span class="o">&gt;:</span>	<span class="n">ret</span>    
+<span class="n">End</span> <span class="n">of</span> <span class="n">assembler</span> <span class="n">dump</span><span class="p">.</span>
+<span class="n">gdb</span><span class="o">-</span><span class="n">peda</span><span class="err">$</span> <span class="n">b</span> <span class="o">*</span><span class="mh">0x0000000000400606</span>
+<span class="n">Breakpoint</span> <span class="mi">1</span> <span class="n">at</span> <span class="mh">0x400606</span>
+<span class="n">gdb</span><span class="o">-</span><span class="n">peda</span><span class="err">$</span> <span class="n">r</span>
+<span class="n">Starting</span> <span class="n">program</span><span class="o">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">rhama</span><span class="o">/</span><span class="n">challenge</span><span class="o">/</span><span class="n">pwnable</span><span class="o">/</span><span class="n">random</span> 
+
+ <span class="p">[</span><span class="o">----------------------------------</span><span class="n">registers</span><span class="o">-----------------------------------</span><span class="p">]</span>
+<span class="n">RAX</span><span class="o">:</span> <span class="mh">0x6b8b4567</span> <span class="p">;</span> <span class="n">nilai</span> <span class="n">dari</span> <span class="n">rand</span><span class="p">()</span>
+<span class="n">RBX</span><span class="o">:</span> <span class="mh">0x0</span> 
+<span class="n">RCX</span><span class="o">:</span> <span class="mh">0x7f2b52c1e0a4</span> <span class="o">--&gt;</span> <span class="mh">0x16a5bce3991539b1</span> 
+<span class="n">RDX</span><span class="o">:</span> <span class="mh">0x7f2b52c1e0a8</span> <span class="o">--&gt;</span> <span class="mh">0x6774a4cd16a5bce3</span> 
+<span class="n">RSI</span><span class="o">:</span> <span class="mh">0x7fff8fc822fc</span> <span class="o">--&gt;</span> <span class="mh">0x6b8b4567</span> 
+<span class="n">RDI</span><span class="o">:</span> <span class="mh">0x7f2b52c1e620</span> <span class="o">--&gt;</span> <span class="mh">0x7f2b52c1e0b4</span> <span class="o">--&gt;</span> <span class="mh">0x61048c054e508aaa</span> 
+<span class="n">RBP</span><span class="o">:</span> <span class="mh">0x7fff8fc82330</span> <span class="o">--&gt;</span> <span class="mh">0x400670</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">__libc_csu_init</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">QWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rsp</span><span class="o">-</span><span class="mh">0x28</span><span class="p">],</span><span class="n">rbp</span><span class="p">)</span>
+<span class="n">RSP</span><span class="o">:</span> <span class="mh">0x7fff8fc82320</span> <span class="o">--&gt;</span> <span class="mh">0x7fff8fc82410</span> <span class="o">--&gt;</span> <span class="mh">0x1</span> 
+<span class="n">RIP</span><span class="o">:</span> <span class="mh">0x400606</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">18</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x4</span><span class="p">],</span><span class="n">eax</span><span class="p">)</span>
+<span class="n">R8</span> <span class="o">:</span> <span class="mh">0x7f2b52c1e0a4</span> <span class="o">--&gt;</span> <span class="mh">0x16a5bce3991539b1</span> 
+<span class="n">R9</span> <span class="o">:</span> <span class="mh">0x7f2b52c1e120</span> <span class="o">--&gt;</span> <span class="mh">0x8</span> 
+<span class="n">R10</span><span class="o">:</span> <span class="mh">0x47f</span> 
+<span class="n">R11</span><span class="o">:</span> <span class="mh">0x7f2b52895f60</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">rand</span><span class="o">&gt;:</span>	<span class="n">sub</span>    <span class="n">rsp</span><span class="p">,</span><span class="mh">0x8</span><span class="p">)</span>
+<span class="n">R12</span><span class="o">:</span> <span class="mh">0x400510</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">_start</span><span class="o">&gt;:</span>	<span class="n">xor</span>    <span class="n">ebp</span><span class="p">,</span><span class="n">ebp</span><span class="p">)</span>
+<span class="n">R13</span><span class="o">:</span> <span class="mh">0x7fff8fc82410</span> <span class="o">--&gt;</span> <span class="mh">0x1</span> 
+<span class="n">R14</span><span class="o">:</span> <span class="mh">0x0</span> 
+<span class="n">R15</span><span class="o">:</span> <span class="mh">0x0</span>
+<span class="n">EFLAGS</span><span class="o">:</span> <span class="mh">0x206</span> <span class="p">(</span><span class="n">carry</span> <span class="n">PARITY</span> <span class="n">adjust</span> <span class="n">zero</span> <span class="n">sign</span> <span class="n">trap</span> <span class="n">INTERRUPT</span> <span class="n">direction</span> <span class="n">overflow</span><span class="p">)</span>
+<span class="p">[</span><span class="o">-------------------------------------</span><span class="n">code</span><span class="o">-------------------------------------</span><span class="p">]</span>
+   <span class="mh">0x4005f8</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">4</span><span class="o">&gt;:</span>	<span class="n">sub</span>    <span class="n">rsp</span><span class="p">,</span><span class="mh">0x10</span>
+   <span class="mh">0x4005fc</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">8</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x0</span>
+   <span class="mh">0x400601</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">13</span><span class="o">&gt;:</span>	<span class="n">call</span>   <span class="mh">0x400500</span> <span class="o">&lt;</span><span class="n">rand</span><span class="err">@</span><span class="n">plt</span><span class="o">&gt;</span>
+<span class="o">=&gt;</span> <span class="mh">0x400606</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">18</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x4</span><span class="p">],</span><span class="n">eax</span>
+   <span class="mh">0x400609</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">21</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">DWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x8</span><span class="p">],</span><span class="mh">0x0</span>
+   <span class="mh">0x400610</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">28</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">eax</span><span class="p">,</span><span class="mh">0x400760</span>
+   <span class="mh">0x400615</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">33</span><span class="o">&gt;:</span>	<span class="n">lea</span>    <span class="n">rdx</span><span class="p">,[</span><span class="n">rbp</span><span class="o">-</span><span class="mh">0x8</span><span class="p">]</span>
+   <span class="mh">0x400619</span> <span class="o">&lt;</span><span class="n">main</span><span class="o">+</span><span class="mi">37</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">rsi</span><span class="p">,</span><span class="n">rdx</span>
+<span class="p">[</span><span class="o">------------------------------------</span><span class="n">stack</span><span class="o">-------------------------------------</span><span class="p">]</span>
+<span class="mo">0000</span><span class="o">|</span> <span class="mh">0x7fff8fc82320</span> <span class="o">--&gt;</span> <span class="mh">0x7fff8fc82410</span> <span class="o">--&gt;</span> <span class="mh">0x1</span> 
+<span class="mo">000</span><span class="mi">8</span><span class="o">|</span> <span class="mh">0x7fff8fc82328</span> <span class="o">--&gt;</span> <span class="mh">0x0</span> 
+<span class="mo">0016</span><span class="o">|</span> <span class="mh">0x7fff8fc82330</span> <span class="o">--&gt;</span> <span class="mh">0x400670</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">__libc_csu_init</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">QWORD</span> <span class="n">PTR</span> <span class="p">[</span><span class="n">rsp</span><span class="o">-</span><span class="mh">0x28</span><span class="p">],</span><span class="n">rbp</span><span class="p">)</span>
+<span class="mo">0024</span><span class="o">|</span> <span class="mh">0x7fff8fc82338</span> <span class="o">--&gt;</span> <span class="mh">0x7f2b5287b830</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">__libc_start_main</span><span class="o">+</span><span class="mi">240</span><span class="o">&gt;:</span>	<span class="n">mov</span>    <span class="n">edi</span><span class="p">,</span><span class="n">eax</span><span class="p">)</span>
+<span class="mo">0032</span><span class="o">|</span> <span class="mh">0x7fff8fc82340</span> <span class="o">--&gt;</span> <span class="mh">0x0</span> 
+<span class="mo">0040</span><span class="o">|</span> <span class="mh">0x7fff8fc82348</span> <span class="o">--&gt;</span> <span class="mh">0x7fff8fc82418</span> <span class="o">--&gt;</span> <span class="mh">0x7fff8fc83302</span> <span class="p">(</span><span class="s">"/home/rhama/challenge/pwnable/random"</span><span class="p">)</span>
+<span class="mo">004</span><span class="mi">8</span><span class="o">|</span> <span class="mh">0x7fff8fc82350</span> <span class="o">--&gt;</span> <span class="mh">0x100000000</span> 
+<span class="mo">0056</span><span class="o">|</span> <span class="mh">0x7fff8fc82358</span> <span class="o">--&gt;</span> <span class="mh">0x4005f4</span> <span class="p">(</span><span class="o">&lt;</span><span class="n">main</span><span class="o">&gt;:</span>	<span class="n">push</span>   <span class="n">rbp</span><span class="p">)</span>
+<span class="p">[</span><span class="o">------------------------------------------------------------------------------</span><span class="p">]</span>
+<span class="n">Legend</span><span class="o">:</span> <span class="n">code</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">rodata</span><span class="p">,</span> <span class="n">value</span>
+
+<span class="n">Breakpoint</span> <span class="mi">1</span><span class="p">,</span> <span class="mh">0x0000000000400606</span> <span class="n">in</span> <span class="n">main</span> <span class="p">()</span></code></pre></figure>
+
+<p>Didapatkan nilai 0x6b8b4567 atau 180428983 dalam desimal yang tersimpan dalam register RAX</p>
+
+<p>Karena kondisi if( (key ^ random) == 0xdeadbeef ), langkah selanjut nya adalah melakukan XORING antara random dan 0xdeadbeef untuk mendapatkan key dari XOR.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">root</span><span class="err">@</span><span class="n">linux</span> <span class="o">~</span><span class="err">#</span> <span class="n">python</span> <span class="o">-</span><span class="n">c</span> <span class="s">"print 0x6b8b4567 ^ 0xdeadbeef"</span>
+<span class="mi">3039230856</span></code></pre></figure>
+
+<p>Didapatkan key 3039230856 yang dapat digunakan untuk mendapatkan flag pada challenge random ini.</p>
+
+<figure class="highlight"><pre><code class="language-c" data-lang="c"><span class="n">root</span><span class="err">@</span><span class="n">linux</span> <span class="o">~</span><span class="err">#</span> <span class="n">ssh</span> <span class="n">random</span><span class="err">@</span><span class="n">pwnable</span><span class="p">.</span><span class="n">kr</span> <span class="o">-</span><span class="n">p2222</span>
+<span class="n">random</span><span class="err">@</span><span class="n">pwnable</span><span class="p">.</span><span class="n">kr</span><span class="err">'</span><span class="n">s</span> <span class="n">password</span><span class="o">:</span> 
+ <span class="n">____</span>  <span class="n">__</span>    <span class="n">__</span>  <span class="n">____</span>    <span class="n">____</span>  <span class="n">____</span>   <span class="n">_</span>        <span class="n">___</span>      <span class="n">__</span>  <span class="n">_</span>  <span class="n">____</span>  
+<span class="o">|</span>    <span class="err">\</span><span class="o">|</span>  <span class="o">|</span><span class="n">__</span><span class="o">|</span>  <span class="o">||</span>    <span class="err">\</span>  <span class="o">/</span>    <span class="o">||</span>    <span class="err">\</span> <span class="o">|</span> <span class="o">|</span>      <span class="o">/</span>  <span class="n">_</span><span class="p">]</span>    <span class="o">|</span>  <span class="o">|/</span> <span class="p">]</span><span class="o">|</span>    <span class="err">\</span> 
+<span class="o">|</span>  <span class="n">o</span>  <span class="p">)</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="o">||</span>  <span class="n">_</span>  <span class="o">||</span>  <span class="n">o</span>  <span class="o">||</span>  <span class="n">o</span>  <span class="p">)</span><span class="o">|</span> <span class="o">|</span>     <span class="o">/</span>  <span class="p">[</span><span class="n">_</span>     <span class="o">|</span>  <span class="err">'</span> <span class="o">/</span> <span class="o">|</span>  <span class="n">D</span>  <span class="p">)</span>
+<span class="o">|</span>   <span class="n">_</span><span class="o">/|</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="o">||</span>  <span class="o">|</span>  <span class="o">||</span>     <span class="o">||</span>     <span class="o">||</span> <span class="o">|</span><span class="n">___</span> <span class="o">|</span>    <span class="n">_</span><span class="p">]</span>    <span class="o">|</span>    <span class="err">\</span> <span class="o">|</span>    <span class="o">/</span> 
+<span class="o">|</span>  <span class="o">|</span>  <span class="o">|</span>  <span class="err">`</span>  <span class="err">'</span>  <span class="o">||</span>  <span class="o">|</span>  <span class="o">||</span>  <span class="n">_</span>  <span class="o">||</span>  <span class="n">O</span>  <span class="o">||</span>     <span class="o">||</span>   <span class="p">[</span><span class="n">_</span>  <span class="n">__</span> <span class="o">|</span>     <span class="err">\</span><span class="o">|</span>    <span class="err">\</span> 
+<span class="o">|</span>  <span class="o">|</span>   <span class="err">\</span>      <span class="o">/</span> <span class="o">|</span>  <span class="o">|</span>  <span class="o">||</span>  <span class="o">|</span>  <span class="o">||</span>     <span class="o">||</span>     <span class="o">||</span>     <span class="o">||</span>  <span class="o">||</span>  <span class="p">.</span>  <span class="o">||</span>  <span class="p">.</span>  \
+<span class="o">|</span><span class="n">__</span><span class="o">|</span>    <span class="err">\</span><span class="n">_</span><span class="o">/</span><span class="err">\</span><span class="n">_</span><span class="o">/</span>  <span class="o">|</span><span class="n">__</span><span class="o">|</span><span class="n">__</span><span class="o">||</span><span class="n">__</span><span class="o">|</span><span class="n">__</span><span class="o">||</span><span class="n">_____</span><span class="o">||</span><span class="n">_____</span><span class="o">||</span><span class="n">_____</span><span class="o">||</span><span class="n">__</span><span class="o">||</span><span class="n">__</span><span class="o">|</span><span class="err">\</span><span class="n">_</span><span class="o">||</span><span class="n">__</span><span class="o">|</span><span class="err">\</span><span class="n">_</span><span class="o">|</span>
+                                                                     
+<span class="o">-</span> <span class="n">Site</span> <span class="n">admin</span> <span class="o">:</span> <span class="n">daehee87</span><span class="p">.</span><span class="n">kr</span><span class="err">@</span><span class="n">gmail</span><span class="p">.</span><span class="n">com</span>
+<span class="o">-</span> <span class="n">IRC</span> <span class="o">:</span> <span class="n">irc</span><span class="p">.</span><span class="n">netgarage</span><span class="p">.</span><span class="n">org</span><span class="o">:</span><span class="mi">6667</span> <span class="o">/</span> <span class="err">#</span><span class="n">pwnable</span><span class="p">.</span><span class="n">kr</span>
+<span class="o">-</span> <span class="n">Simply</span> <span class="n">type</span> <span class="s">"irssi"</span> <span class="n">command</span> <span class="n">to</span> <span class="n">join</span> <span class="n">IRC</span> <span class="n">now</span>
+<span class="o">-</span> <span class="n">files</span> <span class="n">under</span> <span class="o">/</span><span class="n">tmp</span> <span class="n">can</span> <span class="n">be</span> <span class="n">erased</span> <span class="n">anytime</span><span class="p">.</span> <span class="n">make</span> <span class="n">your</span> <span class="n">directory</span> <span class="n">under</span> <span class="o">/</span><span class="n">tmp</span>
+<span class="o">-</span> <span class="n">to</span> <span class="n">use</span> <span class="n">peda</span><span class="p">,</span> <span class="n">issue</span> <span class="err">`</span><span class="n">source</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">share</span><span class="o">/</span><span class="n">peda</span><span class="o">/</span><span class="n">peda</span><span class="p">.</span><span class="n">py</span><span class="err">`</span> <span class="n">in</span> <span class="n">gdb</span> <span class="n">terminal</span>
+<span class="n">Last</span> <span class="n">login</span><span class="o">:</span> <span class="n">Wed</span> <span class="n">Dec</span> <span class="mi">21</span> <span class="mo">06</span><span class="o">:</span><span class="mo">05</span><span class="o">:</span><span class="mi">58</span> <span class="mi">2016</span> <span class="n">from</span> <span class="mi">125</span><span class="p">.</span><span class="mi">198</span><span class="p">.</span><span class="mi">19</span><span class="p">.</span><span class="mi">179</span>
+<span class="n">random</span><span class="err">@</span><span class="n">ubuntu</span><span class="o">:~</span><span class="err">$</span> <span class="p">.</span><span class="o">/</span><span class="n">random</span>
+<span class="mi">3039230856</span>
+<span class="n">Good</span><span class="o">!</span>
+<span class="n">Mommy</span><span class="p">,</span> <span class="n">I</span> <span class="n">thought</span> <span class="n">libc</span> <span class="n">random</span> <span class="n">is</span> <span class="n">unpredictable</span><span class="p">...</span>
+<span class="n">random</span><span class="err">@</span><span class="n">ubuntu</span><span class="o">:~</span><span class="err">$</span> </code></pre></figure>
+
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/pwnable.kr">pwnable.kr</a>,&nbsp;<a href="/tag/CTF">CTF</a>
+</section>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+      <a href="//www.facebook.com/sharer.php?t=pwnable.kr+-+random&u=https%3A%2F%2Frhama.my.id%2Fctf%2Freverse%2520engineering%2F2016%2F12%2F21%2Fpwnable.kr-random.html"
+        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+        <i class="fa fa-facebook-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('https://rhama.my.id/ctf/reverse%20engineering/2016/12/21/pwnable.kr-random.html') + '&title=pwnable.kr - random'; return false">
+        <i class="fa fa-reddit-square fa-lg"></i>
+      </a>
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">CTF.Ninja</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+          <li class="nav-link"><a href="/about/">About</a>
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Archives</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:r4m@protonmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">r4m@protonmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://www.facebook.com/eat.sleep.pwn.repeat" title="Friend me on Facebook">
+              <i class="fa fa-facebook"></i>
+              <span class="username">eat.sleep.pwn.repeat</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">CTF, InfoSec, Banana And More.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>

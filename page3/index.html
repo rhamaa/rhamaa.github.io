@@ -11,12 +11,12 @@
 ">
   
   <meta name="author" content="rhama">
-  <meta name="copyright" content="&copy; rhama 2017">
+  <meta name="copyright" content="&copy; rhama 2018">
   
 
   <!-- External libraries -->
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai-sublime.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai.min.css">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
 
   <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
@@ -42,26 +42,26 @@
 
   
   <!-- Facebook OGP cards -->
-  <meta property="og:description" content="CTF, InfoSec, Banana And More.
+<!--   <meta property="og:description" content="CTF, InfoSec, Banana And More.
 " />
-  <meta property="og:url" content="https://rhama.my.id/page3/" />
+  <meta property="og:url" content="https://rhama.my.id" />
   <meta property="og:site_name" content="CTF.Ninja" />
   <meta property="og:title" content="CTF.Ninja" />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://rhama.my.id/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="612" />
-  <meta property="og:image:height" content="605" />
-  
+  <meta property="og:image:height" content="605" /> -->
+<meta content="https://rhama.my.id/assets/logo.png" property="og:image" />
+<meta content="CTF.Ninja" property="og:site_name" />
+<meta content="object" property="og:type" />
+<meta content="CTF.Ninja" property="og:title" />
+<meta content="https://rhama.my.id/page3/" property="og:url" />
+<meta content="CTF, InfoSec, Banana And More.
+" property="og:description" />
 
   
-  <!-- Twitter: card tags -->
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="CTF.Ninja">
-  <meta name="twitter:description" content="CTF, InfoSec, Banana And More.
-">
-  <meta name="twitter:image" content="https://rhama.my.id/assets/logo.png">
-  <meta name="twitter:url" content="https://rhama.my.id/page3/">
+
   
 
   
@@ -111,6 +111,16 @@
         
           
         
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
       </ul>
     </nav>
   </div>
@@ -134,17 +144,17 @@
   
   <li>
     <h2>
-      <a class="post-link" href="/pentesting/2017/05/03/lord-of-the-root-write-up.html">Lord Of The Root Write up</a>
+      <a class="post-link" href="/ctf/2017/11/20/pwnabletw-start.html">Pwnable.tw - Start (100)</a>
     </h2>
     <section class="post-excerpt" itemprop="description">
-      <p>Description Lord Of The Root adalah VM yang saya dapatkan dari situs vulnhub.com, yang dimana goal nya adalah dengan mendapatkan root access sehingga bisa membaca flag yang berada di /root/Flag.txt Proof Of Concept 1. Nmap Scanning Saya hanya melakukan scanning port biasa menggunakan nmap agar mendapakat hasil dengan cepat dan...</p>
+      <p>Diberikan sebuah binary bernama start, yang vulnerable buffer overflow, karena buffer inputan lebih besar dari buffer variable penampung. Berikut informasi binary start. $ file start start: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), statically linked, not stripped $ checksec start [*] 'start' Arch: i386-32-little RELRO: No RELRO Stack:...</p>
     </section>
     <section class="post-meta">
-      <div class="post-date">May 3, 2017</div>
+      <div class="post-date">November 20, 2017</div>
       <div class="post-categories">
       in 
         
-        <a href="/category/Pentesting">Pentesting</a>
+        <a href="/category/CTF">Ctf</a>
         
       
       </div>
@@ -156,17 +166,21 @@
   
   <li>
     <h2>
-      <a class="post-link" href="/pentesting/2017/03/25/hackday-albania-2016-writeup.html">Hackday - Albania 2016 Write Up</a>
+      <a class="post-link" href="/ctf/web%20hacking/2017/11/20/hxpctf-2017-web150.html">hxp CTF 2017 - cloud18 (web 150)</a>
     </h2>
     <section class="post-excerpt" itemprop="description">
-      <p>Executive Summary Hackday : Albania 2016 adalah VM yang saya dapatkan dari vulnhub.com, VM ini memiliki 2 service yang berjalan, SSH pada port default dan Web Server pada port 8008 serta terdapat web apps yang vulnerable terhadap serangan SQL Injection. Quick POC Scanning Live Host menggunakan nmap Port 8080 adalah...</p>
+      <p>We also did an online text editor! We also made it, like, super secure! We are so confident that we even give you the source code. Download: 65e868ae9518a3fd226e71d4041be9d4cd8350d7552b46832f3e7f0b5d6e03af.tar.xz Connection: http://35.198.105.111:5475/ Diberikan sebuah website beserta source code nya. Tampilan awal web tersebut hanya terdapat form login dan register. fungsi web tersebut...</p>
     </section>
     <section class="post-meta">
-      <div class="post-date">March 25, 2017</div>
+      <div class="post-date">November 20, 2017</div>
       <div class="post-categories">
       in 
         
-        <a href="/category/Pentesting">Pentesting</a>
+        <a href="/category/CTF">Ctf</a>, 
+        
+      
+        
+        <a href="/category/Web Hacking">Web hacking</a>
         
       
       </div>
@@ -178,53 +192,24 @@
   
   <li>
     <h2>
-      <a class="post-link" href="/2017/01/06/exploit-exercises-nebula-level02.html">Exploit-Exercises Nebula - Level02</a>
+      <a class="post-link" href="/ctf/2017/11/20/cyber-jawara-2017.html">Cyber Jawara 2017 - Write Up</a>
     </h2>
     <section class="post-excerpt" itemprop="description">
-      <p>Executive Summary Challenge level02 exploit-exercise adalah mengganti value Environtment variable $USER sehingga dapat memanipulasi cara kerja program About There is a vulnerability in the below program that allows arbitrary programs to be executed, can you find it? To do this level, log in as the level02 account with the password...</p>
+      <p>
+Berikut adalah write up penyisihan Cyber Jawara 2017 dari tim Rules Of Pwning (ROP).
+Write Up Cyber Jawara 2017
+ 
+"Tiada Daya dan Upaya Melainkan Pertolongan Allah"
+ 
+
+</p>
     </section>
     <section class="post-meta">
-      <div class="post-date">January 6, 2017</div>
-      <div class="post-categories">
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/2017/01/06/exploit-exercises-nebula-level01.html">Exploit-Exercises Nebula - Level01</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>Executive Summary Challenge level01 exploit-exercise adalah melakukan modifikasi pada $PATH sehingga dapat melakukan arbitary execution About There is a vulnerability in the below program that allows arbitrary programs to be executed, can you find it? To do this level, log in as the level01 account with the password level01. Files...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">January 6, 2017</div>
-      <div class="post-categories">
-      
-      </div>
-    </section>
-  </li>
-  
-  <hr>
-  
-  
-  <li>
-    <h2>
-      <a class="post-link" href="/pentesting/2017/01/06/exploit-exercises-level00.html">Exploit-Exercises Nebula - Level00</a>
-    </h2>
-    <section class="post-excerpt" itemprop="description">
-      <p>Executive Summary Challenge level00 exploit-exercise adalah suid program yang akan menjalakan program sebagai user ‘flag00’ About This level requires you to find a Set User ID program that will run as the “flag00” account. You could also find this by carefully looking in top level directories in / for suspicious...</p>
-    </section>
-    <section class="post-meta">
-      <div class="post-date">January 6, 2017</div>
+      <div class="post-date">November 20, 2017</div>
       <div class="post-categories">
       in 
         
-        <a href="/category/Pentesting">Pentesting</a>
+        <a href="/category/CTF">Ctf</a>
         
       
       </div>
@@ -236,17 +221,17 @@
   
   <li>
     <h2>
-      <a class="post-link" href="/reverse%20engineering/2016/12/24/basic-reverse-engineering-linux-binaries.html">Basic Reverse Engineering Linux Binaries</a>
+      <a class="post-link" href="/ctf/2017/11/20/cyber-jawara-2017-final-pwn200.html">Cyber Jawara 2017 Final - echo (pwn 200)</a>
     </h2>
     <section class="post-excerpt" itemprop="description">
-      <p>Assalamualaikum. Saya akan sedikit membahas basic dalam melakukan reverse engineering elf binnary, reverse engineering sendiri sangat penting apalagi dalam challenge CTF yang biasa nya mempunyai poin yang besar. The Code root@kali:~# cat rev.c #include int main(){ int a,b,c,d; a = 306; b = 737; c = 100 * a +...</p>
+      <p>Diberikan sebuah file elf binary 64 bit dengan nama echo $ file echo echo: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.32, BuildID[sha1]=c5e63f048eccc18550211a8582dd02c44874ba61, stripped Dengan proteksi sebagai berikut $ checksec echo [*] 'echo' Arch: amd64-64-little RELRO: Partial RELRO Stack: No canary found NX: NX enabled...</p>
     </section>
     <section class="post-meta">
-      <div class="post-date">December 24, 2016</div>
+      <div class="post-date">November 20, 2017</div>
       <div class="post-categories">
       in 
         
-        <a href="/category/Reverse Engineering">Reverse engineering</a>
+        <a href="/category/CTF">Ctf</a>
         
       
       </div>
@@ -258,17 +243,17 @@
   
   <li>
     <h2>
-      <a class="post-link" href="/misc/2016/12/23/suctf2016-camera-model.html">SharifCTF 2016 - Camera Model</a>
+      <a class="post-link" href="/ctf/2017/11/20/csawctf-2017-quals.html">CSAW CTF 2017 Prelims - Write Up</a>
     </h2>
     <section class="post-excerpt" itemprop="description">
-      <p>Challenge Misc SharifCTF 2016 diberikan file bernama Image_Viewer yang akan menampilkan sebuah foto dan model kamera yang digunakan untuk mengambil foto tersebut merupakan flag. root@kali:~/Desktop/SU CTF# file Image_Viewer Image_Viewer: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=c3aaafe49fbcc6a7a2adbcdf4f3c2dd125a3dd32, not stripped Proof Of Concept...</p>
+      <p>Pwn (75) - Pilot pilot Can I take your order? nc pwn.chal.csaw.io 8464 Diberikan sebuah binary 64 bit striped. [email&#160;protected]:~/CTF/CSAW2017$ file pilot pilot: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=6ed26a43b94fd3ff1dd15964e4106df72c01dc6c, stripped Apabila program dijalankan akan meminta command yang merupakan inputan pengguna....</p>
     </section>
     <section class="post-meta">
-      <div class="post-date">December 23, 2016</div>
+      <div class="post-date">November 20, 2017</div>
       <div class="post-categories">
       in 
         
-        <a href="/category/Misc">Misc</a>
+        <a href="/category/CTF">Ctf</a>
         
       
       </div>
@@ -290,7 +275,7 @@
 			</a>
 			
 		
-		<span class="page-number">Page 3 of 5</span>
+		<span class="page-number">Page 3 of 10</span>
 		
 		<a class="newer-posts" href="/page4">
       <span class="fa-stack fa-lg">
@@ -324,6 +309,16 @@
         
         
           <li class="nav-link"><a href="/posts/">Archives</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         
         
         

