@@ -6,8 +6,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>SharifCTF 2016 - UnloadMe</title>
-  <meta name="description" content="">
+  <title>EASYCTFIV-2018</title>
+  <meta name="description" content="CTF, InfoSec, Banana And More.
+">
   
   <meta name="author" content="rhama">
   <meta name="copyright" content="&copy; rhama 2018">
@@ -41,21 +42,23 @@
 
   
   <!-- Facebook OGP cards -->
-<!--   <meta property="og:description" content="" />
+<!--   <meta property="og:description" content="CTF, InfoSec, Banana And More.
+" />
   <meta property="og:url" content="https://rhama.my.id" />
   <meta property="og:site_name" content="CTF.Ninja" />
-  <meta property="og:title" content="SharifCTF 2016 - UnloadMe" />
+  <meta property="og:title" content="EASYCTFIV-2018" />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="https://rhama.my.id/assets/images/ctf.png" />
+  <meta property="og:image" content="https://rhama.my.id/assets/logo.png" />
   <meta property="og:image:type" content="image/png" />
   <meta property="og:image:width" content="612" />
   <meta property="og:image:height" content="605" /> -->
-<meta content="https://rhama.my.id/assets/images/ctf.png" property="og:image" />
+<meta content="https://rhama.my.id/assets/logo.png" property="og:image" />
 <meta content="CTF.Ninja" property="og:site_name" />
 <meta content="object" property="og:type" />
-<meta content="SharifCTF 2016 - UnloadMe" property="og:title" />
-<meta content="https://rhama.my.id/ctf/reverse%20engineering/2016/12/22/suctf2016-unloadme.html" property="og:url" />
-<meta content="" property="og:description" />
+<meta content="EASYCTFIV-2018" property="og:title" />
+<meta content="https://rhama.my.id/tag/easyctfiv-2018/" property="og:url" />
+<meta content="CTF, InfoSec, Banana And More.
+" property="og:description" />
 
   
 
@@ -66,7 +69,7 @@
   <!-- Site styles -->
   <link rel="stylesheet" href="/css/main.css">
    <link rel="stylesheet" href="/css/terminal.css">
-  <link rel="canonical" href="https://rhama.my.id/ctf/reverse%20engineering/2016/12/22/suctf2016-unloadme.html">
+  <link rel="canonical" href="https://rhama.my.id/tag/easyctfiv-2018/">
   <link rel="alternate" type="application/rss+xml" title="CTF.Ninja" href="https://rhama.my.id/feed.xml" />
 </head>
 
@@ -100,26 +103,6 @@
         
           
         
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
-          
-        
       </ul>
     </nav>
   </div>
@@ -127,204 +110,30 @@
 
 
     <div class="page-content">
-        <div class="post">
+        <div class="wrapper">
+<div class="page">
 
-<div class="post-header-container has-cover" style="background-image: url(/assets/images/ctf.png);">
-  <div class="scrim has-cover">
-    <header class="post-header">
-      <h1 class="title">SharifCTF 2016 - UnloadMe</h1>
-      <p class="info">by <strong>Aiden Pearce</strong></p>
-    </header>
-  </div>
-</div>
+  <header class="post-header">
+    <h1 class="post-title">Posts in "Easyctfiv-2018"</h1>
+  </header>
 
-<div class="wrapper">
-
+  <span class="page-divider">
+  <span class="one"></span>
+  <span class="two"></span>
+</span>
 
 
-<section class="post-meta">
-  <div class="post-date">December 22, 2016</div>
-  <div class="post-categories">
-  in 
-    
-    <a href="/category/CTF">Ctf</a>, 
-    
-  
-    
-    <a href="/category/Reverse Engineering">Reverse engineering</a>
-    
-  
-  </div>
-</section>
-
-<article class="post-content">
-  <ul id="markdown-toc">
-  <li><a href="#proof-of-concept" id="markdown-toc-proof-of-concept">Proof Of Concept</a></li>
-</ul>
-
-<p>Challenge RE SharifCTF 2016 UnloadMe berupa file PE32 Windows Executable</p>
-
-<figure class="highlight"><pre><code class="language-bash" data-lang="bash">root@kali:~/Desktop/SU CTF/RE# file UnloadMe
-UnloadMe: PE32 executable <span class="o">(</span>native<span class="o">)</span> Intel 80386, <span class="k">for </span>MS Windows</code></pre></figure>
-
-<h1 id="proof-of-concept">Proof Of Concept</h1>
-<p>Saya melakukan <em>disassembly</em> menggunakan Hopper, ditemukan <em>Hex String</em> mencurigakan pada register.</p>
-
-<p><img src="https://raw.githubusercontent.com/rh4ma/rh4ma.github.io/master/_posts/UnloadME.png" alt="UnloadME.png" /></p>
-
-<p>Apabila <em>Hex String</em> tersebut didecode akan menghasilkan cc043056a0a32cb5e104aeb2cf4ff7ba
-flag : SharifCTF{cc043056a0a32cb5e104aeb2cf4ff7ba}</p>
-
-</article>
-
-
-
-<section class="tags">
-  <strong>Tags:</strong> <a href="/tag/sharifctf2016">sharifctf2016</a>,&nbsp;<a href="/tag/CTF">CTF</a>
-</section>
-
-
-
-<section class="rss">
-  <p class="rss-subscribe text"><strong>Subscribe <a href="/feed.xml">via RSS</a></strong></p>
-</section>
-
-<section class="share">
-  <span>Share: </span>
-  
-    
-    
-    
-      <a href="//www.facebook.com/sharer.php?t=SharifCTF+2016+-+UnloadMe&u=https%3A%2F%2Frhama.my.id%2Fctf%2Freverse%2520engineering%2F2016%2F12%2F22%2Fsuctf2016-unloadme.html"
-        onclick="window.open(this.href, 'facebook-share', 'width=550,height=255');return false;">
-        <i class="fa fa-facebook-square fa-lg"></i>
-      </a>
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-      <a href="//www.reddit.com/submit" onclick="window.location = '//www.reddit.com/submit?url=' + encodeURIComponent('https://rhama.my.id/ctf/reverse%20engineering/2016/12/22/suctf2016-unloadme.html') + '&title=SharifCTF 2016 - UnloadMe'; return false">
-        <i class="fa fa-reddit-square fa-lg"></i>
-      </a>
-    
-    
-  
-    
-    
-    
-    
-    
-    
-    
-    
-  
-</section>
-
-
-
+  <article class="post-content">
+    <ul class="posts-list">
+      
+      <li><strong><a class="post-link" href="/ctf/2018/02/25/easyivctf-2018.html">EasyCTF IV 2018 - Reversing</a></strong><span class="post-date"> - February 25, 2018</span></li>
+      
+    </ul>
+  </article>
 
 </div>
 </div>
+<br>
 
     </div>
 
@@ -345,26 +154,6 @@ flag : SharifCTF{cc043056a0a32cb5e104aeb2cf4ff7ba}</p>
         
         
           <li class="nav-link"><a href="/posts/">Archives</a>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         

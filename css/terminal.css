@@ -45,9 +45,9 @@
       .terminal > nav:first-of-type a.close {
         background: #FD4E4E; }
       .terminal > nav:first-of-type a.minimize {
-        background: #F3BB55; }
-      .terminal > nav:first-of-type a.maximize {
         background: #96D16F; }
+      .terminal > nav:first-of-type a.maximize {
+        background: #F3BB55; }
       .terminal > nav:first-of-type a.deactivate {
         background: #b5b5b5; }
   .terminal > .title {
@@ -67,7 +67,7 @@
     padding: 1em;
     border-radius: 0;
     background: #333;
-    font-size: 80%; }
+    font-size: 75%; }
     .terminal > pre:first-of-type span {
       margin-top: 0.5em; }
       .terminal > pre:first-of-type span:before {
