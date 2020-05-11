@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on /home/rhama/</title>
+    <link>/categories/</link>
+    <description>Recent content in Categories on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 24 Dec 2016 01:06:00 +0700</lastBuildDate>
+    
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Reverse Engineering</title>
+      <link>/categories/reverse-engineering/</link>
+      <pubDate>Sat, 24 Dec 2016 01:06:00 +0700</pubDate>
+      
+      <guid>/categories/reverse-engineering/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Binary Exploit</title>
+      <link>/categories/binary-exploit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/binary-exploit/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>CTF</title>
+      <link>/categories/ctf/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/ctf/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Misc</title>
+      <link>/categories/misc/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/misc/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Pwn</title>
+      <link>/categories/pwn/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/pwn/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Web Hacking</title>
+      <link>/categories/web-hacking/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/categories/web-hacking/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

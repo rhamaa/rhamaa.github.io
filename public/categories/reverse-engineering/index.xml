@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Reverse Engineering on /home/rhama/</title>
+    <link>/categories/reverse-engineering/</link>
+    <description>Recent content in Reverse Engineering on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 24 Dec 2016 01:06:00 +0700</lastBuildDate>
+    
+	<atom:link href="/categories/reverse-engineering/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Basic Reverse Engineering Linux Binaries</title>
+      <link>/post/2016-12-24-basic-reverse-engineering-linux-binaries/</link>
+      <pubDate>Sat, 24 Dec 2016 01:06:00 +0700</pubDate>
+      
+      <guid>/post/2016-12-24-basic-reverse-engineering-linux-binaries/</guid>
+      <description>Assalamualaikum. Saya akan sedikit membahas basic dalam melakukan reverse engineering elf binnary, reverse engineering sendiri sangat penting apalagi dalam challenge CTF yang biasa nya mempunyai poin yang besar.
+The Code root@kali:~# cat rev.c #include int main(){	int a,b,c,d; a = 306; b = 737; c = 100 * a + b; printf(&amp;#34;Enter your passcode : &amp;#34;); scanf(&amp;#34;%d&amp;#34;, &amp;amp;d); if(d == c){ puts(&amp;#34;Correct&amp;#34;); else{ puts(&amp;#34;Incorrect&amp;#34;);	return 0; ``` Proof Of Concept ==================================== ``` c %} root@kali:~# gcc rev.</description>
+    </item>
+    
+    <item>
+      <title>pwnable.kr - random</title>
+      <link>/post/2016-12-21-pwnable.kr-random/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-12-21-pwnable.kr-random/</guid>
+      <description>Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code
+#include &amp;lt;stdio.h&amp;gt; int main(){ unsigned int random; random = rand();	// random value!  unsigned int key=0; scanf(&amp;#34;%d&amp;#34;, &amp;amp;key); if( (key ^ random) == 0xdeadbeef ){ printf(&amp;#34;Good!\n&amp;#34;); system(&amp;#34;/bin/cat flag&amp;#34;); return 0; } printf(&amp;#34;Wrong, maybe you should try 2^32 cases.\n&amp;#34;); return 0; } Fungsi rand() akan mengembalikan nilai pseudo-random antara 0 dan RAND_MAX. Value dari fungsi rand() akan disimpan pada variable random, dan terdapat variable key yang menampung user input sehingga pada kondisi if dilakukan XOR antara key ^ random jika hasil nya 0xdeadbeef akan mendapatkan flag.</description>
+    </item>
+    
+    <item>
+      <title>SharifCTF 2016 - Getit</title>
+      <link>/post/2016-12-22-suctf2016-getit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-12-22-suctf2016-getit/</guid>
+      <description>Pada challenge RE ShariftCTF 2016 diberikan file elf binnary bernama getit, yang informasi nya seperti dibawah ini
+root@kali:~/Desktop/SU CTF/RE# file getit getit: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=e389cd7a4b9272ba80f85d7eb604176f6106c61e, not stripped Proof Of Concept Saya menggunakan gdb untuk melakukan debugging
+root@kali:~/Desktop/SU CTF/RE# gdb -q getit Reading symbols from getit...(no debugging symbols found)...done. (gdb) set disassembly-flavor intel (gdb) disass main Dump of assembler code for function main: --- snip --- 0x000000000040080d &amp;lt;+183&amp;gt;:	call 0x400620 &amp;lt;fprintf@plt&amp;gt; 0x0000000000400812 &amp;lt;+188&amp;gt;:	mov DWORD PTR [rbp-0x3c],0x0 0x0000000000400819 &amp;lt;+195&amp;gt;:	mov eax,DWORD PTR [rbp-0x3c] 0x000000000040081c &amp;lt;+198&amp;gt;:	movsxd rbx,eax 0x000000000040081f &amp;lt;+201&amp;gt;:	mov edi,0x6010e0 0x0000000000400824 &amp;lt;+206&amp;gt;:	call 0x4005e0 &amp;lt;strlen@plt&amp;gt; 0x0000000000400829 &amp;lt;+211&amp;gt;:	cmp rbx,rax 0x000000000040082c &amp;lt;+214&amp;gt;:	jae 0x4008b5 &amp;lt;main+351&amp;gt; --- snip --- Ditemukan bagian menarik pada offset 0x000000000040081f at +201, dimana terdapat &amp;ldquo;sesuatu&amp;rdquo; yang disalin ke register edi.</description>
+    </item>
+    
+    <item>
+      <title>SharifCTF 2016 - SCrack</title>
+      <link>/post/2016-12-22-suctf2016-scrack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-12-22-suctf2016-scrack/</guid>
+      <description>Challenge RE SharifCTF 2016 SCrack berupa file elf binnary 64bit yang akan melakukan validasi key
+root@kali:~/Desktop/SU CTF/RE# file SCrack SCrack: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=d011afc29443bbb3ea2c72ef5ac15f8dc278397a, not stripped root@kali:~/Desktop/SU CTF/RE# ./SCrack Enter the valid key! asasasasasas Invalid Key! :( Saat mencoba menggunakan ltrace terdapat output Dont trace me! dan percobaan disassembly menggunakan gdb ditemukan ptrace yang digunakan sebagai anti-debugging technique</description>
+    </item>
+    
+    <item>
+      <title>SharifCTF 2016 - UnloadMe</title>
+      <link>/post/2016-12-22-suctf2016-unloadme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-12-22-suctf2016-unloadme/</guid>
+      <description>content {:toc}  Challenge RE SharifCTF 2016 UnloadMe berupa file PE32 Windows Executable
+root@kali:~/Desktop/SU CTF/RE# file UnloadMe UnloadMe: PE32 executable (native) Intel 80386, for MS Windows Proof Of Concept Saya melakukan disassembly menggunakan Hopper, ditemukan Hex String mencurigakan pada register.
+Apabila Hex String tersebut didecode akan menghasilkan cc043056a0a32cb5e104aeb2cf4ff7ba flag : SharifCTF{cc043056a0a32cb5e104aeb2cf4ff7ba}</description>
+    </item>
+    
+  </channel>
+</rss>

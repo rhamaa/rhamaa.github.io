@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>EasyCTF IV 2018 - Reversing :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Liar Diberikan sebuah file binary 64-bit not stripped
+Hasil decompile fungsi main()
+int __cdecl main(int argc, const char **argv, const char **envp) { int result; // eax@12  __int64 v4; // rdi@12  int n; // [sp&#43;Ch] [bp-14h]@1  int i; // [sp&#43;10h] [bp-10h]@1  int m; // [sp&#43;14h] [bp-Ch]@1  __int64 v8; // [sp&#43;18h] [bp-8h]@1  v8 = *MK_FP(__FS__, 40LL); __isoc99_scanf(&amp;amp;unk_A64, &amp;amp;n, envp); f[30] = 160LL; f[10] = 47LL; f[13] = 4LL; f[25] = 205LL; f[5] = 87LL; f[24] = 247LL; f[6] = 76LL; f[31] = 176LL; f[7] = 74LL; f[34] = 154LL; f[21] = 231LL; f[32] = 135LL; f[8] = 75LL; f[1] = 102LL; f[9] = 75LL; f[28] = 232LL; f[29] = 148LL; f[3] = 108LL; f[11] = 33LL; f[4] = 127LL; f[14] = 21LL; f[18] = 89LL; f[16] = 3LL; f[26] = 215LL; f[20] = 211LL; f[15] = 8LL; f[17] = 25LL; f[27] = 217LL; f[0] = 101LL; f[33] = 143LL; f[22] = 245LL; f[19] = 241LL; f[12] = 56LL; f[36] = 129LL; f[23] = 206LL; f[2] = 125LL; f[35] = 202LL; m = n ^ 0x58EB29; for ( i = 0; i &amp;lt;= 36; &#43;&#43;i ) g[i] = m * i ^ (unsigned __int64)f[i]; g[i] = 0; if ( g[0] == 101 &amp;amp;&amp;amp; g[1] == 97 &amp;amp;&amp;amp; g[2] == 115 &amp;amp;&amp;amp; g[3] == 121 &amp;amp;&amp;amp; g[4] == 99 &amp;amp;&amp;amp; g[5] == 116 &amp;amp;&amp;amp; g[6] == 102 ) printf(&amp;#34;the flag is %s\n&amp;#34;, g); result = 0; v4 = *MK_FP(__FS__, 40LL) ^ v8; return result; } Dimana pada potongan code berikut"/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/post/2018-02-25-easyivctf-2018/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<link rel="stylesheet" href="/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="EasyCTF IV 2018 - Reversing"/>
+<meta name="twitter:description" content="Liar Diberikan sebuah file binary 64-bit not stripped
+Hasil decompile fungsi main()
+int __cdecl main(int argc, const char **argv, const char **envp) { int result; // eax@12  __int64 v4; // rdi@12  int n; // [sp&#43;Ch] [bp-14h]@1  int i; // [sp&#43;10h] [bp-10h]@1  int m; // [sp&#43;14h] [bp-Ch]@1  __int64 v8; // [sp&#43;18h] [bp-8h]@1  v8 = *MK_FP(__FS__, 40LL); __isoc99_scanf(&amp;unk_A64, &amp;n, envp); f[30] = 160LL; f[10] = 47LL; f[13] = 4LL; f[25] = 205LL; f[5] = 87LL; f[24] = 247LL; f[6] = 76LL; f[31] = 176LL; f[7] = 74LL; f[34] = 154LL; f[21] = 231LL; f[32] = 135LL; f[8] = 75LL; f[1] = 102LL; f[9] = 75LL; f[28] = 232LL; f[29] = 148LL; f[3] = 108LL; f[11] = 33LL; f[4] = 127LL; f[14] = 21LL; f[18] = 89LL; f[16] = 3LL; f[26] = 215LL; f[20] = 211LL; f[15] = 8LL; f[17] = 25LL; f[27] = 217LL; f[0] = 101LL; f[33] = 143LL; f[22] = 245LL; f[19] = 241LL; f[12] = 56LL; f[36] = 129LL; f[23] = 206LL; f[2] = 125LL; f[35] = 202LL; m = n ^ 0x58EB29; for ( i = 0; i &lt;= 36; &#43;&#43;i ) g[i] = m * i ^ (unsigned __int64)f[i]; g[i] = 0; if ( g[0] == 101 &amp;&amp; g[1] == 97 &amp;&amp; g[2] == 115 &amp;&amp; g[3] == 121 &amp;&amp; g[4] == 99 &amp;&amp; g[5] == 116 &amp;&amp; g[6] == 102 ) printf(&#34;the flag is %s\n&#34;, g); result = 0; v4 = *MK_FP(__FS__, 40LL) ^ v8; return result; } Dimana pada potongan code berikut"/>
+
+
+
+<meta property="og:title" content="EasyCTF IV 2018 - Reversing" />
+<meta property="og:description" content="Liar Diberikan sebuah file binary 64-bit not stripped
+Hasil decompile fungsi main()
+int __cdecl main(int argc, const char **argv, const char **envp) { int result; // eax@12  __int64 v4; // rdi@12  int n; // [sp&#43;Ch] [bp-14h]@1  int i; // [sp&#43;10h] [bp-10h]@1  int m; // [sp&#43;14h] [bp-Ch]@1  __int64 v8; // [sp&#43;18h] [bp-8h]@1  v8 = *MK_FP(__FS__, 40LL); __isoc99_scanf(&amp;unk_A64, &amp;n, envp); f[30] = 160LL; f[10] = 47LL; f[13] = 4LL; f[25] = 205LL; f[5] = 87LL; f[24] = 247LL; f[6] = 76LL; f[31] = 176LL; f[7] = 74LL; f[34] = 154LL; f[21] = 231LL; f[32] = 135LL; f[8] = 75LL; f[1] = 102LL; f[9] = 75LL; f[28] = 232LL; f[29] = 148LL; f[3] = 108LL; f[11] = 33LL; f[4] = 127LL; f[14] = 21LL; f[18] = 89LL; f[16] = 3LL; f[26] = 215LL; f[20] = 211LL; f[15] = 8LL; f[17] = 25LL; f[27] = 217LL; f[0] = 101LL; f[33] = 143LL; f[22] = 245LL; f[19] = 241LL; f[12] = 56LL; f[36] = 129LL; f[23] = 206LL; f[2] = 125LL; f[35] = 202LL; m = n ^ 0x58EB29; for ( i = 0; i &lt;= 36; &#43;&#43;i ) g[i] = m * i ^ (unsigned __int64)f[i]; g[i] = 0; if ( g[0] == 101 &amp;&amp; g[1] == 97 &amp;&amp; g[2] == 115 &amp;&amp; g[3] == 121 &amp;&amp; g[4] == 99 &amp;&amp; g[5] == 116 &amp;&amp; g[6] == 102 ) printf(&#34;the flag is %s\n&#34;, g); result = 0; v4 = *MK_FP(__FS__, 40LL) ^ v8; return result; } Dimana pada potongan code berikut" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2018-02-25-easyivctf-2018/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="/post/2018-02-25-easyivctf-2018/">EasyCTF IV 2018 - Reversing</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by CTF.Ninja</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="/tags/easyctfiv-2018/">EASYCTFIV-2018</a>&nbsp;
+        
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/CTF.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <h2 id="liar">Liar</h2>
+<p>Diberikan sebuah file binary 64-bit not stripped</p>
+<!-- raw HTML omitted -->
+<p>Hasil decompile fungsi <code>main()</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">int</span> <span style="color:#66d9ef">__cdecl</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>envp)
+{
+  <span style="color:#66d9ef">int</span> result; <span style="color:#75715e">// eax@12
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">__int64</span> v4; <span style="color:#75715e">// rdi@12
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> n; <span style="color:#75715e">// [sp+Ch] [bp-14h]@1
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> i; <span style="color:#75715e">// [sp+10h] [bp-10h]@1
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> m; <span style="color:#75715e">// [sp+14h] [bp-Ch]@1
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">__int64</span> v8; <span style="color:#75715e">// [sp+18h] [bp-8h]@1
+</span><span style="color:#75715e"></span>
+  v8 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>MK_FP(__FS__, <span style="color:#ae81ff">40LL</span>);
+  __isoc99_scanf(<span style="color:#f92672">&amp;</span>unk_A64, <span style="color:#f92672">&amp;</span>n, envp);
+  f[<span style="color:#ae81ff">30</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">160LL</span>;
+  f[<span style="color:#ae81ff">10</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">47LL</span>;
+  f[<span style="color:#ae81ff">13</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">4LL</span>;
+  f[<span style="color:#ae81ff">25</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">205LL</span>;
+  f[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">87LL</span>;
+  f[<span style="color:#ae81ff">24</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">247LL</span>;
+  f[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">76LL</span>;
+  f[<span style="color:#ae81ff">31</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">176LL</span>;
+  f[<span style="color:#ae81ff">7</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">74LL</span>;
+  f[<span style="color:#ae81ff">34</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">154LL</span>;
+  f[<span style="color:#ae81ff">21</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">231LL</span>;
+  f[<span style="color:#ae81ff">32</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">135LL</span>;
+  f[<span style="color:#ae81ff">8</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">75LL</span>;
+  f[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">102LL</span>;
+  f[<span style="color:#ae81ff">9</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">75LL</span>;
+  f[<span style="color:#ae81ff">28</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">232LL</span>;
+  f[<span style="color:#ae81ff">29</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">148LL</span>;
+  f[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">108LL</span>;
+  f[<span style="color:#ae81ff">11</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">33LL</span>;
+  f[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">127LL</span>;
+  f[<span style="color:#ae81ff">14</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">21LL</span>;
+  f[<span style="color:#ae81ff">18</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">89LL</span>;
+  f[<span style="color:#ae81ff">16</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">3LL</span>;
+  f[<span style="color:#ae81ff">26</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">215LL</span>;
+  f[<span style="color:#ae81ff">20</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">211LL</span>;
+  f[<span style="color:#ae81ff">15</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">8LL</span>;
+  f[<span style="color:#ae81ff">17</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">25LL</span>;
+  f[<span style="color:#ae81ff">27</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">217LL</span>;
+  f[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">101LL</span>;
+  f[<span style="color:#ae81ff">33</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">143LL</span>;
+  f[<span style="color:#ae81ff">22</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">245LL</span>;
+  f[<span style="color:#ae81ff">19</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">241LL</span>;
+  f[<span style="color:#ae81ff">12</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">56LL</span>;
+  f[<span style="color:#ae81ff">36</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">129LL</span>;
+  f[<span style="color:#ae81ff">23</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">206LL</span>;
+  f[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">125LL</span>;
+  f[<span style="color:#ae81ff">35</span>] <span style="color:#f92672">=</span> <span style="color:#ae81ff">202LL</span>;
+  m <span style="color:#f92672">=</span> n <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x58EB29</span>;
+  <span style="color:#66d9ef">for</span> ( i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">36</span>; <span style="color:#f92672">++</span>i )
+    g[i] <span style="color:#f92672">=</span> m <span style="color:#f92672">*</span> i <span style="color:#f92672">^</span> (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">__int64</span>)f[i];
+  g[i] <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  <span style="color:#66d9ef">if</span> ( g[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">101</span> <span style="color:#f92672">&amp;&amp;</span> g[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">97</span> <span style="color:#f92672">&amp;&amp;</span> g[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">115</span> <span style="color:#f92672">&amp;&amp;</span> g[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">121</span> <span style="color:#f92672">&amp;&amp;</span> g[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">99</span> <span style="color:#f92672">&amp;&amp;</span> g[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">116</span> <span style="color:#f92672">&amp;&amp;</span> g[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">==</span> <span style="color:#ae81ff">102</span> )
+    printf(<span style="color:#e6db74">&#34;the flag is %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, g);
+  result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  v4 <span style="color:#f92672">=</span> <span style="color:#f92672">*</span>MK_FP(__FS__, <span style="color:#ae81ff">40LL</span>) <span style="color:#f92672">^</span> v8;
+  <span style="color:#66d9ef">return</span> result;
+}
+</code></pre></div><p>Dimana pada potongan code berikut</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"> m <span style="color:#f92672">=</span> n <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x58EB29</span>;
+<span style="color:#66d9ef">for</span> ( i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">36</span>; <span style="color:#f92672">++</span>i )
+    g[i] <span style="color:#f92672">=</span> m <span style="color:#f92672">*</span> i <span style="color:#f92672">^</span> (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">__int64</span>)f[i];
+</code></pre></div><p><code>n</code> adalah inputan user. Yang apabila inputan benar, akan mengeluarkan flag yang benar.</p>
+<p>Untuk mencari nilai <code>n</code> yang benar, saya menggunakan <code>z3</code></p>
+<p>Berikut script nya</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+s <span style="color:#f92672">=</span> Solver()
+n <span style="color:#f92672">=</span> BitVec(<span style="color:#e6db74">&#34;X1&#34;</span>,<span style="color:#ae81ff">32</span>)
+f1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">102</span>
+m <span style="color:#f92672">=</span> n <span style="color:#f92672">^</span> <span style="color:#ae81ff">0x58EB29</span>
+g <span style="color:#f92672">=</span> m <span style="color:#f92672">*</span> <span style="color:#ae81ff">1</span> <span style="color:#f92672">^</span> f1
+s<span style="color:#f92672">.</span>add(g <span style="color:#f92672">==</span> <span style="color:#ae81ff">97</span>)
+
+<span style="color:#66d9ef">print</span> s<span style="color:#f92672">.</span>check()
+
+m <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>model()
+
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;Valid n {}&#34;</span><span style="color:#f92672">.</span>format(m[n])
+</code></pre></div><h3 id="flag--easyctfstill_wasnt_too_bad_right">Flag : easyctf{still_wasn&rsquo;t_too_bad,_right?}</h3>
+<h2 id="adder">Adder</h2>
+<p>Diberikan sebuah file binary 64-bit not stripped</p>
+<!-- raw HTML omitted -->
+<p>Hasil decompile fungsi <code>main()</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"> v7 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  std<span style="color:#f92672">::</span>operator<span style="color:#f92672">&lt;&lt;&lt;</span>std<span style="color:#f92672">::</span>char_traits<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">char</span><span style="color:#f92672">&gt;&gt;</span>(<span style="color:#f92672">&amp;</span>std<span style="color:#f92672">::</span>cout, <span style="color:#e6db74">&#34;Enter three numbers!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, envp);
+  LODWORD(v3) <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>istream<span style="color:#f92672">::</span>operator<span style="color:#f92672">&gt;&gt;</span>(<span style="color:#f92672">&amp;</span>std<span style="color:#f92672">::</span>cin, <span style="color:#f92672">&amp;</span>v9);
+  LODWORD(v4) <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>istream<span style="color:#f92672">::</span>operator<span style="color:#f92672">&gt;&gt;</span>(v3, <span style="color:#f92672">&amp;</span>v8);
+  std<span style="color:#f92672">::</span>istream<span style="color:#f92672">::</span>operator<span style="color:#f92672">&gt;&gt;</span>(v4, <span style="color:#f92672">&amp;</span>v7);
+  ptr <span style="color:#f92672">=</span> gen(v8 <span style="color:#f92672">+</span> v9 <span style="color:#f92672">+</span> v7);
+  v5 <span style="color:#f92672">=</span> (v8 <span style="color:#f92672">+</span> v9);
+  <span style="color:#66d9ef">if</span> ( v5 <span style="color:#f92672">+</span> v7 <span style="color:#f92672">==</span> <span style="color:#ae81ff">1337</span> )
+  {
+    std<span style="color:#f92672">::</span>operator<span style="color:#f92672">&lt;&lt;&lt;</span>std<span style="color:#f92672">::</span>char_traits<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">char</span><span style="color:#f92672">&gt;&gt;</span>(<span style="color:#f92672">&amp;</span>std<span style="color:#f92672">::</span>cout, <span style="color:#e6db74">&#34;easyctf{&#34;</span>, v5);
+    print_ptr(ptr);
+    puts(<span style="color:#e6db74">&#34;}&#34;</span>);
+  }
+  <span style="color:#66d9ef">else</span>
+  {
+    std<span style="color:#f92672">::</span>operator<span style="color:#f92672">&lt;&lt;&lt;</span>std<span style="color:#f92672">::</span>char_traits<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">char</span><span style="color:#f92672">&gt;&gt;</span>(<span style="color:#f92672">&amp;</span>std<span style="color:#f92672">::</span>cout, <span style="color:#e6db74">&#34;nope.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, v5);
+  }
+</code></pre></div><p><code>v8, v9, v7</code> adalah inputan user, dan fungsi <code>gen()</code> adalah fungsi yang menggenerate flag.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">    ptr <span style="color:#f92672">=</span> gen(v8 <span style="color:#f92672">+</span> v9 <span style="color:#f92672">+</span> v7);
+    v5 <span style="color:#f92672">=</span> (v8 <span style="color:#f92672">+</span> v9);
+    <span style="color:#66d9ef">if</span> ( v5 <span style="color:#f92672">+</span> v7 <span style="color:#f92672">==</span> <span style="color:#ae81ff">1337</span> )
+</code></pre></div><p><code>(v8 + v9) + v7</code> harus <code>==</code> 1337 untuk mendapatkan Flag.</p>
+<p>Berikut script yang digunakan</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+N <span style="color:#f92672">=</span> Ints(<span style="color:#e6db74">&#34;N1 N2 N3&#34;</span>)
+v5 <span style="color:#f92672">=</span> N[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> N[<span style="color:#ae81ff">2</span>]
+solve((v5 <span style="color:#f92672">+</span> N[<span style="color:#ae81ff">0</span>]) <span style="color:#f92672">==</span> <span style="color:#ae81ff">1337</span>)
+</code></pre></div><h3 id="flag--easyctfy0u_added_thr33_nums">Flag : easyctf{y0u_added_thr33_nums!}</h3>
+<h2 id="ezreverse">EzReverse</h2>
+<p>Diberikan sebuah file binary 64-bit not stripped</p>
+<pre><code>$ file executable
+executable: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=eb7a47c52c657a17b5ae730826c4640de86b0dcf, not stripped ```
+```C
+
+Hasil decompile fungsi `main()`
+
+int __cdecl main(int argc, const char **argv, const char **envp)
+{
+  int result; // eax@2
+  int v4; // [sp+10h] [bp-20h]@3
+  int v5; // [sp+14h] [bp-1Ch]@3
+  int v6; // [sp+18h] [bp-18h]@3
+  int v7; // [sp+1Ch] [bp-14h]@3
+  int v8; // [sp+20h] [bp-10h]@3
+  const char *v9; // [sp+28h] [bp-8h]@3
+
+  signal(2, sigintHandler);
+  target = (char *)*argv;
+  if ( argc == 2 )
+  {
+    v9 = argv[1];
+    v4 = 1;
+    v5 = 2;
+    v6 = 3;
+    v7 = 4;
+    v8 = 5;
+    v4 = *v9 + 1;
+    v5 = v9[1] + 2;
+    v6 = v9[2] + 3;
+    v7 = v9[3] + 4;
+    v8 = v9[4] + 5;
+    if ( v7 != 111 || v6 != 125 || v4 != v8 - 10 || v5 != 53 || v8 != v7 + 3 )
+    {
+      sleep(2u);
+      remove(*argv);
+      puts(&quot;successfully deleted!&quot;);
+      result = 2;
+    }
+    else
+    {
+      printf(&quot;Now here is your flag: &quot;, sigintHandler, argv);
+      print_5(&amp;v4);
+      result = 1;
+    }
+  }
+  else
+  {
+    result = 2;
+  }
+  return result;
+}
+</code></pre><p>Program tersebut membutuhkan <code>argument</code> dan apabila argument yang dimasukan salah, program akan di <code>remove()</code>.</p>
+<p>Karakter pada variable <code>v4</code> dan <code>v8</code> belum diketahui dengan pasti. Dan untuk karakter pada variable <code>v5, v6, v7</code> masing2 ditambahkan dengan <code>2,3,4</code>.
+Dan <code>v4 dan v8</code> masing-masing ditambahkan dengan <code>1 dan 5</code>.</p>
+<p>Untuk mendapatkan nilai <code>v4 dan v8</code> menggunakan persamaan</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">v4 <span style="color:#f92672">==</span> v8 - <span style="color:#ae81ff">10</span>
+v8 <span style="color:#f92672">==</span> v7 + <span style="color:#ae81ff">3</span>
+</code></pre></div><p>Untuk mencari nya saya menggunakan <code>z3</code>.</p>
+<p>Berikut script yang digunakan</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> z3 <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+f <span style="color:#f92672">=</span> [BitVec(<span style="color:#e6db74">&#34;f{}&#34;</span><span style="color:#f92672">.</span>format(i),<span style="color:#ae81ff">32</span>) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">5</span>)]
+s <span style="color:#f92672">=</span> Solver()
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(f)):
+    s<span style="color:#f92672">.</span>add(f[i] <span style="color:#f92672">&lt;=</span> ord(<span style="color:#e6db74">&#34;z&#34;</span>), f[i] <span style="color:#f92672">&gt;=</span> ord(<span style="color:#e6db74">&#34; &#34;</span>))
+
+v4 <span style="color:#f92672">=</span> f[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>
+v5 <span style="color:#f92672">=</span> f[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">2</span>
+v6 <span style="color:#f92672">=</span> f[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>
+v7 <span style="color:#f92672">=</span> f[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>
+v8 <span style="color:#f92672">=</span> f[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>
+
+s<span style="color:#f92672">.</span>add(v4 <span style="color:#f92672">==</span> (v8 <span style="color:#f92672">-</span> <span style="color:#ae81ff">10</span>))
+s<span style="color:#f92672">.</span>add(v5 <span style="color:#f92672">==</span> <span style="color:#ae81ff">53</span>)
+s<span style="color:#f92672">.</span>add(v6 <span style="color:#f92672">==</span> <span style="color:#ae81ff">125</span>)
+s<span style="color:#f92672">.</span>add(v7 <span style="color:#f92672">==</span> <span style="color:#ae81ff">111</span>)
+s<span style="color:#f92672">.</span>add(v8 <span style="color:#f92672">==</span> (v7 <span style="color:#f92672">+</span> <span style="color:#ae81ff">3</span>))
+
+s<span style="color:#f92672">.</span>check()
+m <span style="color:#f92672">=</span> s<span style="color:#f92672">.</span>model()
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join([ chr(m[i]<span style="color:#f92672">.</span>as_long()) <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> f ])
+</code></pre></div><h3 id="flag--easyctf10453125111114">Flag : easyctf{10453125111114}</h3>
+<h2 id="maldropper">MalDropper</h2>
+<h4 id="reserved">Reserved</h4>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="/post/2017-11-20-cyber-jawara-2017-final-pwn200/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Cyber Jawara 2017 Final - echo (pwn 200)</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="/post/2018-05-30-format-string-attack/">
+                  <span class="button__text">Format String Attack</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

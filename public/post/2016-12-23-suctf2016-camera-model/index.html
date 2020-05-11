@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>SharifCTF 2016 - Camera Model :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Challenge Misc SharifCTF 2016 diberikan file bernama Image_Viewer yang akan menampilkan sebuah foto dan model kamera yang digunakan untuk mengambil foto tersebut merupakan flag.
+root@kali:~/Desktop/SU CTF# file Image_Viewer Image_Viewer: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=c3aaafe49fbcc6a7a2adbcdf4f3c2dd125a3dd32, not stripped Proof Of Concept Saya menggunakan binwalk untuk melakukan signature scan
+root@kali:~/Desktop/SU CTF# binwalk Image_Viewer DECIMAL HEXADECIMAL DESCRIPTION -------------------------------------------------------------------------------- 0 0x0 ELF, 64-bit LSB executable, AMD x86-64, version 1 (SYSV) 5432 0x1538 Zlib compressed data, best compression Tidak terdapat signature file gambar, tapi saya mencoba mengekstrack gambar tersebut dengan option -e pada binwalk"/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/post/2016-12-23-suctf2016-camera-model/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<link rel="stylesheet" href="/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SharifCTF 2016 - Camera Model"/>
+<meta name="twitter:description" content="Challenge Misc SharifCTF 2016 diberikan file bernama Image_Viewer yang akan menampilkan sebuah foto dan model kamera yang digunakan untuk mengambil foto tersebut merupakan flag.
+root@kali:~/Desktop/SU CTF# file Image_Viewer Image_Viewer: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=c3aaafe49fbcc6a7a2adbcdf4f3c2dd125a3dd32, not stripped Proof Of Concept Saya menggunakan binwalk untuk melakukan signature scan
+root@kali:~/Desktop/SU CTF# binwalk Image_Viewer DECIMAL HEXADECIMAL DESCRIPTION -------------------------------------------------------------------------------- 0 0x0 ELF, 64-bit LSB executable, AMD x86-64, version 1 (SYSV) 5432 0x1538 Zlib compressed data, best compression Tidak terdapat signature file gambar, tapi saya mencoba mengekstrack gambar tersebut dengan option -e pada binwalk"/>
+
+
+
+<meta property="og:title" content="SharifCTF 2016 - Camera Model" />
+<meta property="og:description" content="Challenge Misc SharifCTF 2016 diberikan file bernama Image_Viewer yang akan menampilkan sebuah foto dan model kamera yang digunakan untuk mengambil foto tersebut merupakan flag.
+root@kali:~/Desktop/SU CTF# file Image_Viewer Image_Viewer: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=c3aaafe49fbcc6a7a2adbcdf4f3c2dd125a3dd32, not stripped Proof Of Concept Saya menggunakan binwalk untuk melakukan signature scan
+root@kali:~/Desktop/SU CTF# binwalk Image_Viewer DECIMAL HEXADECIMAL DESCRIPTION -------------------------------------------------------------------------------- 0 0x0 ELF, 64-bit LSB executable, AMD x86-64, version 1 (SYSV) 5432 0x1538 Zlib compressed data, best compression Tidak terdapat signature file gambar, tapi saya mencoba mengekstrack gambar tersebut dengan option -e pada binwalk" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2016-12-23-suctf2016-camera-model/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="/post/2016-12-23-suctf2016-camera-model/">SharifCTF 2016 - Camera Model</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="/tags/sharifctf2016/">sharifctf2016</a>&nbsp;
+        
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <p>Challenge Misc SharifCTF 2016 diberikan file bernama Image_Viewer yang akan menampilkan sebuah foto dan model kamera yang digunakan untuk mengambil foto tersebut merupakan flag.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">	root<span style="color:#a6e22e">@kali</span>:<span style="color:#f92672">~/</span>Desktop<span style="color:#f92672">/</span>SU CTF<span style="color:#75715e"># file Image_Viewer</span>
+	Image_Viewer: ELF <span style="color:#ae81ff">64</span><span style="color:#f92672">-</span>bit LSB executable, x86<span style="color:#f92672">-</span><span style="color:#ae81ff">64</span>, version <span style="color:#ae81ff">1</span> (SYSV), 
+	dynamically linked, interpreter <span style="color:#f92672">/</span>lib64<span style="color:#f92672">/</span>ld<span style="color:#f92672">-</span>linux<span style="color:#f92672">-</span>x86<span style="color:#f92672">-</span><span style="color:#ae81ff">64.</span>so<span style="color:#f92672">.</span><span style="color:#ae81ff">2</span>, 
+	<span style="color:#66d9ef">for</span> GNU<span style="color:#f92672">/</span>Linux <span style="color:#ae81ff">2.6</span><span style="color:#f92672">.</span><span style="color:#ae81ff">32</span>, BuildID[sha1]<span style="color:#f92672">=</span>c3aaafe49fbcc6a7a2adbcdf4f3c2dd125a3dd32, <span style="color:#f92672">not</span> stripped
+</code></pre></div><h1 id="proof-of-concept">Proof Of Concept</h1>
+<p>Saya menggunakan <strong>binwalk</strong> untuk melakukan <em>signature scan</em></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">root<span style="color:#a6e22e">@kali</span>:<span style="color:#f92672">~/</span>Desktop<span style="color:#f92672">/</span>SU CTF<span style="color:#75715e"># binwalk Image_Viewer</span>
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+<span style="color:#f92672">--------------------------------------------------------------------------------</span>
+<span style="color:#ae81ff">0</span>             <span style="color:#ae81ff">0x0</span>             ELF, <span style="color:#ae81ff">64</span><span style="color:#f92672">-</span>bit LSB executable, AMD x86<span style="color:#f92672">-</span><span style="color:#ae81ff">64</span>, version <span style="color:#ae81ff">1</span> (SYSV)
+<span style="color:#ae81ff">5432</span>          <span style="color:#ae81ff">0x1538</span>          Zlib compressed data, best compression
+</code></pre></div><p>Tidak terdapat <em>signature</em> file gambar, tapi saya mencoba mengekstrack gambar tersebut dengan option -e pada binwalk</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">root<span style="color:#a6e22e">@kali</span>:<span style="color:#f92672">~/</span>Desktop<span style="color:#f92672">/</span>SU CTF<span style="color:#75715e"># binwalk -e Image_Viewer</span>
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+<span style="color:#f92672">--------------------------------------------------------------------------------</span>
+<span style="color:#ae81ff">0</span>             <span style="color:#ae81ff">0x0</span>             ELF, <span style="color:#ae81ff">64</span><span style="color:#f92672">-</span>bit LSB executable, AMD x86<span style="color:#f92672">-</span><span style="color:#ae81ff">64</span>, version <span style="color:#ae81ff">1</span> (SYSV)
+<span style="color:#ae81ff">5432</span>          <span style="color:#ae81ff">0x1538</span>          Zlib compressed data, best compression
+</code></pre></div><p>Hasil command diatas membuat output sebuah directory _Image_Viewer.extracted</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">	root<span style="color:#a6e22e">@kali</span>:<span style="color:#f92672">~/</span>Desktop<span style="color:#f92672">/</span>SU CTF<span style="color:#75715e"># cd _Image_Viewer.extracted</span>
+	root<span style="color:#a6e22e">@kali</span>:<span style="color:#f92672">~/</span>Desktop<span style="color:#f92672">/</span>SU CTF<span style="color:#f92672">/</span>_Image_Viewer<span style="color:#f92672">.</span>extracted<span style="color:#75715e"># ls</span>
+	<span style="color:#ae81ff">0.</span>elf  <span style="color:#ae81ff">1538</span>  <span style="color:#ae81ff">1538.</span>zlib
+	root<span style="color:#a6e22e">@kali</span>:<span style="color:#f92672">~/</span>Desktop<span style="color:#f92672">/</span>SU CTF<span style="color:#f92672">/</span>_Image_Viewer<span style="color:#f92672">.</span>extracted<span style="color:#75715e"># file *</span>
+	<span style="color:#f92672">---</span> snip <span style="color:#f92672">---</span>
+	<span style="color:#ae81ff">1538</span>:  JPEG image data, JFIF standard <span style="color:#ae81ff">1.01</span>, resolution (DPI), density <span style="color:#ae81ff">72</span>x72, 
+	segment length <span style="color:#ae81ff">16</span>, Exif Standard: [TIFF image data, big<span style="color:#f92672">-</span>endian, 
+	direntries<span style="color:#f92672">=</span><span style="color:#ae81ff">8</span>, model<span style="color:#f92672">=</span>DSLR4781, orientation<span style="color:#f92672">=</span>upper<span style="color:#f92672">-</span>left, 
+	xresolution<span style="color:#f92672">=</span><span style="color:#ae81ff">120</span>, yresolution<span style="color:#f92672">=</span><span style="color:#ae81ff">128</span>, resolutionunit<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>, 
+	software<span style="color:#f92672">=</span>GIMP <span style="color:#ae81ff">2.8</span><span style="color:#f92672">.</span><span style="color:#ae81ff">16</span>, datetime<span style="color:#f92672">=</span><span style="color:#ae81ff">2016</span>:<span style="color:#ae81ff">12</span>:<span style="color:#ae81ff">02</span> <span style="color:#ae81ff">11</span>:<span style="color:#ae81ff">38</span>:<span style="color:#ae81ff">04</span>], 
+	progressive, precision <span style="color:#ae81ff">8</span>, <span style="color:#ae81ff">355</span>x382, frames <span style="color:#ae81ff">3</span>
+	<span style="color:#f92672">---</span> snip <span style="color:#f92672">---</span>
+</code></pre></div><p>File 1538 merupakan file gambar yang muncul pada saat program Image_Viewer dijalankan, dan bagian model=DSLR4781 adalah model kamera yang digunakan.</p>
+<p>Flag : SharifCTF{md5(DSLR4781)}</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="/post/2017-11-15-school-ctf-2017/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">School CTF 2017 Write Up</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="/post/2016-12-22-suctf2016-getit/">
+                  <span class="button__text">SharifCTF 2016 - Getit</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

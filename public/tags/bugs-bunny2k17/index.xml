@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>bugs-bunny2k17 on /home/rhama/</title>
+    <link>/tags/bugs-bunny2k17/</link>
+    <description>Recent content in bugs-bunny2k17 on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tags/bugs-bunny2k17/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Bugs Bunny 2k17 CTF - Pwn150</title>
+      <link>/post/2017-07-22-bugs-bunny2k17-pwn150/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-07-22-bugs-bunny2k17-pwn150/</guid>
+      <description>Diberikan file ELF binary bernama pwn150 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn150 pwn150: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=dc1ada44067255e5211fafc5133679404b54f110, not stripped Elf binary tersebut diproteksi NX (No-eXecute)
+gdb-peda$ checksec CANARY : disabled FORTIFY : disabled NX : ENABLED PIE : disabled RELRO : Partial Karena NX enabled, saya berasumsi untuk mengeksploitnya menggunakan teknik Return-to-libc.</description>
+    </item>
+    
+    <item>
+      <title>Bugs Bunny 2k17 CTF - Pwn50</title>
+      <link>/post/2017-06-22-bugs-bunny2k17-pwn50/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-06-22-bugs-bunny2k17-pwn50/</guid>
+      <description>Diberikan file ELF binary bernama pwn50 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn50 pwn50: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=9100876ac8da789151a1afcbc3e43ddaca1305c1, not stripped Binary ini hanya meminta user input tanpa mengirim kembali outputnya
+➜ ./pwn50 saya ganteng Dengan menggunakan nm terlihat bahwa binary tersebut menggunakan fungsi gets() yang tidak membatasi user input sehingga dapat menyebabkan Buffer Overflow.</description>
+    </item>
+    
+    <item>
+      <title>Bugs Bunny 2k17 CTF - Rev75</title>
+      <link>/post/2017-06-22-bugs-bunny2k17-rev75/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-06-22-bugs-bunny2k17-rev75/</guid>
+      <description>Deskripsi Soal i ran the binary but no password match but believe this is another simple reverse engineering challenge . Diberikan file elf binary static bernama rev75 64 bit yang harus direversing agar bisa mendapatkan flag.
+➜ rev75 file rev75 rev75: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.24, BuildID[sha1]=1bd9592380c83821bf975f46076118ecfd1964df, not stripped Binary tersebut membutuhkan password sebagai argumentnya
+➜ rev75 ./rev75 usage: ./rev75 password ➜ rev75 .</description>
+    </item>
+    
+  </channel>
+</rss>

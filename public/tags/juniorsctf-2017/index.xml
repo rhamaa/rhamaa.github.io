@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>JuniorsCTF-2017 on /home/rhama/</title>
+    <link>/tags/juniorsctf-2017/</link>
+    <description>Recent content in JuniorsCTF-2017 on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tags/juniorsctf-2017/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Juniors CTF 2017 - Write up</title>
+      <link>/post/2017-12-3-juniorsctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-12-3-juniorsctf-2017/</guid>
+      <description>Website PR me, please Diberikan sebuah web 10.0.181.112:15110, untuk mendapatkan flag cukup gunakan salah satu situs dibawah ini sebagai Referer ke situs challenge.
+https://www.yandex.ru/ https://www.facebook.com/ https://www.wikipedia.org/ https://telegram.org/ https://www.whatsapp.com/ $ curl -e &amp;#39;www.yandex.ru&amp;#39; &amp;#39;http://10.0.181.112:15110/&amp;#39; Flag : yoUUGOOODhacker46466464 Stegano Sweet dreams Diberikan sebuah file doc bernama _.doc. Untuk mendapatkan Flag, cukup dengan melakukan unzip
+$ strings _.doc | grep flag word/media/flag.png word/media/flag.png $ unzip _.doc Setelah itu Flag berada di word/media/flag.png
+Flag : DIFFERENT AGE SANDWICH?</description>
+    </item>
+    
+  </channel>
+</rss>

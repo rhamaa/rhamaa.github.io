@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>EASYCTFIV-2018 on /home/rhama/</title>
+    <link>/tags/easyctfiv-2018/</link>
+    <description>Recent content in EASYCTFIV-2018 on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tags/easyctfiv-2018/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>EasyCTF IV 2018 - Reversing</title>
+      <link>/post/2018-02-25-easyivctf-2018/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2018-02-25-easyivctf-2018/</guid>
+      <description>Liar Diberikan sebuah file binary 64-bit not stripped
+Hasil decompile fungsi main()
+int __cdecl main(int argc, const char **argv, const char **envp) { int result; // eax@12  __int64 v4; // rdi@12  int n; // [sp+Ch] [bp-14h]@1  int i; // [sp+10h] [bp-10h]@1  int m; // [sp+14h] [bp-Ch]@1  __int64 v8; // [sp+18h] [bp-8h]@1  v8 = *MK_FP(__FS__, 40LL); __isoc99_scanf(&amp;amp;unk_A64, &amp;amp;n, envp); f[30] = 160LL; f[10] = 47LL; f[13] = 4LL; f[25] = 205LL; f[5] = 87LL; f[24] = 247LL; f[6] = 76LL; f[31] = 176LL; f[7] = 74LL; f[34] = 154LL; f[21] = 231LL; f[32] = 135LL; f[8] = 75LL; f[1] = 102LL; f[9] = 75LL; f[28] = 232LL; f[29] = 148LL; f[3] = 108LL; f[11] = 33LL; f[4] = 127LL; f[14] = 21LL; f[18] = 89LL; f[16] = 3LL; f[26] = 215LL; f[20] = 211LL; f[15] = 8LL; f[17] = 25LL; f[27] = 217LL; f[0] = 101LL; f[33] = 143LL; f[22] = 245LL; f[19] = 241LL; f[12] = 56LL; f[36] = 129LL; f[23] = 206LL; f[2] = 125LL; f[35] = 202LL; m = n ^ 0x58EB29; for ( i = 0; i &amp;lt;= 36; ++i ) g[i] = m * i ^ (unsigned __int64)f[i]; g[i] = 0; if ( g[0] == 101 &amp;amp;&amp;amp; g[1] == 97 &amp;amp;&amp;amp; g[2] == 115 &amp;amp;&amp;amp; g[3] == 121 &amp;amp;&amp;amp; g[4] == 99 &amp;amp;&amp;amp; g[5] == 116 &amp;amp;&amp;amp; g[6] == 102 ) printf(&amp;#34;the flag is %s\n&amp;#34;, g); result = 0; v4 = *MK_FP(__FS__, 40LL) ^ v8; return result; } Dimana pada potongan code berikut</description>
+    </item>
+    
+  </channel>
+</rss>

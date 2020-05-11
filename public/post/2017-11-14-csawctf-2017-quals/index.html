@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>CSAW CTF 2017 Prelims Write Up :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Didapatkan Locationmerupakan alamat stack dimana inputan penggunana akan disimpan dan dibutuhkan 40 bytes untuk meng overwriteregister RIP.
+Berikut exploit code yang digunakan
+Exploit code dijalankan.
+Flag : flag{1nput_c00rd1nat3s_Strap_y0urse1v3s_1n_b0ys}Stage 1 : meminta input nomor kartu kredit {Visa|Discover|American Express|MasterCard}
+Stage 2 : meminta input nomor kartu kredit dengan 4 digit prefix
+Stage 3 : meminta input nomor kartu kredit dengan 1 digit suffix
+Stage 4 : meminta input nomor kartu kredit dengan 4 digit suffix"/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/post/2017-11-14-csawctf-2017-quals/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<link rel="stylesheet" href="/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CSAW CTF 2017 Prelims Write Up"/>
+<meta name="twitter:description" content="Didapatkan Locationmerupakan alamat stack dimana inputan penggunana akan disimpan dan dibutuhkan 40 bytes untuk meng overwriteregister RIP.
+Berikut exploit code yang digunakan
+Exploit code dijalankan.
+Flag : flag{1nput_c00rd1nat3s_Strap_y0urse1v3s_1n_b0ys}Stage 1 : meminta input nomor kartu kredit {Visa|Discover|American Express|MasterCard}
+Stage 2 : meminta input nomor kartu kredit dengan 4 digit prefix
+Stage 3 : meminta input nomor kartu kredit dengan 1 digit suffix
+Stage 4 : meminta input nomor kartu kredit dengan 4 digit suffix"/>
+
+
+
+<meta property="og:title" content="CSAW CTF 2017 Prelims Write Up" />
+<meta property="og:description" content="Didapatkan Locationmerupakan alamat stack dimana inputan penggunana akan disimpan dan dibutuhkan 40 bytes untuk meng overwriteregister RIP.
+Berikut exploit code yang digunakan
+Exploit code dijalankan.
+Flag : flag{1nput_c00rd1nat3s_Strap_y0urse1v3s_1n_b0ys}Stage 1 : meminta input nomor kartu kredit {Visa|Discover|American Express|MasterCard}
+Stage 2 : meminta input nomor kartu kredit dengan 4 digit prefix
+Stage 3 : meminta input nomor kartu kredit dengan 1 digit suffix
+Stage 4 : meminta input nomor kartu kredit dengan 4 digit suffix" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2017-11-14-csawctf-2017-quals/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="/post/2017-11-14-csawctf-2017-quals/">CSAW CTF 2017 Prelims Write Up</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="/tags/csawctf-2017-quals/">csawctf-2017-quals</a>&nbsp;
+        
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->
+Didapatkan <!-- raw HTML omitted --><!-- raw HTML omitted -->Location<!-- raw HTML omitted --><!-- raw HTML omitted --> merupakan alamat stack dimana inputan penggunana akan disimpan dan dibutuhkan 40 bytes untuk meng <!-- raw HTML omitted -->overwrite<!-- raw HTML omitted --> register RIP.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Berikut exploit code yang digunakan</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Exploit code dijalankan.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->Flag : flag{1nput_c00rd1nat3s_Strap_y0urse1v3s_1n_b0ys}<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>Stage 1 : meminta input nomor kartu kredit {Visa|Discover|American Express|MasterCard}</p>
+<p>Stage 2 : meminta input nomor kartu kredit dengan 4 digit prefix</p>
+<p>Stage 3 : meminta input nomor kartu kredit dengan 1 digit suffix</p>
+<p>Stage 4 : meminta input nomor kartu kredit dengan 4 digit suffix</p>
+<p>Stage 5 : meminta input apakah kartu kredit valid atau invalid.</p>
+<p>Untuk melewati stage 1, bisa menggunakan list kartu kredit yang didapatkan di situs <a href="http://www.getcreditcardnumbers.com/">http://www.getcreditcardnumbers.com/</a></p>
+<p>Untuk melewati stage 2-4, bisa menggunakan script <!-- raw HTML omitted -->gencc.py<!-- raw HTML omitted --> (yang sudah saya ubah seperlu nya)</p>
+<p>Untuk melewati stage 5, bisa menggunakan algoritma Luhn</p>
+<p>Script yang saya gunakan bisa didapatkan disini : <!-- raw HTML omitted -->CSAW2017_misc_cvv.py<!-- raw HTML omitted --></p>
+<p>Setelah dijalankan akan mendapatkan flag</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->Flag : flag{ch3ck-exp3rian-dat3-b3for3-us3}<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>I wrote a little proxy program <!-- raw HTML omitted -->in<!-- raw HTML omitted --> NodeJS <!-- raw HTML omitted -->for<!-- raw HTML omitted --> my poems folder.</p>
+<p>Everyone wants to read flag.txt but I like it too much to share.</p>
+<p>http:<!-- raw HTML omitted -->/<!-- raw HTML omitted --><!-- raw HTML omitted -->/<!-- raw HTML omitted -->web.chal.csaw.io:<!-- raw HTML omitted -->7311<!-- raw HTML omitted --><!-- raw HTML omitted -->/<!-- raw HTML omitted -->?path<!-- raw HTML omitted -->=<!-- raw HTML omitted -->orange.txt</p>
+<p><!-- raw HTML omitted -->
+Saat mencoba mengakses web <a href="http://web.chal.csaw.io">http://web.chal.csaw.io</a>:7311/?path=orange.txt akan membaca file orange.txt</p>
+<p>Apabila dilakukan <!-- raw HTML omitted --><!-- raw HTML omitted -->Path Traversing<!-- raw HTML omitted --><!-- raw HTML omitted --> ( ../ ) akan mengeluarkan pesan <!-- raw HTML omitted --><!-- raw HTML omitted -->WHOA THATS BANNED!!!!<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<p>Percobaan bypass menggunakan <!-- raw HTML omitted --><!-- raw HTML omitted -->Double Urlencoding<!-- raw HTML omitted --><!-- raw HTML omitted --> ternyata berhasil bisa membaca file flag.txt</p>
+<p>../ =&gt; %252E%252E%252F</p>
+<p><!-- raw HTML omitted --><a href="http://web.chal.csaw.io">http://web.chal.csaw.io</a>:7311/?path=%252E%252E%252Fflag.txt<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->Flag : flag{thank_you_based_orange_for_this_ctf_challenge}<!-- raw HTML omitted --></p>
+<p>Special Thanks to Allah SWT, lalu kemudian bang Abdilahrf yang udh bantu fix script CVV.</p>
+<p>RulesOfPwning - rhama, ramdhan, bayu, Niko, Riorden, Amrul dan Agus</p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="/post/2017-11-20-csawctf-2017-quals/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">CSAW CTF 2017 Prelims - Write Up</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="/post/2017-11-20-cyber-jawara-2017/">
+                  <span class="button__text">Cyber Jawara 2017 - Write Up</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

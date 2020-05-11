@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>sharifctf2016 on /home/rhama/</title>
+    <link>/tags/sharifctf2016/</link>
+    <description>Recent content in sharifctf2016 on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tags/sharifctf2016/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>SharifCTF 2016 - Camera Model</title>
+      <link>/post/2016-12-23-suctf2016-camera-model/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-12-23-suctf2016-camera-model/</guid>
+      <description>Challenge Misc SharifCTF 2016 diberikan file bernama Image_Viewer yang akan menampilkan sebuah foto dan model kamera yang digunakan untuk mengambil foto tersebut merupakan flag.
+root@kali:~/Desktop/SU CTF# file Image_Viewer Image_Viewer: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=c3aaafe49fbcc6a7a2adbcdf4f3c2dd125a3dd32, not stripped Proof Of Concept Saya menggunakan binwalk untuk melakukan signature scan
+root@kali:~/Desktop/SU CTF# binwalk Image_Viewer DECIMAL HEXADECIMAL DESCRIPTION -------------------------------------------------------------------------------- 0 0x0 ELF, 64-bit LSB executable, AMD x86-64, version 1 (SYSV) 5432 0x1538 Zlib compressed data, best compression Tidak terdapat signature file gambar, tapi saya mencoba mengekstrack gambar tersebut dengan option -e pada binwalk</description>
+    </item>
+    
+    <item>
+      <title>SharifCTF 2016 - Getit</title>
+      <link>/post/2016-12-22-suctf2016-getit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-12-22-suctf2016-getit/</guid>
+      <description>Pada challenge RE ShariftCTF 2016 diberikan file elf binnary bernama getit, yang informasi nya seperti dibawah ini
+root@kali:~/Desktop/SU CTF/RE# file getit getit: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=e389cd7a4b9272ba80f85d7eb604176f6106c61e, not stripped Proof Of Concept Saya menggunakan gdb untuk melakukan debugging
+root@kali:~/Desktop/SU CTF/RE# gdb -q getit Reading symbols from getit...(no debugging symbols found)...done. (gdb) set disassembly-flavor intel (gdb) disass main Dump of assembler code for function main: --- snip --- 0x000000000040080d &amp;lt;+183&amp;gt;:	call 0x400620 &amp;lt;fprintf@plt&amp;gt; 0x0000000000400812 &amp;lt;+188&amp;gt;:	mov DWORD PTR [rbp-0x3c],0x0 0x0000000000400819 &amp;lt;+195&amp;gt;:	mov eax,DWORD PTR [rbp-0x3c] 0x000000000040081c &amp;lt;+198&amp;gt;:	movsxd rbx,eax 0x000000000040081f &amp;lt;+201&amp;gt;:	mov edi,0x6010e0 0x0000000000400824 &amp;lt;+206&amp;gt;:	call 0x4005e0 &amp;lt;strlen@plt&amp;gt; 0x0000000000400829 &amp;lt;+211&amp;gt;:	cmp rbx,rax 0x000000000040082c &amp;lt;+214&amp;gt;:	jae 0x4008b5 &amp;lt;main+351&amp;gt; --- snip --- Ditemukan bagian menarik pada offset 0x000000000040081f at +201, dimana terdapat &amp;ldquo;sesuatu&amp;rdquo; yang disalin ke register edi.</description>
+    </item>
+    
+    <item>
+      <title>SharifCTF 2016 - SCrack</title>
+      <link>/post/2016-12-22-suctf2016-scrack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-12-22-suctf2016-scrack/</guid>
+      <description>Challenge RE SharifCTF 2016 SCrack berupa file elf binnary 64bit yang akan melakukan validasi key
+root@kali:~/Desktop/SU CTF/RE# file SCrack SCrack: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=d011afc29443bbb3ea2c72ef5ac15f8dc278397a, not stripped root@kali:~/Desktop/SU CTF/RE# ./SCrack Enter the valid key! asasasasasas Invalid Key! :( Saat mencoba menggunakan ltrace terdapat output Dont trace me! dan percobaan disassembly menggunakan gdb ditemukan ptrace yang digunakan sebagai anti-debugging technique</description>
+    </item>
+    
+    <item>
+      <title>SharifCTF 2016 - UnloadMe</title>
+      <link>/post/2016-12-22-suctf2016-unloadme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2016-12-22-suctf2016-unloadme/</guid>
+      <description>content {:toc}  Challenge RE SharifCTF 2016 UnloadMe berupa file PE32 Windows Executable
+root@kali:~/Desktop/SU CTF/RE# file UnloadMe UnloadMe: PE32 executable (native) Intel 80386, for MS Windows Proof Of Concept Saya melakukan disassembly menggunakan Hopper, ditemukan Hex String mencurigakan pada register.
+Apabila Hex String tersebut didecode akan menghasilkan cc043056a0a32cb5e104aeb2cf4ff7ba flag : SharifCTF{cc043056a0a32cb5e104aeb2cf4ff7ba}</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>tuctf2017 on /home/rhama/</title>
+    <link>/tags/tuctf2017/</link>
+    <description>Recent content in tuctf2017 on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tags/tuctf2017/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TUCTF 2017 - Writeup</title>
+      <link>/post/2017-11-27-tuctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-11-27-tuctf-2017/</guid>
+      <description>Reversing 200 (Unknown) Diberikan file ELF 64 bit stripped.
+Berikut hasil disassembly fungsi main
+signed __int64 __fastcall main(int a1, char **a2, char **a3) { signed __int64 result; // rax@2  unsigned int i; // [sp+14h] [bp-Ch]@5  char *v5; // [sp+18h] [bp-8h]@5  if ( a1 == 2 ) { if ( strlen(a2[1]) == 56 ) { v5 = a2[1]; for ( i = 0; i &amp;lt; 0x38; ++i ) { if ( (unsigned int)sub_401E90((__int64)v5, i) ) dword_603084 = 1; } if ( dword_603084 ) puts(&amp;#34;Nope.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>SharifCTF 2016 - SCrack :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Challenge RE SharifCTF 2016 SCrack berupa file elf binnary 64bit yang akan melakukan validasi key
+root@kali:~/Desktop/SU CTF/RE# file SCrack SCrack: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=d011afc29443bbb3ea2c72ef5ac15f8dc278397a, not stripped root@kali:~/Desktop/SU CTF/RE# ./SCrack Enter the valid key! asasasasasas Invalid Key! :( Saat mencoba menggunakan ltrace terdapat output Dont trace me! dan percobaan disassembly menggunakan gdb ditemukan ptrace yang digunakan sebagai anti-debugging technique"/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="/post/2016-12-22-suctf2016-scrack/" />
+
+
+
+
+
+<link rel="stylesheet" href="/assets/style.css">
+
+
+<link rel="stylesheet" href="/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SharifCTF 2016 - SCrack"/>
+<meta name="twitter:description" content="Challenge RE SharifCTF 2016 SCrack berupa file elf binnary 64bit yang akan melakukan validasi key
+root@kali:~/Desktop/SU CTF/RE# file SCrack SCrack: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=d011afc29443bbb3ea2c72ef5ac15f8dc278397a, not stripped root@kali:~/Desktop/SU CTF/RE# ./SCrack Enter the valid key! asasasasasas Invalid Key! :( Saat mencoba menggunakan ltrace terdapat output Dont trace me! dan percobaan disassembly menggunakan gdb ditemukan ptrace yang digunakan sebagai anti-debugging technique"/>
+
+
+
+<meta property="og:title" content="SharifCTF 2016 - SCrack" />
+<meta property="og:description" content="Challenge RE SharifCTF 2016 SCrack berupa file elf binnary 64bit yang akan melakukan validasi key
+root@kali:~/Desktop/SU CTF/RE# file SCrack SCrack: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=d011afc29443bbb3ea2c72ef5ac15f8dc278397a, not stripped root@kali:~/Desktop/SU CTF/RE# ./SCrack Enter the valid key! asasasasasas Invalid Key! :( Saat mencoba menggunakan ltrace terdapat output Dont trace me! dan percobaan disassembly menggunakan gdb ditemukan ptrace yang digunakan sebagai anti-debugging technique" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/post/2016-12-22-suctf2016-scrack/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="/about">About</a></li>
+        
+      
+        
+          <li><a href="/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="/about">About</a></li>
+      
+    
+      
+        <li><a href="/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="/post/2016-12-22-suctf2016-scrack/">SharifCTF 2016 - SCrack</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="/tags/sharifctf2016/">sharifctf2016</a>&nbsp;
+        
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <p>Challenge RE SharifCTF 2016 SCrack berupa file elf binnary 64bit yang akan melakukan validasi key</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:~/Desktop/SU CTF/RE# file SCrack
+SCrack: ELF 64-bit LSB executable, x86-64, version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>SYSV<span style="color:#f92672">)</span>, 
+dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, 
+<span style="color:#66d9ef">for</span> GNU/Linux 2.6.24, BuildID<span style="color:#f92672">[</span>sha1<span style="color:#f92672">]=</span>d011afc29443bbb3ea2c72ef5ac15f8dc278397a, 
+not stripped
+
+root@kali:~/Desktop/SU CTF/RE# ./SCrack
+Enter the valid key!
+asasasasasas
+Invalid Key! :<span style="color:#f92672">(</span>
+</code></pre></div><p>Saat mencoba menggunakan <strong>ltrace</strong> terdapat output <em>Dont trace me!</em> dan percobaan <em>disassembly</em> menggunakan gdb ditemukan <em>ptrace</em> yang digunakan sebagai <em>anti-debugging technique</em></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:~/Desktop/SU CTF/RE# gdb -q SCrack
+Reading symbols from SCrack...<span style="color:#f92672">(</span>no debugging symbols found<span style="color:#f92672">)</span>...done.
+<span style="color:#f92672">(</span>gdb<span style="color:#f92672">)</span> disass main
+Dump of assembler code <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">function</span> main:
+--- snip ---
+   0x0000000000400a79 &lt;+44&gt;:	mov    $0x0,%eax
+   0x0000000000400a7e &lt;+49&gt;:	callq  0x400910 &lt;ptrace@plt&gt;
+   0x0000000000400a83 &lt;+54&gt;:	cmp    $0xffffffffffffffff,%rax
+   0x0000000000400a87 &lt;+58&gt;:	sete   %al
+   0x0000000000400a8a &lt;+61&gt;:	test   %al,%al
+--- snip ---
+</code></pre></div><h1 id="proof-of-concept">Proof Of Concept</h1>
+<p>Dikarenakan menggunakan ltrace tidak bisa, saya mencoba melakukan <em>static analisys</em> menggunakan <strong>objdump</strong></p>
+<p>Ditemukan instruksi yang akan memberikan &ldquo;sesuatu&rdquo; ke register esi</p>
+<p><img src="https://raw.githubusercontent.com/rh4ma/rh4ma.github.io/master/_posts/SCRACK.png" alt="SCRACK.png"></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:~/Desktop/SU CTF/RE# objdump -M intel -d SCrack | grep esi | awk <span style="color:#e6db74">&#39;{print $8}&#39;</span> | 
+cut -f2 -d<span style="color:#e6db74">&#34;,&#34;</span>  | tr <span style="color:#e6db74">&#34;\n&#34;</span> <span style="color:#e6db74">&#34;,&#34;</span>
+
+0x0,0x401064,0x401075,0x53,0x68,0x61,0x72,0x69,0x66,0x43,0x54,
+0x46,0x7b,0x65,0x64,0x39,0x37,0x64,0x32,0x38,0x36,0x66,0x33,
+0x35,0x36,0x64,0x61,0x64,0x62,0x35,0x63,0x64,0x65,0x30,0x39,
+0x30,0x32,0x30,0x30,0x36,0x63,0x37,0x64,0x65,0x62,0x7d,0x400950,
+0x49,0x6e,0x76,0x61,0x6c,0x69,0x64,0x20,0x4b,0x65,0x79,0x21,0x20,
+0x3a,0x28,0x400950,esi,0x6022d1,0xffff,
+</code></pre></div><p>Decode menggunakan python</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:~/Desktop/SU CTF/RE# python
+&gt;&gt;&gt; x <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>0x53,0x68,0x61,0x72,0x69,0x66,0x43,0x54,0x46,0x7b,0x65,
+0x64,0x39,0x37,0x64,0x32,0x38,0x36,0x66,0x33,0x35,0x36,0x64,0x61,
+0x64,0x62,0x35,0x63,0x64,0x65,0x30,0x39,0x30,0x32,0x30,0x30,0x36,
+0x63,0x37,0x64,0x65,0x62,0x7d,0x49,0x6e,0x76,0x61,0x6c,0x69,0x64,
+0x20,0x4b,0x65,0x79,0x21,0x20,0x3a,0x28<span style="color:#f92672">]</span>
+&gt;&gt;&gt; <span style="color:#e6db74">&#34;&#34;</span>.join<span style="color:#f92672">([</span> chr<span style="color:#f92672">(</span>y<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> y in x<span style="color:#f92672">])</span>
+<span style="color:#e6db74">&#39;SharifCTF{ed97d286f356dadb5cde0902006c7deb}Invalid Key! :(&#39;</span>
+</code></pre></div><p>Flag : SharifCTF{ed97d286f356dadb5cde0902006c7deb}</p>
+<h1 id="proof-of-concept-2">Proof Of Concept #2</h1>
+<p>Cara lain juga dapat digunakan untuk mendapatkan flag pada challenge ini, yang saya rasa ini memang cara yang diharapkan untuk mendapatkan flag yaitu dengan memasukan key yang valid</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:~/Desktop/SU CTF/RE# objdump -M intel -d SCrack | grep cmp | awk <span style="color:#e6db74">&#39;{print $5}&#39;</span> | 
+cut -f2 -d<span style="color:#e6db74">&#34;,&#34;</span>  | tr <span style="color:#e6db74">&#34;\n&#34;</span> <span style="color:#e6db74">&#34;,&#34;</span>
+0e,18,e8,ff,0x38,0x37,0x34,0x30,0x33,0x38,0x65,0x34,0x62,0x36,0x65,
+0x32,0x39,0x62,0x66,0x30,0x38,0x39,0x38,0x62,0x67,0x34,0x66,0x30,0x32,
+0x32,0x35,0x39,0x33,0x35,0x63,0x30,01,ff,cmp,
+</code></pre></div><p>Decode menggunakan Python</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:~/Desktop/SU CTF/RE# python
+&gt;&gt;&gt; x <span style="color:#f92672">=</span> <span style="color:#f92672">[</span>0x38,0x37,0x34,0x30,0x33,0x38,0x65,0x34,0x62,0x36,0x65,0x32,
+0x39,0x62,0x66,0x30,0x38,0x39,0x38,0x62,0x67,0x34,0x66,0x30,0x32,0x32,
+0x35,0x39,0x33,0x35,0x63,0x30<span style="color:#f92672">]</span>
+&gt;&gt;&gt; <span style="color:#e6db74">&#34;&#34;</span>.join<span style="color:#f92672">([</span> chr<span style="color:#f92672">(</span>y<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> y in x<span style="color:#f92672">])</span>
+<span style="color:#e6db74">&#39;874038e4b6e29bf0898bg4f0225935c0&#39;</span>
+&gt;&gt;&gt; exit<span style="color:#f92672">()</span>
+
+root@kali:~/Desktop/SU CTF/RE# ./SCrack
+Enter the valid key!
+874038e4b6e29bf0898bg4f0225935c0
+SharifCTF<span style="color:#f92672">{</span>ed97d286f356dadb5cde0902006c7deb<span style="color:#f92672">}</span>
+</code></pre></div>
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="/post/2016-12-22-suctf2016-getit/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">SharifCTF 2016 - Getit</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="/post/2016-12-22-suctf2016-unloadme/">
+                  <span class="button__text">SharifCTF 2016 - UnloadMe</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>schoolctf-2017 on /home/rhama/</title>
+    <link>/tags/schoolctf-2017/</link>
+    <description>Recent content in schoolctf-2017 on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="/tags/schoolctf-2017/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>School CTF 2017 Write Up</title>
+      <link>/post/2017-11-15-school-ctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>/post/2017-11-15-school-ctf-2017/</guid>
+      <description>Task URLSitus tersebut menggunakan self signed ssl, dan Flag nya terdapat pada bagian Organizational unit (OU).
+Flag : SchoolCTF{n0t_so+$eCur3}Can you find it?
+Task URLWeb tersebut menyediakan fasilitas scan port. dimana terdapat 2 fitur,
+yang pertama &amp;lsquo;Scan the host to get the list of open ports&amp;rsquo;
+terlihat port 31337 dengan service SchoolCTF Flag Serverdalam keadaan Open.
+Yang kedua &amp;ldquo;Identify the single port on the host&amp;rdquo;
+Tetapi apabila me scan &amp;ldquo;localhost&amp;rdquo; atau &amp;ldquo;127.</description>
+    </item>
+    
+  </channel>
+</rss>
