@@ -10,20 +10,20 @@
 #include &amp;lt;stdio.h&amp;gt; int main(){ unsigned int random; random = rand();	// random value!  unsigned int key=0; scanf(&amp;#34;%d&amp;#34;, &amp;amp;key); if( (key ^ random) == 0xdeadbeef ){ printf(&amp;#34;Good!\n&amp;#34;); system(&amp;#34;/bin/cat flag&amp;#34;); return 0; } printf(&amp;#34;Wrong, maybe you should try 2^32 cases.\n&amp;#34;); return 0; } Fungsi rand() akan mengembalikan nilai pseudo-random antara 0 dan RAND_MAX. Value dari fungsi rand() akan disimpan pada variable random, dan terdapat variable key yang menampung user input sehingga pada kondisi if dilakukan XOR antara key ^ random jika hasil nya 0xdeadbeef akan mendapatkan flag."/>
 <meta name="keywords" content=""/>
 <meta name="robots" content="noodp"/>
-<link rel="canonical" href="rhamaa.github.io/post/2016-12-21-pwnable.kr-random/" />
+<link rel="canonical" href="/post/2016-12-21-pwnable.kr-random/" />
 
 
 
 
 
-<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+<link rel="stylesheet" href="/assets/style.css">
 
 
-<link rel="stylesheet" href="rhamaa.github.io/style.css">
+<link rel="stylesheet" href="/style.css">
 
 
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
-<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
 
 
 <meta name="twitter:card" content="summary"/>
@@ -37,7 +37,7 @@
 <meta property="og:description" content="Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code
 #include &lt;stdio.h&gt; int main(){ unsigned int random; random = rand();	// random value!  unsigned int key=0; scanf(&#34;%d&#34;, &amp;key); if( (key ^ random) == 0xdeadbeef ){ printf(&#34;Good!\n&#34;); system(&#34;/bin/cat flag&#34;); return 0; } printf(&#34;Wrong, maybe you should try 2^32 cases.\n&#34;); return 0; } Fungsi rand() akan mengembalikan nilai pseudo-random antara 0 dan RAND_MAX. Value dari fungsi rand() akan disimpan pada variable random, dan terdapat variable key yang menampung user input sehingga pada kondisi if dilakukan XOR antara key ^ random jika hasil nya 0xdeadbeef akan mendapatkan flag." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="rhamaa.github.io/post/2016-12-21-pwnable.kr-random/" />
+<meta property="og:url" content="/post/2016-12-21-pwnable.kr-random/" />
 <meta property="og:site_name" content="/home/rhama/" />
 
 
@@ -68,11 +68,11 @@
     
       
         
-          <li><a href="rhamaa.github.io/about">About</a></li>
+          <li><a href="/about">About</a></li>
         
       
         
-          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+          <li><a href="/showcase">Showcase</a></li>
         
       
       
@@ -82,11 +82,11 @@
   <ul class="menu__inner menu__inner--mobile">
     
       
-        <li><a href="rhamaa.github.io/about">About</a></li>
+        <li><a href="/about">About</a></li>
       
     
       
-        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        <li><a href="/showcase">Showcase</a></li>
       
     
   </ul>
@@ -118,7 +118,7 @@
   
 
   <div class="post">
-    <h1 class="post-title"><a href="rhamaa.github.io/post/2016-12-21-pwnable.kr-random/">pwnable.kr - random</a></h1>
+    <h1 class="post-title"><a href="/post/2016-12-21-pwnable.kr-random/">pwnable.kr - random</a></h1>
     <div class="post-meta">
       
 
@@ -129,9 +129,9 @@
     
       <span class="post-tags">
         
-          #<a href="rhamaa.github.io/tags/pwnable.kr/">pwnable.kr</a>&nbsp;
+          #<a href="/tags/pwnable.kr/">pwnable.kr</a>&nbsp;
         
-          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
         
       </span>
     
@@ -285,7 +285,7 @@ random<span style="color:#960050;background-color:#1e0010">@</span>ubuntu:<span 
           <div class="pagination__buttons">
             
               <span class="button previous">
-                <a href="rhamaa.github.io/post/2017-12-3-juniorsctf-2017/">
+                <a href="/post/2017-12-3-juniorsctf-2017/">
                   <span class="button__icon">←</span>
                   <span class="button__text">Juniors CTF 2017 - Write up</span>
                 </a>
@@ -293,7 +293,7 @@ random<span style="color:#960050;background-color:#1e0010">@</span>ubuntu:<span 
             
             
               <span class="button next">
-                <a href="rhamaa.github.io/post/2017-11-06-pwnabletw-start/">
+                <a href="/post/2017-11-06-pwnabletw-start/">
                   <span class="button__text">Pwnable.tw - Start (100)</span>
                   <span class="button__icon">→</span>
                 </a>
@@ -339,8 +339,8 @@ random<span style="color:#960050;background-color:#1e0010">@</span>ubuntu:<span 
   </div>
 </footer>
 
-<script src="rhamaa.github.io/assets/main.js"></script>
-<script src="rhamaa.github.io/assets/prism.js"></script>
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
 
 
       

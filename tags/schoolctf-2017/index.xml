@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>schoolctf-2017 on /home/rhama/</title>
-    <link>rhamaa.github.io/tags/schoolctf-2017/</link>
+    <link>/tags/schoolctf-2017/</link>
     <description>Recent content in schoolctf-2017 on /home/rhama/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="rhamaa.github.io/tags/schoolctf-2017/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/schoolctf-2017/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>School CTF 2017 Write Up</title>
-      <link>rhamaa.github.io/post/2017-11-15-school-ctf-2017/</link>
+      <link>/post/2017-11-15-school-ctf-2017/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>rhamaa.github.io/post/2017-11-15-school-ctf-2017/</guid>
+      <guid>/post/2017-11-15-school-ctf-2017/</guid>
       <description>Task URLSitus tersebut menggunakan self signed ssl, dan Flag nya terdapat pada bagian Organizational unit (OU).
 Flag : SchoolCTF{n0t_so+$eCur3}Can you find it?
 Task URLWeb tersebut menyediakan fasilitas scan port. dimana terdapat 2 fitur,

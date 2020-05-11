@@ -11,20 +11,20 @@ Task URLdefip2long(ip): aton =inet_aton(ip) returnunpack(&amp;rdquo;!L&amp;quot;
 defmain(): URL =&amp;quot;http://portscan.task.school-CTF.org/port&amp;quot;IP =&amp;quot;127.0.0.1&amp;quot;HOST =ip2long(IP) PORT =&amp;quot;31337&amp;quot;print&amp;quot;Host : {}&amp;ldquo;.format(HOST) r =requests.post(URL,data={&amp;quot;host&amp;quot;: HOST,&amp;quot;port&amp;quot;: PORT}) raw_content =r.content flag =re.findall(&amp;quot;SchoolCTF{.*?}&amp;ldquo;,raw_content) print&amp;quot;Flag : {}&amp;ldquo;.format(flag[0]) if__name__==&amp;rsquo;main&amp;lsquo;: main() p.s. It seems that one of them said that they haven&amp;rsquo;t yet fully configured the security system and the password can be cracked. Safe URLdefa(pin): if(int(pin[0]) &#43;int(pin[1]) &#43;int(pin[2])) %10==int(pin[3]): returnpin else: returnNonepin_list =[] prod_pin =product(&amp;quot;123456789&amp;quot;,repeat=4) prod_pin =[&amp;quot;&amp;ldquo;.join(x) forx inlist(prod_pin)] prod_pin =map(a,prod_pin) prod_pin =filter(None,prod_pin) prod_pin =list(set(prod_pin)) pin_list&#43;=prod_pin"/>
 <meta name="keywords" content=""/>
 <meta name="robots" content="noodp"/>
-<link rel="canonical" href="rhamaa.github.io/post/2017-11-27-school-ctf-2017/" />
+<link rel="canonical" href="/post/2017-11-27-school-ctf-2017/" />
 
 
 
 
 
-<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+<link rel="stylesheet" href="/assets/style.css">
 
 
-<link rel="stylesheet" href="rhamaa.github.io/style.css">
+<link rel="stylesheet" href="/style.css">
 
 
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
-<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
 
 
 <meta name="twitter:card" content="summary"/>
@@ -40,7 +40,7 @@ defmain(): URL =&quot;http://portscan.task.school-CTF.org/port&quot;IP =&quot;12
 Task URLdefip2long(ip): aton =inet_aton(ip) returnunpack(&rdquo;!L&quot;,aton)[0]
 defmain(): URL =&quot;http://portscan.task.school-CTF.org/port&quot;IP =&quot;127.0.0.1&quot;HOST =ip2long(IP) PORT =&quot;31337&quot;print&quot;Host : {}&ldquo;.format(HOST) r =requests.post(URL,data={&quot;host&quot;: HOST,&quot;port&quot;: PORT}) raw_content =r.content flag =re.findall(&quot;SchoolCTF{.*?}&ldquo;,raw_content) print&quot;Flag : {}&ldquo;.format(flag[0]) if__name__==&rsquo;main&lsquo;: main() p.s. It seems that one of them said that they haven&rsquo;t yet fully configured the security system and the password can be cracked. Safe URLdefa(pin): if(int(pin[0]) &#43;int(pin[1]) &#43;int(pin[2])) %10==int(pin[3]): returnpin else: returnNonepin_list =[] prod_pin =product(&quot;123456789&quot;,repeat=4) prod_pin =[&quot;&ldquo;.join(x) forx inlist(prod_pin)] prod_pin =map(a,prod_pin) prod_pin =filter(None,prod_pin) prod_pin =list(set(prod_pin)) pin_list&#43;=prod_pin" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="rhamaa.github.io/post/2017-11-27-school-ctf-2017/" />
+<meta property="og:url" content="/post/2017-11-27-school-ctf-2017/" />
 <meta property="og:site_name" content="/home/rhama/" />
 
 
@@ -71,11 +71,11 @@ defmain(): URL =&quot;http://portscan.task.school-CTF.org/port&quot;IP =&quot;12
     
       
         
-          <li><a href="rhamaa.github.io/about">About</a></li>
+          <li><a href="/about">About</a></li>
         
       
         
-          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+          <li><a href="/showcase">Showcase</a></li>
         
       
       
@@ -85,11 +85,11 @@ defmain(): URL =&quot;http://portscan.task.school-CTF.org/port&quot;IP =&quot;12
   <ul class="menu__inner menu__inner--mobile">
     
       
-        <li><a href="rhamaa.github.io/about">About</a></li>
+        <li><a href="/about">About</a></li>
       
     
       
-        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        <li><a href="/showcase">Showcase</a></li>
       
     
   </ul>
@@ -121,7 +121,7 @@ defmain(): URL =&quot;http://portscan.task.school-CTF.org/port&quot;IP =&quot;12
   
 
   <div class="post">
-    <h1 class="post-title"><a href="rhamaa.github.io/post/2017-11-27-school-ctf-2017/">School CTF 2017 - Write Up</a></h1>
+    <h1 class="post-title"><a href="/post/2017-11-27-school-ctf-2017/">School CTF 2017 - Write Up</a></h1>
     <div class="post-meta">
       
 
@@ -132,9 +132,9 @@ defmain(): URL =&quot;http://portscan.task.school-CTF.org/port&quot;IP =&quot;12
     
       <span class="post-tags">
         
-          #<a href="rhamaa.github.io/tags/schoolctf2017/">SchoolCTF2017</a>&nbsp;
+          #<a href="/tags/schoolctf2017/">SchoolCTF2017</a>&nbsp;
         
-          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
         
       </span>
     
@@ -301,7 +301,7 @@ main()
           <div class="pagination__buttons">
             
               <span class="button previous">
-                <a href="rhamaa.github.io/post/2017-11-21-rc3-ctf-2017/">
+                <a href="/post/2017-11-21-rc3-ctf-2017/">
                   <span class="button__icon">←</span>
                   <span class="button__text">RC3 CTF 2017 Write Up</span>
                 </a>
@@ -309,7 +309,7 @@ main()
             
             
               <span class="button next">
-                <a href="rhamaa.github.io/post/2017-11-15-school-ctf-2017/">
+                <a href="/post/2017-11-15-school-ctf-2017/">
                   <span class="button__text">School CTF 2017 Write Up</span>
                   <span class="button__icon">→</span>
                 </a>
@@ -355,8 +355,8 @@ main()
   </div>
 </footer>
 
-<script src="rhamaa.github.io/assets/main.js"></script>
-<script src="rhamaa.github.io/assets/prism.js"></script>
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
 
 
       

@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>RE on /home/rhama/</title>
-    <link>rhamaa.github.io/tags/re/</link>
+    <link>/tags/re/</link>
     <description>Recent content in RE on /home/rhama/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Sat, 24 Dec 2016 01:06:00 +0700</lastBuildDate>
     
-	<atom:link href="rhamaa.github.io/tags/re/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/re/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Basic Reverse Engineering Linux Binaries</title>
-      <link>rhamaa.github.io/post/2016-12-24-basic-reverse-engineering-linux-binaries/</link>
+      <link>/post/2016-12-24-basic-reverse-engineering-linux-binaries/</link>
       <pubDate>Sat, 24 Dec 2016 01:06:00 +0700</pubDate>
       
-      <guid>rhamaa.github.io/post/2016-12-24-basic-reverse-engineering-linux-binaries/</guid>
+      <guid>/post/2016-12-24-basic-reverse-engineering-linux-binaries/</guid>
       <description>Assalamualaikum. Saya akan sedikit membahas basic dalam melakukan reverse engineering elf binnary, reverse engineering sendiri sangat penting apalagi dalam challenge CTF yang biasa nya mempunyai poin yang besar.
 The Code root@kali:~# cat rev.c #include int main(){	int a,b,c,d; a = 306; b = 737; c = 100 * a + b; printf(&amp;#34;Enter your passcode : &amp;#34;); scanf(&amp;#34;%d&amp;#34;, &amp;amp;d); if(d == c){ puts(&amp;#34;Correct&amp;#34;); else{ puts(&amp;#34;Incorrect&amp;#34;);	return 0; ``` Proof Of Concept ==================================== ``` c %} root@kali:~# gcc rev.</description>
     </item>

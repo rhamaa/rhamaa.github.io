@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>TAMUCTF-2018 on /home/rhama/</title>
-    <link>rhamaa.github.io/tags/tamuctf-2018/</link>
+    <link>/tags/tamuctf-2018/</link>
     <description>Recent content in TAMUCTF-2018 on /home/rhama/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="rhamaa.github.io/tags/tamuctf-2018/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/tamuctf-2018/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>TAMUCTF 2018 - Pwning</title>
-      <link>rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/</link>
+      <link>/post/2018-02-27-tamuctf-2018-pwning/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/</guid>
+      <guid>/post/2018-02-27-tamuctf-2018-pwning/</guid>
       <description>Pwn1 Diberikan sebuah file binary dengan informasi sebagai berikut
 Percobaan debugging menggunakan gdb
 $ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. gdb-peda $ pdisass main Berikut hasil disassable fungsi main

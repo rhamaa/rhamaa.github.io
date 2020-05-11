@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Misc on /home/rhama/</title>
-    <link>rhamaa.github.io/categories/misc/</link>
+    <link>/categories/misc/</link>
     <description>Recent content in Misc on /home/rhama/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="rhamaa.github.io/categories/misc/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/categories/misc/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>SharifCTF 2016 - Camera Model</title>
-      <link>rhamaa.github.io/post/2016-12-23-suctf2016-camera-model/</link>
+      <link>/post/2016-12-23-suctf2016-camera-model/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>rhamaa.github.io/post/2016-12-23-suctf2016-camera-model/</guid>
+      <guid>/post/2016-12-23-suctf2016-camera-model/</guid>
       <description>Challenge Misc SharifCTF 2016 diberikan file bernama Image_Viewer yang akan menampilkan sebuah foto dan model kamera yang digunakan untuk mengambil foto tersebut merupakan flag.
 root@kali:~/Desktop/SU CTF# file Image_Viewer Image_Viewer: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=c3aaafe49fbcc6a7a2adbcdf4f3c2dd125a3dd32, not stripped Proof Of Concept Saya menggunakan binwalk untuk melakukan signature scan
 root@kali:~/Desktop/SU CTF# binwalk Image_Viewer DECIMAL HEXADECIMAL DESCRIPTION -------------------------------------------------------------------------------- 0 0x0 ELF, 64-bit LSB executable, AMD x86-64, version 1 (SYSV) 5432 0x1538 Zlib compressed data, best compression Tidak terdapat signature file gambar, tapi saya mencoba mengekstrack gambar tersebut dengan option -e pada binwalk</description>

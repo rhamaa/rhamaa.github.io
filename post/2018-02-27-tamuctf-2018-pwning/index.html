@@ -12,20 +12,20 @@ $ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. g
 0x080485cf &amp;lt;&#43;29&amp;gt;: call 0x8048410 &amp;lt;setvbuf@plt&amp;gt; 0x080485d4 &amp;lt;&#43;34&amp;gt;: add esp,0x10 0x080485d7 &amp;lt;&#43;37&amp;gt;: sub esp,0xc 0x080485da &amp;lt;&#43;40&amp;gt;: push 0x8048700 0x080485df &amp;lt;&#43;45&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x080485e4 &amp;lt;&#43;50&amp;gt;: add esp,0x10 0x080485e7 &amp;lt;&#43;53&amp;gt;: sub esp,0xc 0x080485ea &amp;lt;&#43;56&amp;gt;: push 0x8048720 0x080485ef &amp;lt;&#43;61&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x080485f4 &amp;lt;&#43;66&amp;gt;: add esp,0x10 0x080485f7 &amp;lt;&#43;69&amp;gt;: sub esp,0xc 0x080485fa &amp;lt;&#43;72&amp;gt;: push 0x804875f 0x080485ff &amp;lt;&#43;77&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x08048604 &amp;lt;&#43;82&amp;gt;: add esp,0x10 0x08048607 &amp;lt;&#43;85&amp;gt;: mov DWORD PTR [ebp-0xc],0x0 0x0804860e &amp;lt;&#43;92&amp;gt;: sub esp,0xc 0x08048611 &amp;lt;&#43;95&amp;gt;: lea eax,[ebp-0x23] 0x08048614 &amp;lt;&#43;98&amp;gt;: push eax 0x08048615 &amp;lt;&#43;99&amp;gt;: call 0x80483d0 &amp;lt;gets@plt&amp;gt; 0x0804861a &amp;lt;&#43;104&amp;gt;: add esp,0x10 0x0804861d &amp;lt;&#43;107&amp;gt;: cmp DWORD PTR [ebp-0xc],0xf007ba11 0x08048624 &amp;lt;&#43;114&amp;gt;: jne 0x804862d &amp;lt;main&#43;123&amp;gt; 0x08048626 &amp;lt;&#43;116&amp;gt;: call 0x804854b &amp;lt;print_flag&amp;gt; 0x0804862b &amp;lt;&#43;121&amp;gt;: jmp 0x804863d &amp;lt;main&#43;139&amp;gt; 0x0804862d &amp;lt;&#43;123&amp;gt;: sub esp,0xc 0x08048630 &amp;lt;&#43;126&amp;gt;: push 0x8048772 0x08048635 &amp;lt;&#43;131&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x0804863a &amp;lt;&#43;136&amp;gt;: add esp,0x10 0x0804863d &amp;lt;&#43;139&amp;gt;: mov eax,0x0 0x08048642 &amp;lt;&#43;144&amp;gt;: mov ecx,DWORD PTR [ebp-0x4] 0x08048645 &amp;lt;&#43;147&amp;gt;: leave 0x08048646 &amp;lt;&#43;148&amp;gt;: lea esp,[ecx-0x4] 0x08048649 &amp;lt;&#43;151&amp;gt;: ret Terlihat terdapat penggunaan fungsi gets() yang vulnerable buffer overflow."/>
 <meta name="keywords" content=""/>
 <meta name="robots" content="noodp"/>
-<link rel="canonical" href="rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/" />
+<link rel="canonical" href="/post/2018-02-27-tamuctf-2018-pwning/" />
 
 
 
 
 
-<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+<link rel="stylesheet" href="/assets/style.css">
 
 
-<link rel="stylesheet" href="rhamaa.github.io/style.css">
+<link rel="stylesheet" href="/style.css">
 
 
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
-<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
 
 
 <meta name="twitter:card" content="summary"/>
@@ -43,7 +43,7 @@ Percobaan debugging menggunakan gdb
 $ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. gdb-peda $ pdisass main Berikut hasil disassable fungsi main
 0x080485cf &lt;&#43;29&gt;: call 0x8048410 &lt;setvbuf@plt&gt; 0x080485d4 &lt;&#43;34&gt;: add esp,0x10 0x080485d7 &lt;&#43;37&gt;: sub esp,0xc 0x080485da &lt;&#43;40&gt;: push 0x8048700 0x080485df &lt;&#43;45&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485e4 &lt;&#43;50&gt;: add esp,0x10 0x080485e7 &lt;&#43;53&gt;: sub esp,0xc 0x080485ea &lt;&#43;56&gt;: push 0x8048720 0x080485ef &lt;&#43;61&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485f4 &lt;&#43;66&gt;: add esp,0x10 0x080485f7 &lt;&#43;69&gt;: sub esp,0xc 0x080485fa &lt;&#43;72&gt;: push 0x804875f 0x080485ff &lt;&#43;77&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x08048604 &lt;&#43;82&gt;: add esp,0x10 0x08048607 &lt;&#43;85&gt;: mov DWORD PTR [ebp-0xc],0x0 0x0804860e &lt;&#43;92&gt;: sub esp,0xc 0x08048611 &lt;&#43;95&gt;: lea eax,[ebp-0x23] 0x08048614 &lt;&#43;98&gt;: push eax 0x08048615 &lt;&#43;99&gt;: call 0x80483d0 &lt;gets@plt&gt; 0x0804861a &lt;&#43;104&gt;: add esp,0x10 0x0804861d &lt;&#43;107&gt;: cmp DWORD PTR [ebp-0xc],0xf007ba11 0x08048624 &lt;&#43;114&gt;: jne 0x804862d &lt;main&#43;123&gt; 0x08048626 &lt;&#43;116&gt;: call 0x804854b &lt;print_flag&gt; 0x0804862b &lt;&#43;121&gt;: jmp 0x804863d &lt;main&#43;139&gt; 0x0804862d &lt;&#43;123&gt;: sub esp,0xc 0x08048630 &lt;&#43;126&gt;: push 0x8048772 0x08048635 &lt;&#43;131&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x0804863a &lt;&#43;136&gt;: add esp,0x10 0x0804863d &lt;&#43;139&gt;: mov eax,0x0 0x08048642 &lt;&#43;144&gt;: mov ecx,DWORD PTR [ebp-0x4] 0x08048645 &lt;&#43;147&gt;: leave 0x08048646 &lt;&#43;148&gt;: lea esp,[ecx-0x4] 0x08048649 &lt;&#43;151&gt;: ret Terlihat terdapat penggunaan fungsi gets() yang vulnerable buffer overflow." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/" />
+<meta property="og:url" content="/post/2018-02-27-tamuctf-2018-pwning/" />
 <meta property="og:site_name" content="/home/rhama/" />
 
 
@@ -74,11 +74,11 @@ $ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. g
     
       
         
-          <li><a href="rhamaa.github.io/about">About</a></li>
+          <li><a href="/about">About</a></li>
         
       
         
-          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+          <li><a href="/showcase">Showcase</a></li>
         
       
       
@@ -88,11 +88,11 @@ $ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. g
   <ul class="menu__inner menu__inner--mobile">
     
       
-        <li><a href="rhamaa.github.io/about">About</a></li>
+        <li><a href="/about">About</a></li>
       
     
       
-        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        <li><a href="/showcase">Showcase</a></li>
       
     
   </ul>
@@ -124,7 +124,7 @@ $ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. g
   
 
   <div class="post">
-    <h1 class="post-title"><a href="rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/">TAMUCTF 2018 - Pwning</a></h1>
+    <h1 class="post-title"><a href="/post/2018-02-27-tamuctf-2018-pwning/">TAMUCTF 2018 - Pwning</a></h1>
     <div class="post-meta">
       
 
@@ -135,9 +135,9 @@ $ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. g
     
       <span class="post-tags">
         
-          #<a href="rhamaa.github.io/tags/tamuctf-2018/">TAMUCTF-2018</a>&nbsp;
+          #<a href="/tags/tamuctf-2018/">TAMUCTF-2018</a>&nbsp;
         
-          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
         
       </span>
     
@@ -306,7 +306,7 @@ r<span style="color:#f92672">.</span>interactive()
           <div class="pagination__buttons">
             
               <span class="button previous">
-                <a href="rhamaa.github.io/post/2016-12-22-suctf2016-unloadme/">
+                <a href="/post/2016-12-22-suctf2016-unloadme/">
                   <span class="button__icon">←</span>
                   <span class="button__text">SharifCTF 2016 - UnloadMe</span>
                 </a>
@@ -314,7 +314,7 @@ r<span style="color:#f92672">.</span>interactive()
             
             
               <span class="button next">
-                <a href="rhamaa.github.io/post/2017-12-05-tpctf-2017-write-up/">
+                <a href="/post/2017-12-05-tpctf-2017-write-up/">
                   <span class="button__text">TPCTF 2017 - Write up</span>
                   <span class="button__icon">→</span>
                 </a>
@@ -360,8 +360,8 @@ r<span style="color:#f92672">.</span>interactive()
   </div>
 </footer>
 
-<script src="rhamaa.github.io/assets/main.js"></script>
-<script src="rhamaa.github.io/assets/prism.js"></script>
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
 
 
       

