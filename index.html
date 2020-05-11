@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+	<meta name="generator" content="Hugo 0.68.3" />
+    
+      <title>/home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Personal Blog"/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="/home/rhama/"/>
+<meta name="twitter:description" content=""/>
+
+
+
+<meta property="og:title" content="/home/rhama/" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="rhamaa.github.io/" />
+<meta property="og:updated_time" content="2020-05-10T18:02:01+07:00" /><meta property="og:site_name" content="/home/rhama/" />
+
+
+
+<link rel="alternate" type="application/rss+xml" href="rhamaa.github.io/index.xml" title="/home/rhama/" />
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  
+  
+    
+  
+  
+
+  <div class="posts">
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/exploiting-broken-crypto-to-ssrf-phpproxy/">Exploiting Broken Crypto to SSRF On PHP-Proxy</a></h1>
+      <div class="post-meta">
+        
+          <span class="post-date">
+            2020-05-10
+          </span>
+
+          
+        
+        
+        
+      </div>
+
+      
+
+      
+
+      <div class="post-content">
+        
+          
+            PHP-Proxy sebenarnya adalah project yang sudah tidak dikembangkan lagi, tapi disini saya melihat masih ada banyak orang yang menggunakan PHP-Proxy sebagai Web Proxy.
+PHP-Proxy Overview Url yang disubmit di form, akan di-encrypt dan dilakukan redirect ke /?q=&lt;ENCRYPTED_URL&gt;. add_http adalah fungsi yang akan menambahkan http:// apabila $url tidak diawali dengan https:// atau http://
+Apabila yang disubmit adalah file:///etc/passwd, oleh fungsi add_http akan me-return http://file:///etc/passwd sehingga kita tidak bisa exploit dengan cara men-submit URL lewat form.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/exploiting-broken-crypto-to-ssrf-phpproxy/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/cyber-jawara-2018-web-exploitation/">Cyber Jawara 2018 Web Exploitation</a></h1>
+      <div class="post-meta">
+        
+          <span class="post-date">
+            2020-04-11
+          </span>
+
+          
+        
+        
+        
+      </div>
+
+      
+
+      
+
+      <div class="post-content">
+        
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/cyber-jawara-2018-web-exploitation/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2016-12-24-basic-reverse-engineering-linux-binaries/">Basic Reverse Engineering Linux Binaries</a></h1>
+      <div class="post-meta">
+        
+          <span class="post-date">
+            2016-12-24
+          </span>
+
+          
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/re/">RE</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Assalamualaikum. Saya akan sedikit membahas basic dalam melakukan reverse engineering elf binnary, reverse engineering sendiri sangat penting apalagi dalam challenge CTF yang biasa nya mempunyai poin yang besar.
+The Code root@kali:~# cat rev.c #include int main(){	int a,b,c,d; a = 306; b = 737; c = 100 * a + b; printf(&quot;Enter your passcode : &quot;); scanf(&quot;%d&quot;, &amp;d); if(d == c){ puts(&quot;Correct&quot;); else{ puts(&quot;Incorrect&quot;);	return 0; <code>Proof Of Concept ====================================</code> c %} root@kali:~# gcc rev.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2016-12-24-basic-reverse-engineering-linux-binaries/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2017-07-22-bugs-bunny2k17-pwn150/">Bugs Bunny 2k17 CTF - Pwn150</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/bugs-bunny2k17/">bugs-bunny2k17</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Diberikan file ELF binary bernama pwn150 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn150 pwn150: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=dc1ada44067255e5211fafc5133679404b54f110, not stripped Elf binary tersebut diproteksi NX (No-eXecute)
+gdb-peda$ checksec CANARY : disabled FORTIFY : disabled NX : ENABLED PIE : disabled RELRO : Partial Karena NX enabled, saya berasumsi untuk mengeksploitnya menggunakan teknik Return-to-libc.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2017-07-22-bugs-bunny2k17-pwn150/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-pwn50/">Bugs Bunny 2k17 CTF - Pwn50</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/bugs-bunny2k17/">bugs-bunny2k17</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Diberikan file ELF binary bernama pwn50 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn50 pwn50: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=9100876ac8da789151a1afcbc3e43ddaca1305c1, not stripped Binary ini hanya meminta user input tanpa mengirim kembali outputnya
+➜ ./pwn50 saya ganteng Dengan menggunakan nm terlihat bahwa binary tersebut menggunakan fungsi gets() yang tidak membatasi user input sehingga dapat menyebabkan Buffer Overflow.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-pwn50/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="pagination">
+  <div class="pagination__buttons">
+    
+    
+      <span class="button next">
+        <a href="rhamaa.github.io/page/2/">
+          <span class="button__text">Older posts</span>
+          <span class="button__icon">→</span>
+        </a>
+      </span>
+    
+  </div>
+</div>
+
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>TAMUCTF-2018 on /home/rhama/</title>
+    <link>rhamaa.github.io/tags/tamuctf-2018/</link>
+    <description>Recent content in TAMUCTF-2018 on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="rhamaa.github.io/tags/tamuctf-2018/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>TAMUCTF 2018 - Pwning</title>
+      <link>rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/</guid>
+      <description>Pwn1 Diberikan sebuah file binary dengan informasi sebagai berikut
+Percobaan debugging menggunakan gdb
+$ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. gdb-peda $ pdisass main Berikut hasil disassable fungsi main
+0x080485cf &amp;lt;+29&amp;gt;: call 0x8048410 &amp;lt;setvbuf@plt&amp;gt; 0x080485d4 &amp;lt;+34&amp;gt;: add esp,0x10 0x080485d7 &amp;lt;+37&amp;gt;: sub esp,0xc 0x080485da &amp;lt;+40&amp;gt;: push 0x8048700 0x080485df &amp;lt;+45&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x080485e4 &amp;lt;+50&amp;gt;: add esp,0x10 0x080485e7 &amp;lt;+53&amp;gt;: sub esp,0xc 0x080485ea &amp;lt;+56&amp;gt;: push 0x8048720 0x080485ef &amp;lt;+61&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x080485f4 &amp;lt;+66&amp;gt;: add esp,0x10 0x080485f7 &amp;lt;+69&amp;gt;: sub esp,0xc 0x080485fa &amp;lt;+72&amp;gt;: push 0x804875f 0x080485ff &amp;lt;+77&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x08048604 &amp;lt;+82&amp;gt;: add esp,0x10 0x08048607 &amp;lt;+85&amp;gt;: mov DWORD PTR [ebp-0xc],0x0 0x0804860e &amp;lt;+92&amp;gt;: sub esp,0xc 0x08048611 &amp;lt;+95&amp;gt;: lea eax,[ebp-0x23] 0x08048614 &amp;lt;+98&amp;gt;: push eax 0x08048615 &amp;lt;+99&amp;gt;: call 0x80483d0 &amp;lt;gets@plt&amp;gt; 0x0804861a &amp;lt;+104&amp;gt;: add esp,0x10 0x0804861d &amp;lt;+107&amp;gt;: cmp DWORD PTR [ebp-0xc],0xf007ba11 0x08048624 &amp;lt;+114&amp;gt;: jne 0x804862d &amp;lt;main+123&amp;gt; 0x08048626 &amp;lt;+116&amp;gt;: call 0x804854b &amp;lt;print_flag&amp;gt; 0x0804862b &amp;lt;+121&amp;gt;: jmp 0x804863d &amp;lt;main+139&amp;gt; 0x0804862d &amp;lt;+123&amp;gt;: sub esp,0xc 0x08048630 &amp;lt;+126&amp;gt;: push 0x8048772 0x08048635 &amp;lt;+131&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x0804863a &amp;lt;+136&amp;gt;: add esp,0x10 0x0804863d &amp;lt;+139&amp;gt;: mov eax,0x0 0x08048642 &amp;lt;+144&amp;gt;: mov ecx,DWORD PTR [ebp-0x4] 0x08048645 &amp;lt;+147&amp;gt;: leave 0x08048646 &amp;lt;+148&amp;gt;: lea esp,[ecx-0x4] 0x08048649 &amp;lt;+151&amp;gt;: ret Terlihat terdapat penggunaan fungsi gets() yang vulnerable buffer overflow.</description>
+    </item>
+    
+  </channel>
+</rss>

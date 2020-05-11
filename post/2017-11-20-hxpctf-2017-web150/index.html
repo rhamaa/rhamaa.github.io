@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>hxp CTF 2017 - cloud18 (web 150) :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Diberikan sebuah website beserta source code nya. Tampilan awal web tersebut hanya terdapat form login dan register. fungsi web tersebut adalah online editor, fungsi editor sendiri akan muncul setelah user login. Berikut daftar file source code yang diberikan
+Snippet editor.phpif (preg_match(&amp;#34;/exec|system|passthru|`|proc_open|popen/&amp;#34;, strtolower($_POST[&amp;#34;method&amp;#34;].$_POST[&amp;#34;text&amp;#34;])) != 0) { exit(&amp;#34;Do you really think you could pass something to the command line? Functions like this are often disabled! Maybe have a look at the source?&amp;#34;); } ."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2017-11-20-hxpctf-2017-web150/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="hxp CTF 2017 - cloud18 (web 150)"/>
+<meta name="twitter:description" content="Diberikan sebuah website beserta source code nya. Tampilan awal web tersebut hanya terdapat form login dan register. fungsi web tersebut adalah online editor, fungsi editor sendiri akan muncul setelah user login. Berikut daftar file source code yang diberikan
+Snippet editor.phpif (preg_match(&#34;/exec|system|passthru|`|proc_open|popen/&#34;, strtolower($_POST[&#34;method&#34;].$_POST[&#34;text&#34;])) != 0) { exit(&#34;Do you really think you could pass something to the command line? Functions like this are often disabled! Maybe have a look at the source?&#34;); } ."/>
+
+
+
+<meta property="og:title" content="hxp CTF 2017 - cloud18 (web 150)" />
+<meta property="og:description" content="Diberikan sebuah website beserta source code nya. Tampilan awal web tersebut hanya terdapat form login dan register. fungsi web tersebut adalah online editor, fungsi editor sendiri akan muncul setelah user login. Berikut daftar file source code yang diberikan
+Snippet editor.phpif (preg_match(&#34;/exec|system|passthru|`|proc_open|popen/&#34;, strtolower($_POST[&#34;method&#34;].$_POST[&#34;text&#34;])) != 0) { exit(&#34;Do you really think you could pass something to the command line? Functions like this are often disabled! Maybe have a look at the source?&#34;); } ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2017-11-20-hxpctf-2017-web150/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2017-11-20-hxpctf-2017-web150/">hxp CTF 2017 - cloud18 (web 150)</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/hxpctf-2017/">hxpctf-2017</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Diberikan sebuah website beserta source code nya. Tampilan awal web tersebut hanya terdapat form login dan register. fungsi web tersebut adalah online editor, fungsi editor sendiri akan muncul setelah user login.
+<!-- raw HTML omitted -->
+Berikut daftar file source code yang diberikan</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->Snippet editor.php<!-- raw HTML omitted --></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">if (preg_match(&#34;/exec|system|passthru|`|proc_open|popen/&#34;, strtolower($_POST[&#34;method&#34;].$_POST[&#34;text&#34;])) != 0) {
+    exit(&#34;Do you really think you could pass something to the command line? Functions like this are often disabled! Maybe have a look at the source?&#34;);
+}
+...............
+    $editedText = preg_replace_callback(&#34;/&#34; . $_POST[&#34;regex&#34;] . &#34;/&#34;, function ($matches) {
+        return call_user_func($_POST[&#34;method&#34;], $matches[0]);
+    }, $_POST[&#34;text&#34;]);
+    if($editedText) {
+        echo(&#34;&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;alert success&#39;</span>&gt;&#34; . $editedText . &#34;&lt;/<span style="color:#f92672">div</span>&gt;&#34;);
+    }
+</code></pre></div><p><!-- raw HTML omitted -->Snippet index.php<!-- raw HTML omitted --></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-php" data-lang="php">    if($_SESSION[&#34;user&#34;]){
+        echo &#34;&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;alert success&#39;</span>&gt;login sucessful&lt;/<span style="color:#f92672">div</span>&gt;&#34;;
+        if($_SESSION[&#34;user&#34;]-&gt;getName() === &#34;admin&#34;){
+            echo &#34;&lt;<span style="color:#f92672">div</span> <span style="color:#a6e22e">class</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#39;alert success&#39;</span>&gt;&#34; . shell_exec(&#34;/usr/bin/get_flag&#34;) . &#34;&lt;/<span style="color:#f92672">div</span>&gt;&#34;;
+        }
+    }
+</code></pre></div><p>Dari source code editor.php, diketahui text inputan akan di edit akan dicocokan dengan <!-- raw HTML omitted -->regex<!-- raw HTML omitted --> lalu me return hasil dari fungsi <!-- raw HTML omitted -->call_user_func<!-- raw HTML omitted -->.
+fungsi dari <!-- raw HTML omitted -->call_user_func<!-- raw HTML omitted --> adalah untuk memanggil suatu fungsi, yang dimana parameter pertama nya adalah nama fungsi itu sendiri dan paramter kedua adalah parameter untuk fungsi yang ingin dipanggil.</p>
+<p><!-- raw HTML omitted --><!-- raw HTML omitted -->call_user_func(&ldquo;system&rdquo;,&ldquo;id&rdquo;)<!-- raw HTML omitted --><!-- raw HTML omitted --> akan memanggil fungsi <!-- raw HTML omitted -->system(&ldquo;id&rdquo;)<!-- raw HTML omitted -->. Tapi karena terdapat filter nama fungsi, fungsi untuk eksekusi external program tidak bisa di digunakan. Karena parameter untuk nama fungsi di ambil dari <!-- raw HTML omitted -->$_POST[&ldquo;method&rdquo;]<!-- raw HTML omitted --> dalam hal ini kita bisa memanipulasi nama fungsi yang dipanggil <!-- raw HTML omitted -->call_user_func<!-- raw HTML omitted --> dengan memodifikasi value dari method itu sendiri via inspect element.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">        &lt;<span style="color:#f92672">select</span> <span style="color:#a6e22e">name</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;method&#34;</span>&gt;
+            &lt;<span style="color:#f92672">option</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;&#34;</span> <span style="color:#a6e22e">disabled</span> <span style="color:#a6e22e">selected</span>&gt;select a method&lt;/<span style="color:#f92672">option</span>&gt;
+            &lt;<span style="color:#f92672">option</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;strtoupper&#34;</span>&gt;to upper case&lt;/<span style="color:#f92672">option</span>&gt;
+            &lt;<span style="color:#f92672">option</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;strtolower&#34;</span>&gt;to lower case&lt;/<span style="color:#f92672">option</span>&gt;
+            &lt;<span style="color:#f92672">option</span> <span style="color:#a6e22e">value</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;ucfirst&#34;</span>&gt;first letter to upper case&lt;/<span style="color:#f92672">option</span>&gt;
+        &lt;/<span style="color:#f92672">select</span>&gt;
+</code></pre></div><p>Berdasarkan source code index.php, lokasi flag berada di <!-- raw HTML omitted -->&rdquo;/usr/bin/get_flag&quot;<!-- raw HTML omitted -->. Oleh karena itu bisa digunakan fungsi <code>readfile</code> untuk membaca isi dari <code>/usr/bin/get_flag</code>.</p>
+<p><!-- raw HTML omitted -->
+Gunanya regex : <!-- raw HTML omitted -->^[ -~]+$<!-- raw HTML omitted --> adalah agar match dengan semua dengan karakter yang di input pada bagian text.</p>
+<p>Setelah disubmit, akan muncul isi dari <!-- raw HTML omitted -->/usr/bin/get_flag<!-- raw HTML omitted -->. tinggal CTR + F &ldquo;hxp&rdquo; untuk mendapatkan string Flag.</p>
+<p><!-- raw HTML omitted -->Flag : hxp{Th1s_w2sn&rsquo;t_so_h4rd_now_do_web_of_ages!!!Sorry_f0r_f1rst_sh1tty_upload}<!-- raw HTML omitted --></p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2018-05-30-format-string-attack/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Format String Attack</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2017-11-27-hxpctf-2017-cloud18/">
+                  <span class="button__text">hxp CTF 2017 - cloud18 (web 150)</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

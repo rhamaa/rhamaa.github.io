@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>CTF :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/tags/ctf/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="CTF"/>
+<meta name="twitter:description" content=""/>
+
+
+
+<meta property="og:title" content="CTF" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="rhamaa.github.io/tags/ctf/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+<link rel="alternate" type="application/rss+xml" href="rhamaa.github.io/tags/ctf/index.xml" title="/home/rhama/" />
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  
+  
+  
+
+  <div class="posts">
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2017-07-22-bugs-bunny2k17-pwn150/">Bugs Bunny 2k17 CTF - Pwn150</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/bugs-bunny2k17/">bugs-bunny2k17</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Diberikan file ELF binary bernama pwn150 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn150 pwn150: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=dc1ada44067255e5211fafc5133679404b54f110, not stripped Elf binary tersebut diproteksi NX (No-eXecute)
+gdb-peda$ checksec CANARY : disabled FORTIFY : disabled NX : ENABLED PIE : disabled RELRO : Partial Karena NX enabled, saya berasumsi untuk mengeksploitnya menggunakan teknik Return-to-libc.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2017-07-22-bugs-bunny2k17-pwn150/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-pwn50/">Bugs Bunny 2k17 CTF - Pwn50</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/bugs-bunny2k17/">bugs-bunny2k17</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Diberikan file ELF binary bernama pwn50 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn50 pwn50: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=9100876ac8da789151a1afcbc3e43ddaca1305c1, not stripped Binary ini hanya meminta user input tanpa mengirim kembali outputnya
+➜ ./pwn50 saya ganteng Dengan menggunakan nm terlihat bahwa binary tersebut menggunakan fungsi gets() yang tidak membatasi user input sehingga dapat menyebabkan Buffer Overflow.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-pwn50/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-rev75/">Bugs Bunny 2k17 CTF - Rev75</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/bugs-bunny2k17/">bugs-bunny2k17</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Deskripsi Soal i ran the binary but no password match but believe this is another simple reverse engineering challenge . Diberikan file elf binary static bernama rev75 64 bit yang harus direversing agar bisa mendapatkan flag.
+➜ rev75 file rev75 rev75: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.24, BuildID[sha1]=1bd9592380c83821bf975f46076118ecfd1964df, not stripped Binary tersebut membutuhkan password sebagai argumentnya
+➜ rev75 ./rev75 usage: ./rev75 password ➜ rev75 .
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-rev75/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2017-06-25-compfest9-writeup-quals/">Compfest 9 - {Preliminary} Write Up</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Posting tentang programming C pertama, dimana saya akan membahas mengenai File Input/Output di C dengan menggunakan berbagai macam fungsi yang berhubungan dengan File I/O di C yang sudah tersedia di pustaka “stdio.h”.
+Tipe Files Terdapat dua tipe files yang harus diketahui, yaitu Text File dan Binary File.
+Text File - Adalah text file biasa yang berformat .txt dan dapat dibaca (readable) oleh manusia. Binary File - Adalah data nya disimpan dalam bentuk biner (0 dan 1) dan tidak dapat dibaca (not readable) oleh manusia.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2017-06-25-compfest9-writeup-quals/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2017-11-20-csawctf-2017-quals/">CSAW CTF 2017 Prelims - Write Up</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by CTF.Ninja</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/csawctf2017prelims/">CSAWCTF2017Prelims</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/CTF.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2017-11-20-csawctf-2017-quals/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="pagination">
+  <div class="pagination__buttons">
+    
+    
+      <span class="button next">
+        <a href="rhamaa.github.io/tags/ctf/page/2/">
+          <span class="button__text">Older posts</span>
+          <span class="button__icon">→</span>
+        </a>
+      </span>
+    
+  </div>
+</div>
+
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

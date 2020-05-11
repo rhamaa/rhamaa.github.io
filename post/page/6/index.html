@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>Posts :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Posts"/>
+<meta name="twitter:description" content=""/>
+
+
+
+<meta property="og:title" content="Posts" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="rhamaa.github.io/post/" />
+<meta property="og:updated_time" content="2020-05-10T18:02:01+07:00" /><meta property="og:site_name" content="/home/rhama/" />
+
+
+
+<link rel="alternate" type="application/rss+xml" href="rhamaa.github.io/post/index.xml" title="/home/rhama/" />
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  
+  
+  
+
+  <div class="posts">
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2016-12-23-suctf2016-camera-model/">SharifCTF 2016 - Camera Model</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/sharifctf2016/">sharifctf2016</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Challenge Misc SharifCTF 2016 diberikan file bernama Image_Viewer yang akan menampilkan sebuah foto dan model kamera yang digunakan untuk mengambil foto tersebut merupakan flag.
+root@kali:~/Desktop/SU CTF# file Image_Viewer Image_Viewer: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=c3aaafe49fbcc6a7a2adbcdf4f3c2dd125a3dd32, not stripped Proof Of Concept Saya menggunakan binwalk untuk melakukan signature scan
+root@kali:~/Desktop/SU CTF# binwalk Image_Viewer DECIMAL HEXADECIMAL DESCRIPTION &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash; 0 0x0 ELF, 64-bit LSB executable, AMD x86-64, version 1 (SYSV) 5432 0x1538 Zlib compressed data, best compression Tidak terdapat signature file gambar, tapi saya mencoba mengekstrack gambar tersebut dengan option -e pada binwalk
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2016-12-23-suctf2016-camera-model/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2016-12-22-suctf2016-getit/">SharifCTF 2016 - Getit</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/sharifctf2016/">sharifctf2016</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Pada challenge RE ShariftCTF 2016 diberikan file elf binnary bernama getit, yang informasi nya seperti dibawah ini
+root@kali:~/Desktop/SU CTF/RE# file getit getit: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=e389cd7a4b9272ba80f85d7eb604176f6106c61e, not stripped Proof Of Concept Saya menggunakan gdb untuk melakukan debugging
+root@kali:~/Desktop/SU CTF/RE# gdb -q getit Reading symbols from getit&hellip;(no debugging symbols found)&hellip;done. (gdb) set disassembly-flavor intel (gdb) disass main Dump of assembler code for function main: &mdash; snip &mdash; 0x000000000040080d &lt;+183&gt;:	call 0x400620 &lt;fprintf@plt&gt; 0x0000000000400812 &lt;+188&gt;:	mov DWORD PTR [rbp-0x3c],0x0 0x0000000000400819 &lt;+195&gt;:	mov eax,DWORD PTR [rbp-0x3c] 0x000000000040081c &lt;+198&gt;:	movsxd rbx,eax 0x000000000040081f &lt;+201&gt;:	mov edi,0x6010e0 0x0000000000400824 &lt;+206&gt;:	call 0x4005e0 &lt;strlen@plt&gt; 0x0000000000400829 &lt;+211&gt;:	cmp rbx,rax 0x000000000040082c &lt;+214&gt;:	jae 0x4008b5 &lt;main+351&gt; &mdash; snip &mdash; Ditemukan bagian menarik pada offset 0x000000000040081f at +201, dimana terdapat “sesuatu” yang disalin ke register edi.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2016-12-22-suctf2016-getit/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2016-12-22-suctf2016-scrack/">SharifCTF 2016 - SCrack</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/sharifctf2016/">sharifctf2016</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Challenge RE SharifCTF 2016 SCrack berupa file elf binnary 64bit yang akan melakukan validasi key
+root@kali:~/Desktop/SU CTF/RE# file SCrack SCrack: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=d011afc29443bbb3ea2c72ef5ac15f8dc278397a, not stripped root@kali:~/Desktop/SU CTF/RE# ./SCrack Enter the valid key! asasasasasas Invalid Key! :( Saat mencoba menggunakan ltrace terdapat output Dont trace me! dan percobaan disassembly menggunakan gdb ditemukan ptrace yang digunakan sebagai anti-debugging technique
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2016-12-22-suctf2016-scrack/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2016-12-22-suctf2016-unloadme/">SharifCTF 2016 - UnloadMe</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by Aiden Pearce</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/sharifctf2016/">sharifctf2016</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/ctf.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2016-12-22-suctf2016-unloadme/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/">TAMUCTF 2018 - Pwning</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by CTF.Ninja</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/tamuctf-2018/">TAMUCTF-2018</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/CTF.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Pwn1 Diberikan sebuah file binary dengan informasi sebagai berikut
+Percobaan debugging menggunakan gdb
+$ gdb -q pwn1 Reading symbols from pwn1&hellip;(no debugging symbols found)&hellip;done. gdb-peda $ pdisass main Berikut hasil disassable fungsi main
+0x080485cf &lt;+29&gt;: call 0x8048410 &lt;setvbuf@plt&gt; 0x080485d4 &lt;+34&gt;: add esp,0x10 0x080485d7 &lt;+37&gt;: sub esp,0xc 0x080485da &lt;+40&gt;: push 0x8048700 0x080485df &lt;+45&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485e4 &lt;+50&gt;: add esp,0x10 0x080485e7 &lt;+53&gt;: sub esp,0xc 0x080485ea &lt;+56&gt;: push 0x8048720 0x080485ef &lt;+61&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485f4 &lt;+66&gt;: add esp,0x10 0x080485f7 &lt;+69&gt;: sub esp,0xc 0x080485fa &lt;+72&gt;: push 0x804875f 0x080485ff &lt;+77&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x08048604 &lt;+82&gt;: add esp,0x10 0x08048607 &lt;+85&gt;: mov DWORD PTR [ebp-0xc],0x0 0x0804860e &lt;+92&gt;: sub esp,0xc 0x08048611 &lt;+95&gt;: lea eax,[ebp-0x23] 0x08048614 &lt;+98&gt;: push eax 0x08048615 &lt;+99&gt;: call 0x80483d0 &lt;gets@plt&gt; 0x0804861a &lt;+104&gt;: add esp,0x10 0x0804861d &lt;+107&gt;: cmp DWORD PTR [ebp-0xc],0xf007ba11 0x08048624 &lt;+114&gt;: jne 0x804862d &lt;main+123&gt; 0x08048626 &lt;+116&gt;: call 0x804854b &lt;print_flag&gt; 0x0804862b &lt;+121&gt;: jmp 0x804863d &lt;main+139&gt; 0x0804862d &lt;+123&gt;: sub esp,0xc 0x08048630 &lt;+126&gt;: push 0x8048772 0x08048635 &lt;+131&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x0804863a &lt;+136&gt;: add esp,0x10 0x0804863d &lt;+139&gt;: mov eax,0x0 0x08048642 &lt;+144&gt;: mov ecx,DWORD PTR [ebp-0x4] 0x08048645 &lt;+147&gt;: leave 0x08048646 &lt;+148&gt;: lea esp,[ecx-0x4] 0x08048649 &lt;+151&gt;: ret Terlihat terdapat penggunaan fungsi gets() yang vulnerable buffer overflow.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="pagination">
+  <div class="pagination__buttons">
+    
+      <span class="button previous">
+        <a href="rhamaa.github.io/post/page/5/">
+          <span class="button__icon">←</span>
+          <span class="button__text">Newer posts</span>
+        </a>
+      </span>
+    
+    
+      <span class="button next">
+        <a href="rhamaa.github.io/post/page/7/">
+          <span class="button__text">Older posts</span>
+          <span class="button__icon">→</span>
+        </a>
+      </span>
+    
+  </div>
+</div>
+
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

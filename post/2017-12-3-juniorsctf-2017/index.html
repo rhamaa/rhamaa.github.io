@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>Juniors CTF 2017 - Write up :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Website PR me, please Diberikan sebuah web 10.0.181.112:15110, untuk mendapatkan flag cukup gunakan salah satu situs dibawah ini sebagai Referer ke situs challenge.
+https://www.yandex.ru/ https://www.facebook.com/ https://www.wikipedia.org/ https://telegram.org/ https://www.whatsapp.com/ $ curl -e &amp;#39;www.yandex.ru&amp;#39; &amp;#39;http://10.0.181.112:15110/&amp;#39; Flag : yoUUGOOODhacker46466464 Stegano Sweet dreams Diberikan sebuah file doc bernama _.doc. Untuk mendapatkan Flag, cukup dengan melakukan unzip
+$ strings _.doc | grep flag word/media/flag.png word/media/flag.png $ unzip _.doc Setelah itu Flag berada di word/media/flag.png
+Flag : DIFFERENT AGE SANDWICH?"/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2017-12-3-juniorsctf-2017/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Juniors CTF 2017 - Write up"/>
+<meta name="twitter:description" content="Website PR me, please Diberikan sebuah web 10.0.181.112:15110, untuk mendapatkan flag cukup gunakan salah satu situs dibawah ini sebagai Referer ke situs challenge.
+https://www.yandex.ru/ https://www.facebook.com/ https://www.wikipedia.org/ https://telegram.org/ https://www.whatsapp.com/ $ curl -e &#39;www.yandex.ru&#39; &#39;http://10.0.181.112:15110/&#39; Flag : yoUUGOOODhacker46466464 Stegano Sweet dreams Diberikan sebuah file doc bernama _.doc. Untuk mendapatkan Flag, cukup dengan melakukan unzip
+$ strings _.doc | grep flag word/media/flag.png word/media/flag.png $ unzip _.doc Setelah itu Flag berada di word/media/flag.png
+Flag : DIFFERENT AGE SANDWICH?"/>
+
+
+
+<meta property="og:title" content="Juniors CTF 2017 - Write up" />
+<meta property="og:description" content="Website PR me, please Diberikan sebuah web 10.0.181.112:15110, untuk mendapatkan flag cukup gunakan salah satu situs dibawah ini sebagai Referer ke situs challenge.
+https://www.yandex.ru/ https://www.facebook.com/ https://www.wikipedia.org/ https://telegram.org/ https://www.whatsapp.com/ $ curl -e &#39;www.yandex.ru&#39; &#39;http://10.0.181.112:15110/&#39; Flag : yoUUGOOODhacker46466464 Stegano Sweet dreams Diberikan sebuah file doc bernama _.doc. Untuk mendapatkan Flag, cukup dengan melakukan unzip
+$ strings _.doc | grep flag word/media/flag.png word/media/flag.png $ unzip _.doc Setelah itu Flag berada di word/media/flag.png
+Flag : DIFFERENT AGE SANDWICH?" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2017-12-3-juniorsctf-2017/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2017-12-3-juniorsctf-2017/">Juniors CTF 2017 - Write up</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by CTF.Ninja</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/juniorsctf-2017/">JuniorsCTF-2017</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/CTF.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <h1 id="website">Website</h1>
+<h2 id="pr-me-please">PR me, please</h2>
+<p>Diberikan sebuah web <a href="http://10.0.181.112:15110/">10.0.181.112:15110</a>, untuk mendapatkan flag cukup gunakan salah satu situs dibawah ini sebagai <code>Referer</code> ke situs challenge.</p>
+<pre><code>https://www.yandex.ru/
+https://www.facebook.com/
+https://www.wikipedia.org/
+https://telegram.org/
+https://www.whatsapp.com/
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ curl -e <span style="color:#e6db74">&#39;www.yandex.ru&#39;</span> <span style="color:#e6db74">&#39;http://10.0.181.112:15110/&#39;</span>
+</code></pre></div><h4 id="flag--youugooodhacker46466464">Flag : yoUUGOOODhacker46466464</h4>
+<h1 id="stegano">Stegano</h1>
+<h2 id="sweet-dreams">Sweet dreams</h2>
+<p>Diberikan sebuah file doc bernama <code>_.doc</code>. Untuk mendapatkan Flag, cukup dengan melakukan <code>unzip</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ strings _.doc | grep flag
+word/media/flag.png
+word/media/flag.png
+$ unzip _.doc
+</code></pre></div><p>Setelah itu Flag berada di <code>word/media/flag.png</code></p>
+<h4 id="flag--different-age-sandwich">Flag : DIFFERENT AGE SANDWICH?</h4>
+<h1 id="reversing">Reversing</h1>
+<h2 id="weve-discovered-another-planet">We&rsquo;ve discovered another planet!</h2>
+<p>Diberikan file binary .NET bernama <code>scream.exe</code>, sesuai dengan nama nya apabila program tersebut dijalankan, akan mengeluarkan teriakan yang sangat lama.</p>
+<p>Dari hasil decompile menggunakan <code>ILSpy</code>, program akan menampilkan Flag apabila waktu &ldquo;teriakan&rdquo; nya selesai</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"> here is the code
+</code></pre></div><p>Karena yang ditampilkan adalah Object gambar, bisa menggunakan <code>foremost</code> untuk melakuan <code>carving</code> sehingga file Flag tersebut bisa didapatkan tanpa harus menunggu waktu &ldquo;teriakan&rdquo; habis.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ foremost -i scream.exe -v
+</code></pre></div><h4 id="flag--what_a_lovely_day">Flag : what_a_lovely_day!</h4>
+<h2 id="were-losing-her">We&rsquo;re losing her</h2>
+<p>Diberikan sebuah file PE Executable bernama <code>Horsereanimation.exe</code>, program tersebut akan terhubung ke <code>Time Server</code> yang akan mencocokan dengan <em>Subscription TIme</em>. Apabila ingin mendapatkan Flag, <em>Period Subscription Time</em> harus berada dibawah waktu yang ditentukan. Disini saya melakukan <em>Patching</em> sehingga bisa mengouput Flag, tapi harus reimplement ulang fungsi <code>generate_flag</code>.</p>
+<p>Ganti opcode yang akan memanggil fungsi <code>connect_timeserver</code> menjadi <code>nop</code>.</p>
+<p><img src="/img/juniorsctf2017/horseanim1.png" alt=""></p>
+<p>Dan intruksi <code>jbe ( jum if bellow or equal)</code> menjadi <code>jne atau jnz</code>. Sehingga akan masuk ke fungsi <code>you_get_flag</code>.</p>
+<p><img src="/img/juniorsctf2017/horseanim2.png" alt=""></p>
+<p>Apply Patch nya, lalu jalankan.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ wine HorseReanimation.exe
+</code></pre></div><h4 id="flag--neverlookagifthorseinthemouth">Flag : NeverLookAGiftHorseInTheMouth</h4>
+<h1 id="admin-misc">Admin (Misc)</h1>
+<h3 id="terry-test">Terry test</h3>
+<p>Diberikan sebuah file bernama <code>task.rar</code>, didalam nya terdapat banyak file zip beserta passwordnya.
+Karena <code>zip dalam zip</code> nya sangat banyak, bisa dilakukan automasi menggunakan <code>Python</code>.</p>
+<p>Berikut script yang saya gunakan</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> zipfile <span style="color:#f92672">import</span> ZipFile
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_passwd</span>(n):
+	<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;{}.txt&#34;</span><span style="color:#f92672">.</span>format(n),<span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> pwd:
+		<span style="color:#66d9ef">return</span> pwd<span style="color:#f92672">.</span>read()
+
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span>,<span style="color:#ae81ff">300</span>):
+	<span style="color:#66d9ef">try</span>:
+		<span style="color:#66d9ef">with</span> ZipFile(<span style="color:#e6db74">&#39;{}.zip&#39;</span><span style="color:#f92672">.</span>format(i),<span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> zf:
+    			zf<span style="color:#f92672">.</span>extractall(pwd<span style="color:#f92672">=</span>get_passwd(i))
+    	<span style="color:#66d9ef">except</span>:
+    		<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;message.txt&#34;</span>,<span style="color:#e6db74">&#34;r&#34;</span>) <span style="color:#66d9ef">as</span> flag:
+    			<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;Flag : {}&#34;</span><span style="color:#f92672">.</span>format(flag<span style="color:#f92672">.</span>read())
+    			<span style="color:#66d9ef">break</span>
+</code></pre></div><h4 id="flag--bearlovehoney">Flag : bearlovehoney</h4>
+<h1 id="admin-rickandmorty-vm">Admin (RickAndMorty VM)</h1>
+<p>Diberikan sebuah VM bernama RickAndMorty dengan OS Debian. Saya mengubah konfigurasi <em>default</em> <em>NIC CARD</em> menjadi <em>Bridge</em>
+Password user tidak diberikan. Oleh karena itu, untuk masuk saya mengubah <em>Boot Parameter</em> <code>ro splash</code> menjadi <code>rw init=/bin/bash</code> agar mendapatkan akses ke system.</p>
+<h3 id="may-i-come-in">May I come in?</h3>
+<p>Challenge ini berfokus pada user <code>morty</code>. OS nya tidak bisa boot ke Desktop. Dan setelah berpikir-pikir, saya rasa Flag nya ada di wallpaper yang digunakan oleh si <code>morty</code> karena OS nya tidak bisa masuk ke Desktop.</p>
+<p>dari melihat file konfigurasi <code>/home/morty/.config/pcmanfm/LXDE/desktop-items-0.conf</code>, didapatkan lokasi wallpaper nya</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">[</span>*<span style="color:#f92672">]</span>
+wallpaper_mode<span style="color:#f92672">=</span>stretch
+wallpaper_common<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>
+wallpapers_configured<span style="color:#f92672">=</span><span style="color:#ae81ff">2</span>
+wallpaper0<span style="color:#f92672">=</span>/etc/alternatives/desktop-background
+wallpaper1<span style="color:#f92672">=</span>/etc/alternatives/desctop-bg.png
+desktop_bg<span style="color:#f92672">=</span><span style="color:#75715e">#ffffff</span>
+....
+</code></pre></div><p>Untuk mendapatkan file nya bisa ditransfer menggunakan <code>nc</code>.</p>
+<p>On VM</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ nc listener_server <span style="color:#ae81ff">2121</span> &lt; /etc/alternatives/desctop-bg.png
+</code></pre></div><p>On my Machine</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ nc -vlp <span style="color:#ae81ff">2121</span> &gt; wall.png
+</code></pre></div><h4 id="flag--mygrandfatheriscrazy">Flag : MyGrandfatherIsCrazy</h4>
+<h3 id="something-fell-off-on-the-go">Something fell off on the go</h3>
+<p>Challenge ini berfokus pada user <code>jerry</code>. Untuk mendapatkan Flag, saya hanya menggunakan command <code>find</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ find /home/jerry -type f 2&gt;/dev/null
+</code></pre></div><p>Terdapat berbagai file, tapi setelah di cek, file yang terdapat Flag nya adalah file bernama <code>ris.svg.gz</code></p>
+<h4 id="flag--horsesgobacktothestables">Flag : HorsesGoBackToTheStables</h4>
+<h2 id="admin-forensic">Admin Forensic</h2>
+<h3 id="typical-admin-but">Typical Admin, but&hellip;</h3>
+<p>Diberikan sebuah url github <a href="https://github.com/MierBen/TM-Patch.git">TM-PATCH</a>, terdapat file bernama <code>main.go</code> yang telah dicommit, dan repository nya memiliki sekitar 108 branch.</p>
+<p>Saya pull semua branch nya dengan script berikut.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#75715e">#!/bin/bash
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">for</span> i in <span style="color:#66d9ef">$(</span>seq <span style="color:#ae81ff">1</span> 108<span style="color:#66d9ef">)</span>; <span style="color:#66d9ef">do</span>
+  git pull https://github.com/MierBen/TM-Patch.git <span style="color:#e6db74">${</span>i<span style="color:#e6db74">}</span>
+<span style="color:#66d9ef">done</span>
+</code></pre></div><p>Karena saya sangat awam dengan git, saya menggunakan tool bernama <code>tig</code> untuk copy manual source code nya.. wkwkwk</p>
+<p><img src="/img/juniorsctf2017/typical_tig.png" alt=""></p>
+<p>Setelah copy susun dan dirapihkan menggunakan <em>Go Beautifier</em> didapatkan source main.go</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<span style="color:#f92672">import</span> (<span style="color:#e6db74">&#34;fmt&#34;</span>
+        <span style="color:#e6db74">&#34;encoding/base64&#34;</span>
+        <span style="color:#e6db74">&#34;os&#34;</span>
+        <span style="color:#e6db74">&#34;strings&#34;</span>
+        <span style="color:#e6db74">&#34;archive/tar&#34;</span>
+        <span style="color:#e6db74">&#34;io&#34;</span>
+        <span style="color:#e6db74">&#34;compress/gzip&#34;</span>
+        <span style="color:#e6db74">&#34;strconv&#34;</span>)
+
+
+<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">MAGIC</span> <span style="color:#66d9ef">int</span>
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+        <span style="color:#a6e22e">f</span>, <span style="color:#a6e22e">err</span>: = <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">OpenFile</span>(<span style="color:#e6db74">&#34;flag.tar.gz&#34;</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">O_RDONLY</span>, <span style="color:#ae81ff">0444</span>)
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            panic(<span style="color:#a6e22e">err</span>)
+        }
+
+        <span style="color:#a6e22e">gr</span>, <span style="color:#a6e22e">err</span>: = <span style="color:#a6e22e">gzip</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">f</span>)
+
+        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+            panic(<span style="color:#a6e22e">err</span>)
+        }
+
+        <span style="color:#a6e22e">tr</span>: = <span style="color:#a6e22e">tar</span>.<span style="color:#a6e22e">NewReader</span>(<span style="color:#a6e22e">gr</span>)
+        <span style="color:#66d9ef">for</span> {
+            <span style="color:#a6e22e">hdr</span>, <span style="color:#a6e22e">err</span>: = <span style="color:#a6e22e">tr</span>.<span style="color:#a6e22e">Next</span>()
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">EOF</span> {
+                <span style="color:#66d9ef">break</span>
+            }
+            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                panic(<span style="color:#a6e22e">err</span>)
+            }
+            <span style="color:#a6e22e">path</span>: = <span style="color:#a6e22e">hdr</span>.<span style="color:#a6e22e">Name</span>
+            <span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">hdr</span>.<span style="color:#a6e22e">Typeflag</span> {
+                    <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">tar</span>.<span style="color:#a6e22e">TypeDir</span>:
+                        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span>: = <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">MkdirAll</span>(<span style="color:#a6e22e">path</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">FileMode</span>(<span style="color:#a6e22e">hdr</span>.<span style="color:#a6e22e">Mode</span>));
+                        <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                            panic(<span style="color:#a6e22e">err</span>)
+                        }
+                    <span style="color:#66d9ef">case</span> <span style="color:#a6e22e">tar</span>.<span style="color:#a6e22e">TypeReg</span>:
+                        <span style="color:#a6e22e">ow</span>, <span style="color:#a6e22e">err</span>: = <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">OpenFile</span>(<span style="color:#a6e22e">path</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">O_RDWR</span> | <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">O_TRUNC</span>, <span style="color:#ae81ff">0777</span>)
+                        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                            <span style="color:#a6e22e">ow</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">path</span>)
+                            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                                panic(<span style="color:#a6e22e">err</span>)
+                            }
+                            <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span>: = <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Copy</span>(<span style="color:#a6e22e">ow</span>, <span style="color:#a6e22e">tr</span>);
+                            <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                                panic(<span style="color:#a6e22e">err</span>)
+                            }
+                            <span style="color:#a6e22e">ow</span>.<span style="color:#a6e22e">Close</span>()
+                        }
+                        <span style="color:#a6e22e">gr</span>.<span style="color:#a6e22e">Close</span>()
+                        <span style="color:#a6e22e">f</span>.<span style="color:#a6e22e">Close</span>()
+                        <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span>: = <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">OpenFile</span>(<span style="color:#e6db74">&#34;morse_flag&#34;</span>, <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">O_RDONLY</span>, <span style="color:#ae81ff">0444</span>)
+                        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                            panic(<span style="color:#a6e22e">err</span>)
+                        }
+                        <span style="color:#a6e22e">stat</span>, <span style="color:#a6e22e">err</span>: = <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Stat</span>()
+                        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                            panic(<span style="color:#a6e22e">err</span>)
+                        }
+                        <span style="color:#a6e22e">data</span>: = make([] <span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">stat</span>.<span style="color:#a6e22e">Size</span>())
+                        <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">data</span>)
+                        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                            panic(<span style="color:#a6e22e">err</span>)
+                        }
+                        <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+                        <span style="color:#a6e22e">splStr</span>: = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(string(<span style="color:#a6e22e">data</span>), <span style="color:#e6db74">&#34; &#34;</span>)
+                        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">binaryFlag</span>[] <span style="color:#66d9ef">string</span>
+                        <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span>: = <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">splStr</span> {
+                                <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">temp</span>[] <span style="color:#66d9ef">string</span>
+                                <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>: = <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">v</span> {
+                                    <span style="color:#66d9ef">if</span> string(<span style="color:#a6e22e">v</span>[<span style="color:#a6e22e">i</span>]) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;*&#34;</span> {
+                                        <span style="color:#a6e22e">temp</span> = append(<span style="color:#a6e22e">temp</span>, <span style="color:#e6db74">&#34;1&#34;</span>)
+                                    } <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> string(<span style="color:#a6e22e">v</span>[<span style="color:#a6e22e">i</span>]) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;-&#34;</span> {
+                                        <span style="color:#a6e22e">temp</span> = append(<span style="color:#a6e22e">temp</span>, <span style="color:#e6db74">&#34;0&#34;</span>
+                                        } <span style="color:#66d9ef">else</span> {
+                                            <span style="color:#66d9ef">continue</span>
+                                        }
+                                        <span style="color:#a6e22e">binaryFlag</span> = append(<span style="color:#a6e22e">binaryFlag</span>, <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Join</span>(<span style="color:#a6e22e">temp</span>, <span style="color:#e6db74">&#34;&#34;</span>))
+                                    }
+                                    <span style="color:#a6e22e">binaryFlag</span> = <span style="color:#a6e22e">binaryFlag</span>[: len(<span style="color:#a6e22e">binaryFlag</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>]
+                                    <span style="color:#a6e22e">encodedFlag</span>: = make([] <span style="color:#66d9ef">string</span>, len(<span style="color:#a6e22e">binaryFlag</span>))
+                                    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>: = <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">binaryFlag</span> {
+                                        <span style="color:#a6e22e">temp</span>, <span style="color:#a6e22e">_</span>: = <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">ParseInt</span>(<span style="color:#a6e22e">binaryFlag</span>[<span style="color:#a6e22e">i</span>], <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">64</span>)
+                                        <span style="color:#a6e22e">encodedFlag</span>[<span style="color:#a6e22e">i</span>] = string(<span style="color:#a6e22e">temp</span>)
+                                    }
+                                    <span style="color:#a6e22e">baseFlag</span>: = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Join</span>(<span style="color:#a6e22e">encodedFlag</span>, <span style="color:#e6db74">&#34;&#34;</span>)
+                                    <span style="color:#a6e22e">unBaseFlag</span>, <span style="color:#a6e22e">err</span>: = <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">StdEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">baseFlag</span>)
+                                    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                                        panic(<span style="color:#a6e22e">err</span>)
+                                    }
+                                    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">rotFlag</span>[] <span style="color:#66d9ef">byte</span>
+                                    <span style="color:#a6e22e">MAGIC</span> = <span style="color:#ae81ff">13</span>
+                                    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span>: = <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">unBaseFlag</span> {
+                                        <span style="color:#a6e22e">rotFlag</span> = append(<span style="color:#a6e22e">rotFlag</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">+</span> byte(<span style="color:#a6e22e">MAGIC</span>))
+                                    }
+                                    <span style="color:#a6e22e">deBaseRot</span>, <span style="color:#a6e22e">err</span>: = <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">StdEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(string(<span style="color:#a6e22e">rotFlag</span>))
+                                    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+                                        panic(<span style="color:#a6e22e">err</span>)
+                                    }
+                                    <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">flag</span>[] <span style="color:#66d9ef">byte</span>
+                                    <span style="color:#a6e22e">MAGIC</span> = (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">3</span>) <span style="color:#f92672">+</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">5</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+                                    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span>: = <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">deBaseRot</span> {
+                                        <span style="color:#a6e22e">flag</span> = append(<span style="color:#a6e22e">flag</span>, <span style="color:#a6e22e">v</span> ^ byte(<span style="color:#a6e22e">MAGIC</span>))
+                                    }
+                                    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(string(<span style="color:#a6e22e">flag</span>))
+                                }
+</code></pre></div><p>Apabila di jalankan mengeluarkan error.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ go run main.go
+package main: 
+main_BACK.go:2:14: expected <span style="color:#e6db74">&#39;;&#39;</span>, found <span style="color:#e6db74">&#39;,&#39;</span>
+main_BACK.go:3:9: expected <span style="color:#e6db74">&#39;;&#39;</span>, found <span style="color:#e6db74">&#39;,&#39;</span>
+</code></pre></div><p>Karena tidak begitu familier dengan bahasa <code>Go</code> sehingga saya tidak bisa memperbaikinya, tapi inti nya logika bahasa program itu sama, saya membuat nya dalam bahasa <code>Python</code> berdasarkan Algoritma main.go untuk menggenerate Flag.
+Berikut script yang digunakan</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> tarfile
+
+<span style="color:#75715e"># extract flag.tar.gz</span>
+
+tar <span style="color:#f92672">=</span> tarfile<span style="color:#f92672">.</span>open(<span style="color:#e6db74">&#34;flag.tar.gz&#34;</span>)
+tar<span style="color:#f92672">.</span>extractall()
+tar<span style="color:#f92672">.</span>close()
+
+<span style="color:#75715e"># open morse_flag</span>
+<span style="color:#66d9ef">with</span> open(<span style="color:#e6db74">&#34;morse_flag&#34;</span>) <span style="color:#66d9ef">as</span> morse_tmp:
+  morse_tmp <span style="color:#f92672">=</span> morse_tmp<span style="color:#f92672">.</span>read()<span style="color:#f92672">.</span>split()
+
+morse_flag <span style="color:#f92672">=</span> []
+tmp <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+<span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> morse_tmp:
+  tmp <span style="color:#f92672">=</span> i<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;*&#34;</span>,<span style="color:#e6db74">&#34;1&#34;</span>)
+  tmp <span style="color:#f92672">=</span> tmp<span style="color:#f92672">.</span>replace(<span style="color:#e6db74">&#34;-&#34;</span>,<span style="color:#e6db74">&#34;0&#34;</span>)
+  morse_flag<span style="color:#f92672">.</span>append(tmp)
+
+unbase <span style="color:#f92672">=</span> map(<span style="color:#66d9ef">lambda</span> x: int(x,<span style="color:#ae81ff">2</span>), morse_flag)
+unbase <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(chr(c) <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> unbase)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;base64&#34;</span>)
+
+rotFlag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(chr(ord(c) <span style="color:#f92672">+</span> <span style="color:#ae81ff">13</span>) <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> unbase)<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;base64&#34;</span>)
+
+MAGIC <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">3</span>) <span style="color:#f92672">+</span> (<span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">5</span>) <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span> <span style="color:#75715e"># == 39</span>
+
+flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span><span style="color:#f92672">.</span>join(chr(ord(c) <span style="color:#f92672">^</span> MAGIC) <span style="color:#66d9ef">for</span> c <span style="color:#f92672">in</span> rotFlag)
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#39;Flag : {}&#39;</span><span style="color:#f92672">.</span>format(flag)
+</code></pre></div><p>Setelah dijalankan akan mendapatkan Flag.</p>
+<h4 id="flag--itsohardtoprogsolo">Flag : ItSoHardToProgSolo</h4>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2017-11-27-hxpctf-2017-cloud18/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">hxp CTF 2017 - cloud18 (web 150)</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2016-12-21-pwnable.kr-random/">
+                  <span class="button__text">pwnable.kr - random</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>pwnable.kr on /home/rhama/</title>
+    <link>rhamaa.github.io/tags/pwnable.kr/</link>
+    <description>Recent content in pwnable.kr on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="rhamaa.github.io/tags/pwnable.kr/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>pwnable.kr - random</title>
+      <link>rhamaa.github.io/post/2016-12-21-pwnable.kr-random/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2016-12-21-pwnable.kr-random/</guid>
+      <description>Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code
+#include &amp;lt;stdio.h&amp;gt; int main(){ unsigned int random; random = rand();	// random value!  unsigned int key=0; scanf(&amp;#34;%d&amp;#34;, &amp;amp;key); if( (key ^ random) == 0xdeadbeef ){ printf(&amp;#34;Good!\n&amp;#34;); system(&amp;#34;/bin/cat flag&amp;#34;); return 0; } printf(&amp;#34;Wrong, maybe you should try 2^32 cases.\n&amp;#34;); return 0; } Fungsi rand() akan mengembalikan nilai pseudo-random antara 0 dan RAND_MAX. Value dari fungsi rand() akan disimpan pada variable random, dan terdapat variable key yang menampung user input sehingga pada kondisi if dilakukan XOR antara key ^ random jika hasil nya 0xdeadbeef akan mendapatkan flag.</description>
+    </item>
+    
+  </channel>
+</rss>

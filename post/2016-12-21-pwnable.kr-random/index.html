@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>pwnable.kr - random :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code
+#include &amp;lt;stdio.h&amp;gt; int main(){ unsigned int random; random = rand();	// random value!  unsigned int key=0; scanf(&amp;#34;%d&amp;#34;, &amp;amp;key); if( (key ^ random) == 0xdeadbeef ){ printf(&amp;#34;Good!\n&amp;#34;); system(&amp;#34;/bin/cat flag&amp;#34;); return 0; } printf(&amp;#34;Wrong, maybe you should try 2^32 cases.\n&amp;#34;); return 0; } Fungsi rand() akan mengembalikan nilai pseudo-random antara 0 dan RAND_MAX. Value dari fungsi rand() akan disimpan pada variable random, dan terdapat variable key yang menampung user input sehingga pada kondisi if dilakukan XOR antara key ^ random jika hasil nya 0xdeadbeef akan mendapatkan flag."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2016-12-21-pwnable.kr-random/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="pwnable.kr - random"/>
+<meta name="twitter:description" content="Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code
+#include &lt;stdio.h&gt; int main(){ unsigned int random; random = rand();	// random value!  unsigned int key=0; scanf(&#34;%d&#34;, &amp;key); if( (key ^ random) == 0xdeadbeef ){ printf(&#34;Good!\n&#34;); system(&#34;/bin/cat flag&#34;); return 0; } printf(&#34;Wrong, maybe you should try 2^32 cases.\n&#34;); return 0; } Fungsi rand() akan mengembalikan nilai pseudo-random antara 0 dan RAND_MAX. Value dari fungsi rand() akan disimpan pada variable random, dan terdapat variable key yang menampung user input sehingga pada kondisi if dilakukan XOR antara key ^ random jika hasil nya 0xdeadbeef akan mendapatkan flag."/>
+
+
+
+<meta property="og:title" content="pwnable.kr - random" />
+<meta property="og:description" content="Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code
+#include &lt;stdio.h&gt; int main(){ unsigned int random; random = rand();	// random value!  unsigned int key=0; scanf(&#34;%d&#34;, &amp;key); if( (key ^ random) == 0xdeadbeef ){ printf(&#34;Good!\n&#34;); system(&#34;/bin/cat flag&#34;); return 0; } printf(&#34;Wrong, maybe you should try 2^32 cases.\n&#34;); return 0; } Fungsi rand() akan mengembalikan nilai pseudo-random antara 0 dan RAND_MAX. Value dari fungsi rand() akan disimpan pada variable random, dan terdapat variable key yang menampung user input sehingga pada kondisi if dilakukan XOR antara key ^ random jika hasil nya 0xdeadbeef akan mendapatkan flag." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2016-12-21-pwnable.kr-random/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2016-12-21-pwnable.kr-random/">pwnable.kr - random</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/pwnable.kr/">pwnable.kr</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <p>Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(){
+	<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> random;
+	random <span style="color:#f92672">=</span> rand();	<span style="color:#75715e">// random value!
+</span><span style="color:#75715e"></span>
+	<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> key<span style="color:#f92672">=</span><span style="color:#ae81ff">0</span>;
+	scanf(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>key);
+
+	<span style="color:#66d9ef">if</span>( (key <span style="color:#f92672">^</span> random) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0xdeadbeef</span> ){
+		printf(<span style="color:#e6db74">&#34;Good!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+		system(<span style="color:#e6db74">&#34;/bin/cat flag&#34;</span>);
+		<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+	}
+
+	printf(<span style="color:#e6db74">&#34;Wrong, maybe you should try 2^32 cases.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><p>Fungsi rand() akan mengembalikan nilai pseudo-random antara 0 dan RAND_MAX. Value dari fungsi rand() akan disimpan pada variable random, dan terdapat variable key yang menampung user input sehingga pada kondisi if dilakukan <em>XOR</em> antara key ^ random jika hasil nya 0xdeadbeef akan mendapatkan flag. *Apabila belum mengerti tentang <em>XOR Encryption</em> dapat melihat video dari <a href="https://www.youtube.com/watch?v=j3ya6t3Zfrs">Cyber Security IPB</a></p>
+<h1 id="proof-of-concept">Proof Of Concept</h1>
+<p>Saya menggunakan gdb dengan plugin peda.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">
+root<span style="color:#960050;background-color:#1e0010">@</span>linux <span style="color:#f92672">~</span><span style="color:#960050;background-color:#1e0010">#</span> gdb <span style="color:#f92672">-</span>q random
+Reading symbols from random...(no debugging symbols found)...done.
+gdb<span style="color:#f92672">-</span>peda<span style="color:#960050;background-color:#1e0010">$</span> disass main
+Dump of assembler code <span style="color:#66d9ef">for</span> function main:
+   <span style="color:#ae81ff">0x00000000004005f4</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">0</span><span style="color:#f92672">&gt;:</span>	push   rbp
+   <span style="color:#ae81ff">0x00000000004005f5</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">1</span><span style="color:#f92672">&gt;:</span>	mov    rbp,rsp
+   <span style="color:#ae81ff">0x00000000004005f8</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">4</span><span style="color:#f92672">&gt;:</span>	sub    rsp,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#ae81ff">0x00000000004005fc</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">8</span><span style="color:#f92672">&gt;:</span>	mov    eax,<span style="color:#ae81ff">0x0</span>
+   <span style="color:#ae81ff">0x0000000000400601</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">13</span><span style="color:#f92672">&gt;:</span>	call   <span style="color:#ae81ff">0x400500</span> <span style="color:#f92672">&lt;</span>rand<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x0000000000400606</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">18</span><span style="color:#f92672">&gt;:</span>	mov    DWORD PTR [rbp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x4</span>],eax ; Pasang breakpoint disini
+   <span style="color:#ae81ff">0x0000000000400609</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">21</span><span style="color:#f92672">&gt;:</span>	mov    DWORD PTR [rbp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x8</span>],<span style="color:#ae81ff">0x0</span>
+   <span style="color:#ae81ff">0x0000000000400610</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">28</span><span style="color:#f92672">&gt;:</span>	mov    eax,<span style="color:#ae81ff">0x400760</span>
+   <span style="color:#ae81ff">0x0000000000400615</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">33</span><span style="color:#f92672">&gt;:</span>	lea    rdx,[rbp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x8</span>]
+   <span style="color:#ae81ff">0x0000000000400619</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">37</span><span style="color:#f92672">&gt;:</span>	mov    rsi,rdx
+   <span style="color:#ae81ff">0x000000000040061c</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">40</span><span style="color:#f92672">&gt;:</span>	mov    rdi,rax
+   <span style="color:#ae81ff">0x000000000040061f</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">43</span><span style="color:#f92672">&gt;:</span>	mov    eax,<span style="color:#ae81ff">0x0</span>
+   <span style="color:#ae81ff">0x0000000000400624</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">48</span><span style="color:#f92672">&gt;:</span>	call   <span style="color:#ae81ff">0x4004f0</span> <span style="color:#f92672">&lt;</span>__isoc99_scanf<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x0000000000400629</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">53</span><span style="color:#f92672">&gt;:</span>	mov    eax,DWORD PTR [rbp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x8</span>]
+   <span style="color:#ae81ff">0x000000000040062c</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">56</span><span style="color:#f92672">&gt;:</span>	xor    eax,DWORD PTR [rbp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x4</span>]
+   <span style="color:#ae81ff">0x000000000040062f</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">59</span><span style="color:#f92672">&gt;:</span>	cmp    eax,<span style="color:#ae81ff">0xdeadbeef</span>
+   <span style="color:#ae81ff">0x0000000000400634</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">64</span><span style="color:#f92672">&gt;:</span>	jne    <span style="color:#ae81ff">0x400656</span> <span style="color:#f92672">&lt;</span>main<span style="color:#f92672">+</span><span style="color:#ae81ff">98</span><span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x0000000000400636</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">66</span><span style="color:#f92672">&gt;:</span>	mov    edi,<span style="color:#ae81ff">0x400763</span>
+   <span style="color:#ae81ff">0x000000000040063b</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">71</span><span style="color:#f92672">&gt;:</span>	call   <span style="color:#ae81ff">0x4004c0</span> <span style="color:#f92672">&lt;</span>puts<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x0000000000400640</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">76</span><span style="color:#f92672">&gt;:</span>	mov    edi,<span style="color:#ae81ff">0x400769</span>
+   <span style="color:#ae81ff">0x0000000000400645</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">81</span><span style="color:#f92672">&gt;:</span>	mov    eax,<span style="color:#ae81ff">0x0</span>
+   <span style="color:#ae81ff">0x000000000040064a</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">86</span><span style="color:#f92672">&gt;:</span>	call   <span style="color:#ae81ff">0x4004d0</span> <span style="color:#f92672">&lt;</span>system<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x000000000040064f</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">91</span><span style="color:#f92672">&gt;:</span>	mov    eax,<span style="color:#ae81ff">0x0</span>
+   <span style="color:#ae81ff">0x0000000000400654</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">96</span><span style="color:#f92672">&gt;:</span>	jmp    <span style="color:#ae81ff">0x400665</span> <span style="color:#f92672">&lt;</span>main<span style="color:#f92672">+</span><span style="color:#ae81ff">113</span><span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x0000000000400656</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">98</span><span style="color:#f92672">&gt;:</span>	mov    edi,<span style="color:#ae81ff">0x400778</span>
+   <span style="color:#ae81ff">0x000000000040065b</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">103</span><span style="color:#f92672">&gt;:</span>	call   <span style="color:#ae81ff">0x4004c0</span> <span style="color:#f92672">&lt;</span>puts<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+   <span style="color:#ae81ff">0x0000000000400660</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">108</span><span style="color:#f92672">&gt;:</span>	mov    eax,<span style="color:#ae81ff">0x0</span>
+   <span style="color:#ae81ff">0x0000000000400665</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">113</span><span style="color:#f92672">&gt;:</span>	leave  
+   <span style="color:#ae81ff">0x0000000000400666</span> <span style="color:#f92672">&lt;+</span><span style="color:#ae81ff">114</span><span style="color:#f92672">&gt;:</span>	ret    
+End of assembler dump.
+gdb<span style="color:#f92672">-</span>peda<span style="color:#960050;background-color:#1e0010">$</span> b <span style="color:#f92672">*</span><span style="color:#ae81ff">0x0000000000400606</span>
+Breakpoint <span style="color:#ae81ff">1</span> at <span style="color:#ae81ff">0x400606</span>
+gdb<span style="color:#f92672">-</span>peda<span style="color:#960050;background-color:#1e0010">$</span> r
+Starting program: <span style="color:#f92672">/</span>home<span style="color:#f92672">/</span>rhama<span style="color:#f92672">/</span>challenge<span style="color:#f92672">/</span>pwnable<span style="color:#f92672">/</span>random 
+
+ [<span style="color:#f92672">----------------------------------</span>registers<span style="color:#f92672">-----------------------------------</span>]
+RAX: <span style="color:#ae81ff">0x6b8b4567</span> ; nilai dari rand()
+RBX: <span style="color:#ae81ff">0x0</span> 
+RCX: <span style="color:#ae81ff">0x7f2b52c1e0a4</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x16a5bce3991539b1</span> 
+RDX: <span style="color:#ae81ff">0x7f2b52c1e0a8</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x6774a4cd16a5bce3</span> 
+RSI: <span style="color:#ae81ff">0x7fff8fc822fc</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x6b8b4567</span> 
+RDI: <span style="color:#ae81ff">0x7f2b52c1e620</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x7f2b52c1e0b4</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x61048c054e508aaa</span> 
+RBP: <span style="color:#ae81ff">0x7fff8fc82330</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x400670</span> (<span style="color:#f92672">&lt;</span>__libc_csu_init<span style="color:#f92672">&gt;:</span>	mov    QWORD PTR [rsp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x28</span>],rbp)
+RSP: <span style="color:#ae81ff">0x7fff8fc82320</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x7fff8fc82410</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x1</span> 
+RIP: <span style="color:#ae81ff">0x400606</span> (<span style="color:#f92672">&lt;</span>main<span style="color:#f92672">+</span><span style="color:#ae81ff">18</span><span style="color:#f92672">&gt;:</span>	mov    DWORD PTR [rbp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x4</span>],eax)
+R8 : <span style="color:#ae81ff">0x7f2b52c1e0a4</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x16a5bce3991539b1</span> 
+R9 : <span style="color:#ae81ff">0x7f2b52c1e120</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x8</span> 
+R10: <span style="color:#ae81ff">0x47f</span> 
+R11: <span style="color:#ae81ff">0x7f2b52895f60</span> (<span style="color:#f92672">&lt;</span>rand<span style="color:#f92672">&gt;:</span>	sub    rsp,<span style="color:#ae81ff">0x8</span>)
+R12: <span style="color:#ae81ff">0x400510</span> (<span style="color:#f92672">&lt;</span>_start<span style="color:#f92672">&gt;:</span>	xor    ebp,ebp)
+R13: <span style="color:#ae81ff">0x7fff8fc82410</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x1</span> 
+R14: <span style="color:#ae81ff">0x0</span> 
+R15: <span style="color:#ae81ff">0x0</span>
+EFLAGS: <span style="color:#ae81ff">0x206</span> (carry PARITY adjust zero sign trap INTERRUPT direction overflow)
+[<span style="color:#f92672">-------------------------------------</span>code<span style="color:#f92672">-------------------------------------</span>]
+   <span style="color:#ae81ff">0x4005f8</span> <span style="color:#f92672">&lt;</span>main<span style="color:#f92672">+</span><span style="color:#ae81ff">4</span><span style="color:#f92672">&gt;:</span>	sub    rsp,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#ae81ff">0x4005fc</span> <span style="color:#f92672">&lt;</span>main<span style="color:#f92672">+</span><span style="color:#ae81ff">8</span><span style="color:#f92672">&gt;:</span>	mov    eax,<span style="color:#ae81ff">0x0</span>
+   <span style="color:#ae81ff">0x400601</span> <span style="color:#f92672">&lt;</span>main<span style="color:#f92672">+</span><span style="color:#ae81ff">13</span><span style="color:#f92672">&gt;:</span>	call   <span style="color:#ae81ff">0x400500</span> <span style="color:#f92672">&lt;</span>rand<span style="color:#960050;background-color:#1e0010">@</span>plt<span style="color:#f92672">&gt;</span>
+<span style="color:#f92672">=&gt;</span> <span style="color:#ae81ff">0x400606</span> <span style="color:#f92672">&lt;</span>main<span style="color:#f92672">+</span><span style="color:#ae81ff">18</span><span style="color:#f92672">&gt;:</span>	mov    DWORD PTR [rbp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x4</span>],eax
+   <span style="color:#ae81ff">0x400609</span> <span style="color:#f92672">&lt;</span>main<span style="color:#f92672">+</span><span style="color:#ae81ff">21</span><span style="color:#f92672">&gt;:</span>	mov    DWORD PTR [rbp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x8</span>],<span style="color:#ae81ff">0x0</span>
+   <span style="color:#ae81ff">0x400610</span> <span style="color:#f92672">&lt;</span>main<span style="color:#f92672">+</span><span style="color:#ae81ff">28</span><span style="color:#f92672">&gt;:</span>	mov    eax,<span style="color:#ae81ff">0x400760</span>
+   <span style="color:#ae81ff">0x400615</span> <span style="color:#f92672">&lt;</span>main<span style="color:#f92672">+</span><span style="color:#ae81ff">33</span><span style="color:#f92672">&gt;:</span>	lea    rdx,[rbp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x8</span>]
+   <span style="color:#ae81ff">0x400619</span> <span style="color:#f92672">&lt;</span>main<span style="color:#f92672">+</span><span style="color:#ae81ff">37</span><span style="color:#f92672">&gt;:</span>	mov    rsi,rdx
+[<span style="color:#f92672">------------------------------------</span>stack<span style="color:#f92672">-------------------------------------</span>]
+<span style="color:#ae81ff">0000</span><span style="color:#f92672">|</span> <span style="color:#ae81ff">0x7fff8fc82320</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x7fff8fc82410</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x1</span> 
+<span style="color:#ae81ff">000</span><span style="color:#ae81ff">8</span><span style="color:#f92672">|</span> <span style="color:#ae81ff">0x7fff8fc82328</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x0</span> 
+<span style="color:#ae81ff">0016</span><span style="color:#f92672">|</span> <span style="color:#ae81ff">0x7fff8fc82330</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x400670</span> (<span style="color:#f92672">&lt;</span>__libc_csu_init<span style="color:#f92672">&gt;:</span>	mov    QWORD PTR [rsp<span style="color:#f92672">-</span><span style="color:#ae81ff">0x28</span>],rbp)
+<span style="color:#ae81ff">0024</span><span style="color:#f92672">|</span> <span style="color:#ae81ff">0x7fff8fc82338</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x7f2b5287b830</span> (<span style="color:#f92672">&lt;</span>__libc_start_main<span style="color:#f92672">+</span><span style="color:#ae81ff">240</span><span style="color:#f92672">&gt;:</span>	mov    edi,eax)
+<span style="color:#ae81ff">0032</span><span style="color:#f92672">|</span> <span style="color:#ae81ff">0x7fff8fc82340</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x0</span> 
+<span style="color:#ae81ff">0040</span><span style="color:#f92672">|</span> <span style="color:#ae81ff">0x7fff8fc82348</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x7fff8fc82418</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x7fff8fc83302</span> (<span style="color:#e6db74">&#34;/home/rhama/challenge/pwnable/random&#34;</span>)
+<span style="color:#ae81ff">004</span><span style="color:#ae81ff">8</span><span style="color:#f92672">|</span> <span style="color:#ae81ff">0x7fff8fc82350</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x100000000</span> 
+<span style="color:#ae81ff">0056</span><span style="color:#f92672">|</span> <span style="color:#ae81ff">0x7fff8fc82358</span> <span style="color:#f92672">--&gt;</span> <span style="color:#ae81ff">0x4005f4</span> (<span style="color:#f92672">&lt;</span>main<span style="color:#f92672">&gt;:</span>	push   rbp)
+[<span style="color:#f92672">------------------------------------------------------------------------------</span>]
+Legend: code, data, rodata, value
+
+Breakpoint <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0x0000000000400606</span> in main ()
+</code></pre></div><p>Didapatkan nilai 0x6b8b4567 atau 180428983 dalam desimal yang tersimpan dalam register RAX</p>
+<p>Karena kondisi if( (key ^ random) == 0xdeadbeef ), langkah selanjut nya adalah melakukan XORING antara random dan 0xdeadbeef untuk mendapatkan key dari XOR.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">root<span style="color:#960050;background-color:#1e0010">@</span>linux <span style="color:#f92672">~</span><span style="color:#960050;background-color:#1e0010">#</span> python <span style="color:#f92672">-</span>c <span style="color:#e6db74">&#34;print 0x6b8b4567 ^ 0xdeadbeef&#34;</span>
+<span style="color:#ae81ff">3039230856</span>
+</code></pre></div><p>Didapatkan key 3039230856 yang dapat digunakan untuk mendapatkan flag pada challenge random ini.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c" data-lang="c">root<span style="color:#960050;background-color:#1e0010">@</span>linux <span style="color:#f92672">~</span><span style="color:#960050;background-color:#1e0010">#</span> ssh random<span style="color:#960050;background-color:#1e0010">@</span>pwnable.kr <span style="color:#f92672">-</span>p2222
+random<span style="color:#960050;background-color:#1e0010">@</span>pwnable.kr<span style="color:#960050;background-color:#1e0010">&#39;</span>s password: 
+ ____  __    __  ____    ____  ____   _        ___      __  _  ____  
+<span style="color:#f92672">|</span>    <span style="color:#960050;background-color:#1e0010">\</span><span style="color:#f92672">|</span>  <span style="color:#f92672">|</span>__<span style="color:#f92672">|</span>  <span style="color:#f92672">||</span>    <span style="color:#960050;background-color:#1e0010">\</span>  <span style="color:#f92672">/</span>    <span style="color:#f92672">||</span>    <span style="color:#960050;background-color:#1e0010">\</span> <span style="color:#f92672">|</span> <span style="color:#f92672">|</span>      <span style="color:#f92672">/</span>  _]    <span style="color:#f92672">|</span>  <span style="color:#f92672">|/</span> ]<span style="color:#f92672">|</span>    <span style="color:#960050;background-color:#1e0010">\</span> 
+<span style="color:#f92672">|</span>  o  )  <span style="color:#f92672">|</span>  <span style="color:#f92672">|</span>  <span style="color:#f92672">||</span>  _  <span style="color:#f92672">||</span>  o  <span style="color:#f92672">||</span>  o  )<span style="color:#f92672">|</span> <span style="color:#f92672">|</span>     <span style="color:#f92672">/</span>  [_     <span style="color:#f92672">|</span>  <span style="color:#960050;background-color:#1e0010">&#39;</span> <span style="color:#f92672">/</span> <span style="color:#f92672">|</span>  D  )
+<span style="color:#f92672">|</span>   _<span style="color:#f92672">/|</span>  <span style="color:#f92672">|</span>  <span style="color:#f92672">|</span>  <span style="color:#f92672">||</span>  <span style="color:#f92672">|</span>  <span style="color:#f92672">||</span>     <span style="color:#f92672">||</span>     <span style="color:#f92672">||</span> <span style="color:#f92672">|</span>___ <span style="color:#f92672">|</span>    _]    <span style="color:#f92672">|</span>    <span style="color:#960050;background-color:#1e0010">\</span> <span style="color:#f92672">|</span>    <span style="color:#f92672">/</span> 
+<span style="color:#f92672">|</span>  <span style="color:#f92672">|</span>  <span style="color:#f92672">|</span>  <span style="color:#960050;background-color:#1e0010">`</span>  <span style="color:#960050;background-color:#1e0010">&#39;</span>  <span style="color:#f92672">||</span>  <span style="color:#f92672">|</span>  <span style="color:#f92672">||</span>  _  <span style="color:#f92672">||</span>  O  <span style="color:#f92672">||</span>     <span style="color:#f92672">||</span>   [_  __ <span style="color:#f92672">|</span>     <span style="color:#960050;background-color:#1e0010">\</span><span style="color:#f92672">|</span>    <span style="color:#960050;background-color:#1e0010">\</span> 
+<span style="color:#f92672">|</span>  <span style="color:#f92672">|</span>   <span style="color:#960050;background-color:#1e0010">\</span>      <span style="color:#f92672">/</span> <span style="color:#f92672">|</span>  <span style="color:#f92672">|</span>  <span style="color:#f92672">||</span>  <span style="color:#f92672">|</span>  <span style="color:#f92672">||</span>     <span style="color:#f92672">||</span>     <span style="color:#f92672">||</span>     <span style="color:#f92672">||</span>  <span style="color:#f92672">||</span>  .  <span style="color:#f92672">||</span>  .  \
+<span style="color:#f92672">|</span>__<span style="color:#f92672">|</span>    <span style="color:#960050;background-color:#1e0010">\</span>_<span style="color:#f92672">/</span><span style="color:#960050;background-color:#1e0010">\</span>_<span style="color:#f92672">/</span>  <span style="color:#f92672">|</span>__<span style="color:#f92672">|</span>__<span style="color:#f92672">||</span>__<span style="color:#f92672">|</span>__<span style="color:#f92672">||</span>_____<span style="color:#f92672">||</span>_____<span style="color:#f92672">||</span>_____<span style="color:#f92672">||</span>__<span style="color:#f92672">||</span>__<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">\</span>_<span style="color:#f92672">||</span>__<span style="color:#f92672">|</span><span style="color:#960050;background-color:#1e0010">\</span>_<span style="color:#f92672">|</span>
+                                                                     
+<span style="color:#f92672">-</span> Site admin : daehee87.kr<span style="color:#960050;background-color:#1e0010">@</span>gmail.com
+<span style="color:#f92672">-</span> IRC : irc.netgarage.org:<span style="color:#ae81ff">6667</span> <span style="color:#f92672">/</span> <span style="color:#960050;background-color:#1e0010">#</span>pwnable.kr
+<span style="color:#f92672">-</span> Simply type <span style="color:#e6db74">&#34;irssi&#34;</span> command to join IRC now
+<span style="color:#f92672">-</span> files under <span style="color:#f92672">/</span>tmp can be erased anytime. make your directory under <span style="color:#f92672">/</span>tmp
+<span style="color:#f92672">-</span> to use peda, issue <span style="color:#960050;background-color:#1e0010">`</span>source <span style="color:#f92672">/</span>usr<span style="color:#f92672">/</span>share<span style="color:#f92672">/</span>peda<span style="color:#f92672">/</span>peda.py<span style="color:#960050;background-color:#1e0010">`</span> in gdb terminal
+Last login: Wed Dec <span style="color:#ae81ff">21</span> <span style="color:#ae81ff">06</span><span style="color:#f92672">:</span><span style="color:#ae81ff">05</span><span style="color:#f92672">:</span><span style="color:#ae81ff">58</span> <span style="color:#ae81ff">2016</span> from <span style="color:#ae81ff">125.198.19.179</span>
+random<span style="color:#960050;background-color:#1e0010">@</span>ubuntu:<span style="color:#f92672">~</span><span style="color:#960050;background-color:#1e0010">$</span> .<span style="color:#f92672">/</span>random
+<span style="color:#ae81ff">3039230856</span>
+Good<span style="color:#f92672">!</span>
+Mommy, I thought libc random is unpredictable...
+random<span style="color:#960050;background-color:#1e0010">@</span>ubuntu:<span style="color:#f92672">~</span><span style="color:#960050;background-color:#1e0010">$</span> 
+
+</code></pre></div>
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2017-12-3-juniorsctf-2017/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Juniors CTF 2017 - Write up</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2017-11-06-pwnabletw-start/">
+                  <span class="button__text">Pwnable.tw - Start (100)</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

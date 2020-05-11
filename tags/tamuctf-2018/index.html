@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>TAMUCTF-2018 :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content=""/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/tags/tamuctf-2018/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TAMUCTF-2018"/>
+<meta name="twitter:description" content=""/>
+
+
+
+<meta property="og:title" content="TAMUCTF-2018" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="rhamaa.github.io/tags/tamuctf-2018/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+<link rel="alternate" type="application/rss+xml" href="rhamaa.github.io/tags/tamuctf-2018/index.xml" title="/home/rhama/" />
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  
+  
+  
+
+  <div class="posts">
+    
+    <div class="post on-list">
+      <h1 class="post-title"><a href="rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/">TAMUCTF 2018 - Pwning</a></h1>
+      <div class="post-meta">
+        
+        <span class="post-author">— Written by CTF.Ninja</span>
+        
+      </div>
+
+      
+        <span class="post-tags">
+          
+            #<a href="rhamaa.github.io/tags/tamuctf-2018/">TAMUCTF-2018</a>&nbsp;
+          
+            #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+          
+        </span>
+      
+
+      
+        
+          <img src="/assets/images/CTF.png" class="post-cover" />
+        
+      
+
+      <div class="post-content">
+        
+          
+            Pwn1 Diberikan sebuah file binary dengan informasi sebagai berikut
+Percobaan debugging menggunakan gdb
+$ gdb -q pwn1 Reading symbols from pwn1&hellip;(no debugging symbols found)&hellip;done. gdb-peda $ pdisass main Berikut hasil disassable fungsi main
+0x080485cf &lt;+29&gt;: call 0x8048410 &lt;setvbuf@plt&gt; 0x080485d4 &lt;+34&gt;: add esp,0x10 0x080485d7 &lt;+37&gt;: sub esp,0xc 0x080485da &lt;+40&gt;: push 0x8048700 0x080485df &lt;+45&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485e4 &lt;+50&gt;: add esp,0x10 0x080485e7 &lt;+53&gt;: sub esp,0xc 0x080485ea &lt;+56&gt;: push 0x8048720 0x080485ef &lt;+61&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485f4 &lt;+66&gt;: add esp,0x10 0x080485f7 &lt;+69&gt;: sub esp,0xc 0x080485fa &lt;+72&gt;: push 0x804875f 0x080485ff &lt;+77&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x08048604 &lt;+82&gt;: add esp,0x10 0x08048607 &lt;+85&gt;: mov DWORD PTR [ebp-0xc],0x0 0x0804860e &lt;+92&gt;: sub esp,0xc 0x08048611 &lt;+95&gt;: lea eax,[ebp-0x23] 0x08048614 &lt;+98&gt;: push eax 0x08048615 &lt;+99&gt;: call 0x80483d0 &lt;gets@plt&gt; 0x0804861a &lt;+104&gt;: add esp,0x10 0x0804861d &lt;+107&gt;: cmp DWORD PTR [ebp-0xc],0xf007ba11 0x08048624 &lt;+114&gt;: jne 0x804862d &lt;main+123&gt; 0x08048626 &lt;+116&gt;: call 0x804854b &lt;print_flag&gt; 0x0804862b &lt;+121&gt;: jmp 0x804863d &lt;main+139&gt; 0x0804862d &lt;+123&gt;: sub esp,0xc 0x08048630 &lt;+126&gt;: push 0x8048772 0x08048635 &lt;+131&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x0804863a &lt;+136&gt;: add esp,0x10 0x0804863d &lt;+139&gt;: mov eax,0x0 0x08048642 &lt;+144&gt;: mov ecx,DWORD PTR [ebp-0x4] 0x08048645 &lt;+147&gt;: leave 0x08048646 &lt;+148&gt;: lea esp,[ecx-0x4] 0x08048649 &lt;+151&gt;: ret Terlihat terdapat penggunaan fungsi gets() yang vulnerable buffer overflow.
+          
+        
+      </div>
+      
+        <div><a class="read-more button" href="rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/">Read more →</a></div>
+      
+    </div>
+    
+    <div class="pagination">
+  <div class="pagination__buttons">
+    
+    
+  </div>
+</div>
+
+  </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

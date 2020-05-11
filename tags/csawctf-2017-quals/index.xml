@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>csawctf-2017-quals on /home/rhama/</title>
+    <link>rhamaa.github.io/tags/csawctf-2017-quals/</link>
+    <description>Recent content in csawctf-2017-quals on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="rhamaa.github.io/tags/csawctf-2017-quals/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>CSAW CTF 2017 Prelims Write Up</title>
+      <link>rhamaa.github.io/post/2017-11-14-csawctf-2017-quals/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-14-csawctf-2017-quals/</guid>
+      <description>Didapatkan Locationmerupakan alamat stack dimana inputan penggunana akan disimpan dan dibutuhkan 40 bytes untuk meng overwriteregister RIP.
+Berikut exploit code yang digunakan
+Exploit code dijalankan.
+Flag : flag{1nput_c00rd1nat3s_Strap_y0urse1v3s_1n_b0ys}Stage 1 : meminta input nomor kartu kredit {Visa|Discover|American Express|MasterCard}
+Stage 2 : meminta input nomor kartu kredit dengan 4 digit prefix
+Stage 3 : meminta input nomor kartu kredit dengan 1 digit suffix
+Stage 4 : meminta input nomor kartu kredit dengan 4 digit suffix</description>
+    </item>
+    
+  </channel>
+</rss>

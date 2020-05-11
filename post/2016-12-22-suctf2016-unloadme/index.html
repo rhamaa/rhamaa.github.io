@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>SharifCTF 2016 - UnloadMe :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="content {:toc}  Challenge RE SharifCTF 2016 UnloadMe berupa file PE32 Windows Executable
+root@kali:~/Desktop/SU CTF/RE# file UnloadMe UnloadMe: PE32 executable (native) Intel 80386, for MS Windows Proof Of Concept Saya melakukan disassembly menggunakan Hopper, ditemukan Hex String mencurigakan pada register.
+Apabila Hex String tersebut didecode akan menghasilkan cc043056a0a32cb5e104aeb2cf4ff7ba flag : SharifCTF{cc043056a0a32cb5e104aeb2cf4ff7ba}"/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2016-12-22-suctf2016-unloadme/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SharifCTF 2016 - UnloadMe"/>
+<meta name="twitter:description" content="content {:toc}  Challenge RE SharifCTF 2016 UnloadMe berupa file PE32 Windows Executable
+root@kali:~/Desktop/SU CTF/RE# file UnloadMe UnloadMe: PE32 executable (native) Intel 80386, for MS Windows Proof Of Concept Saya melakukan disassembly menggunakan Hopper, ditemukan Hex String mencurigakan pada register.
+Apabila Hex String tersebut didecode akan menghasilkan cc043056a0a32cb5e104aeb2cf4ff7ba flag : SharifCTF{cc043056a0a32cb5e104aeb2cf4ff7ba}"/>
+
+
+
+<meta property="og:title" content="SharifCTF 2016 - UnloadMe" />
+<meta property="og:description" content="content {:toc}  Challenge RE SharifCTF 2016 UnloadMe berupa file PE32 Windows Executable
+root@kali:~/Desktop/SU CTF/RE# file UnloadMe UnloadMe: PE32 executable (native) Intel 80386, for MS Windows Proof Of Concept Saya melakukan disassembly menggunakan Hopper, ditemukan Hex String mencurigakan pada register.
+Apabila Hex String tersebut didecode akan menghasilkan cc043056a0a32cb5e104aeb2cf4ff7ba flag : SharifCTF{cc043056a0a32cb5e104aeb2cf4ff7ba}" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2016-12-22-suctf2016-unloadme/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2016-12-22-suctf2016-unloadme/">SharifCTF 2016 - UnloadMe</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/sharifctf2016/">sharifctf2016</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <ul>
+<li>content
+{:toc}</li>
+</ul>
+<p>Challenge RE SharifCTF 2016 UnloadMe berupa file PE32 Windows Executable</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:~/Desktop/SU CTF/RE# file UnloadMe
+UnloadMe: PE32 executable <span style="color:#f92672">(</span>native<span style="color:#f92672">)</span> Intel 80386, <span style="color:#66d9ef">for</span> MS Windows
+</code></pre></div><h1 id="proof-of-concept">Proof Of Concept</h1>
+<p>Saya melakukan <em>disassembly</em> menggunakan Hopper, ditemukan <em>Hex String</em> mencurigakan pada register.</p>
+<p><img src="https://raw.githubusercontent.com/rh4ma/rh4ma.github.io/master/_posts/UnloadME.png" alt="UnloadME.png"></p>
+<p>Apabila <em>Hex String</em> tersebut didecode akan menghasilkan cc043056a0a32cb5e104aeb2cf4ff7ba
+flag : SharifCTF{cc043056a0a32cb5e104aeb2cf4ff7ba}</p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2016-12-22-suctf2016-scrack/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">SharifCTF 2016 - SCrack</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/">
+                  <span class="button__text">TAMUCTF 2018 - Pwning</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>cyber-jawara2017 on /home/rhama/</title>
+    <link>rhamaa.github.io/tags/cyber-jawara2017/</link>
+    <description>Recent content in cyber-jawara2017 on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="rhamaa.github.io/tags/cyber-jawara2017/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Cyber Jawara 2017 Final - echo (pwn 200)</title>
+      <link>rhamaa.github.io/post/2017-11-06-cyber-jawara-2017-final-pwn200/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-06-cyber-jawara-2017-final-pwn200/</guid>
+      <description>Diberikan sebuah file elf binary 64 bit dengan nama echo
+Dengan proteksi sebagai berikut
+Berikut adalah hasil decompile menggunakan IDA pro
+Dari hasil decompile IDA pro dipastikan binary tersebut vulnerable terhadap Buffer Overflow karena menggunakan fungsi &amp;ldquo;gets()&amp;rdquo; yang tidak memfilter panjang inputan.
+Dengan asumsi bahwa ASLR pada mesin dalam keadaan ON dan binary tersebut di proteksi dengan NX bit yang tidak memungkinkan untuk eksekusi shellcode, sehingga teknik yang digunakan adalah ROP ( Return Oriented Programming).</description>
+    </item>
+    
+    <item>
+      <title>Write Up Cyber Jawara 2017</title>
+      <link>rhamaa.github.io/post/2017-11-06-cyber-jawara-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-06-cyber-jawara-2017/</guid>
+      <description>Berikut adalah write up penyisihan Cyber Jawara 2017 dari tim Rules Of Pwning (ROP).
+Write Up Cyber Jawara 2017 </description>
+    </item>
+    
+  </channel>
+</rss>

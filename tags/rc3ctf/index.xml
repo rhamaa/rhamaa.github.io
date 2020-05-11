@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>rc3ctf on /home/rhama/</title>
+    <link>rhamaa.github.io/tags/rc3ctf/</link>
+    <description>Recent content in rc3ctf on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="rhamaa.github.io/tags/rc3ctf/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>RC3 CTF 2017 Write Up</title>
+      <link>rhamaa.github.io/post/2017-11-20-rc3-ctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-20-rc3-ctf-2017/</guid>
+      <description>Reversing (100) Diberikan file elf 64bit not stripped.
+$ file hello hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=e85915bc2c95f7eac6c02254b065d9161e5efca2, not stripped Hanya dengan menggunakan strings didapatkan Flag yang benar.
+$ strings hello | grep RC RC3-2017{little_ball_of_fur} Cukup mudah untuk challenge dengan points 100 :)
+Flag : RC3-2017{little_ball_of_fur}
+Web (100) Diberikan sebuah website http://13.59.6.98
+$ curl http://13.59.6.98 &amp;lt;meta http-equiv=&amp;#34;refresh&amp;#34; content=&amp;#34;0; url=C.html&amp;#34; /&amp;gt; &amp;lt;p hidden&amp;gt;R&amp;lt;/p&amp;gt; Website tersebut akan otomatis direfresh apabila dikunjungi via Browser.</description>
+    </item>
+    
+    <item>
+      <title>RC3 CTF 2017 Write Up</title>
+      <link>rhamaa.github.io/post/2017-11-21-rc3-ctf-2017/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-21-rc3-ctf-2017/</guid>
+      <description>Reversing (100) Diberikan file elf 64bit not stripped.
+$ file hello hello: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.32, BuildID[sha1]=e85915bc2c95f7eac6c02254b065d9161e5efca2, not stripped Hanya dengan menggunakan strings didapatkan Flag yang benar.
+$ strings hello | grep RC RC3-2017{little_ball_of_fur} Cukup mudah untuk challenge dengan points 100 :) Flag : RC3-2017{little_ball_of_fur}
+Web (100) Diberikan sebuah website ()[http://13.59.6.98]
+$ curl http://13.59.6.98 &amp;lt;meta http-equiv=&amp;#34;refresh&amp;#34; content=&amp;#34;0; url=C.html&amp;#34; /&amp;gt; &amp;lt;p hidden&amp;gt;R&amp;lt;/p&amp;gt; Website tersebut akan otomatis direfresh apabila dikunjungi via Browser.</description>
+    </item>
+    
+  </channel>
+</rss>

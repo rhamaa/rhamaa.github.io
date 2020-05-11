@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>SharifCTF 2016 - Getit :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Pada challenge RE ShariftCTF 2016 diberikan file elf binnary bernama getit, yang informasi nya seperti dibawah ini
+root@kali:~/Desktop/SU CTF/RE# file getit getit: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=e389cd7a4b9272ba80f85d7eb604176f6106c61e, not stripped Proof Of Concept Saya menggunakan gdb untuk melakukan debugging
+root@kali:~/Desktop/SU CTF/RE# gdb -q getit Reading symbols from getit...(no debugging symbols found)...done. (gdb) set disassembly-flavor intel (gdb) disass main Dump of assembler code for function main: --- snip --- 0x000000000040080d &amp;lt;&#43;183&amp;gt;:	call 0x400620 &amp;lt;fprintf@plt&amp;gt; 0x0000000000400812 &amp;lt;&#43;188&amp;gt;:	mov DWORD PTR [rbp-0x3c],0x0 0x0000000000400819 &amp;lt;&#43;195&amp;gt;:	mov eax,DWORD PTR [rbp-0x3c] 0x000000000040081c &amp;lt;&#43;198&amp;gt;:	movsxd rbx,eax 0x000000000040081f &amp;lt;&#43;201&amp;gt;:	mov edi,0x6010e0 0x0000000000400824 &amp;lt;&#43;206&amp;gt;:	call 0x4005e0 &amp;lt;strlen@plt&amp;gt; 0x0000000000400829 &amp;lt;&#43;211&amp;gt;:	cmp rbx,rax 0x000000000040082c &amp;lt;&#43;214&amp;gt;:	jae 0x4008b5 &amp;lt;main&#43;351&amp;gt; --- snip --- Ditemukan bagian menarik pada offset 0x000000000040081f at &#43;201, dimana terdapat &amp;ldquo;sesuatu&amp;rdquo; yang disalin ke register edi."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2016-12-22-suctf2016-getit/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="SharifCTF 2016 - Getit"/>
+<meta name="twitter:description" content="Pada challenge RE ShariftCTF 2016 diberikan file elf binnary bernama getit, yang informasi nya seperti dibawah ini
+root@kali:~/Desktop/SU CTF/RE# file getit getit: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=e389cd7a4b9272ba80f85d7eb604176f6106c61e, not stripped Proof Of Concept Saya menggunakan gdb untuk melakukan debugging
+root@kali:~/Desktop/SU CTF/RE# gdb -q getit Reading symbols from getit...(no debugging symbols found)...done. (gdb) set disassembly-flavor intel (gdb) disass main Dump of assembler code for function main: --- snip --- 0x000000000040080d &lt;&#43;183&gt;:	call 0x400620 &lt;fprintf@plt&gt; 0x0000000000400812 &lt;&#43;188&gt;:	mov DWORD PTR [rbp-0x3c],0x0 0x0000000000400819 &lt;&#43;195&gt;:	mov eax,DWORD PTR [rbp-0x3c] 0x000000000040081c &lt;&#43;198&gt;:	movsxd rbx,eax 0x000000000040081f &lt;&#43;201&gt;:	mov edi,0x6010e0 0x0000000000400824 &lt;&#43;206&gt;:	call 0x4005e0 &lt;strlen@plt&gt; 0x0000000000400829 &lt;&#43;211&gt;:	cmp rbx,rax 0x000000000040082c &lt;&#43;214&gt;:	jae 0x4008b5 &lt;main&#43;351&gt; --- snip --- Ditemukan bagian menarik pada offset 0x000000000040081f at &#43;201, dimana terdapat &ldquo;sesuatu&rdquo; yang disalin ke register edi."/>
+
+
+
+<meta property="og:title" content="SharifCTF 2016 - Getit" />
+<meta property="og:description" content="Pada challenge RE ShariftCTF 2016 diberikan file elf binnary bernama getit, yang informasi nya seperti dibawah ini
+root@kali:~/Desktop/SU CTF/RE# file getit getit: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 2.6.24, BuildID[sha1]=e389cd7a4b9272ba80f85d7eb604176f6106c61e, not stripped Proof Of Concept Saya menggunakan gdb untuk melakukan debugging
+root@kali:~/Desktop/SU CTF/RE# gdb -q getit Reading symbols from getit...(no debugging symbols found)...done. (gdb) set disassembly-flavor intel (gdb) disass main Dump of assembler code for function main: --- snip --- 0x000000000040080d &lt;&#43;183&gt;:	call 0x400620 &lt;fprintf@plt&gt; 0x0000000000400812 &lt;&#43;188&gt;:	mov DWORD PTR [rbp-0x3c],0x0 0x0000000000400819 &lt;&#43;195&gt;:	mov eax,DWORD PTR [rbp-0x3c] 0x000000000040081c &lt;&#43;198&gt;:	movsxd rbx,eax 0x000000000040081f &lt;&#43;201&gt;:	mov edi,0x6010e0 0x0000000000400824 &lt;&#43;206&gt;:	call 0x4005e0 &lt;strlen@plt&gt; 0x0000000000400829 &lt;&#43;211&gt;:	cmp rbx,rax 0x000000000040082c &lt;&#43;214&gt;:	jae 0x4008b5 &lt;main&#43;351&gt; --- snip --- Ditemukan bagian menarik pada offset 0x000000000040081f at &#43;201, dimana terdapat &ldquo;sesuatu&rdquo; yang disalin ke register edi." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2016-12-22-suctf2016-getit/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2016-12-22-suctf2016-getit/">SharifCTF 2016 - Getit</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/sharifctf2016/">sharifctf2016</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <p>Pada challenge RE ShariftCTF 2016 diberikan file elf binnary bernama getit, yang informasi nya seperti dibawah ini</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:~/Desktop/SU CTF/RE# file getit
+getit: ELF 64-bit LSB executable, x86-64, version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>SYSV<span style="color:#f92672">)</span>, 
+dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, 
+<span style="color:#66d9ef">for</span> GNU/Linux 2.6.24, 
+BuildID<span style="color:#f92672">[</span>sha1<span style="color:#f92672">]=</span>e389cd7a4b9272ba80f85d7eb604176f6106c61e, not stripped
+</code></pre></div><h1 id="proof-of-concept">Proof Of Concept</h1>
+<p>Saya menggunakan gdb untuk melakukan debugging</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">root@kali:~/Desktop/SU CTF/RE# gdb -q getit
+Reading symbols from getit...<span style="color:#f92672">(</span>no debugging symbols found<span style="color:#f92672">)</span>...done.
+<span style="color:#f92672">(</span>gdb<span style="color:#f92672">)</span> set disassembly-flavor intel
+<span style="color:#f92672">(</span>gdb<span style="color:#f92672">)</span> disass main
+Dump of assembler code <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">function</span> main:
+
+--- snip ---  
+   0x000000000040080d &lt;+183&gt;:	call   0x400620 &lt;fprintf@plt&gt;
+   0x0000000000400812 &lt;+188&gt;:	mov    DWORD PTR <span style="color:#f92672">[</span>rbp-0x3c<span style="color:#f92672">]</span>,0x0
+   0x0000000000400819 &lt;+195&gt;:	mov    eax,DWORD PTR <span style="color:#f92672">[</span>rbp-0x3c<span style="color:#f92672">]</span>
+   0x000000000040081c &lt;+198&gt;:	movsxd rbx,eax
+   0x000000000040081f &lt;+201&gt;:	mov    edi,0x6010e0
+   0x0000000000400824 &lt;+206&gt;:	call   0x4005e0 &lt;strlen@plt&gt;
+   0x0000000000400829 &lt;+211&gt;:	cmp    rbx,rax
+   0x000000000040082c &lt;+214&gt;:	jae    0x4008b5 &lt;main+351&gt;
+--- snip ---  
+</code></pre></div><p>Ditemukan bagian menarik pada offset 0x000000000040081f at +201, dimana terdapat &ldquo;sesuatu&rdquo; yang disalin ke register edi.</p>
+<p>Untuk melihat isi dari register edi, saya memasang <em>breakpoint</em> pada offset 0x0000000000400824 at +206</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#f92672">(</span>gdb<span style="color:#f92672">)</span> b *0x0000000000400824
+Breakpoint <span style="color:#ae81ff">1</span> at 0x400824
+<span style="color:#f92672">(</span>gdb<span style="color:#f92672">)</span> r
+Starting program: /root/Desktop/SU CTF/RE/getit 
+
+Breakpoint 1, 0x0000000000400824 in main <span style="color:#f92672">()</span>
+<span style="color:#f92672">(</span>gdb<span style="color:#f92672">)</span> x/s $rdi
+0x6010e0 &lt;t&gt;:	<span style="color:#e6db74">&#34;SharifCTF{b70c59275fcfa8aebf2d5911223c6589}&#34;</span>
+</code></pre></div><p>Flag : SharifCTF{b70c59275fcfa8aebf2d5911223c6589}</p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2016-12-23-suctf2016-camera-model/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">SharifCTF 2016 - Camera Model</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2016-12-22-suctf2016-scrack/">
+                  <span class="button__text">SharifCTF 2016 - SCrack</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

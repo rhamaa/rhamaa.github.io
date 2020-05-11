@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>Cyber Jawara 2017 Final - echo (pwn 200) :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Diberikan sebuah file elf binary 64 bit dengan nama echo
+Dengan proteksi sebagai berikut
+Berikut adalah hasil decompile menggunakan IDA pro
+Dari hasil decompile IDA pro dipastikan binary tersebut vulnerable terhadap Buffer Overflow karena menggunakan fungsi &amp;ldquo;gets()&amp;rdquo; yang tidak memfilter panjang inputan.
+Dengan asumsi bahwa ASLR pada mesin dalam keadaan ON dan binary tersebut di proteksi dengan NX bit yang tidak memungkinkan untuk eksekusi shellcode, sehingga teknik yang digunakan adalah ROP ( Return Oriented Programming)."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2017-11-06-cyber-jawara-2017-final-pwn200/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Cyber Jawara 2017 Final - echo (pwn 200)"/>
+<meta name="twitter:description" content="Diberikan sebuah file elf binary 64 bit dengan nama echo
+Dengan proteksi sebagai berikut
+Berikut adalah hasil decompile menggunakan IDA pro
+Dari hasil decompile IDA pro dipastikan binary tersebut vulnerable terhadap Buffer Overflow karena menggunakan fungsi &ldquo;gets()&rdquo; yang tidak memfilter panjang inputan.
+Dengan asumsi bahwa ASLR pada mesin dalam keadaan ON dan binary tersebut di proteksi dengan NX bit yang tidak memungkinkan untuk eksekusi shellcode, sehingga teknik yang digunakan adalah ROP ( Return Oriented Programming)."/>
+
+
+
+<meta property="og:title" content="Cyber Jawara 2017 Final - echo (pwn 200)" />
+<meta property="og:description" content="Diberikan sebuah file elf binary 64 bit dengan nama echo
+Dengan proteksi sebagai berikut
+Berikut adalah hasil decompile menggunakan IDA pro
+Dari hasil decompile IDA pro dipastikan binary tersebut vulnerable terhadap Buffer Overflow karena menggunakan fungsi &ldquo;gets()&rdquo; yang tidak memfilter panjang inputan.
+Dengan asumsi bahwa ASLR pada mesin dalam keadaan ON dan binary tersebut di proteksi dengan NX bit yang tidak memungkinkan untuk eksekusi shellcode, sehingga teknik yang digunakan adalah ROP ( Return Oriented Programming)." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2017-11-06-cyber-jawara-2017-final-pwn200/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2017-11-06-cyber-jawara-2017-final-pwn200/">Cyber Jawara 2017 Final - echo (pwn 200)</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/cyber-jawara2017/">cyber-jawara2017</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <p><!-- raw HTML omitted --></p>
+<p>Diberikan sebuah file elf binary 64 bit dengan nama echo</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Dengan proteksi sebagai berikut</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Berikut adalah hasil decompile menggunakan IDA pro</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Dari hasil decompile IDA pro dipastikan binary tersebut vulnerable terhadap Buffer Overflow karena menggunakan fungsi &ldquo;gets()&rdquo; yang tidak memfilter panjang inputan.</p>
+<p>Dengan asumsi bahwa ASLR pada mesin dalam keadaan ON dan binary tersebut di proteksi dengan NX bit yang tidak memungkinkan untuk eksekusi shellcode, sehingga teknik yang digunakan adalah ROP ( Return Oriented Programming).</p>
+<p>Sebelumnya, ukuran buffer variable v4 yang menyimpan inputan user adalah 0x2710 (10000) bytes (terlihat pada bp-2710h). Dan dibutuhkan 10000 + 8 bytes untuk mengoverwrite RIP.</p>
+<p>Karena binary tersebut dicompile dengan flag ( -static ) static binary, pembuatan gadget bisa di automasi menggunakan &ldquo;ROPgadget&rdquo; untuk generate ropchain.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Berikut exploit code dari ropchain yang digenerate ROPgadget dan disesuikan dengan ukuran buffer untuk overwrite RIP.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Jalankan script nya.</p>
+<!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Setelah itu akan mendapatkan interactive shell.</p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2017-11-20-cyber-jawara-2017/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Cyber Jawara 2017 - Write Up</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2017-11-20-cyber-jawara-2017-final-pwn200/">
+                  <span class="button__text">Cyber Jawara 2017 Final - echo (pwn 200)</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

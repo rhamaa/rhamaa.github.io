@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>hxpCTF2017 on /home/rhama/</title>
+    <link>rhamaa.github.io/tags/hxpctf2017/</link>
+    <description>Recent content in hxpCTF2017 on /home/rhama/</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    
+	<atom:link href="rhamaa.github.io/tags/hxpctf2017/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>hxp CTF 2017 - cloud18 (web 150)</title>
+      <link>rhamaa.github.io/post/2017-11-27-hxpctf-2017-cloud18/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>rhamaa.github.io/post/2017-11-27-hxpctf-2017-cloud18/</guid>
+      <description>65e868ae9518a3fd226e71d4041be9d4cd8350d7552b46832f3e7f0b5d6e03af.tar.xzConnection:</description>
+    </item>
+    
+  </channel>
+</rss>

